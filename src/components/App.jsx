@@ -1,11 +1,11 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import PlayerHomePage from './playerHomePage';
 import Landing from './landing';
 
-import './app.css';
+import './App.css';
 
-export default function App(props) {
+export default function App(props) {  
     return (
         <Router>
             <div className="app">
@@ -13,8 +13,10 @@ export default function App(props) {
                     <h1></h1>
                 </header>*/}
                 <main>
-                    <Route exact path="/" component={Landing} />
-                    <Route exact path="/player/:playerId" component={PlayerHomePage} />                    
+                    <Switch>
+                        <Route exact path="/" component={Landing} />
+                        <Route exact path="/playerDemo" component={PlayerHomePage} />                    
+                    </Switch>
                 </main>
             </div>
         </Router>

@@ -1,27 +1,35 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 import NavBar from './navBar';
 import MyCharactersArray from './myCharactersArray';
 
 import './playerHomePage.css';
 
-export default class PlayerHomePage extends React.Component{
-    constructor(props){
-        super(props);
-    }
+export function PlayerHomePage(props){
+    const user = props.user;
+    const isLoggedIn = props.isLoggedIn;
+    const chars = props.characters;
 
-    render() {
-        const user = this.props.user;
-        const isLoggedIn = this.props.isLoggedIn;
-        const chars = this.props.characters;
+    return (
+        <div className="playerHomePage">
+            <NavBar isLoggedIn={isLoggedIn} />
 
-        return (
-            <div className="playerHomePage">
-                <NavBar isLoggedIn={isLoggedIn} />
-
-                <h2>Welcome to Pathfinder Beyond {user}!</h2>
-                <MyCharactersArray characters={chars}/>
-            </div>
-        );
-    }
+            <h2>Welcome to Pathfinder Beyond {user}!</h2>
+            <MyCharactersArray characters={chars}/>
+        </div>
+    );    
 }
+
+PlayerHomePage.defaultProps = {
+    user: "",
+    isLoggedIn: false,
+    chars: null,
+}
+
+const mapStateToProps = state => ({
+    user: state.user,
+    isLoggedIn: state.isLoggedIn,
+    chars: state.chars,
+});
+
+export default connect(mapStateToProps)(PlayerHomePage);

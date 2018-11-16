@@ -1,13 +1,12 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import NavBar from './navBar';
 
 import './landing.css';
 
 export default class Landing extends React.Component{
-    constructor(props){
+/*    constructor(props){
         super(props);
-    }
+    }*/
 
     render() {
         const isLoggedIn = this.props.isLoggedIn;
