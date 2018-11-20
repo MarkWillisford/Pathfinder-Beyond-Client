@@ -1,3 +1,5 @@
+import * as actions from '../actions';
+
 const initialState = {
   user:"Me",
   isLoggedIn:true,
@@ -23,5 +25,12 @@ const initialState = {
 };
 
 export const reducer = (state=initialState, action) => {
+      console.log(action);
+    if (action.type === actions.LOAD_CHARACTER) {
+      return Object.assign({}, state, {
+        char:action.char,
+      });
+    }
+
     return state;
 };

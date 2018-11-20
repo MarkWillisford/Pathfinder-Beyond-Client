@@ -17,7 +17,7 @@ export default class NavBar extends React.Component{
                         <h2>Pathfinder Beyond</h2>
                     </div>
                     <div className="nav">
-                        Home | Log Out
+                        <Link to="/playerDemo">Home</Link> | <Link to="/">Log Out</Link>
                     </div>
                 </div>
             );

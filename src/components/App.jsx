@@ -1,7 +1,8 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import PlayerHomePage from './playerHomePage';
 import Landing from './landing';
+import PlayerHomePage from './playerHomePage';
+import CharacterDetails from './characterDetails';
 
 import './App.css';
 
@@ -15,7 +16,9 @@ export default function App(props) {
                 <main>
                     <Switch>
                         <Route exact path="/" component={Landing} />
-                        <Route exact path="/playerDemo" component={PlayerHomePage} />                    
+                        <Route exact path="/playerDemo" component={PlayerHomePage} />    
+                        {/* TODO */}     
+                        <Route exact path="/playerDemo/character/:characterID" component={CharacterDetails} />                   
                     </Switch>
                 </main>
             </div>
