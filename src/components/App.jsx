@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Landing from './landing';
 import PlayerHomePage from './playerHomePage';
 import CharacterDetails from './characterDetails';
+import NewCharacter from './newCharacter';
 
 import './App.css';
 
@@ -17,8 +18,8 @@ export default function App(props) {
                     <Switch>
                         <Route exact path="/" component={Landing} />
                         <Route exact path="/playerDemo" component={PlayerHomePage} />    
-                        {/* TODO */}     
-                        <Route exact path="/playerDemo/character/:characterID" component={CharacterDetails} />                   
+                        <Route exact path="/playerDemo/character/:characterID" component={CharacterDetails} />
+                        <Route path="/playerDemo/newCharacter" component={NewCharacter} />                     
                     </Switch>
                 </main>
             </div>

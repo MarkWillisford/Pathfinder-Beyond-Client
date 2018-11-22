@@ -1,0 +1,1 @@
+Current structure of newCharacterContainer causes an error when page is refreashed.
