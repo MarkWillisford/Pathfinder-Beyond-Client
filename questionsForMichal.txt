@@ -1,1 +1,5 @@
 Current structure of newCharacterContainer causes an error when page is refreashed.
+
+structure of links and next / prev buttons
+
+display from arrays and each section is clickable. on click the section displays a new div

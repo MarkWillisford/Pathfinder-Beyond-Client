@@ -29,6 +29,7 @@ export class NewCharacterNavLinks extends React.Component{
 		return (
 	        <div className="newCharacterNavLinks">
 	        	Nav Links
+	        	<p><button>Help</button></p>
 	        	<ul>
 		        	{this.props.creationSteps.map(({name, id}) => (
 		        		<li key={id}>

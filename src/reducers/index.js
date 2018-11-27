@@ -97,7 +97,9 @@ export const reducer = (state=initialState, action) => {
           completedUrl:"",
           complete:false},
         ],
-        currentStep:0,
+        currentStep:1,
+        disabledNext: false,
+        disabledPrev: false,
       });
     } else if (action.type === actions.DECREMENT_CURRENT_STEP){
       if(state.currentStep !== 0){
@@ -117,6 +119,21 @@ export const reducer = (state=initialState, action) => {
       } else {
         return state;
       } 
+    } else if (action.type === actions.TOGGLE_STEP){
+      console.log("in reducer - toggleStep");
+      return Object.assign({}, state, {
+        currentStep:action.index,
+        disabledNext: action.disabledNext, 
+        disabledPrev: action.disabledPrev, 
+      })
+    } else if (action.type === actions.LOAD_RACES){
+      return Object.assign({}, state, {
+        racesArray:[
+        {id:0,thum:"img",name:"Human",expand:false},
+        {id:1,thum:"img",name:"Elf",expand:true},
+        {id:2,thum:"img",name:"Dwarf",expand:false},
+      ],
+      });
     }
     return state;
 };
