@@ -58,28 +58,20 @@ export const reducer = (state=initialState, action) => {
         creationSteps:[
           {name:"Character Basics",
           id:0,
-          url:"",
-          completedUrl:"",
           complete:false},
+
           {name:"Race",
           id:1,
-          url:"",
-          completedUrl:"",
           complete:false},
+          
           {name:"Class",
           id:2,
-          url:"",
-          completedUrl:"",
           complete:false},
           {name:"Ability Scores",
           id:3,
-          url:"",
-          completedUrl:"",
           complete:false},
           {name:"Details",
           id:4,
-          url:"",
-          completedUrl:"",
           complete:false},
           {name:"Skills",
           id:5,
@@ -97,9 +89,10 @@ export const reducer = (state=initialState, action) => {
           completedUrl:"",
           complete:false},
         ],
-        currentStep:1,
+        help:false,
+        currentStep:0,
         disabledNext: false,
-        disabledPrev: false,
+        disabledPrev: true,
       });
     } else if (action.type === actions.DECREMENT_CURRENT_STEP){
       if(state.currentStep !== 0){

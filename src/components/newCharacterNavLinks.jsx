@@ -25,6 +25,13 @@ export class NewCharacterNavLinks extends React.Component{
 		return ({listItems});
 	}*/
 
+
+    loadRaces(){
+    	console.log("in container loading call");
+/*    	this.props.dispatch(loadRaces());*/
+    }
+
+
 	render(){
 		return (
 	        <div className="newCharacterNavLinks">
@@ -33,7 +40,7 @@ export class NewCharacterNavLinks extends React.Component{
 	        	<ul>
 		        	{this.props.creationSteps.map(({name, id}) => (
 		        		<li key={id}>
-		        			<Link to={`/playerDemo/newCharacter/${name}`} >{name}</Link>
+		        			<Link to={`/playerDemo/newCharacter/${name}`}>{name}</Link>
 		        		</li>
 		        	))}
 		        </ul>

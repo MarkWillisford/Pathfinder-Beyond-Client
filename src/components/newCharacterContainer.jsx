@@ -1,6 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import NewCharacterNavLinks from './newCharacterNavLinks';
 import NewCharacterPerferances from './newCharacterPerferances';
 import NewCharacterRace from './newCharacterRace';
@@ -24,7 +24,7 @@ import TestingRoutes from './testingRoutes';
 import './newCharacterPerferances.css';
 
 export class NewCharacterContainer extends React.Component{
-    loadPrevious(){
+/*    loadPrevious(){
         this.props.dispatch(decrementCurrentStep());    	
     }
 
@@ -37,10 +37,8 @@ export class NewCharacterContainer extends React.Component{
         		url=this.props.creationSteps[i].name;
         	};
         };
-        this.props.history.push(`/playerDemo/newCharacter/${url}`);   
-
-        /*https://stackoverflow.com/questions/50725146/how-create-separate-component-for-prev-next-buttons-reactjs*/
-    }
+        this.props.history.push(`/playerDemo/newCharacter/${url}`);          
+    }*/
 
     togglePrev(e){
     	let index = this.props.currentStep-1;
@@ -50,6 +48,7 @@ export class NewCharacterContainer extends React.Component{
 
     	// call disable action
     	this.props.dispatch(toggleStep(index, false, disabledPrev));
+    	this.setUrl();
     }
 
     toggleNext(e){
@@ -58,30 +57,45 @@ export class NewCharacterContainer extends React.Component{
 
     	// call disable action
     	this.props.dispatch(toggleStep(index, disabledNext, false ));
+    	this.setUrl();
     }
 
-    loadRaces(){
-    	console.log("in container loading call");
-/*    	this.props.dispatch(loadRaces());*/
+    setUrl(){
+		const stepsArray = this.props.creationSteps;
+		const currentStep = this.props.currentStep+1;
+		console.log("currentStep is: " + currentStep);
+		const help = this.props.help;
+		const disabledPrev = this.props.disabledPrev;
+		const disabledNext = this.props.disabledNext;
+		
+		const url = stepsArray[currentStep].name
+		console.log(this.props);
+		this.props.history.push(`/playerDemo/newCharacter/${url}`);
+
     }
 
 	render(){
+		const stepsArray = this.props.creationSteps;
+		const currentStep = this.props.currentStep;
+		const help = this.props.help;
 		const disabledPrev = this.props.disabledPrev;
 		const disabledNext = this.props.disabledNext;
+		
+		const url = stepsArray[currentStep].name/*
+		this.props.history.push(`/playerDemo/newCharacter/${url}`);*/
 
 		return (
 	        <Router>
 		        <div className="newCharacterContainer">
-		        	<NewCharacterNavLinks /> {/*
-			        <Route exact path="/playerDemo/newCharacter/:id" component={TestingRoutes} />*/}
-		        	{/*<button onClick={this.togglePrev.bind(this)}>Back</button>*/}
+		        	<NewCharacterNavLinks /> 
+		        	change to links
 		        	<Prev toggle={(e) => this.togglePrev(e)} disabled={disabledPrev} />
 		        	<div>
 		        		{/* 8 sections, each of which has a completed property
 			        		which controls which component is displayed */}
 			        	<Route exact path="/playerDemo/newCharacter/Character Basics" render={() => <Redirect to="/playerDemo/newCharacter/home" />} />
 		        		<Route exact path="/playerDemo/newCharacter/home" component={NewCharacterPerferances} />
-		        		<Route exact path="/playerDemo/newCharacter/Race" component={NewCharacterRace} onClick={this.loadRaces.bind(this)}/>
+		        		<Route exact path="/playerDemo/newCharacter/Race" component={NewCharacterRace} />
 		        		<Route exact path="/playerDemo/newCharacter/Class" component={NewCharacterClass} />
 			        	<Route exact path="/playerDemo/newCharacter/Ability Scores" render={() => <Redirect to="/playerDemo/newCharacter/AbilityScores" />} />
 		        		<Route exact path="/playerDemo/newCharacter/AbilityScores" component={NewCharacterAbilityScores} />
@@ -90,7 +104,6 @@ export class NewCharacterContainer extends React.Component{
 		        		<Route exact path="/playerDemo/newCharacter/Feats" component={NewCharacterFeats} />
 		        		<Route exact path="/playerDemo/newCharacter/Equipment" component={NewCharacterEquipment} />
 		        	</div>
-		        	{/*<button onClick={this.toggleNext.bind(this)}>Next</button>*/}
 		        	<Next toggle={(e) => this.toggleNext(e)} disabled={disabledNext} />
 		        </div>
 	        </Router>
@@ -101,6 +114,7 @@ export class NewCharacterContainer extends React.Component{
 const mapStateToProps = state => ({
 	creationSteps:state.creationSteps,
 	currentStep:state.currentStep,
+	help:state.help,
     disabledNext:state.disabledNext,
     disabledPrev:state.disabledPrev,
 });
