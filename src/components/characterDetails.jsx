@@ -73,7 +73,7 @@ export class CharacterDetails extends React.Component{
 }
 
 const mapStateToProps = state => ({
-    character: state.char,
+    character: state.characterReducer.char,
 });
 
 export default connect(mapStateToProps)(CharacterDetails);

@@ -27,9 +27,9 @@ PlayerHomePage.defaultProps = {
 }
 
 const mapStateToProps = state => ({
-    user: state.user,
-    isLoggedIn: state.isLoggedIn,
-    chars: state.chars,
+    user: state.characterReducer.user,
+    isLoggedIn: state.characterReducer.isLoggedIn,
+    chars: state.characterReducer.chars,
 });
 
 export default connect(mapStateToProps)(PlayerHomePage);

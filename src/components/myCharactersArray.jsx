@@ -30,7 +30,7 @@ export function MyCharactersArray(props){
 }
 
 const mapStateToProps = state => ({
-    characters: state.chars,
+    characters: state.characterReducer.chars,
 });
 
 export default connect(mapStateToProps)(MyCharactersArray);

@@ -4,6 +4,9 @@ import {connect} from 'react-redux';
 import './newCharacterPerferances.css';
 
 export class NewCharacterPerferances extends React.Component{
+	submit(){
+		console.log("submitting");
+	}
 	render(){
 		const complete = this.props.complete;
 		if(!complete){
@@ -40,7 +43,7 @@ export class NewCharacterPerferances extends React.Component{
 		        		<option value="level">Level</option>
 		        		<option value="crRefunds">CR Refunds</option>
 		        	</select></p>
-			        	
+			    	<button onClick={this.submit.bind(this)}>Submit</button>
 		        </div>
 		    );
 		} else {
@@ -54,7 +57,7 @@ export class NewCharacterPerferances extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	complete:state.creationSteps[0].complete,
+	complete:state.characterReducer.creationSteps[0].complete,
 });
 
 export default connect(mapStateToProps)(NewCharacterPerferances);

@@ -23,7 +23,7 @@ export class NewCharacterFeats extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	complete:state.creationSteps[6].complete,
+	complete:state.characterReducer.creationSteps[6].complete,
 });
 
 export default connect(mapStateToProps)(NewCharacterFeats);

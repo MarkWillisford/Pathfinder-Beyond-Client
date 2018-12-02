@@ -1,6 +1,7 @@
-Current structure of newCharacterContainer causes an error when page is refreashed.
-
-structure of links and next / prev buttons
 
 display from arrays and each section is clickable. on click the section displays a new div
+
+reducers.index lines 117 - 127 (TOGGLE_RACE_EXPAND) can I streamline this? toggle the property for all elements of the array?
+
+stats - dice . . .    how do I set up the assignment process?
 

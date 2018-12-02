@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import NewCharacterNavLinks from './newCharacterNavLinks';
 import NewCharacterPerferances from './newCharacterPerferances';
 import NewCharacterRace from './newCharacterRace';
@@ -10,13 +11,14 @@ import NewCharacterDetails from './newCharacterDetails';
 import NewCharacterSkills from './newCharacterSkills';
 import NewCharacterFeats from './newCharacterFeats';
 import NewCharacterEquipment from './newCharacterEquipment';
+import LoadOptions from './loadNewCharacterOptions';
 import Next from './next';
 import Prev from './prev';
 
 import {decrementCurrentStep} from '../actions/index';
 import {incrementCurrentStep} from '../actions/index';
-import {togglePrev} from '../actions/index';
-import {toggleNext} from '../actions/index';
+/*import {togglePrev} from '../actions/index';
+import {toggleNext} from '../actions/index';*/
 import {toggleStep} from '../actions/index';
 import {loadRaces} from '../actions/index';
 import TestingRoutes from './testingRoutes';
@@ -24,31 +26,13 @@ import TestingRoutes from './testingRoutes';
 import './newCharacterPerferances.css';
 
 export class NewCharacterContainer extends React.Component{
-/*    loadPrevious(){
-        this.props.dispatch(decrementCurrentStep());    	
-    }
-
-    loadNext(){
-        this.props.dispatch(incrementCurrentStep());
-        let url = "";
-        const idToFind = this.props.currentStep+1;
-        for(let i=0;i<this.props.creationSteps.length;i++){
-        	if(this.props.creationSteps[i].id === idToFind){
-        		url=this.props.creationSteps[i].name;
-        	};
-        };
-        this.props.history.push(`/playerDemo/newCharacter/${url}`);          
-    }*/
-
     togglePrev(e){
     	let index = this.props.currentStep-1;
-    	console.log("index is: " + index);
     	let disabledPrev = (index === 0);
-    	console.log("disabledPrev is: " + disabledPrev);
 
     	// call disable action
+		LoadOptions(index, this.props.dispatch);
     	this.props.dispatch(toggleStep(index, false, disabledPrev));
-    	this.setUrl();
     }
 
     toggleNext(e){
@@ -56,22 +40,8 @@ export class NewCharacterContainer extends React.Component{
     	let disabledNext = (index === this.props.creationSteps.length-1);
 
     	// call disable action
+		LoadOptions(index, this.props.dispatch);
     	this.props.dispatch(toggleStep(index, disabledNext, false ));
-    	this.setUrl();
-    }
-
-    setUrl(){
-		const stepsArray = this.props.creationSteps;
-		const currentStep = this.props.currentStep+1;
-		console.log("currentStep is: " + currentStep);
-		const help = this.props.help;
-		const disabledPrev = this.props.disabledPrev;
-		const disabledNext = this.props.disabledNext;
-		
-		const url = stepsArray[currentStep].name
-		console.log(this.props);
-		this.props.history.push(`/playerDemo/newCharacter/${url}`);
-
     }
 
 	render(){
@@ -81,15 +51,25 @@ export class NewCharacterContainer extends React.Component{
 		const disabledPrev = this.props.disabledPrev;
 		const disabledNext = this.props.disabledNext;
 		
-		const url = stepsArray[currentStep].name/*
-		this.props.history.push(`/playerDemo/newCharacter/${url}`);*/
+		let prevUrl = "";
+		if(currentStep !== 0){
+			prevUrl = `/playerDemo/newCharacter/${stepsArray[currentStep-1].name}`;
+		} else {
+			prevUrl = `/playerDemo/newCharacter/${stepsArray[currentStep].name}`;
+		}
+
+		let nextUrl = "";
+		if(currentStep !== 7){
+			nextUrl = `/playerDemo/newCharacter/${stepsArray[currentStep+1].name}`;
+		} else {
+			nextUrl = `/playerDemo/newCharacter/${stepsArray[currentStep].name}`;
+		}
 
 		return (
 	        <Router>
 		        <div className="newCharacterContainer">
 		        	<NewCharacterNavLinks /> 
-		        	change to links
-		        	<Prev toggle={(e) => this.togglePrev(e)} disabled={disabledPrev} />
+		        	<Prev toggle={(e) => this.togglePrev(e)} disabled={disabledPrev} url={prevUrl}/>
 		        	<div>
 		        		{/* 8 sections, each of which has a completed property
 			        		which controls which component is displayed */}
@@ -104,7 +84,7 @@ export class NewCharacterContainer extends React.Component{
 		        		<Route exact path="/playerDemo/newCharacter/Feats" component={NewCharacterFeats} />
 		        		<Route exact path="/playerDemo/newCharacter/Equipment" component={NewCharacterEquipment} />
 		        	</div>
-		        	<Next toggle={(e) => this.toggleNext(e)} disabled={disabledNext} />
+		        	<Next toggle={(e) => this.toggleNext(e)} disabled={disabledNext} url={nextUrl}/>
 		        </div>
 	        </Router>
 	    );
@@ -112,11 +92,11 @@ export class NewCharacterContainer extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	creationSteps:state.creationSteps,
-	currentStep:state.currentStep,
-	help:state.help,
-    disabledNext:state.disabledNext,
-    disabledPrev:state.disabledPrev,
+	creationSteps:state.characterReducer.creationSteps,
+	currentStep:state.characterReducer.currentStep,
+	help:state.characterReducer.help,
+    disabledNext:state.characterReducer.disabledNext,
+    disabledPrev:state.characterReducer.disabledPrev,
 });
 
 export default connect(mapStateToProps)(NewCharacterContainer);

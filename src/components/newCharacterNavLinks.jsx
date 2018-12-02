@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Route} from 'react-router-dom';
+import {setStep} from '../actions/index';
+import LoadOptions from './loadNewCharacterOptions';
 
 import './newCharacterNavLinks.css';
 
@@ -11,26 +13,20 @@ export class NewCharacterNavLinks extends React.Component{
 	to have this forLoop control the links but I couldnt get
 	it working. Instead I will have two 'views' within each
 	component 
-	forLoop(){
-		const listItems = this.props.creationSteps.map(({name, id, url, completedUrl, complete}) => (
-    		const step = this.props.creationSteps[i];
-    		const linkTo = "";
-    		if(step.complete === false){
-    			linkTo = step.url;
-    		} else {
-    			linkTo = step.completedUrl;
-    		}
-    		<ListItem key={step.id} value={<Link to={`/playerDemo/newCharacter/${linkTo}`}>{step.name}</Link>}
-		));
-		return ({listItems});
-	}*/
+*/
+	setStep(step){
+		let disabledPrev = false;
+		let disabledNext = false;
 
-
-    loadRaces(){
-    	console.log("in container loading call");
-/*    	this.props.dispatch(loadRaces());*/
-    }
-
+		if(step === 0){
+			disabledPrev = true;
+		} else if(step === 7){
+			disabledNext = true;
+		}
+		// Will need to be async . . .     
+		LoadOptions(step, this.props.dispatch);
+		this.props.dispatch(setStep(step, disabledNext, disabledPrev));
+	}
 
 	render(){
 		return (
@@ -40,7 +36,7 @@ export class NewCharacterNavLinks extends React.Component{
 	        	<ul>
 		        	{this.props.creationSteps.map(({name, id}) => (
 		        		<li key={id}>
-		        			<Link to={`/playerDemo/newCharacter/${name}`}>{name}</Link>
+		        			<Link to={`/playerDemo/newCharacter/${name}`} onClick={this.setStep.bind(this,id)}>{name}</Link>
 		        		</li>
 		        	))}
 		        </ul>
@@ -50,7 +46,7 @@ export class NewCharacterNavLinks extends React.Component{
 }
 
 const mapStateToProps = state => ({
-    creationSteps: state.creationSteps,
+    creationSteps: state.characterReducer.creationSteps,
 });
 
 export default connect(mapStateToProps)(NewCharacterNavLinks);
