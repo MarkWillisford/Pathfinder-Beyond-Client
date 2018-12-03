@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { dynamicSelect } from './dynamicSelect/';
 
 class SelectExample extends React.Component {
-	constructor(props){
-		super(props);
-		this.state = {
+  constructor(props){
+    super(props);
+    this.state = {
       takenOptions:[],
       allOptions: [],
     };
@@ -25,7 +25,7 @@ class SelectExample extends React.Component {
     // Call some action that will store this data on BE
   }
 
-	render(){
+  render(){
     return (
       <form onSubmit={this.props.handleSubmit(this.submitHandler.bind(this))} >
         <button onClick={this.generateNumbers.bind(this)}>Roll</button>
