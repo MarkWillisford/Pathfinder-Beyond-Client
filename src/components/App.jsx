@@ -4,6 +4,7 @@ import Landing from './landing';
 import PlayerHomePage from './playerHomePage';
 import CharacterDetails from './characterDetails';
 import NewCharacter from './newCharacter';
+import SelectExample from './selectExample/';
 
 import './App.css';
 
@@ -20,6 +21,7 @@ export default function App(props) {
                         <Route exact path="/playerDemo" component={PlayerHomePage} />    
                         <Route exact path="/playerDemo/character/:characterID" component={CharacterDetails} />
                         <Route path="/playerDemo/newCharacter" component={NewCharacter} />                     
+                        <Route exact path="/select-example" component={SelectExample} />
                     </Switch>
                 </main>
             </div>
