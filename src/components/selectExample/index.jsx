@@ -16,7 +16,13 @@ class SelectExample extends React.Component {
   generateNumbers(e) {
     e.preventDefault()
     this.setState({
-      allOptions: [null, 4, 6, 8, 10],
+      allOptions: [
+        {id: '', value: ''},
+        {id: '1', value: '1'},
+        {id: '2', value: '1'},
+        {id: '3', value: '2'},
+        {id: '4', value: '3'}
+      ],
     })
   }
 
@@ -53,10 +59,11 @@ class SelectExample extends React.Component {
 const dynamicFields = ['strength', 'charisma'];
 const selector = formValueSelector('example-form')
 const mapStateToProps = (state) => ({
-  takenOptions: dynamicFields.map(x => Number(selector(state, x))).filter(Boolean),
-  initialValues: {  // Optional
-    strength: 10,   // used for default values
-  }                 // while editing resource
+  takenOptions: dynamicFields.map(x => selector(state, x)).filter(Boolean),
+  initialValues: { // Optional
+    strength: '2',   // used for default values
+    charisma: '3',   // while editing resource
+  }
 });
 
 SelectExample = reduxForm({
