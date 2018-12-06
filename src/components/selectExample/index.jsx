@@ -3,6 +3,7 @@ import { reduxForm, Field, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 
 import { dynamicSelect } from './dynamicSelect/';
+import {calculateTotal} from './utilities';
 
 class SelectExample extends React.Component {
   constructor(props){
@@ -27,38 +28,52 @@ class SelectExample extends React.Component {
   }
 
   submitHandler(values) {
-    console.log(values);
+    console.log(this.props.takenOptionsObject);
     // Call some action that will store this data on BE
   }
 
   render(){
     return (
-      <form onSubmit={this.props.handleSubmit(this.submitHandler.bind(this))} >
-        <button onClick={this.generateNumbers.bind(this)}>Roll</button>
-        <Field
-          component={dynamicSelect}
-          name="strength"
-          label="Strength"
-          options={this.state.allOptions}
-          takenOptions={this.props.takenOptions}
-        />
-        <Field
-          component={dynamicSelect}
-          name="charisma"
-          label="Charisma"
-          options={this.state.allOptions}
-          takenOptions={this.props.takenOptions}
-        >
-        </Field>
-        <button type="submit" disabled={this.props.pristine || this.props.submitting}>Submit</button>
-      </form>
+      <div>
+        {this._total}
+        <form onSubmit={this.props.handleSubmit(this.submitHandler.bind(this))} >
+          <button onClick={this.generateNumbers.bind(this)}>Roll</button>
+          <Field
+            component={dynamicSelect}
+            name="strength"
+            label="Strength"
+            options={this.state.allOptions}
+            takenOptions={this.props.takenOptions}
+          />
+          <Field
+            component={dynamicSelect}
+            name="charisma"
+            label="Charisma"
+            options={this.state.allOptions}
+            takenOptions={this.props.takenOptions}
+          >
+          </Field>
+          <button type="submit" disabled={this.props.pristine || this.props.submitting}>Submit</button>
+        </form>
+      </div>
     )
-	}
+  }
+
+  get _total() {
+    return calculateTotal(this.state.allOptions, this.props.charisma, this.props.strength)
+  }
 }
 
 const dynamicFields = ['strength', 'charisma'];
 const selector = formValueSelector('example-form')
 const mapStateToProps = (state) => ({
+  // takenOptionsObject: dynamicFields.reduce((prev, curr) => {
+  //   //console.prev = selector(state, curr)
+  //   //console.log(selector(state, curr))
+  //   return prev = selector(state, curr)
+  // }, {}),
+  strength: selector(state, 'strength'),
+  charisma: selector(state, 'charisma'),
   takenOptions: dynamicFields.map(x => selector(state, x)).filter(Boolean),
   initialValues: { // Optional
     strength: '2',   // used for default values
