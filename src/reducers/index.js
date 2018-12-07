@@ -1,41 +1,5 @@
 import * as actions from '../actions';
 
-const races = [
-  {id:0,thum:"img",name:"Human",expand:false, standardRacialTraits:{
-    base:{
-      abilityScoreRacialBonuses: "Select", 
-      age:"normal", 
-      size:"medium", 
-      type:"Humanoid [Human]", 
-      speed:"Humans have a base speed of 30 feet.", 
-      Languages:{start:"Common", learn:"any"}},
-    racial:[{name:"Bonus Feat", description:"Humans select one extra feat at 1st level."},
-      {name:"Skilled", description:"Humans gain an additional skill rank at first level and one additional rank whenever they gain a level."},
-    ]
-  }},
-  {id:1,thum:"img",name:"Elf",expand:false, standardRacialTraits:{
-    base:{abilityScoreRacialBonuses: "+2 Dexterity, +2 Intelligence, and –2 Constitution", age:"normal", size:"medium", type:"Humanoid [Elf]", speed:"Elves have a base speed of 30 feet.", Languages:{start:["Common","Elven"], learn:["Celestial", "Draconic", "Gnoll", "Gnome", "Goblin", "Orc", "Sylvan"]}},
-    racial:[{name:"Elven Immunities", description:"Elves are immune to magic sleep effects and gain a +2 racial saving throw bonus against enchantment spells and effects."},
-      {name:"Keen Senses", description:"Elves receive a +2 racial bonus on Perception checks."},
-      {name:"Elven Magic", description:"Elves receive a +2 racial bonus on caster level checks made to overcome spell resistance. In addition, elves receive a +2 racial bonus on Spellcraft skill checks made to identify the properties of magic items."},
-      {name:"Weapon Familiarity", description:"Elves are proficient with longbows (including composite longbows), longswords, rapiers, and shortbows (including composite shortbows), and treat any weapon with the word “elven” in its name as a martial weapon."},
-      {name:"Low-Light Vision", description:"Elves can see twice as far as humans in conditions of dim light."},
-    ]
-  }},
-  {id:2,thum:"img",name:"Dwarf",expand:false, standardRacialTraits:{
-    base:{abilityScoreRacialBonuses: "+2 Constitution, +2 Wisdom, and –2 Charisma", age:"normal", size:"medium", type:"Humanoid [Dwarf]", speed:"(Slow and Steady) Dwarves have a base speed of 20 feet, but their speed is never modified by armor or encumbrance.", Languages:{start:["Common","Dwarven"], learn:["Giant", "Gnome", "Goblin", "Orc", "Terran", "Undercommon"]}},
-    racial:[{name:"Defensive Training", description:"Dwarves gain a +4 dodge bonus to AC against monsters of the giant subtype."},
-      {name:"Hardy", description:"Dwarves gain a +4 dodge bonus to AC against monsters of the giant subtype."},
-      {name:"Stability", description:"Dwarves gain a +4 racial bonus to their Combat Maneuver Defense when resisting a bull rush or trip attempt while standing on the ground."},
-      {name:"Greed", description:"Dwarves gain a +2 racial bonus on Appraise checks made to determine the price of non-magical goods that contain precious metals or gemstones."},
-      {name:"Stonecunning", description:"Dwarves gain a +2 bonus on Perception checks to notice unusual stonework, such as traps and hidden doors located in stone walls or floors. They receive a check to notice such features whenever they pass within 10 feet of them, whether or not they are actively looking."},
-      {name:"Darkvision", description:"Dwarves can see perfectly in the dark up to 60 feet."},
-      {name:"Hatred", description:"Dwarves gain a +1 racial bonus on attack rolls against humanoid creatures of the orc and goblinoid subtypes because of their special training against these hated foes."},
-      {name:"Weapon Familiarity", description:"Dwarves are proficient with battleaxes, heavy picks, and warhammers, and treat any weapon with the word “dwarven” in its name as a martial weapon."},
-    ]
-  }},
-]
-
 const initialState = {
   user:"Me",
   isLoggedIn:true,
@@ -95,11 +59,9 @@ export const characterReducer = (state=initialState, action) => {
           {name:"Character Basics",
           id:0,
           complete:false},
-
           {name:"Race",
           id:1,
-          complete:false},
-          
+          complete:false},          
           {name:"Class",
           id:2,
           complete:false},
@@ -129,8 +91,84 @@ export const characterReducer = (state=initialState, action) => {
         currentStep:0,
         disabledNext: false,
         disabledPrev: true,
+        // the actual character object that will be converted and saved in memory
+        newCharacter:{
+          "strength": {
+            base: 0,
+            racial: 0,
+          },
+          "dexterity": {
+            base: 0,
+            racial: 0,
+          },
+          "constitution": {
+            base: 0,
+            racial: 0,
+          },
+          "intelligence": {
+            base: 0,
+            racial: 0,
+          },
+          "wisdom": {
+            base: 0,
+            racial: 0,
+          },
+          "charisma": {
+            base: 0,
+            racial: 0,
+          },
+          charClass:{
+            classFeatures:{
+              skills:0,
+            }
+          },
+          skills:{
+            "acrobatics": {},
+            "appraise": {},
+            "bluff": {},
+            "climb": {},
+            "craft": {},
+            "diplomacy": {},
+            "disableDevice": {},
+            "disguise": {},
+            "escapeArtist": {},
+            "fly": {},
+            "handleAnimal": {},
+            "heal": {},
+            "intimidate": {},
+            "knowledge (arcana)": {},
+            "knowledge (dungeoneering)": {},
+            "knowledge (engineering)": {},
+            "knowledge (geography)": {},
+            "knowledge (history)": {},
+            "knowledge (local)": {},
+            "knowledge (nature)": {},
+            "knowledge (nobility)": {},
+            "knowledge (planes)": {},
+            "knowledge (religion)": {},
+            "linguistics": {},
+            "perception": {},
+            "perform": {},
+            "profession": {},
+            "ride": {},
+            "senseMotive": {},
+            "sleightOfHand": {},
+            "spellcraft": {},
+            "stealth": {},
+            "survival": {},
+            "swim": {},
+            "useMagicDevice": {},
+          }
+        },
         abilityScoreGenerationMethod:"",
         statArrayToAssign:[],
+        detailsExpand:[
+          {id:0, name:"detailsTraitsExpand", expand:false},
+          {id:1, name:"detailsCharacterDetailsExpand", expand:false},
+          {id:2, name:"detailsPhysicalExpand", expand:false},
+          {id:3, name:"detailsPersonalityExpand", expand:false},
+          {id:4, name:"detailsExtrasExpand", expand:false},
+        ],
       });
     } else if (action.type === actions.TOGGLE_STEP){
       return Object.assign({}, state, {
@@ -140,7 +178,7 @@ export const characterReducer = (state=initialState, action) => {
       })
     } else if (action.type === actions.LOAD_RACES){
       return Object.assign({}, state, {
-        racesArray:races,
+        racesArray:action.races,
       });
     } else if (action.type === actions.SET_STEP){
       return Object.assign({}, state, {
@@ -167,12 +205,6 @@ export const characterReducer = (state=initialState, action) => {
         statArrayToAssign:action.statArray,
       })
     } else if (action.type === actions.ASSIGN_SCORE){
-/*      console.log("looking for value: "+action.value);
-
-      console.log(state.statArrayToAssign.findIndex(function(element){
-          console.log(element.value);
-          return element.value == action.value;
-        }));*/
       const index = state.statArrayToAssign.findIndex(function(element){
           return element.value == action.value;
         });
@@ -180,6 +212,156 @@ export const characterReducer = (state=initialState, action) => {
         statArrayToAssign:[...state.statArrayToAssign.slice(0,index),
           ...state.statArrayToAssign.slice(index+1)]
       })
-    }
+    } else if (action.type === actions.SUBMIT_PREFERENCES_TO_STATE){
+      const indexOfStep = 0;
+      const step = state.creationSteps[indexOfStep];
+      return Object.assign({}, state, {
+        // first set the completed tag for step 0 to true
+        creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
+          { ...step, complete:true},
+          ...state.creationSteps.filter(c => c.id > indexOfStep)
+        ], newCharacter:{ ...state.newCharacter,
+          // add the values to the state
+          preferences:{
+            advancement:action.values.advancementSelecter,
+            hpProcess:action.values.hpSelecter,
+            encumberence:action.values.encumberence,
+            coinWeight:action.values.coinWeight,
+            monsterRaces:action.values.monsterRacesAllowed,
+            templateRules:action.values.templateRuleSelecter,
+          }
+        }
+      })
+    } else if (action.type === actions.TOGGLE_HELP){
+      return Object.assign({}, state, {
+        help:!state.help,
+      })
+    } else if (action.type === actions.SUBMIT_RACE_TO_STATE){
+      const race = state.racesArray.find(r => r.id === action.index);
+      const indexOfStep = 1;
+      const step = state.creationSteps[indexOfStep];
+      return Object.assign({}, state, {
+        // first set the completed tag for step 1 to true
+        creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
+          { ...step, complete:true},
+          ...state.creationSteps.filter(c => c.id > indexOfStep)
+        ], newCharacter:{ ...state.newCharacter,
+          // add the values to the state
+          race:race,
+        }
+      })
+    } else if (action.type === actions.SUBMIT_CLASS_TO_STATE){
+      const charClass = state.classesArray.find(r => r.id === action.index);
+      const indexOfStep = 2;  // Class
+      const step = state.creationSteps[indexOfStep];
+      return Object.assign({}, state, {
+        // first set the completed tag for step 2 to true
+        creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
+          { ...step, complete:true},
+          ...state.creationSteps.filter(c => c.id > indexOfStep)
+        ], newCharacter:{ ...state.newCharacter,
+          // add the values to the state
+          charClass:charClass,
+        }
+      })
+    } else if (action.type === actions.SUBMIT_ABILITY_SCORES_TO_STATE){
+      return(Object.assign({}, state, {
+        newCharacter:{
+          ...state.newCharacter,
+          [action.ability]:{
+            ...state.newCharacter[action.ability], [action.bonusType]:action.bonus
+          }
+        }
+      }))
+    } else if (action.type === actions.SUBMIT_SKILLS_TO_STATE){
+      return(Object.assign({}, state, {
+        newCharacter:{
+          ...state.newCharacter,
+          skills:{
+            [action.skill]:{
+              ...state.newCharacter[action.skill], [action.bonusType]:action.bonus
+            }
+          }
+        }           
+      }))
+    } else if (action.type === actions.TOGGLE_CLASS_EXPAND){
+      const charClass = state.classesArray.find(r => r.id === action.index);
+      const expand = charClass.expand;
+      // THIS WORKS TO ENABLE THE CLICKED RACE 
+      return { ...state, 
+        classesArray:[ ...state.classesArray.filter(r => r.id < charClass.id), 
+          { ...charClass, expand:!expand }, 
+          ...state.classesArray.filter(r => r.id > charClass.id) 
+        ] 
+      };
+    } else if (action.type === actions.LOAD_CLASSES){
+      return Object.assign({}, state, {
+        classesArray:action.classes,
+      });
+    } else if (action.type === actions.LOAD_TRAITS){
+      return Object.assign({}, state, {
+        traitsArray:action.traits,
+      });
+    } else if (action.type === actions.TOGGLE_DETAILS_EXPAND){
+      const detail = state.detailsExpand.find(r => r.id == action.index);
+      const expand = detail.expand;
+      return { ...state, 
+        detailsExpand:[ ...state.detailsExpand.filter(r => r.id < detail.id), 
+          { ...detail, expand:!expand }, 
+          ...state.detailsExpand.filter(r => r.id > detail.id) 
+        ] 
+      }
+    } else if (action.type === actions.SAVE_ABILITY_SCORE_OPTIONS){
+      return Object.assign({}, state, {
+        abilityScoreOptions:action.options,
+      });
+    } else if (action.type === actions.SUBMIT_DETAILS_TO_STATE){
+      const indexOfStep = 4;
+      const step = state.creationSteps[indexOfStep];
+      return Object.assign({}, state, {
+        // first set the completed tag for step 0 to true
+        creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
+          { ...step, complete:true},
+          ...state.creationSteps.filter(c => c.id > indexOfStep)
+        ], newCharacter:{ ...state.newCharacter,
+          // add the values to the state
+          details:{
+            age:action.values.age,
+            alignments:action.values.alignments,
+            allies:action.values.allies,
+            backstory:action.values.backstory,
+            enemies:action.values.enemies,
+            eyes:action.values.eyes,
+            faith:action.values.faith,
+            flaws:action.values.flaws,
+            gender:action.values.gender,
+            hair:action.values.hair,
+            ideals:action.values.ideals,
+            organizations:action.values.organizations,
+            other:action.values.other,
+            personalityTraits:action.values.personalityTraits,
+            skin:action.values.skin,
+            weight:action.values.weight,
+          }
+        }
+      })
+    } else if (action.type === actions.SET_STEP_TO_COMPLETE){
+      const indexOfStep = action.step;
+      const step = state.creationSteps[indexOfStep];
+      return Object.assign({}, state, {
+        // first set the completed tag for step 0 to true
+        creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
+          { ...step, complete:true},
+          ...state.creationSteps.filter(c => c.id > indexOfStep)
+        ]
+      })
+    } // Prep for future release
+      /*else if (action.type === actions.TOGGLE_FEATURE_EXPAND){
+      const charClass = state.classesArray.find(r => r.name === action.charClass)
+      const feature = charClass.classFeatures.table.find(r => r[5].find(x => x.name === action.feature));
+      console.log(feature);
+
+      
+    }*/;
     return state;
 };

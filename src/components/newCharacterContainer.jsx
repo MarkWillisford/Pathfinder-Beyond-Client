@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import NewCharacterNavLinks from './newCharacterNavLinks';
-import NewCharacterPerferances from './newCharacterPerferances';
+import NewCharacterPreferences from './newCharacterPreferences';
 import NewCharacterRace from './newCharacterRace';
 import NewCharacterClass from './newCharacterClass';
 import NewCharacterAbilityScores from './newCharacterAbilityScores';
@@ -17,13 +17,11 @@ import Prev from './prev';
 
 import {decrementCurrentStep} from '../actions/index';
 import {incrementCurrentStep} from '../actions/index';
-/*import {togglePrev} from '../actions/index';
-import {toggleNext} from '../actions/index';*/
 import {toggleStep} from '../actions/index';
 import {loadRaces} from '../actions/index';
 import TestingRoutes from './testingRoutes';
 
-import './newCharacterPerferances.css';
+import './newCharacterContainer.css';
 
 export class NewCharacterContainer extends React.Component{
     togglePrev(e){
@@ -74,7 +72,7 @@ export class NewCharacterContainer extends React.Component{
 		        		{/* 8 sections, each of which has a completed property
 			        		which controls which component is displayed */}
 			        	<Route exact path="/playerDemo/newCharacter/Character Basics" render={() => <Redirect to="/playerDemo/newCharacter/home" />} />
-		        		<Route exact path="/playerDemo/newCharacter/home" component={NewCharacterPerferances} />
+		        		<Route exact path="/playerDemo/newCharacter/home" component={NewCharacterPreferences} />
 		        		<Route exact path="/playerDemo/newCharacter/Race" component={NewCharacterRace} />
 		        		<Route exact path="/playerDemo/newCharacter/Class" component={NewCharacterClass} />
 			        	<Route exact path="/playerDemo/newCharacter/Ability Scores" render={() => <Redirect to="/playerDemo/newCharacter/AbilityScores" />} />

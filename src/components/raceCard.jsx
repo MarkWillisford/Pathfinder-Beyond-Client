@@ -1,26 +1,33 @@
 import React from 'react';
 
-export default function RaceCard(props){
-	return(
-		<div className="raceCard">
-			<div className="raceDiv" >
-				{props.thum}
-				{props.name}
+export default class RaceCard extends React.Component{
+	render(){
+		return(
+			<div className="raceCard">
+				<div className="raceDiv" >
+					{this.props.thum}
+					{this.props.name}
+				</div>
+				{ !this.props.expand && <button ref={this.props.name + "button"} onClick={this.props.callback}>More</button> }
+				{ this.props.expand && <RaceExpanded thum={this.props.thum} name={this.props.name} 
+					expand={this.props.expand} traits={this.props.traits} callback={this.props.callback} 
+					addRaceCallback={this.props.addRaceCallback}/> }
 			</div>
-			<button onClick={props.callback}>Select</button>
-			{ props.expand && <RaceExpanded thum={props.thum} name={props.name} expand={props.expand} traits={props.traits} callback={props.callback}/> }
-		</div>
-	)		
+		)	
+	}	
 }
 
 function RaceExpanded(props){
 	let traitNames = "";
+	let blurb = props.traits.blurb;
 	for(let i=0;i<props.traits.racial.length;i++){
 		traitNames = traitNames + props.traits.racial[i].name + ", ";
 	};
 	return(
 		<div className="raceExpanded">
-			<p>One or two sentance blurb</p>
+			<button onClick={props.addRaceCallback}>Add Race</button>
+			<button onClick={props.callback}>Cancel</button>
+			<p>{blurb}</p>
 			<p>Ability Scores: {props.traits.base.abilityScoreRacialBonuses}, { traitNames }</p>
 				{ props.traits.racial.map(({name, description}) =>
 					<div key={name}>
@@ -28,7 +35,7 @@ function RaceExpanded(props){
 						<p>{description}</p>
 					</div>
 				)}
-			<button>Add Class</button>
+			<button onClick={props.addRaceCallback}>Add Race</button>
 			<button onClick={props.callback}>Cancel</button>
 		</div>
 	)

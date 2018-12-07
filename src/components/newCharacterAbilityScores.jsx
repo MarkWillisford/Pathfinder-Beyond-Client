@@ -1,20 +1,56 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import { formValueSelector } from 'redux-form';
+import _ from 'lodash';
 import AbilityScoreDice from './abilityScoreDice';
 
 import { abilityScoreGenerationMethod } from '../actions/index';
 import { assignScore } from '../actions/index';
+import { capitalizeFirstLetter } from '../utility/helperFunctions';
 
 import './newCharacterAbilityScores.css';
 
 export class NewCharacterAbilityScores extends React.Component{
+	constructor(props){
+		super(props);
+	}
+
 	handleClick(text){
 		// set the state.abilityScoreGenerationMethod to text
 		this.props.dispatch(abilityScoreGenerationMethod(text));
 	}
 
+	abilitySum(ability){
+		let capAbility = capitalizeFirstLetter(ability);
+		let basePath="props.base"+capAbility;
+		let numBase = 0;
+		let racialPath="props.racial"+capAbility;
+		let sum = 0;
+
+		sum = Number(_.get(this, racialPath, "0")) + Number(_.get(this, basePath, "0"));
+
+		if(sum === 0){
+			console.log("--");
+			return "--";
+		} else {
+			console.log(sum); return sum;}
+	}
+
 	render(){
 		const complete = this.props.complete;
+		const strengthTotal = 0;
+		const dexterityTotal = this.abilitySum("dexterity");
+		const constitutionTotal =0;
+		const intelligenceTotal =0;
+		const wisdomTotal =0;
+		const charismaTotal =0;
+		const strengthMod =0;
+		const dexterityMod =0;
+		const constitutionMod =0;
+		const intelligenceMod =0;
+		const wisdomMod =0;
+		const charismaMod =0;
+
 		if(!complete){
 			return (
 		        <div className="newCharacterAbilityScores">
@@ -50,8 +86,8 @@ export class NewCharacterAbilityScores extends React.Component{
 				        			<td>Strength</td>
 				        			<td id="strTotal">--</td>
 				        			<td id="strMod">--</td>
-				        			<td id="strBase">--</td>
-				        			<td id="strRacial">+0</td>
+				        			<td id="strBase">{ }</td>
+				        			<td id="strRacial">{ this.props.racialStrength ? this.props.racialStrength : "0" }</td>
 				        			<td id="strEnhance">+0</td>
 				        			<td id="strInherent">+0</td>
 				        			<td id="strTemplate">+0</td>
@@ -60,8 +96,8 @@ export class NewCharacterAbilityScores extends React.Component{
 				        			<td>Dexterity</td>
 				        			<td id="dexTotal">--</td>
 				        			<td id="dexMod">--</td>
-				        			<td id="dexBase">--</td>
-				        			<td id="dexRacial">+0</td>
+				        			<td id="dexBase">{  }</td>
+				        			<td id="dexRacial">{ this.props.racialDexterity ? this.props.racialDexterity : "0" }</td>
 				        			<td id="dexEnhance">+0</td>
 				        			<td id="dexInherent">+0</td>
 				        			<td id="dexTemplate">+0</td>
@@ -70,8 +106,8 @@ export class NewCharacterAbilityScores extends React.Component{
 				        			<td>Constitution</td>
 				        			<td id="conTotal">--</td>
 				        			<td id="conMod">--</td>
-				        			<td id="conBase">--</td>
-				        			<td id="conRacial">+0</td>
+				        			<td id="conBase">{  }</td>
+				        			<td id="conRacial">{ this.props.racialConstitution ? this.props.racialConstitution : "0" }</td>
 				        			<td id="conEnhance">+0</td>
 				        			<td id="conInherent">+0</td>
 				        			<td id="conTemplate">+0</td>
@@ -80,8 +116,8 @@ export class NewCharacterAbilityScores extends React.Component{
 				        			<td>Intelligence</td>
 				        			<td id="intTotal">--</td>
 				        			<td id="intMod">--</td>
-				        			<td id="intBase">--</td>
-				        			<td id="intRacial">+0</td>
+				        			<td id="intBase">{  }</td>
+				        			<td id="intRacial">{ this.props.racialIntelligence ? this.props.racialIntelligence : "0" }</td>
 				        			<td id="intEnhance">+0</td>
 				        			<td id="intInherent">+0</td>
 				        			<td id="intTemplate">+0</td>
@@ -90,8 +126,8 @@ export class NewCharacterAbilityScores extends React.Component{
 				        			<td>Wisdom</td>
 				        			<td id="wisTotal">--</td>
 				        			<td id="wisMod">--</td>
-				        			<td id="wisBase">--</td>
-				        			<td id="wisRacial">+0</td>
+				        			<td id="wisBase">{  }</td>
+				        			<td id="wisRacial">{ this.props.racialWisdom ? this.props.racialWisdom : "0" }</td>
 				        			<td id="wisEnhance">+0</td>
 				        			<td id="wisInherent">+0</td>
 				        			<td id="wisTemplate">+0</td>
@@ -100,8 +136,8 @@ export class NewCharacterAbilityScores extends React.Component{
 				        			<td>Charisma</td>
 				        			<td id="chaTotal">--</td>
 				        			<td id="chaMod">--</td>
-				        			<td id="chaBase">--</td>
-				        			<td id="chaRacial">+0</td>
+				        			<td id="chaBase">{  }</td>
+				        			<td id="chaRacial">{ this.props.racialCharisma ? this.props.racialCharisma : "0" }</td>
 				        			<td id="chaEnhance">+0</td>
 				        			<td id="chaInherent">+0</td>
 				        			<td id="chaTemplate">+0</td>
@@ -109,25 +145,39 @@ export class NewCharacterAbilityScores extends React.Component{
 				        	</tbody>
 			        	</table>
 			        	<br />
-			        	<button>Submit</button>
-			        </div>
+			        </div>	
 		        </div>
 		    );
 		} else {
 			return(
 		        <div className="newCharacterAbilityScores">
-		        	<h1>Character Ability Scores - done</h1>	
+		        	<h1>Character Ability Scores - done</h1>
+		        	<button>Next >></button>
 		        </div>			
 			);
 		};		
 	}
 }
 
-const mapStateToProps = state => ({
-	complete:state.characterReducer.creationSteps[3].complete,
-	abilityScoreGenerationMethod:state.characterReducer.abilityScoreGenerationMethod,
-	statArrayToAssign:state.characterReducer.statArrayToAssign,
-});
+// function AddScores(base, racial){	// there has to be a better solution than this. 
+//	{ this.props.baseStrength ? (<AddScores base={this.props.abilityScoreOptions[this.props.baseStrength].value} racial={this.props.racialStrength}/>) : "--"}
+// 	console.log(base.base);
+// 	console.log(racial);
+// 	if(base.base && racial){
+// 		console.log("adding");
+// 		return (base.base+racial);
+// 	} else if (base.base && !racial){
+// 		console.log("only base");
+// 		console.log(base);
+// 		return base.base;
+// 	} else if(!base.base && racial){
+// 		console.log("only racial");
+// 		return racial;
+// 	} else {
+// 		console.log("neither");
+// 		return "--";
+// 	}
+// }
 
 function AbilityScoreMethod(props){
 	switch(props.method){
@@ -135,7 +185,7 @@ function AbilityScoreMethod(props){
 			return (<AbilityScoreArrays />);
 			break;
 		case "dice": 
-			return (<AbilityScoreDice statArrayToAssign={props.statArrayToAssign} dispatch={props.dispatch}/>);
+			return (<AbilityScoreDice statArrayToAssign={props.statArrayToAssign} />);
 			break;
 		case "manual": 
 			return (<AbilityScoreManual />);
@@ -199,5 +249,25 @@ function AbilityScorePointBuy(){
 		<div>Point Buy</div>
 	)
 }
+
+const selector = formValueSelector('diceForm');
+const mapStateToProps = state => ({
+	complete:state.characterReducer.creationSteps[3].complete,
+	abilityScoreGenerationMethod:state.characterReducer.abilityScoreGenerationMethod,
+	statArrayToAssign:state.characterReducer.statArrayToAssign,
+	baseStrength: selector(state, "strengthSelecter"),
+	baseDexterity: selector(state, "dexteritySelecter"),
+	baseConstitution: selector(state, "constitutionSelecter"),
+	baseIntelligence: selector(state, "intelligenceSelecter"),
+	baseWisdom: selector(state, "wisdomSelecter"),
+	baseCharisma: selector(state, "charismaSelecter"),
+	abilityScoreOptions: state.characterReducer.abilityScoreOptions,
+	racialStrength: state.characterReducer.newCharacter.strength.racial,
+	racialDexterity: state.characterReducer.newCharacter.dexterity.racial,
+	racialConstitution: state.characterReducer.newCharacter.constitution.racial,
+	racialIntelligence: state.characterReducer.newCharacter.intelligence.racial,
+	racialWisdom: state.characterReducer.newCharacter.wisdom.racial,
+	racialCharisma: state.characterReducer.newCharacter.charisma.racial,
+});
 
 export default connect(mapStateToProps)(NewCharacterAbilityScores);

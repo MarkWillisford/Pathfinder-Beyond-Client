@@ -1,30 +1,31 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, Field, SubmissionError, focus, formValueSelector, change } from 'redux-form';
+import { DynamicSelect } from './dynamicSelect';
 
 import { setAvailableStats } from '../actions/index';
+import { saveAbilityScoreOptions } from '../actions/index';
+import { submitAbilityScoreToState } from '../actions/index';
+import { setStepToComplete } from '../actions/index';
 
 /*onChange={()=> this.handleClick(this.refs.abilityScoreGenerationMethod.value)}*/
 export class AbilityScoreDice extends React.Component {
 	constructor(props){
 		super(props);
-		this.state = { statArray:[], availableNumbers:[], };
-
-		this.changeSelectDisplay = this.changeSelectDisplay.bind(this);
+		this.state = { allOptions:[] };
 	}
-/*	let dice = 0;
-	let statArray = [];*/
-    onSubmit(values) {
 
+    onSubmit(values) {
+    	// at this point, the ability scores are already saved in the store. We just need to toggle the 
+    	// step.complete to rerender.
+    	this.props.dispatch(setStepToComplete(3));
     }
 
-	changeSelectDisplay(name, value){
-		console.log("Here");
-		this.props.change(name, value);
-	}
-
     rollDice(event){
-    	let dice = event.target.value
+    	event.preventDefault();
+    	let dice = event.target.value // This needs the value of the diceSelecter select
+    	dice = this.props.diceOptions;
+
     	dice = parseInt(dice.substring(0,1));
     	let statArray = [];
     	for(let a=0;a<6;a++){
@@ -40,23 +41,14 @@ export class AbilityScoreDice extends React.Component {
 			if(dice == 4){
 				number = number - lowest;
 			}
-			statArray.push(number);		// I don't think I need the index here!
+			statArray.push(number);
 		}
+		// lets sort them for display purposes. 
 		statArray.sort(function(a,b){ return b - a;});
-		this.setState((state) => {
-		  	return { statArray: statArray };
-		}, function(){
-			console.log(this.state);	// for doublechecking . . .     Okay now I have an array that I 
-					// can access in other elements without accessing the store. Next step is to set the
-					// 6 select statements to display off of this. 
-			this.setState((state) => {
-				return { availableNumbers:statArray };
-			}, function(){
-				console.log(this.state); 
-			});
-		})
-		/*this.props.dispatch(setAvailableStats(statArray));*/		
-
+		this.setState({
+      		allOptions: statArray.map((item, index) => ({id: index.toString(), value: item})), 
+    	});
+    	this.SaveAbilityScoreOptions(this);
     }
 
     getRandomInt(min, max) {
@@ -65,27 +57,21 @@ export class AbilityScoreDice extends React.Component {
 	    return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
-	handleNumbersChange(event){
-		const missingNumber = event.target.value;
-		const availableNumbersCopy = [...this.state.statArray];
-		const name = event.target.name;
-		console.log(name);
-		const index = availableNumbersCopy.findIndex(i => i == missingNumber);
-/*		console.log("missing number is: " + missingNumber);
-		console.log("array is: ");
-		console.log(availableNumbersCopy);
-		console.log("index is: " + index);*/
-		availableNumbersCopy.splice(index, 1);
-		this.setState((state) => {
-			return { availableNumbers:availableNumbersCopy };
-		}, function(){
-			//console.log(this.state); 
-		});
-		const options = this.state.availableNumbers.map(num => 
-			<option value={num}>{num}</option>
-		)
-		this.changeSelectDisplay("dexteritySelecter", missingNumber);
+	AbilityScoreSelectedCallBack(event){
+		// get the number selected 
+		let value = 0;
+		if(event.target.value){
+			value = this.state.allOptions[event.target.value].value;
+		};
+		// Get the name of the ability as a string by finding the name of the select element, splitting
+		// on capital letters (the S in strength'S'electer) and taking only the first string in the result
+		let ability = event.target.name.split(/(?=[A-Z])/)[0];
+		this.props.dispatch(submitAbilityScoreToState( ability, "base", value ));	
+	}
 
+	SaveAbilityScoreOptions(caller){
+		let options = caller.state.allOptions;
+		caller.props.dispatch(saveAbilityScoreOptions(options));		
 	}
 
 	render(){
@@ -96,98 +82,99 @@ export class AbilityScoreDice extends React.Component {
 			{render(input, label, rest)}
 			</div>
 
-		const RenderInput = createRenderer((input, label) => 
-			<input { ... input} placeholder={label}/>			
-		)
 		const RenderSelect = createRenderer((input, label, { children }) => 
 			<select { ... input}>
 			{children}
-			</select>			
+			</select>
 		)
 
 		return (
-			<form onSubmit={
-				this.props.handleSubmit(values=>this.onSubmit(values)
-			)}>
-				<Field name="diceSelecter" id="diceSelecter" label="How many dice do you get to roll?" component={RenderSelect} onChange={this.rollDice.bind(this)}>
+			<form onSubmit={ this.props.handleSubmit(values=>this.onSubmit(values) )}> 
+				<Field name="diceSelecter" id="diceSelecter" label="How many dice do you get to roll?" component={RenderSelect}>
 					<option />
 					{diceOptions.map(option => 
 						<option key={option} value={option}>
 							{option}
 						</option>
-					)}					
-				</Field>			
-				<Field name="strengthSelecter" id="strengthSelecter" label="Strength" component={RenderSelect} onChange={this.handleNumbersChange.bind(this)}>
-					<option value="-1">--</option>
-					{this.state.availableNumbers.map((num, index) => (
-						<option key={index} value={num}>
-							{num}
-						</option>
-					))}
+					)}
+				</Field>
+				<button onClick={this.rollDice.bind(this)} disabled={!this.props.diceOptions}>Roll</button>			
+				<Field 
+					name="strengthSelecter" 
+					id="strengthSelecter" 
+					label="strength" 
+					options={this.state.allOptions}
+					unavaliableOptions={this.props.unavaliableOptions}
+					component={DynamicSelect}
+					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
+				</Field>
+				<Field 
+					name="dexteritySelecter" 
+					id="dexteritySelecter" 
+					label="dexterity" 
+					options={this.state.allOptions}
+					unavaliableOptions={this.props.unavaliableOptions}
+					component={DynamicSelect}
+					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
+				</Field>
+				<Field 
+					name="constitutionSelecter" 
+					id="constitutionSelecter" 
+					label="constitution" 
+					options={this.state.allOptions}
+					unavaliableOptions={this.props.unavaliableOptions}
+					component={DynamicSelect}
+					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
+				</Field>
+				<Field 
+					name="intelligenceSelecter" 
+					id="intelligenceSelecter" 
+					label="intelligence"
+					options={this.state.allOptions}
+					unavaliableOptions={this.props.unavaliableOptions}
+					component={DynamicSelect}
+					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
+				</Field>
+				<Field 
+					name="wisdomSelecter" 
+					id="wisdomSelecter" 
+					label="wisdom"
+					options={this.state.allOptions}
+					unavaliableOptions={this.props.unavaliableOptions}
+					component={DynamicSelect}
+					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
+				</Field>
+				<Field 
+					name="charismaSelecter" 
+					id="charismaSelecter" 
+					label="charisma"
+					options={this.state.allOptions}
+					unavaliableOptions={this.props.unavaliableOptions}
+					component={DynamicSelect}
+					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
 				</Field>
 
-
-<div>
-					<div>
-						<label htmlFor="dexteritySelecter">Dexterity</label>
-						<Field name="dexteritySelecter" id="dexteritySelecter" type="input" component="select">
-							<option value="-1">--</option>
-						</Field>
-					</div>
-					<div>
-						<label htmlFor="constitutionSelecter">Constitution</label>
-						<Field name="constitutionSelecter" id="constitutionSelecter" type="input" component="select">
-							<option value="-1">--</option>
-						</Field>
-					</div>
-					<div>
-						<label htmlFor="intelligenceSelecter">Intelligence</label>
-						<Field name="intelligenceSelecter" id="intelligenceSelecter" type="input" component="select">
-							<option value="-1">--</option>
-						</Field>
-					</div>
-					<div>
-						<label htmlFor="wisdomSelecter">Wisdom</label>
-						<Field name="wisdomSelecter" id="wisdomSelecter" type="input" component="select">
-							<option value="-1">--</option>
-						</Field>
-					</div>
-					<div>
-						<label htmlFor="charismaSelecter">Charisma</label>
-						<Field name="charismaSelecter" id="charismaSelecter" type="input" component="select">
-							<option value="-1">--</option>
-						</Field>
-					</div>
-				</div>
-
-				<div>
-					<button type="submit">Next >> </button>
-				</div>
+				<button type="submit" disabled={this.props.pristine || this.props.submitting}>Submit</button>
 			</form>
-
 		)
-
 	}
 }
 
-const selector = formValueSelector('diceForm')
-AbilityScoreDice = connect(state => {
-		const { diceSelecter, strengthSelecter, dexteritySelecter } = selector(state, 'diceSelecter', 'strengthSelecter', 'dexteritySelecter')
-		return {
-			diceSelecter, 
-			strengthSelecter, 
-			dexteritySelecter,
-		}
-	}
-)(AbilityScoreDice)
-
-export default reduxForm({
-    form: 'diceForm',
-    onSubmitFail: (errors, dispatch) =>
-        dispatch(focus('dice', Object.keys(errors)[0]))
-})(AbilityScoreDice)
+const dynamicFields = ["strengthSelecter", "dexteritySelecter", "constitutionSelecter", 
+					"intelligenceSelecter", "wisdomSelecter", "charismaSelecter"];
+const selector = formValueSelector('diceForm');
 
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[3].complete,
-	statArrayToAssign:state.characterReducer.statArrayToAssign,
+	unavaliableOptions: dynamicFields.map(f => selector(state, f)).filter(Boolean), //?????
+	baseStrength: selector(state, "strengthSelecter"),
+	diceOptions: selector(state, "diceSelecter")
 })
+
+AbilityScoreDice = reduxForm({
+    form: 'diceForm',
+/*    onSubmitFail: (errors, dispatch) =>
+        dispatch(focus('dice', Object.keys(errors)[0]))*/
+})(AbilityScoreDice)
+
+export default connect(mapStateToProps)(AbilityScoreDice);

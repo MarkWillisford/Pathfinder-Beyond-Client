@@ -1,7 +1,28 @@
+Preferences - first radio button needs to be clicked twice.
+series of "expandable card" loops, easily in the hundreds probably more. I don't need them in memory until I select them. Do I really need to put them in the store?
 
-display from arrays and each section is clickable. on click the section displays a new div
+details page => fields of the form in children components?
+dice page => can't connect to state
+		so close!  if there are two 16s available and one is selected, then both are removed from the array
+		
 
-reducers.index lines 117 - 127 (TOGGLE_RACE_EXPAND) can I streamline this? toggle the property for all elements of the array?
 
-stats - dice . . .    how do I set up the assignment process?
+If I Have Time:
+Extrapulate the traits onto cards
 
+AbilityScoreDice: OnSubmit seems to be called early. 
+Add or remove the extra ability score generation
+clean up details
+form validation
+
+TODO: skills, feats, and EQ
+
+1.) little quality of life things, like moving the view screen to ensure an expanded area is viewable. 
+Redux forms, passable warnings . . .    "are you sure you want to leave xyz blank?"
+
+3.) can I require or import functions into the reducer and call them to act on the data coming in?
+	Yes
+4.) can I import a full table from the state vs each individual cell?
+	Yes
+2.) watching values in state and dispatching actions when they change
+	get _xyz(){}

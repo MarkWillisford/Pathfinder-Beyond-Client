@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {Route} from 'react-router-dom';
 import {setStep} from '../actions/index';
 import LoadOptions from './loadNewCharacterOptions';
+import {toggleHelp} from '../actions/index';
 
 import './newCharacterNavLinks.css';
 
@@ -28,11 +29,15 @@ export class NewCharacterNavLinks extends React.Component{
 		this.props.dispatch(setStep(step, disabledNext, disabledPrev));
 	}
 
+	toggleHelp(){
+		this.props.dispatch(toggleHelp());		
+	}
+
 	render(){
 		return (
 	        <div className="newCharacterNavLinks">
 	        	Nav Links
-	        	<p><button>Help</button></p>
+	        	<p><button onClick={this.toggleHelp.bind(this)}>Help</button></p>
 	        	<ul>
 		        	{this.props.creationSteps.map(({name, id}) => (
 		        		<li key={id}>
