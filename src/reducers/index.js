@@ -277,7 +277,8 @@ export const characterReducer = (state=initialState, action) => {
       return(Object.assign({}, state, {
         newCharacter:{
           ...state.newCharacter,
-          skills:{
+          skills:{ 
+            ...state.newCharacter.skills,
             [action.skill]:{
               ...state.newCharacter[action.skill], [action.bonusType]:action.bonus
             }

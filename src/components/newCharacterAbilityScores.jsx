@@ -152,7 +152,6 @@ export class NewCharacterAbilityScores extends React.Component{
 			return(
 		        <div className="newCharacterAbilityScores">
 		        	<h1>Character Ability Scores - done</h1>
-		        	<button>Next >></button>
 		        </div>			
 			);
 		};		

@@ -1,0 +1,19 @@
+Feats:
+	{
+		"name": ,
+		"specialization": ,
+		"type": [],
+		"description": ,
+		"prerequisites_list": ,
+		"prerequisites_race": [],
+		"prerequisites_class": [],
+		"prerequisites_classFeature": [],
+		"prerequisites_level": ,
+		"prerequisites_stat": {},
+		"prerequisites_feat": [],
+		"benefit": ,
+		"progromaticBenefit": ,
+		"normal": ,
+		"special": ,
+		"source": ,
+	}

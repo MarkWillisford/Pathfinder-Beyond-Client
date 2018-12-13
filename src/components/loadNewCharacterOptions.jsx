@@ -5,6 +5,7 @@ import { loadTraits } from '../actions/index';
 
 
 export default function LoadOptions(props, dispatch){
+    let feats = require('../data/feats');
     let classes = require('../data/classes');
     let races = require('../data/races');
     //let traits = require('../data/traits');

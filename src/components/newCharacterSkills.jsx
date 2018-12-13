@@ -2,64 +2,104 @@ import React from 'react';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 
+import { submitSkillsToState } from '../actions/index';
+
 import './newCharacterSkills.css';
 
 export class NewCharacterSkills extends React.Component{
+	sumObject(obj){
+		let sum = 0;
+		for( let el in obj ) {
+		    if( obj.hasOwnProperty( el ) ) {
+		    	sum += parseFloat( obj[el] );
+			}
+		}
+		return sum;
+	}
+	getModifier(abilityScore){
+		let mod = Math.floor((abilityScore-10)/2);
+		return mod;
+	}
+
+	onChangeHandler(event){
+		let value = event.target.value;
+		let skill = event.target.parentElement.parentElement.getAttribute("name");
+
+		this.props.dispatch(submitSkillsToState( skill, "ranks", value ));
+	}
+
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
+		// For now this is hard coded in. 
+		const hitDie = 1;
+		const strength = this.getModifier(this.sumObject(_.get(this, "props.strength", "0")));
+		const dexterity = this.getModifier(this.sumObject(_.get(this, "props.dexterity", "0")));
+		const constitution = this.getModifier(this.sumObject(_.get(this, "props.constitution", "0")));
+		const intelligence = this.getModifier(this.sumObject(_.get(this, "props.intelligence", "0")));
+		const wisdom = this.getModifier(this.sumObject(_.get(this, "props.wisdom", "0")));
+		const charisma = this.getModifier(this.sumObject(_.get(this, "props.charisma", "0")));
+		const abilityMods = [{"name":"strength","value":strength},{"name":"dexterity","value":dexterity},{"name":"constitution","value":constitution},
+						{"name":"intelligence","value":intelligence},{"name":"wisdom","value":wisdom},{"name":"charisma","value":charisma}];
 
-		const remainingSkillRanks = _.get(this, "props.classSkillsPerLevel", "default");
+		const listOfSkills = [
+			{"name":"acrobatics","ability":"dexterity"},
+			{"name":"appraise","ability":"intelligence"},
+			{"name":"bluff","ability":"charisma"},
+			{"name":"climb","ability":"strength"},
+				{"name":"craft","ability":"intelligence"},
+			{"name":"diplomacy","ability":"charisma"},
+			{"name":"disableDevice","ability":"dexterity"},
+			{"name":"disguise","ability":"charisma"},
+			{"name":"escapeArtist","ability":"dexterity"},
+			{"name":"fly","ability":"dexterity"},
+			{"name":"handleAnimal","ability":"charisma"},
+			{"name":"heal","ability":"wisdom"},
+			{"name":"intimidate","ability":"charisma"},
+			{"name":"knowledge (arcana)","ability":"intelligence"},
+			{"name":"knowledge (dungeoneering)","ability":"intelligence"},
+			{"name":"knowledge (engineering)","ability":"intelligence"},
+			{"name":"knowledge (geography)","ability":"intelligence"},
+			{"name":"knowledge (history)","ability":"intelligence"},
+			{"name":"knowledge (local)","ability":"intelligence"},
+			{"name":"knowledge (nature)","ability":"intelligence"},
+			{"name":"knowledge (nobility)","ability":"intelligence"},
+			{"name":"knowledge (planes)","ability":"intelligence"},
+			{"name":"knowledge (religion)","ability":"intelligence"},
+			{"name":"linguistics","ability":"intelligence"},
+			{"name":"perception","ability":"wisdom"},
+				{"name":"perform","ability":"charisma"},
+				{"name":"profession","ability":"wisdom"},
+			{"name":"ride","ability":"dexterity"},
+			{"name":"senseMotive","ability":"wisdom"},
+			{"name":"sleightOfHand","ability":"dexterity"},
+			{"name":"spellcraft","ability":"intelligence"},
+			{"name":"stealth","ability":"dexterity"},
+			{"name":"survival","ability":"wisdom"},
+			{"name":"swim","ability":"strength"},
+			{"name":"useMagicDevice","ability":"charisma"},
+		];
+		const path1 = "props.skills"
+		let array = this.props.skills;
+		let ranksAssigned = Object.keys(array).reduce(function (previous, key) {
+			if(array[key].ranks){
+		    	return previous + Number(array[key].ranks);
+			} else {
+				return previous;
+			}
+		}, 0);
+		const remainingSkillRanks = ((this.props.classSkillsPerLevel + intelligence) > 0 ? this.props.classSkillsPerLevel + intelligence : 1) - ranksAssigned;
 
-		
-/*		const listOfSkills = [
-			"acrobatics",
-			"appraise",
-			"bluff",
-			"climb",
-				"craft",
-			"diplomacy",
-			"disableDevice",
-			"disguise",
-			"escapeArtist",
-			"fly",
-			"handleAnimal",
-			"heal",
-			"intimidate",
-			"knowledge (arcana)",
-			"knowledge (dungeoneering)",
-			"knowledge (engineering)",
-			"knowledge (geography)",
-			"knowledge (history)",
-			"knowledge (local)",
-			"knowledge (nature)",
-			"knowledge (nobility)",
-			"knowledge (planes)",
-			"knowledge (religion)",
-			"linguistics",
-			"perception",
-				"perform",
-				"profession",
-			"ride",
-			"senseMotive",
-			"sleightOfHand",
-			"spellcraft",
-			"stealth",
-			"survival",
-			"swim",
-			"useMagicDevice",
-		]*/
 		// if help is true, that screen is displayed
 		if(help){
 			return ( <h1>HELP</h1> );
 		} 
 		if(!complete){
-			// check if class and ability scores are done
 			return (
 		        <div className="newCharacterSkills">
-		        	<h1>Character Skills - todo</h1>
+		        	<h1>Character Skills</h1>
 		        	<p>Skills are based on your class and your intelligence modifier.</p>
-		        	<p>Remaining skill ranks: {this.props.classSkills}</p>
+		        	<p>Remaining skill ranks: {remainingSkillRanks}</p>
 		        	<table>
 		        		<thead>
 			        		<tr>
@@ -70,16 +110,28 @@ export class NewCharacterSkills extends React.Component{
 			        			<th>Class</th>
 			        			<th>Racial</th>
 			        			<th>Trait</th>
-			        			<th></th>
 			        		</tr>
 			        	</thead>
 			        	<tbody>
-			        		<tr>
-			        			<td></td>
-			        			<td></td>
-			        			<td></td>
-
-			        		</tr>
+			        		{listOfSkills.map(item => 
+								<tr key={item.name} name={item.name}>
+									<td>{item.name}</td>
+									<td>{
+										Number(_.get(this, path1+"."+item.name+".ranks", "0")) + 
+										Number(abilityMods.find( (abilityMod) => abilityMod.name === item.ability).value) +
+										Number((_.get(this, "props.classSkills", "error").includes(item.name) && ( _.get(this, path1+"."+item.name+".ranks", "0") > 0 )) ? 3 : 0) +
+										Number(_.get(this, path1+"."+item.name+".racial", "0"))
+									}</td>
+							        <td><input type="number" name={item.name+"Ranks"} min="0" max={hitDie} 
+							        	placeholder={(Number(_.get(this, path1+"."+item.name+".ranks"))) ? Number(_.get(this, path1+"."+item.name+".ranks")) : "0" }
+							        	onChange={this.onChangeHandler.bind(this)} 
+							        	disabled={remainingSkillRanks<1 && (Number(_.get(this, path1+"."+item.name+".ranks"))!=1)}/></td>
+									<td>{abilityMods.find( (abilityMod) => abilityMod.name === item.ability).value}</td>
+							        <td>{(_.get(this, "props.classSkills", "error").includes(item.name) && ( _.get(this, path1+"."+item.name+".ranks", "0") > 0 )) ? 3 : 0}</td>
+									<td>{_.get(this, path1+"."+item.name+".racial", "0")}</td>
+							        <td>Trait</td>
+								</tr>
+							)}
 			        	</tbody>
 			        </table>
 		        </div>
@@ -98,7 +150,14 @@ const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[5].complete,
 	help:state.characterReducer.help,
 	classSkillsPerLevel:state.characterReducer.newCharacter.charClass.classFeatures.skills,
+	classSkills:state.characterReducer.newCharacter.charClass.classFeatures.classSkills,
 	skills:state.characterReducer.newCharacter.skills,
+	strength: state.characterReducer.newCharacter.strength,
+	dexterity: state.characterReducer.newCharacter.dexterity,
+	constitution: state.characterReducer.newCharacter.constitution,
+	intelligence: state.characterReducer.newCharacter.intelligence,
+	wisdom: state.characterReducer.newCharacter.wisdom,
+	charisma: state.characterReducer.newCharacter.charisma,
 	// draw in the sum of the abilityScores here 
 });
 

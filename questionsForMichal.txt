@@ -10,19 +10,48 @@ dice page => can't connect to state
 If I Have Time:
 Extrapulate the traits onto cards
 
-AbilityScoreDice: OnSubmit seems to be called early. 
+-AbilityScoreDice: OnSubmit seems to be called early. 
 Add or remove the extra ability score generation
 clean up details
 form validation
 
 TODO: skills, feats, and EQ
 
-1.) little quality of life things, like moving the view screen to ensure an expanded area is viewable. 
+ little quality of life things, like moving the view screen to ensure an expanded area is viewable. 
 Redux forms, passable warnings . . .    "are you sure you want to leave xyz blank?"
 
-3.) can I require or import functions into the reducer and call them to act on the data coming in?
+- can I require or import functions into the reducer and call them to act on the data coming in?
 	Yes
-4.) can I import a full table from the state vs each individual cell?
+- can I import a full table from the state vs each individual cell?
 	Yes
-2.) watching values in state and dispatching actions when they change
+- watching values in state and dispatching actions when they change
 	get _xyz(){}
+
+1.) returning 'pages' in the results from an api call
+	https://stackoverflow.com/questions/5539955/how-to-paginate-with-mongoose-in-node-js
+	https://www.google.com/search?q=req.query.limit&rlz=1C1CHWA_enUS605US606&oq=req.query.limit&aqs=chrome..69i57.539j0j7&sourceid=chrome&ie=UTF-8
+	https://www.google.com/search?q=req.query.offset&rlz=1C1CHWA_enUS605US606&oq=req.query.offset&aqs=chrome..69i57.746j0j7&sourceid=chrome&ie=UTF-8
+	"xss"
+2.) 'same page' links eg: 
+		http://www.d20pfsrd.com/feats/general-feats
+		https://github.com/ReactTraining/react-router/issues/394#issuecomment-220221604
+		--OR--
+		https://www.npmjs.com/package/react-scrollable-anchor
+3.) structure advice
+	REST 
+	https://www.restapitutorial.com/lessons/whatisrest.html
+4.) snapshot testing
+	https://jestjs.io/docs/en/snapshot-testing
+5.) Authentication
+	https://github.com/play-instinct/eduride/pull/3/files
+6.) file structure
+	https://github.com/Geril/project-time-tracker/tree/master/src/components
+	https://github.com/Geril/project-time-tracker/tree/master/src
+	https://github.com/Cameron-Grams/Analyst_timeline_client/tree/master/src
+7.) UI
+	https://react.semantic-ui.com/
+
+	https://facebook.github.io/create-react-app/docs/adding-a-sass-stylesheet
+	https://getbootstrap.com/docs/4.1/getting-started/contents/
+
+Use Branches!!
