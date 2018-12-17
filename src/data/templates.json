@@ -17,3 +17,20 @@ Feats:
 		"special": ,
 		"source": ,
 	}
+
+Race:
+  {"id":,"thum":"img","name":"","expand":false, "standardRacialTraits":{
+    "blurb":"",
+    "base":{"abilityScoreRacialBonuses": "+2 Constitution, +2 Charisma, and –2 Strength", "abilityScoreRacialBonusArray":[{"stat":"constitution", "value":2},{"stat":"charisma", "value":2},{"stat":"strength", "value":-2}], 
+    		"skillRacialBonusArray":[{"stat":"perception", "value":2}, {"stat":["craft", "profession"], "value":2}], 
+    		"age":"normal", "size":"small", "type":"Humanoid [Gnome]", "speed":"(slow speed) Gnomes have a base speed of 20 feet.", "Languages":{"start":["Common","Gnome", "Sylvan"], "learn":["Draconic", "Dwarven", "Elven", "Giant", "Goblin", "Orc"]}},
+    "racial":[{"name":"", "description":""},
+      {"name":"", "description":""},
+      {"name":"", "description":""},
+      {"name":"", "description":""},
+      {"name":"", "description":""},
+      {"name":"", "description":""},
+      {"name":"", "description":""},
+      {"name":"", "description":""}
+    ]
+  }}

@@ -55,3 +55,10 @@ Redux forms, passable warnings . . .    "are you sure you want to leave xyz blan
 	https://getbootstrap.com/docs/4.1/getting-started/contents/
 
 Use Branches!!
+
+
+
+Notes to Myself
+Races . . .    
+	Half-elves get skill focus as a bonus feat and get two favored classes. 
+	Halfling Luck: +1 racial bonus on saving throws

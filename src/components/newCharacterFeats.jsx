@@ -35,16 +35,21 @@ export class NewCharacterFeats extends React.Component{
 }
 
 class FeatCategory extends React.Component{
-	handleClick(id){
-		console.log("in handler");
-		this.getDetails(id);
+	handleClick(name){
+		this.getDetails(name);
 	}
-	getDetails(id){
-		console.log(id);
+
+	getDetails(name){
+		// currently static, will be an api call
+		console.log(name);
+		const featsList = require('../data/feats');
+		let feat = featsList.find( feat => feat.name === name);
+		
+		console.log(feat);
 	}
 
 	render(){
-		const featsList = require('../data/feats');		
+		const featsList = require('../data/feats');
 		let index = 0;
 		let featsToDisplay = [];
 		console.log(this.props);
@@ -64,8 +69,8 @@ class FeatCategory extends React.Component{
 		return (
 			<div>
 				<p>say hi</p>
-				{featsToDisplay.map(({index, name, prerequisites, description}) => 
-					<CardFeat key={index} name={name} prerequisites={prerequisites} description={description} 
+				{featsToDisplay.map(({name, prerequisites, description}) => 
+					<CardFeat key={name} name={name} prerequisites={prerequisites} description={description} 
 					callback={()=> this.handleClick(name)} expand={false}/>
 				)}
 			</div>

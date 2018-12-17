@@ -1,5 +1,5 @@
   [{"id":0,"thum":"img","name":"Human","expand":false, "standardRacialTraits":{
-    "blurb":"One or two sentance blurb about humans",
+    "blurb":"Ambitious, sometimes heroic, and always confident, humans have an ability to work together toward common goals that makes them a force to be reckoned with. Though short-lived compared to other races, their boundless energy and drive allow them to accomplish much in their brief lifetimes.",
     "base":{
       "abilityScoreRacialBonuses": "Select", 
       "age":"normal", 
@@ -12,7 +12,7 @@
     ]
   }},
   {"id":1,"thum":"img","name":"Elf","expand":false, "standardRacialTraits":{
-    "blurb":"One or two sentance blurb about elves",
+    "blurb":"Tall, noble, and often haughty, elves are long-lived and subtle masters of the wilderness. Elves excel in the arcane arts. Often they use their intrinsic link to nature to forge new spells and create wondrous items that, like their creators, seem nearly impervious to the ravages of time. A private and often introverted race, elves can give the impression they are indifferent to the plights of others.",
     "base":{"abilityScoreRacialBonuses": "+2 Dexterity, +2 Intelligence, and –2 Constitution", "abilityScoreRacialBonusArray":[{"stat":"dexterity", "value":2},{"stat":"intelligence", "value":2},{"stat":"constitution", "value":-2}], "skillRacialBonusArray":[{"stat":"perception", "value":2}], "age":"normal", "size":"medium", "type":"Humanoid [Elf]", "speed":"Elves have a base speed of 30 feet.", "Languages":{"start":["Common","Elven"], "learn":["Celestial", "Draconic", "Gnoll", "Gnome", "Goblin", "Orc", "Sylvan"]}},
     "racial":[{"name":"Elven Immunities", "description":"Elves are immune to magic sleep effects and gain a +2 racial saving throw bonus against enchantment spells and effects."},
       {"name":"Keen Senses", "description":"Elves receive a +2 racial bonus on Perception checks."},
@@ -22,7 +22,7 @@
     ]
   }},
   {"id":2,"thum":"img","name":"Dwarf","expand":false, "standardRacialTraits":{
-    "blurb":"One or two sentance blurb about dwarves",
+    "blurb":"These short and stocky defenders of mountain fortresses are often seen as stern and humorless. Known for mining the earth’s treasures and crafting magnificent items from ore and gemstones, they have an unrivaled affinity for the bounties of the deep earth. Dwarves also have a tendency toward traditionalism and isolation that sometimes manifests as xenophobia.",
     "base":{"abilityScoreRacialBonuses": "+2 Constitution, +2 Wisdom, and –2 Charisma", "abilityScoreRacialBonusArray":[{"stat":"constitution", "value":2},{"stat":"wisdom", "value":2},{"stat":"charisma", "value":-2}], "age":"normal", "size":"medium", "type":"Humanoid [Dwarf]", "speed":"(Slow and Steady) Dwarves have a base speed of 20 feet, but their speed is never modified by armor or encumbrance.", "Languages":{"start":["Common","Dwarven"], "learn":["Giant", "Gnome", "Goblin", "Orc", "Terran", "Undercommon"]}},
     "racial":[{"name":"Defensive Training", "description":"Dwarves gain a +4 dodge bonus to AC against monsters of the giant subtype."},
       {"name":"Hardy", "description":"Dwarves gain a +4 dodge bonus to AC against monsters of the giant subtype."},
@@ -33,4 +33,105 @@
       {"name":"Hatred", "description":"Dwarves gain a +1 racial bonus on attack rolls against humanoid creatures of the orc and goblinoid subtypes because of their special training against these hated foes."},
       {"name":"Weapon Familiarity", "description":"Dwarves are proficient with battleaxes, heavy picks, and warhammers, and treat any weapon with the word “dwarven” in its name as a martial weapon."}
     ]
-  }}]
+  }},
+  {"id":3,"thum":"img","name":"Gnome","expand":false, "standardRacialTraits":{
+    "blurb":"Expatriates of the strange land of fey, these small folk have a reputation for flighty and eccentric behavior. Many gnomes are whimsical artisans and tinkers, creating strange devices powered by magic, alchemy, and their quirky imagination. Gnomes have an insatiable need for new experiences that often gets them in trouble.",
+    "base":{"abilityScoreRacialBonuses": "+2 Constitution, +2 Charisma, and –2 Strength", "abilityScoreRacialBonusArray":[{"stat":"constitution", "value":2},{"stat":"charisma", "value":2},{"stat":"strength", "value":-2}], 
+            "skillRacialBonusArray":[{"stat":"perception", "value":2}, {"stat":["craft", "profession"], "value":2}], 
+            "age":"normal", "size":"small", "type":"Humanoid [Gnome]", "speed":"(slow speed) Gnomes have a base speed of 20 feet.", "Languages":{"start":["Common","Gnome", "Sylvan"], "learn":["Draconic", "Dwarven", "Elven", "Giant", "Goblin", "Orc"]}},
+    "racial":[{"name":"Defensive Training", "description":"Gnomes gain a +4 dodge bonus to AC against monsters of the giant subtype."},
+      {"name":"Illusion Resistance", "description":"Gnomes gain a +2 racial saving throw bonus against illusion spells and effects."},
+      {"name":"Keen Senses", "description":"Gnomes receive a +2 racial bonus on Perception checks."},
+      {"name":"Obsessive", "description":"Gnomes receive a +2 racial bonus on a Craft or Profession skill of their choice."},
+      {"name":"Gnome Magic", "description":"Gnomes add +1 to the DC of any saving throws against illusion spells that they cast. Gnomes with Charisma scores of 11 or higher also gain the following spell-like abilities: 1/day—dancing lights, ghost sound, prestidigitation, and speak with animals. The caster level for these effects is equal to the gnome’s level. The DC for these spells is equal to 10 + the spell’s level + the gnome’s Charisma modifier."},
+      {"name":"Hatred", "description":"Gnomes receive a +1 bonus on attack rolls against humanoid creatures of the reptilian and goblinoid subtypes because of their special training against these hated foes."},
+      {"name":"Weapon Familiarity", "description":"Gnomes treat any weapon with the word “gnome” in its name as a martial weapon."},
+      {"name":"Low-Light Vision", "description":"Gnomes can see twice as far as humans in conditions of dim light."}
+    ]
+  }},
+  {"id":4,"thum":"img","name":"Half Elf","expand":false, "standardRacialTraits":{
+    "blurb":"Often caught between the worlds of their progenitor races, half-elves are a race of both grace and contradiction. Their dual heritage and natural gifts often create brilliant diplomats and peacemakers, but half-elves are often susceptible to an intense and even melancholic isolation, realizing that they are never truly part of elven or human society.",
+    "base":{"abilityScoreRacialBonuses": "Select",
+        "skillRacialBonusArray":[{"stat":"perception", "value":2}],
+        "age":"normal", "size":"medium", "type":"Humanoid [Human and Elf]", "speed":"Half-elves have a base speed of 30 feet.", "Languages":{"start":["Common","Elven"], "learn":"any"}},
+    "racial":[{"name":"Elven Immunities", "description":"Half-elves are immune to magic sleep effects and gain a +2 racial saving throw bonus against enchantment spells and effects."},
+      {"name":"Adaptability", "description":"Half-elves receive Skill Focus as a bonus feat at 1st level."},
+      {"name":"Keen Senses", "description":"Half-elves receive a +2 racial bonus on Perception checks."},
+      {"name":"Low-Light Vision", "description":"Half-elves can see twice as far as humans in conditions of dim light."},
+      {"name":"Elf Blood", "description":"Half-elves count as both elves and humans for any effect related to race."},
+      {"name":"Multitalented", "description":"Half-elves choose two favored classes at first level and gain +1 hit point or +1 skill point whenever they take a level in either one of those classes."}
+    ]
+  }},
+  {"id":5,"thum":"img","name":"Half Orc","expand":false, "standardRacialTraits":{
+    "blurb":"Often fierce and savage, sometimes noble and resolute, half-orcs can manifest the best and worst qualities of their parent races. Many half-orcs struggle to keep their more bestial natures in check in order to epitomize the most heroic values of humanity. Unfortunately, many outsiders see half-orcs as hopeless abominations devoid of civility, if not monsters unworthy of pity or parley.",
+    "base":{"abilityScoreRacialBonuses": "Select", 
+        "skillRacialBonusArray":[{"stat":"intimidate", "value":2}],
+        "age":"normal", "size":"medium", "type":"Humanoid [Human and Orc]", "speed":"Half-orcs have a base speed of 30 feet.", "Languages":{"start":["Common","Orc"], "learn":["Abyssal", "Draconic", "Giant", "Gnoll", "Goblin"]}},
+    "racial":[{"name":"Intimidating", "description":"Half-orcs receive a +2 racial bonus on Intimidate checks due to their fearsome nature."},
+      {"name":"Orc Ferocity", "description":"Once per day, when a half-orc is brought below 0 hit points but not killed, he can fight on for 1 more round as if disabled. At the end of his next turn, unless brought to above 0 hit points, he immediately falls unconscious and begins dying."},
+      {"name":"Weapon Familiarity", "description":"Half-orcs are proficient with greataxes and falchions and treat any weapon with the word “orc” in its name as a martial weapon."},
+      {"name":"Darkvision", "description":"Half-orcs can see in the dark up to 60 feet."},
+      {"name":"Orc Blood", "description":"Half-orcs count as both humans and orcs for any effect related to race."}
+    ]
+  }},
+  {"id":6,"thum":"img","name":"Halfling","expand":false, "standardRacialTraits":{
+    "blurb":"Members of this diminutive race find strength in family, community, and their own innate and seemingly inexhaustible luck. While their fierce curiosity is sometimes at odds with their intrinsic common sense, half lings are eternal optimists and cunning opportunists with an incredible knack for getting out the worst situations.",
+    "base":{"abilityScoreRacialBonuses": "+2 Dexterity, +2 Charisma, and –2 Strength", "abilityScoreRacialBonusArray":[{"stat":"dexterity", "value":2},{"stat":"charisma", "value":2},{"stat":"strength", "value":-2}], 
+        "skillRacialBonusArray":[{"stat":"acrobatics", "value":2}, {"stat":"climb", "value":2}, {"stat":"perception", "value":2}], 
+        "age":"normal", "size":"small", "type":"Humanoid [Halfling]", "speed":"(slow speed) Halflings have a base speed of 20 feet.", "Languages":{"start":["Common","Halfling"], "learn":["Dwarven", "Elven", "Gnome", "Goblin"]}},
+    "racial":[{"name":"Fearless", "description":"Halflings receive a +2 racial bonus on all saving throws against fear. This bonus stacks with the bonus granted by halfling luck."},
+      {"name":"Halfling Luck", "description":"Halflings receive a +1 racial bonus on all saving throws."},
+      {"name":"Sure-Footed", "description":"Halflings receive a +2 racial bonus on Acrobatics and Climb checks."},
+      {"name":"Weapon Familiarity", "description":"Halflings are proficient with slings and treat any weapon with the word “halfling” in its name as a martial weapon."},
+      {"name":"Keen Senses", "description":"Halflings receive a +2 racial bonus on Perception checks."}
+    ]
+  }},
+  {"id":7,"thum":"img","name":"Kitsune","expand":false, "standardRacialTraits":{
+    "blurb":"These shapeshifting, fox-like folk share a love of mischief, art, and the finer things in life. They can appear as a single human as well as their true form, that of a foxlike humanoid. Kitsune are quick-witted, nimble, and gregarious, and because of this, a fair number of them become adventurers.",
+    "base":{"abilityScoreRacialBonuses": "+2 Dexterity, +2 Charisma, and –2 Strength", "abilityScoreRacialBonusArray":[{"stat":"dexterity", "value":2},{"stat":"charisma", "value":2},{"stat":"strength", "value":-2}], 
+        "skillRacialBonusArray":[{"stat":"acrobatics", "value":2}], 
+        "age":"normal", "size":"medium", "type":"Humanoid [Kitsune and shapechanger]", "speed":"Kitsune have a base speed of 30 feet.", "Languages":{"start":["Common", "Sylvan"], "learn":["Aklo", "Celestial", "Elven", "Gnome", "Tengu"]}},
+    "racial":[{"name":"Agile", "description":"Kitsune receive a +2 racial bonus on Acrobatics checks."},
+      {"name":"Change Shape", "description":"A kitsune can assume the appearance of a specific single human form of the same sex. The kitsune always takes this specific form when she uses this ability. A kitsune in human form cannot use her bite attack, but gains a +10 racial bonus on Disguise checks made to appear human. Changing shape is a standard action. This ability otherwise functions as alter self, except that the kitsune does not adjust her ability scores and can remain in this form indefinitely."},
+      {"name":"Kitsune Magic", "description":"Kitsune add +1 to the DC of any saving throws against enchantment spells that they cast. Kitsune with a Charisma score of 11 or higher gain the following spell-like ability: 3/day—dancing lights (caster level equals the kitsune’s level)."},
+      {"name":"Natural Weapons", "description":"In her natural form, a kitsune has a bite attack that deals 1d4 points of damage."},
+      {"name":"Low-Light Vision", "description":"Kitsune can see twice as far as humans in conditions of dim light."}
+    ]
+  }},
+  {"id":8,"thum":"img","name":"Catfolk","expand":false, "standardRacialTraits":{
+    "blurb":"A race of graceful explorers, catfolk are both clannish and curious by nature. They tend to get along with races that treat them well and respect their boundaries. They love exploration, both physical and intellectual, and tend to be natural adventurers.",
+    "base":{"abilityScoreRacialBonuses": "+2 Dexterity, +2 Charisma, and –2 Wisdom", "abilityScoreRacialBonusArray":[{"stat":"dexterity", "value":2},{"stat":"charisma", "value":2},{"stat":"wisdom", "value":-2}], 
+        "skillRacialBonusArray":[{"stat":"perception", "value":2}, {"stat":"stealth", "value":2}, {"stat":"survival", "value":2}], 
+        "age":"normal", "size":"medium", "type":"Humanoid [catfolk]", "speed":"Catfolk have a base speed of 30 feet", "Languages":{"start":["Common","Catfolks"], "learn":["Elven", "Gnoll", "Gnome", "Goblin", "Halfling", "Orc", "Sylvan"]}},
+    "racial":[{"name":"Cat’s Luck", "description":"Once per day when a catfolk makes a Reflex saving throw, he can roll the saving throw twice and take the better result. He must decide to use this ability before the saving throw is attempted."},
+      {"name":"Natural Hunter", "description":"Catfolk receive a +2 racial bonus on Perception, Stealth, and Survival checks."},
+      {"name":"Sprinter", "description":"Catfolk gain a 10-foot racial bonus to their speed when using the charge, run, or withdraw actions."},
+      {"name":"Low-Light Vision", "description":"Catfolk have low-light vision allowing them to see twice as far as humans in dim light."}
+    ]
+  }},
+  {"id":9,"thum":"img","name":"Aasimar","expand":false, "standardRacialTraits":{
+    "blurb":"Creatures blessed with a celestial bloodline, aasimars seem human except for some exotic quality that betrays their otherworldly origin. While aasimars are nearly always beautiful, something simultaneously a part of and apart from humanity, not all of them are good, though very few are evil.",
+    "base":{"abilityScoreRacialBonuses": "+2 Wisdom, +2 Charisma", "abilityScoreRacialBonusArray":[{"stat":"wisdom", "value":2},{"stat":"charisma", "value":2}], 
+        "skillRacialBonusArray":[{"stat":"diplomacy", "value":2}, {"stat":"perception", "value":2}], 
+        "age":"normal", "size":"medium", "type":"Outsider [Native]", "speed":"Aasimars have a base speed of 30 feet", "Languages":{"start":["Common", "Celestial"], "learn":["Draconic", "Dwarven", "Elven", "Gnome", "Halfling", "Sylvan"]}},
+    "racial":[{"name":"Celestial Resistance", "description":"Aasimars have acid resistance 5, cold resistance 5, and electricity resistance 5."},
+      {"name":"Skilled", "description":"Aasimar have a +2 racial bonus on Diplomacy and Perception checks."},
+      {"name":"Spell-Like Ability", "description":"Aasimars can use daylight once per day as a spell-like ability (caster level equal to the aasimar’s class level)."},
+      {"name":"Darkvision", "description":"Aasimar have darkvision 60 ft. (they can see perfectly in the dark up to 60 feet.)"}
+    ]
+  }},
+  {"id":10,"thum":"img","name":"Half-Giant","expand":false, "standardRacialTraits":{
+    "blurb":"Most often found in the harshest of climates that other races would shy away from, Half-giants value their freedom above all else.",
+    "base":{"abilityScoreRacialBonuses": "+2 Strength, +2 Wisdom, and –2 Dexterity", "abilityScoreRacialBonusArray":[{"stat":"strength", "value":2},{"stat":"wisdom", "value":2},{"stat":"dexterity", "value":-2}], 
+        "skillRacialBonusArray":[{"stat":"survival", "value":4}], 
+        "age":"normal", "size":"medium", "type":"Humanoid [Human and Giant]", "speed":"Half-giants have a base speed of 30 feet.", "Languages":{"start":["Common"], "learn":["Draconic", "Giant", "Gnoll", "Ignan"]}},
+    "racial":[{"name":"Fire Acclimated", "description":"Half-giants receive a +2 racial bonus on saving throws against all fire spells and effects."},
+      {"name":"Powerful Build", "description":"The physical stature of half-giants lets them function in many ways as if they were one size category larger. Whenever a half-giant is subject to a size modifier or special size modifier for a Combat Maneuver Bonus or Combat Maneuver Defense (such as during grapple checks, bull rush attempts, and trip attempts), the half-giant is treated as one size larger if doing so is advantageous to him. A half-giant is also considered to be one size larger when determining whether a creature’s special attacks based on size (such as grab or swallow whole) can affect him. A half-giant can use weapons designed for a creature one size larger without penalty. However, his space and reach remain those of a creature of his actual size. The benefts of this racial trait stack with the effects of powers, abilities, and spells that change the subject’s size category."},
+      {"name":"Naturally Psionic", "description":"Half-giants receive Wild Talent as a bonus feat at 1st level. If a half-giant takes levels in a psionic class, he instead gains the Psionic Talent feat."},
+      {"name":"Half-Giant Psionics", "description":"Half-giants gain the following spell-like ability: 1/day—stomp. The manifester level for this effect is equal to 1/2 the half-giant’s level (minimum 1st). The DC for this power is equal to 10 + the power’s level + the half-giant’s Charisma modifier."},
+      {"name":"Psionic Aptitude", "description":"When a half-giant takes a level in a favored class, he can choose to gain an additional power point instead of a hit point or skill point."},
+      {"name":"Survivor", "description":"Half-giants gain a +4 racial bonus to Survival checks."},
+      {"name":"Low-Light Vision", "description":"Half-giants have low-light vision allowing them to see twice as far as humans in dim light."}
+    ]
+  }}
+]
