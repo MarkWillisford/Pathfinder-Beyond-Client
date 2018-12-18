@@ -240,6 +240,71 @@
 				["20", "1", "0", "1", "1", [{"name":"deadly performance", "type":"Su", "description":["A bard of 20th level or higher can use his performance to cause one enemy to die from joy or sorrow. To be affected, the target must be able to see and hear the bard perform for 1 full round and be within 30 feet. The target receives a Will save (DC 10 + 1/2 the bard’s level + the bard’s Cha modifier) to negate the effect. If a creature’s saving throw succeeds, the target is staggered for 1d4 rounds, and the bard cannot use deadly performance on that creature again for 24 hours. If a creature’s saving throw fails, it dies. Deadly performance is a mind-effecting death effect that relies on audible and visual components."]}], {"1":5, "2":5, "3":5, "4":5, "5":5, "6":5}, {"0":6, "1":6, "2":6, "3":6, "4":6, "5":5, "6":5}]
 			]
 		}
+	},
+ 	{
+		"id":,
+		"thum":"img",
+		"name": "rogue",
+		"expand":false,
+		"classFeatures":{
+			"blurb":"This and that about Rogues excel at moving about unseen and catching foes unaware, and tend to avoid head-to-head combat. Their varied skills and abilities allow them to be highly versatile, with great variations in expertise existing between different rogues. Most, however, excel in overcoming hindrances of all types, from unlocking doors and disarming traps to outwitting magical hazards and conning dull-witted opponents.",
+			"alignment":"any",
+			"hd": 8,
+			"wealth":{
+				"number":4,
+				"type":6
+			},
+			"skills":8,
+			"classSkills":[
+				"acrobatics",
+				"appraise",
+				"bluff",
+				"climb",
+				"craft",
+				"diplomacy",
+				"disableDevice",
+				"disguise",
+				"escapeArtist",
+				"intimidate",
+				"knowledge (dungeoneering)",
+				"knowledge (local)",
+				"linguistics",
+				"perception",
+				"perform",
+				"profession",
+				"senseMotive",
+				"sleightOfHand",
+				"stealth",
+				"swim",
+				"useMagicDevice"
+			],
+			"bab":"3/5",
+			"goodSaves":["reflex"],
+			"proficiency":[ "simple weapons", "hand crossbow", "rapier", "sap", "shortbow", "shortsword", "light armor" ],
+			"table":[
+				["level", "bab", "fort", "ref", "will", "special", "spells"],
+				["1", "0", "0", "2", "0", [{"name":"sneak attack", "type":"Ex", "description":["If a rogue can catch an opponent when he is unable to defend himself effectively from her attack, she can strike a vital spot for extra damage. The rogue’s attack deals extra damage anytime her target would be denied a Dexterity bonus to AC (whether the target actually has a Dexterity bonus or not), or when the rogue flanks her target. This extra damage is 1d6 at 1st level, and increases by 1d6 every two rogue levels thereafter. Should the rogue score a critical hit with a sneak attack, this extra damage is not multiplied. Ranged attacks can count as sneak attacks only if the target is within 30 feet.", "With a weapon that deals nonlethal damage (like a sap, whip, or an unarmed strike), a rogue can make a sneak attack that deals nonlethal damage instead of lethal damage. She cannot use a weapon that deals lethal damage to deal nonlethal damage in a sneak attack, not even with the usual –4 penalty.", "The rogue must be able to see the target well enough to pick out a vital spot and must be able to reach such a spot. A rogue cannot sneak attack while striking a creature with concealment."]}, {"name":"trapfinding", "type":"Ex", "description":["A rogue adds 1/2 her level to Perception skill checks made to locate traps and to Disable Device skill checks (minimum +1). A rogue can use Disable Device to disarm magic traps."]}]],
+				["2", "1", "0", "1", "0", [{"name":"evasion", "type":"Ex", "description":["At 2nd level and higher, a rogue can avoid even magical and unusual attacks with great agility. If she makes a successful Reflex saving throw against an attack that normally deals half damage on a successful save, she instead takes no damage. Evasion can be used only if the rogue is wearing light armor or no armor. A helpless rogue does not gain the benefit of evasion."]}, {"name":"rogue talent", "type":"Ex", "description":["As a rogue gains experience, she learns a number of talents that aid her and confound her foes. Starting at 2nd level, a rogue gains one rogue talent. She gains an additional rogue talent for every 2 levels of rogue attained after 2nd level. A rogue cannot select an individual talent more than once.", "Talents marked with an asterisk add effects to a rogue’s sneak attack. Only one of these talents can be applied to an individual attack and the decision must be made before the attack roll is made. ", "A rogue cannot choose a ninja trick with the same name as a rogue talent."]}]],
+				["3", "1", "1", "0", "1", [{"name":"sneak attack", "type":"Ex", "description":["2nd"]}, {"name":"trap sense", "type":"Ex", "description":["At 3rd level, a rogue gains an intuitive sense that alerts her to danger from traps, giving her a +1 bonus on Reflex saves made to avoid traps and a +1 dodge bonus to AC against attacks made by traps. These bonuses rise to +2 when the rogue reaches 6th level, to +3 when she reaches 9th level, to +4 when she reaches 12th level, to +5 at 15th, and to +6 at 18th level. Trap sense bonuses gained from multiple classes stack."]}]],
+				["4", "1", "0", "1", "0", [{"name":"rogue talent", "type":"Ex", "description":["2nd"]}, {"name":"uncanny dodge", "type":"Ex", "description":["Starting at 4th level, a rogue can react to danger before her senses would normally allow her to do so. She cannot be caught flat-footed, nor does she lose her Dex bonus to AC if the attacker is invisible. She still loses her Dexterity bonus to AC if immobilized. A rogue with this ability can still lose her Dexterity bonus to AC if an opponent successfully uses the feint action (see Combat) against her.", "If a rogue already has uncanny dodge from a different class, she automatically gains improved uncanny dodge (see below) instead."]}]],
+				["5", "0", "0", "0", "0", [{"name":"sneak attack", "type":"Ex", "description":["3rd"]}]],
+				["6", "1", "1", "1", "1", [{"name":"rogue talent", "type":"Ex", "description":["3rd"]}, {"name":"trap sense", "type":"Ex", "description":["2nd"]}]],
+				["7", "1", "0", "0", "0", [{"name":"sneak attack", "type":"Ex", "description":["4th"]}]],
+				["8", "1", "0", "1", "0", [{"name":"improved uncanny dodge", "type":"Ex", "description":["A rogue of 8th level or higher can no longer be flanked. This defense denies another rogue the ability to sneak attack the character by flanking her, unless the attacker has at least four more rogue levels than the target does. If a character already has uncanny dodge (see above) from another class, the levels from the classes that grant uncanny dodge stack to determine the minimum rogue level required to flank the character."]}, {"name":"rogue talent", "type":"Ex", "description":["4th"]}]],
+				["9", "0", "1", "0", "1", [{"name":"sneak attack", "type":"Ex", "description":["5th"]}, {"name":"trap sense", "type":"Ex", "description":["3rd"]}]],
+				["10", "1", "0", "1", "0", [{"name":"advanced talents", "type":"Ex", "description":["At 10th level, and every two levels thereafter, a rogue can choose an advanced talents in place of a rogue talent."]}, {"name":"rogue talent", "type":"Ex", "description":["5th"]}]],
+				["11", "1", "0", "0", "0", [{"name":"sneak attack", "type":"Ex", "description":["6th"]}]],
+				["12", "1", "1", "1", "1", [{"name":"rogue talent", "type":"Ex", "description":["6th"]}, {"name":"trap sense", "type":"Ex", "description":["4th"]}]],
+				["13", "0", "0", "0", "0", [{"name":"sneak attack", "type":"Ex", "description":["7th"]}]],
+				["14", "1", "0", "1", "0", [{"name":"rogue talent", "type":"Ex", "description":["7th"]}]],
+				["15", "1", "1", "0", "1", [{"name":"sneak attack", "type":"Ex", "description":["8th"]}, {"name":"trap sense", "type":"Ex", "description":["5th"]}]],
+				["16", "1", "0", "1", "0", [{"name":"rogue talent", "type":"Ex", "description":["8th"]}]],
+				["17", "0", "0", "0", "0", [{"name":"sneak attack", "type":"Ex", "description":["9th"]}]],
+				["18", "1", "1", "1", "1", [{"name":"rogue talent", "type":"Ex", "description":["9th"]}, {"name":"trap sense", "type":"Ex", "description":["6th"]}]],
+				["19", "1", "0", "0", "0", [{"name":"sneak attack", "type":"Ex", "description":["10th"]}]],
+				["20", "1", "0", "1", "0", [{"name":"master strike", "type":"Ex", "description":["Upon reaching 20th level, a rogue becomes incredibly deadly when dealing sneak attack damage. Each time the rogue deals sneak attack damage, she can choose one of the following three effects: put to sleep for 1d4 hours, paralyzed for 2d6 rounds, or slain.", "Regardless of the effect chosen, the target receives a Fortitude save to negate the additional effect. The DC of this save is equal to 10 + 1/2 the rogue’s level + the rogue’s Intelligence modifier. Once a creature has been the target of a master strike, regardless of whether or not the save is made, that creature is immune to that rogue’s master strike for 24 hours. Creatures that are immune to sneak attack damage are also immune to this ability."]}, {"name":"rogue talent", "type":"Ex", "description":["10th"]}]]
+			]
+		}
 	}
 
 ]
