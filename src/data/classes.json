@@ -305,6 +305,58 @@
 				["20", "1", "0", "1", "0", [{"name":"master strike", "type":"Ex", "description":["Upon reaching 20th level, a rogue becomes incredibly deadly when dealing sneak attack damage. Each time the rogue deals sneak attack damage, she can choose one of the following three effects: put to sleep for 1d4 hours, paralyzed for 2d6 rounds, or slain.", "Regardless of the effect chosen, the target receives a Fortitude save to negate the additional effect. The DC of this save is equal to 10 + 1/2 the rogue’s level + the rogue’s Intelligence modifier. Once a creature has been the target of a master strike, regardless of whether or not the save is made, that creature is immune to that rogue’s master strike for 24 hours. Creatures that are immune to sneak attack damage are also immune to this ability."]}, {"name":"rogue talent", "type":"Ex", "description":["10th"]}]]
 			]
 		}
+	},
+ 	{
+		"id":,
+		"thum":"img",
+		"name": "sorcerer",
+		"expand":false,
+		"classFeatures":{
+			"blurb":"Sorcerers excel at casting a selection of favored spells frequently, making them powerful battle mages. As they become familiar with a specific and ever-widening set of spells, sorcerers often discover new and versatile ways of making use of magics other spellcasters might overlook. Their bloodlines also grant them additional abilities, assuring that no two sorcerers are ever quite alike.",
+			"alignment":"any",
+			"hd": 6,
+			"wealth":{
+				"number":2,
+				"type":6
+			},
+			"skills":2,
+			"classSkills":[
+				"appraise",
+				"bluff",
+				"craft",
+				"fly",
+				"intimidate",
+				"knowledge (arcana)",
+				"profession",
+				"spellcraft",
+				"useMagicDevice"
+			],
+			"bab":"1/2",
+			"goodSaves":["will"],
+			"proficiency":[ "simple weapons" ],
+			"table":[
+				["level", "bab", "fort", "ref", "will", "special", "spells"],
+				["1", "0", "0", "0", "2", [{"name":"eschew materials", "description":["A sorcerer gains Eschew Materials as a bonus feat at 1st level."]}, {"name":"cantrips", "description":["Sorcerers learn a number of cantrips, or 0-level spells. These spells are cast like any other spell, but they do not consume any slots and may be used again."]},{"name":"bloodline", "description":["Each sorcerer has a source of magic somewhere in her heritage that grants her spells, bonus feats, an additional class skill, and other special abilities. This source can represent a blood relation or an extreme event involving a creature somewhere in the family’s past. For example, a sorcerer might have a dragon as a distant relative or her grandfather might have signed a terrible contract with a devil. Regardless of the source, this influence manifests in a number of ways as the sorcerer gains levels. A sorcerer must pick one bloodline upon taking her first level of sorcerer. Once made, this choice cannot be changed."]},{"name":"bloodline power", "description":["Filled with magical power that screams for release, sorcery is not so much a calling as a blessing—or a curse. For some sorcerers, this arcane birthright manifests in subtle and carefully controlled ways, assisting in their manipulation of others or the pursuit of lofty goals. For others, it is wild and unpredictable, the primal and explosive lashing out of a power greater than themselves."]}], {"1":3}, {"0":4, "1":2}],
+				["2", "1", "0", "0", "1", [], {"1":4}, {"0":5, "1":2}],
+				["3", "0", "1", "1", "0", [{"name":"bloodline power", "description":["2nd"]},{"name":"bloodline spell", "description":["At 3rd level, and every two levels thereafter, a sorcerer learns an additional spell, derived from her bloodline. These spells are in addition to the number of spells normally known. These spells cannot be exchanged for different spells at higher levels."]}], {"1":5}, {"0":5, "1":3}],
+				["4", "1", "0", "0", "1", [], {"1":6, "2":3}, {"0":6, "1":3, "2":1}],
+				["5", "0", "0", "0", "0", [{"name":"bloodline spell", "description":["2nd"]}], {"1":6, "2":4}, {"0":6, "1":4, "2":2}],
+				["6", "1", "1", "1", "1", [], {"1":6, "2":5, "3":3}, {"0":7, "1":4, "2":2, "3":1}],
+				["7", "0", "0", "0", "0", [{"name":"bloodline feat", "description":["At 7th level, and every six levels thereafter, a sorcerer receives one bonus feat, chosen from a list specific to each bloodline. The sorcerer must meet the prerequisites for these bonus feats."]},{"name":"bloodline spell", "description":["3rd"]}], {"1":6, "2":6, "3":4}, {"0":7, "1":5, "2":3, "3":2}],
+				["8", "1", "0", "0", "1", [], {"1":6, "2":6, "3":5, "4":3}, {"0":8, "1":5, "2":3, "3":2, "4":1}],
+				["9", "0", "1", "1", "0", [{"name":"bloodline power", "description":["3rd"]},{"name":"bloodline spell", "description":["4th"]}], {"1":6, "2":6, "3":6, "4":4}, {"0":8, "1":5, "2":4, "3":3, "4":2}],
+				["10", "1", "0", "0", "1", [], {"1":6, "2":6, "3":6, "4":5, "5":3}, {"0":9, "1":5, "2":4, "3":3, "4":2, "5":1}],
+				["11", "0", "0", "0", "0", [{"name":"bloodline spell", "description":["5th"]}], {"1":6, "2":6, "3":6, "4":6, "5":4}, {"0":9, "1":5, "2":5, "3":4, "4":3, "5":2}],
+				["12", "1", "1", "1", "1", [], {"1":6, "2":6, "3":6, "4":6, "5":5, "6":3}, {"0":9, "1":5, "2":5, "3":4, "4":3, "5":2, "6":1}],
+				["13", "0", "0", "0", "0", [{"name":"bloodline feat", "description":["2nd"]},{"name":"bloodline spell", "description":["6th"]}], {"1":6, "2":6, "3":6, "4":6, "5":6, "6":4}, {"0":9, "1":5, "2":5, "3":4, "4":4, "5":3, "6":2}],
+				["14", "1", "0", "0", "1", [], {"1":6, "2":6, "3":6, "4":6, "5":6, "6":5, "7":3}, {"0":9, "1":5, "2":5, "3":4, "4":4, "5":3, "6":2, "7":1}],
+				["15", "0", "1", "1", "0", [{"name":"bloodline power", "description":["4th"]},{"name":"bloodline spell", "description":["7th"]}], {"1":6, "2":6, "3":6, "4":6, "5":6, "6":6, "7":4}, {"0":9, "1":5, "2":5, "3":4, "4":4, "5":4, "6":3, "7":2}],
+				["16", "1", "0", "0", "1", [], {"1":6, "2":6, "3":6, "4":6, "5":6, "6":6, "7":5, "8":3}, {"0":9, "1":5, "2":5, "3":4, "4":4, "5":4, "6":3, "7":2, "8":1}],
+				["17", "0", "0", "0", "0", [{"name":"bloodline spell", "description":["8th"]}], {"1":6, "2":6, "3":6, "4":6, "5":6, "6":6, "7":6, "8":4}, {"0":9, "1":5, "2":5, "3":4, "4":4, "5":4, "6":3, "7":3, "8":2}],
+				["18", "1", "1", "1", "1", [], {"1":6, "2":6, "3":6, "4":6, "5":6, "6":6, "7":6, "8":5, "9":3}, {"0":9, "1":5, "2":5, "3":4, "4":4, "5":4, "6":3, "7":3, "8":2, "9":1}],
+				["19", "0", "0", "0", "0", [{"name":"bloodline feat", "description":["3rd"]},{"name":"bloodline spell", "description":["9th"]}], {"1":6, "2":6, "3":6, "4":6, "5":6, "6":6, "7":6, "8":6, "9":4}, {"0":9, "1":5, "2":5, "3":4, "4":4, "5":4, "6":3, "7":3, "8":3, "9":2}],
+				["20", "1", "0", "0", "1", [{"name":"bloodline power", "description":["5th"]}], {"1":6, "2":6, "3":6, "4":6, "5":6, "6":6, "7":6, "8":6, "9":6}, {"0":9, "1":5, "2":5, "3":4, "4":4, "5":4, "6":3, "7":3, "8":3, "9":3}]
+			]
+		}
 	}
-
 ]
