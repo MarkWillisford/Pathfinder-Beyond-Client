@@ -24,38 +24,21 @@ export class NewCharacterAbilityScores extends React.Component{
 	abilitySum(ability, statArrayToAssign){
 		let capAbility = capitalizeFirstLetter(ability);
 		let basePath="props.base"+capAbility;
-		let numBase = 0;
+		let numBase = Number(_.get(this, basePath, "0"));
 		let racialPath="props.racial"+capAbility;
 		let numRace = Number(_.get(this, racialPath, "0"));
-		let sum = 0;
-/*		switch(this.props.abilityScoreGenerationMethod){
-			case "arrays":
-				console.log("arrays");
-			break;
-			case "dice":
-			break;
-			case "manual":
-				console.log("manual");
-			break;
-			case "pointBuy":
-				console.log("pointBuy");
-			break;
-			default:
-				console.log("null");
-		}*/
-		numBase = Number(_.get(this, basePath, "0"));
-		sum = numBase + numRace;
+		let sum = numBase + numRace;
 
 		if(sum === 0){
-			console.log("--");
 			return "--";
 		} else {
-			console.log(sum); return sum;
+			return sum;
 		}
 	}
 
 	render(){
 		const complete = this.props.complete;
+		const help = this.props.help;
 		const strengthTotal = this.abilitySum("strength");
 		const dexterityTotal = this.abilitySum("dexterity");
 		const constitutionTotal = this.abilitySum("constitution");
@@ -63,13 +46,16 @@ export class NewCharacterAbilityScores extends React.Component{
 		const wisdomTotal = this.abilitySum("wisdom");
 		const charismaTotal = this.abilitySum("charisma");
 		const strengthMod = Math.floor((strengthTotal - 10) / 2);
-		const dexterityMod =0;
-		const constitutionMod =0;
-		const intelligenceMod =0;
-		const wisdomMod =0;
-		const charismaMod =0;
+		const dexterityMod = Math.floor((dexterityTotal - 10) / 2);
+		const constitutionMod = Math.floor((constitutionTotal - 10) / 2);
+		const intelligenceMod = Math.floor((intelligenceTotal - 10) / 2);
+		const wisdomMod = Math.floor((wisdomTotal - 10) / 2);
+		const charismaMod = Math.floor((charismaTotal - 10) / 2);
 
-		if(!complete){
+		// if help is true, that screen is displayed
+		if(help){
+			return ( <h1>HELP</h1> );
+		} else if(!complete){
 			return (
 		        <div className="newCharacterAbilityScores">
 		        	<h1>Character Ability Scores</h1>	
@@ -143,7 +129,7 @@ export class NewCharacterAbilityScores extends React.Component{
 				        		<tr>
 				        			<td>Wisdom</td>
 				        			<td id="wisTotal">{wisdomTotal}</td>
-				        			<td id="wisMod">{ this.props.wisdom ? wisdomMod : "--" }</td>
+				        			<td id="wisMod">{ this.props.baseWisdom ? wisdomMod : "--" }</td>
 				        			<td id="wisBase">{ this.props.baseWisdom ? this.props.baseWisdom : "--"}</td>
 				        			<td id="wisRacial">{ this.props.racialWisdom ? this.props.racialWisdom : "0" }</td>
 				        			<td id="wisEnhance">+0</td>
@@ -153,7 +139,7 @@ export class NewCharacterAbilityScores extends React.Component{
 				        		<tr>
 				        			<td>Charisma</td>
 				        			<td id="chaTotal">{charismaTotal}</td>
-				        			<td id="chaMod">{ this.props.charisma ? charismaMod : "--" }</td>
+				        			<td id="chaMod">{ this.props.baseCharisma ? charismaMod : "--" }</td>
 				        			<td id="chaBase">{ this.props.baseCharisma ? this.props.baseCharisma : "--" }</td>
 				        			<td id="chaRacial">{ this.props.racialCharisma ? this.props.racialCharisma : "0" }</td>
 				        			<td id="chaEnhance">+0</td>
@@ -175,26 +161,6 @@ export class NewCharacterAbilityScores extends React.Component{
 		};		
 	}
 }
-
-// function AddScores(base, racial){	// there has to be a better solution than this. 
-//	{ this.props.baseStrength ? (<AddScores base={this.props.abilityScoreOptions[this.props.baseStrength].value} racial={this.props.racialStrength}/>) : "--"}
-// 	console.log(base.base);
-// 	console.log(racial);
-// 	if(base.base && racial){
-// 		console.log("adding");
-// 		return (base.base+racial);
-// 	} else if (base.base && !racial){
-// 		console.log("only base");
-// 		console.log(base);
-// 		return base.base;
-// 	} else if(!base.base && racial){
-// 		console.log("only racial");
-// 		return racial;
-// 	} else {
-// 		console.log("neither");
-// 		return "--";
-// 	}
-// }
 
 function AbilityScoreMethod(props){
 	switch(props.method){
@@ -224,40 +190,11 @@ function AbilityScoreArrays(){
 /***************************
 helper function
 ***************************/
-function DisplayStatArraySelectElements(props){
+/*function DisplayStatArraySelectElements(props){
 	const statArray = props.array;
 	return(
 		null
 
-	)
-}
-
-/*function AbilityScoreManual(){
-	return (
-		<div>
-			<table>
-				<thead>
-					<tr>
-						<th>Strength</th>
-						<th>Dexterity</th>
-						<th>Constitution</th>
-						<th>Intelligence</th>
-						<th>Wisdom</th>
-						<th>Charisma</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><input type="text" id="strInput" style={{width: 50 + 'px'}} /></td>
-						<td><input type="text" id="dexInput" style={{width: 50 + 'px'}} /></td>
-						<td><input type="text" id="conInput" style={{width: 50 + 'px'}} /></td>
-						<td><input type="text" id="intInput" style={{width: 50 + 'px'}} /></td>
-						<td><input type="text" id="wisInput" style={{width: 50 + 'px'}} /></td>
-						<td><input type="text" id="chaInput" style={{width: 50 + 'px'}} /></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
 	)
 }*/
 
@@ -270,6 +207,7 @@ function AbilityScorePointBuy(){
 const selector = formValueSelector('diceForm');
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[3].complete,
+	help:state.characterReducer.help,
 	abilityScoreGenerationMethod:state.characterReducer.abilityScoreGenerationMethod,
 	statArrayToAssign:state.characterReducer.statArrayToAssign,
 	baseStrength: state.characterReducer.newCharacter.strength.base,//selector(state, "strengthSelecter"),

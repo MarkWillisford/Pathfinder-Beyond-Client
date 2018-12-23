@@ -11,11 +11,15 @@ export class NewCharacterFeats extends React.Component{
 		const help = this.props.help;
 		const featCategories = ["general"];//, "combat", "critical", "item creation", "metamagic"];
 
+		// first here we must check to ensure that race, class, and ability scores are complete. 
+		// If not, we display an error message directing the user to complete those pages before 
+		// continuing. 
+		if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
+			return ( <h1>NOT READY</h1> )
+		} else if(help){
 		// if help is true, that screen is displayed
-		if(help){
 			return ( <h1>HELP</h1> );
-		}
-		if(!complete){
+		} else if(!complete){
 			return (
 		        <div className="newCharacterFeats">
 		        	<h1>Character Feats - todo</h1>	
@@ -81,6 +85,9 @@ class FeatCategory extends React.Component{
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[6].complete,
 	help:state.characterReducer.help,
+	race:state.characterReducer.creationSteps[1].complete,
+	charClass:state.characterReducer.creationSteps[2].complete,
+	abilityScores:state.characterReducer.creationSteps[3].complete,
 });
 
 export default connect(mapStateToProps)(NewCharacterFeats);

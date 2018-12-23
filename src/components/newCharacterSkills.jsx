@@ -90,11 +90,15 @@ export class NewCharacterSkills extends React.Component{
 		}, 0);
 		const remainingSkillRanks = ((this.props.classSkillsPerLevel + intelligence) > 0 ? this.props.classSkillsPerLevel + intelligence : 1) - ranksAssigned;
 
-		// if help is true, that screen is displayed
-		if(help){
+		// first here we must check to ensure that race, class, and ability scores are complete. 
+		// If not, we display an error message directing the user to complete those pages before 
+		// continuing. 
+		if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
+			return ( <h1>NOT READY</h1> )
+		} else if(help){
+			// if help is true, that screen is displayed
 			return ( <h1>HELP</h1> );
-		} 
-		if(!complete){
+		} else if(!complete){
 			return (
 		        <div className="newCharacterSkills">
 		        	<h1>Character Skills</h1>
@@ -149,6 +153,9 @@ export class NewCharacterSkills extends React.Component{
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[5].complete,
 	help:state.characterReducer.help,
+	race:state.characterReducer.creationSteps[1].complete,
+	charClass:state.characterReducer.creationSteps[2].complete,
+	abilityScores:state.characterReducer.creationSteps[3].complete,
 	classSkillsPerLevel:state.characterReducer.newCharacter.charClass.classFeatures.skills,
 	classSkills:state.characterReducer.newCharacter.charClass.classFeatures.classSkills,
 	skills:state.characterReducer.newCharacter.skills,
