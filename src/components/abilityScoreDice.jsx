@@ -167,7 +167,7 @@ const selector = formValueSelector('diceForm');
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[3].complete,
 	unavaliableOptions: dynamicFields.map(f => selector(state, f)).filter(Boolean), //?????
-	baseStrength: selector(state, "strengthSelecter"),
+	//baseStrength: selector(state, "strengthSelecter"),
 	diceOptions: selector(state, "diceSelecter")
 })
 

@@ -34,7 +34,7 @@ export class AbilityScoreManual extends React.Component {
 					name="strengthSelecter" 
 					id="strengthSelecter" 
 					label="strength" 
-					component={RenderInput}
+					component={RenderInput}>
 				</Field>
 				<Field 
 					name="dexteritySelecter" 
