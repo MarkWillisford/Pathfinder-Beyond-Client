@@ -54,7 +54,23 @@ export class NewCharacterAbilityScores extends React.Component{
 
 		// if help is true, that screen is displayed
 		if(help){
-			return ( <h1>HELP</h1> );
+			return (
+				<div className="abilityScoreHelp">
+					<h2>Ability Score Selection</h2>
+					<p>Most of what your character attempts in the game is effected by one of his, her or thier six ability scores: Strength, Dexterity, Constitution, Intelligence, Wisdom, and Charisma. Each Ability has a score and a modifier, which you record for use during play. To get the modifier, you simply take the score, subtract 10, and devide by two, rounding down. For example; a 17 becomes a 3 (17 - 10 = 7, 7 / 2 = 3.5, rounded down to 3).</p>
+					<h3>Generation Method</h3>
+					<p>There are four ways to deterimine your ability scores</p>
+					<h4>Standard Arrays</h4>
+					<p>If you want to save time or don’t like the idea of randomly determining ability scores, you can choose from a fixed list (15, 14, 13, 12, 10, 8 or 16, 13, 12, 12, 10, 8).</p>
+					<h4>Rolling Dice</h4>
+					<p>A built in Dice roller for the two most common die methods.</p>
+					<h4>Manual Selection</h4>
+					<p>Manually enter your ability scores. If you roll to randomly determine scores, choose this option to record your results.</p>
+					<h4>Point Buy</h4>
+					<p>Customize your ability scores by spending points.</p>
+					</div> 
+
+			);
 		} else if(!complete){
 			return (
 		        <div className="newCharacterAbilityScores">

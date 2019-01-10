@@ -34,12 +34,17 @@ export class NewCharacterDetails extends React.Component{
 
 		// if help is true, that screen is displayed
 		if(help){
-			return ( <h1>HELP</h1> );
+			return ( 
+				<div className="detailsHelp">
+					<h2>Character Details</h2>
+					<p>In this step, you will flesh your character out as a person. You’ll need to decide your character’s appearance and personality. Choose your character’s alignment (the moral compass that guides his or her decisions) and ideals. Identify the things your character holds most dear, called bonds, and the flaws that could one day undermine him or her.</p>
+				</div>
+			);
 		} else if(!complete){
 			return (
 				<form onSubmit={this.props.handleSubmit(this.submitHandler.bind(this))}>
 			        <div className="newCharacterDetails">
-				        <h1>Character Details - todo</h1>
+				        <h1>Character Details</h1>
 				        <div><h2>Traits</h2>
 				        <button onClick={this.handleToggle.bind(this, "0")}>Expand</button></div>
 				        {expand[0].expand && <DisplayTraits />}

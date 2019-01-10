@@ -97,7 +97,15 @@ export class NewCharacterSkills extends React.Component{
 			return ( <h1>NOT READY</h1> )
 		} else if(help){
 			// if help is true, that screen is displayed
-			return ( <h1>HELP</h1> );
+			return (
+				<div className="skillsHelp">
+					<h2>Acquiring Skills</h2>
+					<p>Skills represent some of the most basic and yet most fundamental abilities your character possesses. As your character advances in level, he can gain new skills and improve his existing skills dramatically. Each level, your character gains a number of skill ranks dependent upon your class plus your Intelligence modifier. Investing a rank in a skill represents a measure of training in that skill. You can never have more ranks in a skill than your total number of Hit Dice. </p>
+					<p>Humans gain 1 additional skill rank per class level. Characters who take a level in a favored class have the option of gaining 1 additional skill rank or an additional hit point . If you select a level in a new class, all of its class skills are automatically added to your list of class skills, and you gain a +3 bonus on these skills if you have ranks in them.</p>
+					<h3>Class Skills</h3>
+					<p>In addition, each class has a number of favored skills, called class skills. It is easier for your character to become more proficient in these skills, as they represent part of his professional training and constant practice. You gain a +3 bonus on all class skills that you put ranks into. If you have more than one class and both grant you a class skill bonus, these bonuses do not stack.</p>
+				</div>
+			);
 		} else if(!complete){
 			return (
 		        <div className="newCharacterSkills">

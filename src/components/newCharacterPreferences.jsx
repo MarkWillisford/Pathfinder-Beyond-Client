@@ -77,7 +77,16 @@ export class NewCharacterPreferencesForm extends React.Component{
 
 		// if help is true, that screen is displayed
 		if(help){
-			return ( <h1>HELP</h1> );
+			return ( 
+				<div className="preferencesHelp">
+					<h2>The Basics</h2>
+					<p>The first step in any roleplaying game is to imagine and then create a character.</p>
+					<p>You choose a race, such as Human or Gnome, and a class, such as paladin or sorcerer. You also create the personality, looks and backstory of the character. Once finished, it is this character that will explore and adventure within the story world your DM is running.</p>
+					<p>Before you go much further, think a bit about the kind of adventurer you want to play. You might be a heroic Paladin, fighting the evils of the world, a flamboyant half-orc sorcerer, or a staunchy tribal fighter, dedicated to protecting its party. Once you have a character concept in mind, follow the steps lain out here in order, making choices that reflect the character you want to build. The only really important thing is that you come to the table with a character you're excited to play.</p>
+					<h3>Preferences</h3>
+					<p>The first step includes various preferences for your character. Most of these are determined by your DM so check with them if you have any questions.</p>
+				</div>
+			);
 		} 
 		// else check for complete,
 		else if(!complete){

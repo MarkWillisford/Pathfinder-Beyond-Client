@@ -15,7 +15,14 @@ export class NewCharacterEquipment extends React.Component{
 			return ( <h1>NOT READY</h1> )
 		} else if(help){
 			// if help is true, that screen is displayed
-			return ( <h1>HELP</h1> );
+			return (
+				<div className="equipmentHelp">
+					<h2>Selecting Equipment</h2>
+					<p>In this step you will select your starting equipment</p>
+					<h4>Encumbrance</h4>
+					<p>Your Strength score limits the amount of gear you can carry. Try not to purchase equipment with a total weight (in pounds) exceeding your Strength score times 15.</p>
+				</div>
+			);
 		} else if(!complete){
 			return (
 		        <div className="newCharacterEquipment">
