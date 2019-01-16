@@ -9,14 +9,15 @@ export class NewCharacterFeats extends React.Component{
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
-		const featCategories = ["general"];//, "combat", "critical", "item creation", "metamagic"];
+		const featCategories = ["general", "combat"];//, "combat", "critical", "item creation", "metamagic"];
 
 		// first here we must check to ensure that race, class, and ability scores are complete. 
 		// If not, we display an error message directing the user to complete those pages before 
 		// continuing. 
-		if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
-			return ( <h1>NOT READY</h1> )
-		} else if(help){
+		//if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
+			//return ( <h1>NOT READY</h1> )
+		//} else 
+		if(help){
 		// if help is true, that screen is displayed
 			return (
 				<div className="">
@@ -61,20 +62,55 @@ class FeatCategory extends React.Component{
 		const featsList = require('../data/feats');
 		let index = 0;
 		let featsToDisplay = [];
-		console.log(this.props);
 
-		while(featsToDisplay.length < 3){
+		//while(featsToDisplay.length < 3){
+		for(let i=0;i<featsList.length;i++){
 			if(featsList[index].type.includes(this.props.name)){
+				//create string for prereqs
+				//featsList[index].prerequisites_list
+				let prereqString = "";
+				let prereqStringArray = [];
+				if(featsList[index].prerequisites_list){
+					for(let j=0;j<featsList[index].prerequisites_list.length;j++){
+						//if this is an array, then loop throught that . . .   
+						if(Array.isArray(featsList[index].prerequisites_list[j])){
+							// this array could be objects (stats)
+							// or strings (list of feats)
+							if(typeof featsList[index].prerequisites_list[j][0] == 'string'){
+								// ok, its the list of feats; loop through and add each element to the prereqString
+								let str = featsList[index].prerequisites_list[j].join(", ");
+								if(prereqString != ""){
+									prereqString += str;
+								} else {
+									prereqString = str;
+								}
+							}
+							else if(typeof featsList[index].prerequisites_list[j][0] == 'object'){
+								// in this case it is an array of stat objects
+								for(let k = 0; k<featsList[index].prerequisites_list[j].length;k++){
+									let str = Object.values(featsList[index].prerequisites_list[j][k]).join(" ");
+									prereqStringArray.push(str);
+								}
+								let str = prereqStringArray.join(", ")
+								if(prereqString != ""){
+									prereqString += str;
+								} else {
+									prereqString = str;
+								}
+							}
+						}
+					}
+				}
+
 				let feat = {
 					"name":featsList[index].name,
-					"prerequisites":featsList[index].prerequisites_list,
+					"prerequisites":prereqString,
 					"description":featsList[index].description,
 				};
 				featsToDisplay.push(feat);
 			}
 			index++
 		};
-		console.log(featsToDisplay);
 		return (
 			<div>
 				<p>say hi</p>
