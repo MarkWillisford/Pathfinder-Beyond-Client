@@ -128,6 +128,12 @@ export const setStepToComplete = (step) => ({
 	step,
 })
 
+export const EQUIPMENT_GENERATION_METHOD = 'EQUIPMENT_GENERATION_METHOD';
+export const equipmentGenerationMethod = (value) => ({
+	type: EQUIPMENT_GENERATION_METHOD,
+	value, 
+});
+
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
 export const toggleFeatureExpand = (charClass, feature) => ({

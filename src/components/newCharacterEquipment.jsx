@@ -1,17 +1,27 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import Equipment_StartingEquipment from './equipment_StartingEquipment';
+
+import { equipmentGenerationMethod } from '../actions/index';
 
 import './newCharacterEquipment.css';
 
 export class NewCharacterEquipment extends React.Component{
+	handleClick(value){
+		// set the state.equipmentGenerationMethod to value
+		this.props.dispatch(equipmentGenerationMethod(value));		
+	}
+
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
+		const wealth = this.props.wealth;
 
 		// first here we must check to ensure that race, class, and ability scores are complete. 
 		// If not, we display an error message directing the user to complete those pages before 
 		// continuing. 
-		if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
+		//if( !(this.props.race && this.props.charClassComplete && this.props.abilityScores) ){
+		if( !(this.props.charClassComplete) ){
 			return ( <h1>NOT READY</h1> )
 		} else if(help){
 			// if help is true, that screen is displayed
@@ -27,6 +37,11 @@ export class NewCharacterEquipment extends React.Component{
 			return (
 		        <div className="newCharacterEquipment">
 		        	<h1>Character Equipment - todo</h1>	
+		        	<p>{ wealth.number }D{ wealth.type }</p>
+		        	<p>Choose <button onClick={()=> this.handleClick("equipment")}>Equipment</button> Or <button onClick={()=> this.handleClick("gold")}>Gold</button></p>
+		        	<div className="equipmentSelection">
+		        		<EquipmentMethod method={this.props.equipmentGenerationMethod} dispatch={this.props.dispatch}/>
+		        	</div>
 		        </div>
 		    );
 		} else {
@@ -39,12 +54,27 @@ export class NewCharacterEquipment extends React.Component{
 	}
 }
 
+function EquipmentMethod(props){
+	switch(props.method){
+		case "equipment": 
+			return (<Equipment_StartingEquipment />);
+			break;
+		case "gold": 
+			return null; // (<Equipment_Gold />);
+			break;
+		default:
+			return null;			
+	}
+}
+
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[7].complete,
 	help:state.characterReducer.help,
 	race:state.characterReducer.creationSteps[1].complete,
-	charClass:state.characterReducer.creationSteps[2].complete,
+	charClassComplete:state.characterReducer.creationSteps[2].complete,
 	abilityScores:state.characterReducer.creationSteps[3].complete,
+	wealth:state.characterReducer.newCharacter.charClass.classFeatures.wealth,
+	equipmentGenerationMethod:state.characterReducer.equipmentGenerationMethod,
 });
 
 export default connect(mapStateToProps)(NewCharacterEquipment);

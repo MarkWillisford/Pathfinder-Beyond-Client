@@ -95,3 +95,41 @@ Race:
 			]
 		}
 	}
+Equipment - Trade Good:
+	{
+		"id":,
+		"name": "",
+		"expand":false,
+		"cost": ,
+		"item": 
+	}
+Equipment - Weapon:
+"Goods and Services"
+	{
+		"id":,
+		"name": "",
+		"expand": false,
+		"description": ,
+		"category": "simple",
+		"use": "unarmed attacks",
+		"cost": ,
+		"dmg (s)": [],
+		"dmg (m)": [],
+		"critical": ,
+		"range": ,
+		"weight": ,
+		"type": ,
+		"special": [],
+		"material": ,
+		"masterwork": false,
+	}
+Equipment - Goods:
+	{
+		"id":,
+		"name": "",
+		"expand": false,
+		"description": ,
+		"type": ,
+		"cost": ,
+		"weight": 
+	}

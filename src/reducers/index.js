@@ -356,6 +356,10 @@ export const characterReducer = (state=initialState, action) => {
           ...state.creationSteps.filter(c => c.id > indexOfStep)
         ]
       })
+    } else if (action.type === actions.EQUIPMENT_GENERATION_METHOD){
+      return Object.assign({}, state, {
+        equipmentGenerationMethod:action.value,
+      })
     } // Prep for future release
       /*else if (action.type === actions.TOGGLE_FEATURE_EXPAND){
       const charClass = state.classesArray.find(r => r.name === action.charClass)
