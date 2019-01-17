@@ -360,6 +360,16 @@ export const characterReducer = (state=initialState, action) => {
       return Object.assign({}, state, {
         equipmentGenerationMethod:action.value,
       })
+    } else if (action.type === actions.GOLD_GENERATION_METHOD){
+      return Object.assign({}, state, {
+        newCharacter:{...state.newCharacter, goldMethod:action.text,
+        }
+      })
+    } else if (action.type === actions.SET_GOLD){
+      return Object.assign({}, state, {
+        newCharacter:{...state.newCharacter, gold:action.value, availableGold:action.value,
+        }
+      })
     } // Prep for future release
       /*else if (action.type === actions.TOGGLE_FEATURE_EXPAND){
       const charClass = state.classesArray.find(r => r.name === action.charClass)

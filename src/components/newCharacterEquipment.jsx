@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Equipment_StartingEquipment from './equipment_StartingEquipment';
+import Equipment_Gold from './equipment_Gold';
 
 import { equipmentGenerationMethod } from '../actions/index';
 
@@ -16,6 +17,7 @@ export class NewCharacterEquipment extends React.Component{
 		const complete = this.props.complete;
 		const help = this.props.help;
 		const wealth = this.props.wealth;
+		const gear = this.props.gear;
 
 		// first here we must check to ensure that race, class, and ability scores are complete. 
 		// If not, we display an error message directing the user to complete those pages before 
@@ -34,16 +36,30 @@ export class NewCharacterEquipment extends React.Component{
 				</div>
 			);
 		} else if(!complete){
-			return (
-		        <div className="newCharacterEquipment">
-		        	<h1>Character Equipment - todo</h1>	
-		        	<p>{ wealth.number }D{ wealth.type }</p>
-		        	<p>Choose <button onClick={()=> this.handleClick("equipment")}>Equipment</button> Or <button onClick={()=> this.handleClick("gold")}>Gold</button></p>
-		        	<div className="equipmentSelection">
-		        		<EquipmentMethod method={this.props.equipmentGenerationMethod} dispatch={this.props.dispatch}/>
-		        	</div>
-		        </div>
-		    );
+			if(gear){
+				return (
+			        <div className="newCharacterEquipment">
+			        	<h1>Character Equipment</h1>	
+			        	<p>{ wealth.number }D{ wealth.type }</p>
+			        	<p>Choose <button onClick={()=> this.handleClick("equipment")}>Equipment</button> Or <button onClick={()=> this.handleClick("gold")}>Gold</button></p>
+			        	<div className="equipmentSelection">
+			        		<EquipmentMethod method={this.props.equipmentGenerationMethod} dispatch={this.props.dispatch}/>
+			        	</div>
+			        </div>
+			    );				
+			} else {
+				return (
+			        <div className="newCharacterEquipment">
+			        	<h1>Character Equipment</h1>	
+			        	<p>{ wealth.number }D{ wealth.type }</p>
+			        	<div className="equipmentSelection">
+			        		<EquipmentMethod method="gold" dispatch={this.props.dispatch}/>
+			        	</div>
+			        </div>
+			    );
+			}
+
+
 		} else {
 			return(
 		        <div className="newCharacterEquipment">
@@ -60,7 +76,7 @@ function EquipmentMethod(props){
 			return (<Equipment_StartingEquipment />);
 			break;
 		case "gold": 
-			return null; // (<Equipment_Gold />);
+			return (<Equipment_Gold />);
 			break;
 		default:
 			return null;			
@@ -75,6 +91,7 @@ const mapStateToProps = state => ({
 	abilityScores:state.characterReducer.creationSteps[3].complete,
 	wealth:state.characterReducer.newCharacter.charClass.classFeatures.wealth,
 	equipmentGenerationMethod:state.characterReducer.equipmentGenerationMethod,
+	gear:state.characterReducer.newCharacter.charClass.classFeatures.gear,
 });
 
 export default connect(mapStateToProps)(NewCharacterEquipment);

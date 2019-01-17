@@ -100,11 +100,11 @@ Equipment - Trade Good:
 		"id":,
 		"name": "",
 		"expand":false,
+		"description": ,
 		"cost": ,
 		"item": 
 	}
 Equipment - Weapon:
-"Goods and Services"
 	{
 		"id":,
 		"name": "",
@@ -130,6 +130,10 @@ Equipment - Goods:
 		"expand": false,
 		"description": ,
 		"type": ,
+		"collection": {
+			"kit": false,
+			"included": [],
+		},
 		"cost": ,
 		"weight": 
 	}

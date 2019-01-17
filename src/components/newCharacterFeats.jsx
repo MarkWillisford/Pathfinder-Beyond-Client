@@ -27,7 +27,7 @@ export class NewCharacterFeats extends React.Component{
 		} else if(!complete){
 			return (
 		        <div className="newCharacterFeats">
-		        	<h1>Character Feats - todo</h1>	
+		        	<h1>Character Feats</h1>
 		        	{featCategories.map((category) => 
 		        		<FeatCategory key={category} name={category} />
 		        	)}
