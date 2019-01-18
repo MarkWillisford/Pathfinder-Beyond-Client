@@ -113,13 +113,33 @@ Equipment - Weapon:
 		"category": "simple",
 		"use": "unarmed attacks",
 		"cost": ,
-		"dmg (s)": [],
-		"dmg (m)": [],
+		"dmgS": [],
+		"dmgM": [],
 		"critical": ,
 		"range": ,
 		"weight": ,
-		"type": ,
+		"type": [],
 		"special": [],
+		"material": ,
+		"masterwork": false,
+	}
+Equipment - Armor:
+	{
+		"id":,
+		"name": "",
+		"expand": false,
+		"description": ,
+		"use": "unarmed attacks",
+		"cost": ,
+		"bonus": {},
+		"maxDexBonus": "",
+		"armorCheckPenalty": "",
+		"arcaneSpellFailureChance": "",
+		"speed": {
+			"20": "",
+			"30": ""
+		},
+		"weight": "",
 		"material": ,
 		"masterwork": false,
 	}
