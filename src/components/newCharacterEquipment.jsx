@@ -17,7 +17,7 @@ export class NewCharacterEquipment extends React.Component{
 		const complete = this.props.complete;
 		const help = this.props.help;
 		const wealth = this.props.wealth;
-		const gear = this.props.gear;
+		const defaultGear = this.props.defaultGear;
 
 		// first here we must check to ensure that race, class, and ability scores are complete. 
 		// If not, we display an error message directing the user to complete those pages before 
@@ -36,7 +36,7 @@ export class NewCharacterEquipment extends React.Component{
 				</div>
 			);
 		} else if(!complete){
-			if(gear){
+			if(defaultGear){
 				return (
 			        <div className="newCharacterEquipment">
 			        	<h1>Character Equipment</h1>	
@@ -51,7 +51,6 @@ export class NewCharacterEquipment extends React.Component{
 				return (
 			        <div className="newCharacterEquipment">
 			        	<h1>Character Equipment</h1>	
-			        	<p>{ wealth.number }D{ wealth.type }</p>
 			        	<div className="equipmentSelection">
 			        		<EquipmentMethod method="gold" dispatch={this.props.dispatch}/>
 			        	</div>
@@ -91,7 +90,7 @@ const mapStateToProps = state => ({
 	abilityScores:state.characterReducer.creationSteps[3].complete,
 	wealth:state.characterReducer.newCharacter.charClass.classFeatures.wealth,
 	equipmentGenerationMethod:state.characterReducer.equipmentGenerationMethod,
-	gear:state.characterReducer.newCharacter.charClass.classFeatures.gear,
+	defaultGear:state.characterReducer.newCharacter.charClass.classFeatures.gear,
 });
 
 export default connect(mapStateToProps)(NewCharacterEquipment);

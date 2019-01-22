@@ -370,7 +370,43 @@ export const characterReducer = (state=initialState, action) => {
         newCharacter:{...state.newCharacter, gold:action.value, availableGold:action.value,
         }
       })
-    } // Prep for future release
+    } else if (action.type === actions.ADD_ITEM_TO_CHARACTER){
+      if(!state.newCharacter.gear){
+          return Object.assign({}, state, {
+            newCharacter:{...state.newCharacter, gear:[action.item]
+          }
+        })
+      } else {
+        return Object.assign({}, state, {
+          newCharacter:{...state.newCharacter, gear:[...state.newCharacter.gear, action.item]
+          }
+        })        
+      }
+    } else if (action.type === actions.REMOVE_ITEM_FROM_CHARACTER){
+      let indexOfItem = null;
+      for(let i=0;i<state.newCharacter.gear.length;i++){
+        if(state.newCharacter.gear[i] === action.item){
+          indexOfItem = i;
+        }
+      }
+      if(indexOfItem){
+        return Object.assign({}, state, {
+          newCharacter:{...state.newCharacter, gear:[...state.newCharacter.gear.slice(0, indexOfItem),
+                        ...state.newCharacter.gear.slice(indexOfItem + 1)]}
+        }); 
+      }    
+    } else if (action.type === actions.SPEND_GOLD){
+      let newGold = state.newCharacter.availableGold - action.cost;
+      console.log(newGold);
+      return Object.assign({}, state, {
+        newCharacter:{...state.newCharacter, availableGold:newGold,
+        }
+      })
+    } 
+
+
+
+    // Prep for future release
       /*else if (action.type === actions.TOGGLE_FEATURE_EXPAND){
       const charClass = state.classesArray.find(r => r.name === action.charClass)
       const feature = charClass.classFeatures.table.find(r => r[5].find(x => x.name === action.feature));

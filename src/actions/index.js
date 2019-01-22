@@ -146,6 +146,24 @@ export const setGold = (value) => ({
 	value, 
 });
 
+export const ADD_ITEM_TO_CHARACTER = 'ADD_ITEM_TO_CHARACTER';
+export const addItemToCharacter = (item) => ({
+	type: ADD_ITEM_TO_CHARACTER,
+	item, 
+});
+
+export const REMOVE_ITEM_FROM_CHARACTER = 'REMOVE_ITEM_FROM_CHARACTER';
+export const removeItemFromCharacter = (item) => ({
+	type: REMOVE_ITEM_FROM_CHARACTER,
+	item, 
+});
+
+export const SPEND_GOLD = 'SPEND_GOLD';
+export const spendGold = (cost) => ({
+	type: SPEND_GOLD,
+	cost, 
+});
+
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
 export const toggleFeatureExpand = (charClass, feature) => ({
