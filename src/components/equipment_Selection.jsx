@@ -1,10 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, Field, SubmissionError, focus, formValueSelector, change } from 'redux-form';
+import CardGoodsOrService from './cardGoodsOrService'
 
 import { spendGold } from '../actions/index';
 import { addItemToCharacter } from '../actions/index';
 import { removeItemFromCharacter } from '../actions/index';
+import { setStepToComplete } from '../actions/index';
 
 import './equipment_Selection.css';
 
@@ -14,10 +16,12 @@ export class Equipment_Selection extends React.Component {
 	}
 
 	addItem(name){
+		console.log("in addItem, name is: ");
+		console.log(name);
 		const tradeGoodsList = require('../data/tradeGoods');
 		const weaponsList = require('../data/weapons');
 		const armorList = require('../data/armor');
-		const adventuringGearList = require('../data/adventuringGear');
+		const goodsAndServicesList = require('../data/goodsAndServices');
 		let item = null;
 		for(let i=0;i<tradeGoodsList.length;i++){
 			if(tradeGoodsList[i].name == name){
@@ -39,9 +43,9 @@ export class Equipment_Selection extends React.Component {
 			};			
 		}
 		if(item == null){
-			for(let i=0;i<adventuringGearList.length;i++){
-				if(adventuringGearList[i].name == name){
-					item = adventuringGearList[i];
+			for(let i=0;i<goodsAndServicesList.length;i++){
+				if(goodsAndServicesList[i].name == name){
+					item = goodsAndServicesList[i];
 				}
 			};			
 		}
@@ -55,7 +59,7 @@ export class Equipment_Selection extends React.Component {
 		const tradeGoodsList = require('../data/tradeGoods');
 		const weaponsList = require('../data/weapons');
 		const armorList = require('../data/armor');
-		const adventuringGearList = require('../data/adventuringGear');
+		const goodsAndServicesList = require('../data/goodsAndServices');
 		let item = null;
 		for(let i=0;i<tradeGoodsList.length;i++){
 			if(tradeGoodsList[i].name == name){
@@ -77,15 +81,20 @@ export class Equipment_Selection extends React.Component {
 			};			
 		}
 		if(item == null){
-			for(let i=0;i<adventuringGearList.length;i++){
-				if(adventuringGearList[i].name == name){
-					item = adventuringGearList[i];
+			for(let i=0;i<goodsAndServicesList.length;i++){
+				if(goodsAndServicesList[i].name == name){
+					item = goodsAndServicesList[i];
 				}
 			};			
 		}
 
 		// Now we have the item the user selected stored in item
+		this.props.dispatch(spendGold(-item.cost));
 		this.props.dispatch(removeItemFromCharacter(item));
+	}
+
+	done(){
+		this.props.dispatch(setStepToComplete(7));
 	}
 
 	render(){
@@ -97,11 +106,11 @@ export class Equipment_Selection extends React.Component {
 		const tradeGoodsList = require('../data/tradeGoods');
 		const weaponsList = require('../data/weapons');
 		const armorList = require('../data/armor');
-		const adventuringGearList = require('../data/adventuringGear');
+		const goodsAndServicesList = require('../data/goodsAndServices');
 
 		// create a list of weapon categories ('simple, martial, etc')
 		let weaponsCategory = [];		// list of categories
-		let foundCategory = false;		// flag
+/*		let foundCategory = false;		// flag
 		for(let i = 0; i<weaponsList.length;i++){			// for each weapon
 			let categoryString = weaponsList[i].category;	// get the category
 			foundCategory = false;							// make sure the marker is false 
@@ -115,12 +124,22 @@ export class Equipment_Selection extends React.Component {
 			};
 		};
 		// Do I really need this?  Will I ever have anything that isn't simple, marital etc?
-		// I think I over complicated this for unneccisary expandable possiblities. 
+		// I think I over complicated this for unneccisary expandable possiblities. */
 		weaponsCategory = ["simple", "martial", "exotic"];
 
 		// Love this, found on https://stackoverflow.com/questions/14696326/break-array-of-objects-into-separate-arrays-based-on-a-property
 		let weaponsListsCategory = groupBy2(weaponsList, "category");
 		let armorListsUse = groupBy2(armorList, "use");
+		let goodsAndServicesListType = groupBy2(goodsAndServicesList, "type");
+		const goodsAndServicesListTypeToDisplay = Object.keys(goodsAndServicesListType).map(key => 
+
+			<GoodsAndServices key={key} array={goodsAndServicesListType[key]} 
+				remove={() => this.removeItem()} 
+				add={() => this.addItem()}
+				availableGold={availableGold} purchasedGear={purchasedGear} />
+		);
+
+
 		if(startingGold){
 			return (
 				<div>
@@ -152,7 +171,6 @@ export class Equipment_Selection extends React.Component {
 					<div className="weapons">
 						<h3>Weapons</h3>
 						{/* For each category in weaponCategory we need a table - just hard code the three . . .   */}
-
 						<h4>Simple</h4>
 						<table className="weaponsTableSimple">
 							<caption></caption>
@@ -180,7 +198,6 @@ export class Equipment_Selection extends React.Component {
 									)}
 							</tbody>
 						</table>
-
 						<h4>Martial</h4>
 						<table className="weaponsTableMartial">
 							<caption></caption>
@@ -208,7 +225,6 @@ export class Equipment_Selection extends React.Component {
 									)}
 							</tbody>
 						</table>
-
 						<h4>Exotic</h4>
 						<table className="weaponsTableExotic">
 							<caption></caption>
@@ -239,7 +255,6 @@ export class Equipment_Selection extends React.Component {
 					</div>
 					<div className="armor">
 						<h3>Armor</h3>
-						{/* For each category in weaponCategory we need a table - just hard code the three . . .   */}
 						<h4>Light Armor</h4>
 						<table className="armorTableLight">
 							<caption></caption>
@@ -321,25 +336,56 @@ export class Equipment_Selection extends React.Component {
 									)}
 							</tbody>
 						</table>
-
-
 					</div>
-					<div className="adventuringGear"></div>
+					<div className="goodsAndServices">
+						<h3>Goods and Services</h3>
+						{ goodsAndServicesListTypeToDisplay }
+					</div>
+					<button onClick={() => this.done()}>Submit and Review</button>
 		    	</div>
 			)
 		} else { return null }
 	}
 }
 
+function GoodsAndServices(props){
+	const type = props.array[0].type;
+
+	const listOfItems = props.array.map(({name, description, cost, weight, collection,}) => 
+		<CardGoodsOrService key={name} name={name} description={description} cost={cost}
+		weight={weight} remove={() => props.remove(name)} add={() => props.add(name)}
+		availableGold={props.availableGold} purchasedGear= {props.purchasedGear} />
+	);
+
+	return(
+		<div>
+		<h4>{type}</h4>
+		<table className="">
+			<caption></caption>
+			<thead>
+				<tr>
+					<th>Quantity</th>
+					<th>Name</th>
+					<th>Cost</th>
+					<th>Weight</th>
+				</tr>
+			</thead>
+			<tbody>
+				{listOfItems}
+			</tbody>
+		</table>
+		</div>
+	)
+}
+
 function TradeGood(props){
 	const name = props.name;
 	const cost = props.cost;
 	const item = props.item;	
-	let quantity = 0;
 	const availableGold = props.availableGold;
 	const purchasedGear = props.purchasedGear;
-	let disabledAdd = (availableGold < cost) ? true : false;
-	let disabledRemove = 0;
+	const disabledAdd = (availableGold < cost) ? true : false;
+	let quantity = 0;
 
 	// set quantity
 	if(purchasedGear){
@@ -349,13 +395,14 @@ function TradeGood(props){
 			}
 		}
 	}
-	
+	const disabledRemove = (quantity > 0) ? false : true;
+
 	return(
 		<tr>
 			<td>
 				<button className={"add_"+item+"_button"} onClick={props.add} disabled={disabledAdd}>+</button> 
 				{quantity}
-				<button className={"remove_"+item+"_button"} onClick={props.remove}>-</button>
+				<button className={"remove_"+item+"_button"} onClick={props.remove} disabled={disabledRemove}>-</button>
 			</td>
 			<td>{cost} gp</td>
 			<td>{item}</td>
@@ -376,14 +423,26 @@ function Weapons(props){
 	const special=props.special;
 	const expand=props.expand;
 	const availableGold = props.availableGold;
-	let disabledAdd = (availableGold < cost) ? true : false;
-	let disabledRemove = 0;
+	const disabledAdd = (availableGold < cost) ? true : false;
+	const purchasedGear = props.purchasedGear;
+	let quantity = 0;
+
+	// set quantity
+	if(purchasedGear){
+		for(let i=0;i<purchasedGear.length;i++){
+			if(purchasedGear[i].name === name){
+				quantity++;
+			}
+		}
+	}
+	const disabledRemove = (quantity > 0) ? false : true;
+
 	return(
 		<tr>
 			<td>
 				<button className={"add_"+name+"_button"} onClick={props.add} disabled={disabledAdd}>+</button>
-				0
-				<button className={"remove_"+name+"_button"} onClick={props.remove}>-</button>
+				{quantity}
+				<button className={"remove_"+name+"_button"} onClick={props.remove} disabled={disabledRemove}>-</button>
 			</td>
 			<td>{name}</td>
 			<td>{cost} gp</td>
@@ -410,17 +469,27 @@ function Armor(props){
 	const speed20=props.speed[Object.keys(props.speed)[0]];
 	const speed30=props.speed[Object.keys(props.speed)[1]];
 	const expand=props.expand;
-	const quantity = " 0 "
-
+	const purchasedGear = props.purchasedGear;
 	const availableGold = props.availableGold;
-	let disabledAdd = (availableGold < cost) ? true : false;
-	let disabledRemove = 0;
+	const disabledAdd = (availableGold < cost) ? true : false;
+	let quantity = 0;
+
+	// set quantity
+	if(purchasedGear){
+		for(let i=0;i<purchasedGear.length;i++){
+			if(purchasedGear[i].name === name){
+				quantity++;
+			}
+		}
+	}
+	const disabledRemove = (quantity > 0) ? false : true;
+
 	return(
 		<tr>
 			<td>
 				<button className={"add_"+name+"_button"} onClick={props.add} disabled={disabledAdd}>+</button>
 				{quantity}
-				<button className={"remove_"+name+"_button"} onClick={props.remove}>-</button>
+				<button className={"remove_"+name+"_button"} onClick={props.remove} disabled={disabledRemove}>-</button>
 			</td>
 			<td>{name}</td>
 			<td>{cost} gp</td>
@@ -451,9 +520,3 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps)(Equipment_Selection);
-
-
-
-/*		
- 						
-*/

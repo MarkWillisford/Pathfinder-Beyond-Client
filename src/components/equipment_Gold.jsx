@@ -14,11 +14,6 @@ export class Equipment_Gold extends React.Component {
 		this.props.dispatch(goldGenerationMethod(text));		
 	};
 
-	setGold(value){
-		console.log("gold is: ")
-		console.log(value);
-	};
-
 	render(){
 		const className = this.props.className;
 		const wealth = this.props.wealth;
@@ -97,8 +92,6 @@ class AverageGold extends React.Component{
 	}
 
 	handleClick(avg){
-		console.log("in handler");
-		console.log(avg);
 		this.props.dispatch(setGold(avg));
 	}
 

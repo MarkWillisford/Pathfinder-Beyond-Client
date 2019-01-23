@@ -389,11 +389,11 @@ export const characterReducer = (state=initialState, action) => {
           indexOfItem = i;
         }
       }
-      if(indexOfItem){
+      if(indexOfItem != undefined || indexOfItem != null){
         return Object.assign({}, state, {
           newCharacter:{...state.newCharacter, gear:[...state.newCharacter.gear.slice(0, indexOfItem),
                         ...state.newCharacter.gear.slice(indexOfItem + 1)]}
-        }); 
+        });
       }    
     } else if (action.type === actions.SPEND_GOLD){
       let newGold = state.newCharacter.availableGold - action.cost;

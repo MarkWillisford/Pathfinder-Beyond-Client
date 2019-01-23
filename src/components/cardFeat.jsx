@@ -15,7 +15,8 @@ export default class CardFeat extends React.Component{
 					<button>Select</button>
 				</div>
 
-{/*				<div className="featExpandedName">{this.props.name}</div>
+{/*				This becomes visible upon clicking the details button above
+				<div className="featExpandedName">{this.props.name}</div>
 				<div className="featExpandedDescription">{this.props.description}</div>
 				<div className="featExpandedPrerequisites">{this.props.prerequisites}</div>*/}
 			</div>
