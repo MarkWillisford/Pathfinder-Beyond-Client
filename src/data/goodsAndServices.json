@@ -1,0 +1,41 @@
+[
+	{
+		"id":0,
+		"name": "Backpack (Empty)",
+		"expand": false,
+		"description": "",
+		"type": "Adventuring Gear",
+		"collection": {
+			"kit": false,
+			"included": []
+		},
+		"cost": 2,
+		"weight": 2
+	},
+	{
+		"id":1,
+		"name": "Acid (Flask)",
+		"expand": false,
+		"description": "",
+		"type": "Special Substances and Items",
+		"collection": {
+			"kit": false,
+			"included": []
+		},
+		"cost": 10,
+		"weight": 1
+	},
+	{
+		"id":2,
+		"name": "Alchemist’s lab",
+		"expand": false,
+		"description": "",
+		"type": "Tools and Skill Kits",
+		"collection": {
+			"kit": false,
+			"included": []
+		},
+		"cost": 200,
+		"weight": 40
+	}
+]

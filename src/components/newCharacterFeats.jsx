@@ -55,6 +55,9 @@ class FeatCategory extends React.Component{
 		let feat = featsList.find( feat => feat.name === name);
 		
 		console.log(feat);
+		// okay, now I have the feat. I need to display additional information
+		// toggle the feat.expand. 
+
 	}
 
 	render(){
@@ -112,7 +115,6 @@ class FeatCategory extends React.Component{
 		};
 		return (
 			<div>
-				<p>say hi</p>
 				{featsToDisplay.map(({name, prerequisites, description}) => 
 					<CardFeat key={name} name={name} prerequisites={prerequisites} description={description} 
 					callback={()=> this.handleClick(name)} expand={false}/>
