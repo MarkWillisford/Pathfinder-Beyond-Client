@@ -95,3 +95,65 @@ Race:
 			]
 		}
 	}
+Equipment - Trade Good:
+	{
+		"id":,
+		"name": "",
+		"expand":false,
+		"description": ,
+		"cost": ,
+		"item": 
+	}
+Equipment - Weapon:
+	{
+		"id":,
+		"name": "",
+		"expand": false,
+		"description": ,
+		"category": "simple",
+		"use": "unarmed attacks",
+		"cost": ,
+		"dmgS": [],
+		"dmgM": [],
+		"critical": ,
+		"range": ,
+		"weight": ,
+		"type": [],
+		"special": [],
+		"material": ,
+		"masterwork": false,
+	}
+Equipment - Armor:
+	{
+		"id":,
+		"name": "",
+		"expand": false,
+		"description": ,
+		"use": "unarmed attacks",
+		"cost": ,
+		"bonus": {},
+		"maxDexBonus": "",
+		"armorCheckPenalty": "",
+		"arcaneSpellFailureChance": "",
+		"speed": {
+			"20": "",
+			"30": ""
+		},
+		"weight": "",
+		"material": ,
+		"masterwork": false,
+	}
+Equipment - Goods:
+	{
+		"id":,
+		"name": "",
+		"expand": false,
+		"description": ,
+		"type": ,
+		"collection": {
+			"kit": false,
+			"included": [],
+		},
+		"cost": ,
+		"weight": 
+	}

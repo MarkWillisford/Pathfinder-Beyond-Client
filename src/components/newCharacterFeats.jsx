@@ -14,10 +14,9 @@ export class NewCharacterFeats extends React.Component{
 		// first here we must check to ensure that race, class, and ability scores are complete. 
 		// If not, we display an error message directing the user to complete those pages before 
 		// continuing. 
-		//if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
-			//return ( <h1>NOT READY</h1> )
-		//} else 
-		if(help){
+		if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
+			return ( <h1>NOT READY</h1> )
+		} else if(help){
 		// if help is true, that screen is displayed
 			return (
 				<div className="">
@@ -28,7 +27,7 @@ export class NewCharacterFeats extends React.Component{
 		} else if(!complete){
 			return (
 		        <div className="newCharacterFeats">
-		        	<h1>Character Feats - todo</h1>	
+		        	<h1>Character Feats</h1>
 		        	{featCategories.map((category) => 
 		        		<FeatCategory key={category} name={category} />
 		        	)}
@@ -56,6 +55,9 @@ class FeatCategory extends React.Component{
 		let feat = featsList.find( feat => feat.name === name);
 		
 		console.log(feat);
+		// okay, now I have the feat. I need to display additional information
+		// toggle the feat.expand. 
+
 	}
 
 	render(){
@@ -113,7 +115,6 @@ class FeatCategory extends React.Component{
 		};
 		return (
 			<div>
-				<p>say hi</p>
 				{featsToDisplay.map(({name, prerequisites, description}) => 
 					<CardFeat key={name} name={name} prerequisites={prerequisites} description={description} 
 					callback={()=> this.handleClick(name)} expand={false}/>

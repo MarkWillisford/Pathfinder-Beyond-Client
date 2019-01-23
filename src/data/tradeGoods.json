@@ -1,0 +1,27 @@
+[
+	{
+		"id":0,
+		"name": "test1",
+		"expand":false,
+		"description": "a thing",
+		"cost": 5,
+		"item": "test1"
+	},	
+	{
+		"id":1,
+		"name": "test2",
+		"expand":false,
+		"description": "another thing",
+		"cost": 10,
+		"item": "test2"
+	},
+	{
+		"id":2,
+		"name": "test3",
+		"expand":false,
+		"description": "yet another thing",
+		"cost": 15,
+		"item": "test3"
+	}
+
+]

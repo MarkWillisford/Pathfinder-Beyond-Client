@@ -1,0 +1,59 @@
+[
+	{
+		"id":0,
+		"name": "Leather",
+		"expand": false,
+		"description": "",
+		"use": "light armor",
+		"cost": 10,
+		"bonus": {"armor":2},
+		"maxDexBonus": "6",
+		"armorCheckPenalty": "0",
+		"arcaneSpellFailureChance": 10,
+		"speed": {
+			"20": 20,
+			"30": 30
+		},
+		"weight": 15,
+		"material": null,
+		"masterwork": false
+	},
+	{
+		"id":1,
+		"name": "Chainmail",
+		"expand": false,
+		"description": "",
+		"use": "medium armor",
+		"cost": 150,
+		"bonus": {"armor":6},
+		"maxDexBonus": 2,
+		"armorCheckPenalty": -5,
+		"arcaneSpellFailureChance": 30,
+		"speed": {
+			"20": 15,
+			"30": 20
+		},
+		"weight": 40,
+		"material": null,
+		"masterwork": false
+	},
+	{
+		"id":2,
+		"name": "Half-plate",
+		"expand": false,
+		"description": "",
+		"use": "heavy armor",
+		"cost": 600,
+		"bonus": {"armor":8},
+		"maxDexBonus": 0,
+		"armorCheckPenalty": -7,
+		"arcaneSpellFailureChance": 40,
+		"speed": {
+			"20": 15,
+			"30": 20
+		},
+		"weight": 50,
+		"material": null,
+		"masterwork": false
+	}
+]
