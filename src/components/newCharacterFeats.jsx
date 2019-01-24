@@ -14,9 +14,9 @@ export class NewCharacterFeats extends React.Component{
 		// first here we must check to ensure that race, class, and ability scores are complete. 
 		// If not, we display an error message directing the user to complete those pages before 
 		// continuing. 
-		if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
+		/*if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
 			return ( <h1>NOT READY</h1> )
-		} else if(help){
+		} else */if(help){
 		// if help is true, that screen is displayed
 			return (
 				<div className="">
@@ -44,6 +44,18 @@ export class NewCharacterFeats extends React.Component{
 }
 
 class FeatCategory extends React.Component{
+	getCategoryList(){
+
+	}
+
+	getFeatList(catID){
+
+	}
+
+	getFeatDetails(featID){
+		
+	}
+
 	handleClick(name){
 		this.getDetails(name);
 	}

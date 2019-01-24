@@ -23,7 +23,7 @@ export class NewCharacterEquipment extends React.Component{
 		// If not, we display an error message directing the user to complete those pages before 
 		// continuing. 
 		//if( !(this.props.race && this.props.charClassComplete && this.props.abilityScores) ){
-		if( !(this.props.charClassComplete) ){
+		if( !(this.props.race && this.props.charClassComplete && this.props.abilityScores) ){
 			return ( <h1>NOT READY</h1> )
 		} else if(help){
 			// if help is true, that screen is displayed

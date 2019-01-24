@@ -3,6 +3,8 @@ import { capitalizeFirstLetter, arrayToSentence } from '../utility/helperFunctio
 //import { toggleFeatureExpand } from '../actions/index';
 
 export default class CardFeat extends React.Component{
+
+
 	render(){
 		return(
 			<div className="cardFeat">
