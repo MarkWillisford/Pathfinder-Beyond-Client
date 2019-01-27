@@ -1,45 +1,70 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import { capitalizeFirstLetter, arrayToSentence } from '../utility/helperFunctions';
-//import { toggleFeatureExpand } from '../actions/index';
 
-export default class CardFeat extends React.Component{
+import { setExpandedFeat } from '../actions/index';
 
+export class CardFeat extends React.Component{
+	getFeatDetails(name){
+		// this will be an API call, but for now it searches the list and retreaves feat details
+		const featsList = require('../data/feats');
+		let featToReturn = featsList.find( feat => feat.name === name);
+		return featToReturn;
+	}
+
+	show(name){
+		// set the name of the expanded feat in state
+		this.props.dispatch(setExpandedFeat(name));
+	}
+
+	hide(name){
+		name = "";
+		// remove the name of the expanded category in state
+		this.props.dispatch(setExpandedFeat(name));
+	}
 
 	render(){
+		let featToExpand ="";
+		if(this.props.featToExpand){
+			featToExpand = this.props.featToExpand.feat;
+		} else {
+			featToExpand = false;
+		}
+		let thisExpanded = ((featToExpand == this.props.name) ? true : false);
+
+		// get the list of feats only if this is expanded
+		let featDetails = null;
+		if(thisExpanded){
+			featDetails = this.getFeatDetails(this.props.name);
+			console.log(featDetails);
+		}
+
 		return(
 			<div className="cardFeat">
 				<div className="featExpandedFalse">
 					<div className="featName">{this.props.name}</div>
 					<div className="featPrerequisites">{this.props.prerequisites}</div>
 					<div className="featDescription">{this.props.description}</div>
+					<button onClick={() => this.show(this.props.name)} disabled={thisExpanded}>Show Details</button>
+					<button onClick={() => this.hide(this.props.name)} disabled={!thisExpanded}>Hide Details</button>
+					
+					{thisExpanded && <CardFeatExpanded feat={featDetails}/>}
 
-					<button onClick={this.props.callback}>Details</button>
-					<button>Select</button>
 				</div>
-
-{/*				This becomes visible upon clicking the details button above
-				<div className="featExpandedName">{this.props.name}</div>
-				<div className="featExpandedDescription">{this.props.description}</div>
-				<div className="featExpandedPrerequisites">{this.props.prerequisites}</div>*/}
 			</div>
 		)	
 	}	
 }
 
-function FeatExpanded(props){
+function CardFeatExpanded(props){
 	return(
-		<div className="featExpanded">
-
-
-
-
-		</div>
+		<div className="featExpandedTrue">EXPANDED WITH DETAILS!</div>
 	)
 }
 
+const mapStateToProps = state => ({
+	featToExpand:state.characterReducer.expanded,
 
+});
 
-/*				{ !this.props.expand && <button ref={this.props.name + "button"} onClick={this.expandDetails}>More</button> }
-				{ this.props.expand && <ClassExpanded thum={this.props.thum} name={this.props.name} 
-					expand={this.props.expand} features={this.props.features} callback={this.props.callback} 
-					addClassCallback={this.props.addClassCallback}/> }*/
+export default connect(mapStateToProps)(CardFeat);

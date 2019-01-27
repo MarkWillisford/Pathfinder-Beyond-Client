@@ -164,6 +164,18 @@ export const spendGold = (cost) => ({
 	cost, 
 });
 
+export const SET_EXPANDED_FEAT_CATEGORY = 'SET_EXPANDED_FEAT_CATEGORY';
+export const setExpandedFeatCategory = (name) => ({
+	type: SET_EXPANDED_FEAT_CATEGORY,
+	name, 
+});
+
+export const SET_EXPANDED_FEAT = 'SET_EXPANDED_FEAT';
+export const setExpandedFeat = (name) => ({
+	type: SET_EXPANDED_FEAT,
+	name, 
+});
+
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
 export const toggleFeatureExpand = (charClass, feature) => ({

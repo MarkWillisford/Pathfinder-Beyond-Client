@@ -397,10 +397,17 @@ export const characterReducer = (state=initialState, action) => {
       }    
     } else if (action.type === actions.SPEND_GOLD){
       let newGold = state.newCharacter.availableGold - action.cost;
-      console.log(newGold);
       return Object.assign({}, state, {
         newCharacter:{...state.newCharacter, availableGold:newGold,
         }
+      })
+    } else if (action.type === actions.SET_EXPANDED_FEAT_CATEGORY){
+      return Object.assign({}, state, {
+        expanded:{...state.expanded, featCategory:action.name}
+      })
+    } else if (action.type === actions.SET_EXPANDED_FEAT){
+      return Object.assign({}, state, {
+        expanded:{...state.expanded, feat:action.name}
       })
     } 
 

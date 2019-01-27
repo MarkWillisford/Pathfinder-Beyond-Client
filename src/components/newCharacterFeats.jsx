@@ -1,15 +1,39 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
+import CardFeatCategory from './cardFeatCategory';
 import CardFeat from './cardFeat';
 
 import './newCharacterFeats.css';
 
 export class NewCharacterFeats extends React.Component{	
+	getCategoryList(){
+		// this will be an api call, for now it just loops through the list of feats and
+		// returns an array of categories on its own
+		const featsList = require('../data/feats');
+		let featsCategory = [];		// list of categories
+		let foundCategory = false;		// flag
+		for(let i = 0; i<featsList.length;i++){				// for each feat
+			let categoryArray = featsList[i].type;			// get the array of category
+			foundCategory = false;							// make sure the marker is false 
+			for(let k=0;k<categoryArray.length;k++){		// for each string in our category array we will
+				for(let j=0;j<featsCategory.length;j++){		// search the list
+					if(featsCategory[j] == categoryArray){		// if the category is found
+						foundCategory = true;					// set the marker
+					};
+				};	
+				if(!foundCategory){ 							// if there is no marker, then it is a new category
+					featsCategory.push(categoryArray[k]); 			// add it to the list
+				};
+			};
+		};
+		return featsCategory;
+	}
+
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
-		const featCategories = ["general", "combat"];//, "combat", "critical", "item creation", "metamagic"];
+		const featCategories = this.getCategoryList();
 
 		// first here we must check to ensure that race, class, and ability scores are complete. 
 		// If not, we display an error message directing the user to complete those pages before 
@@ -29,7 +53,7 @@ export class NewCharacterFeats extends React.Component{
 		        <div className="newCharacterFeats">
 		        	<h1>Character Feats</h1>
 		        	{featCategories.map((category) => 
-		        		<FeatCategory key={category} name={category} />
+		        		<CardFeatCategory key={category} name={category} />
 		        	)}
 			    </div>
 		    );
@@ -43,18 +67,7 @@ export class NewCharacterFeats extends React.Component{
 	}
 }
 
-class FeatCategory extends React.Component{
-	getCategoryList(){
-
-	}
-
-	getFeatList(catID){
-
-	}
-
-	getFeatDetails(featID){
-		
-	}
+/*class FeatCategory extends React.Component{
 
 	handleClick(name){
 		this.getDetails(name);
@@ -62,7 +75,6 @@ class FeatCategory extends React.Component{
 
 	getDetails(name){
 		// currently static, will be an api call
-		console.log(name);
 		const featsList = require('../data/feats');
 		let feat = featsList.find( feat => feat.name === name);
 		
@@ -71,11 +83,11 @@ class FeatCategory extends React.Component{
 		// toggle the feat.expand. 
 
 	}
-
-	render(){
-		const featsList = require('../data/feats');
 		let index = 0;
 		let featsToDisplay = [];
+
+		console.log("testing method: ");
+		console.log(this.getFeatDetails("Spell Focus"));
 
 		//while(featsToDisplay.length < 3){
 		for(let i=0;i<featsList.length;i++){
@@ -133,8 +145,7 @@ class FeatCategory extends React.Component{
 				)}
 			</div>
 		)
-	}
-}
+}*/
 
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[6].complete,
@@ -145,9 +156,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(NewCharacterFeats);
-
-
-
-
-
-//onClick={()=> this.showFeatsInCategory(category)}
