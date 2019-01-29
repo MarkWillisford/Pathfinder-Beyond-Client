@@ -98,6 +98,12 @@ export const submitClassToState = (index) => ({
 	index,
 });
 
+export const SUMBIT_FEAT_TO_STATE = 'SUMBIT_FEAT_TO_STATE';
+export const submitFeatToState = (feat) => ({
+	type: SUMBIT_FEAT_TO_STATE,
+	feat,
+});
+
 export const SUBMIT_DETAILS_TO_STATE = 'SUBMIT_DETAILS_TO_STATE';
 export const submitDetailsToState = (values) => ({
 	type: SUBMIT_DETAILS_TO_STATE,
@@ -175,6 +181,8 @@ export const setExpandedFeat = (name) => ({
 	type: SET_EXPANDED_FEAT,
 	name, 
 });
+
+
 
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';

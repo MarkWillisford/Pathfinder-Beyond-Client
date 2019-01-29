@@ -87,7 +87,7 @@ class CardFeatCategory extends React.Component{
 
 		return(
 			<div>
-				<p>{this.props.name}</p>
+				<h2>{this.props.name}</h2>
 				<button onClick={() => this.show(this.props.name)} disabled={thisExpanded}>Show</button>
 				<button onClick={() => this.hide(this.props.name)} disabled={!thisExpanded}>Hide</button>
 				{thisExpanded && featsList.map((feat) => 

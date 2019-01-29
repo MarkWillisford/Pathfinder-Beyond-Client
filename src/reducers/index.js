@@ -409,9 +409,30 @@ export const characterReducer = (state=initialState, action) => {
       return Object.assign({}, state, {
         expanded:{...state.expanded, feat:action.name}
       })
+    } else if (action.type === actions.SUMBIT_FEAT_TO_STATE){
+      const indexOfStep = 6;
+      const step = state.creationSteps[indexOfStep];
+      if(!state.newCharacter.feats){
+        return Object.assign({}, state, {
+          creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
+            { ...step, complete:true},
+            ...state.creationSteps.filter(c => c.id > indexOfStep)
+          ], 
+          newCharacter:{...state.newCharacter, feats:[action.feat]}
+        })
+      } else {
+        return Object.assign({}, state, {
+          creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
+            { ...step, complete:true},
+            ...state.creationSteps.filter(c => c.id > indexOfStep)
+          ], 
+          newCharacter:{...state.newCharacter, feats:[...state.newCharacter.feats, action.feat]}
+        })        
+      }
     } 
 
-
+// first set the completed tag for step 0 to true
+        
 
     // Prep for future release
       /*else if (action.type === actions.TOGGLE_FEATURE_EXPAND){
