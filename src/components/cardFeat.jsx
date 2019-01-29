@@ -29,16 +29,16 @@ export class CardFeat extends React.Component{
 		// We now have the feat the user selected;
 		// 1.) If there are any selections required we need to get those from 
 		// the user, 
+		let selections = null;
+		if(feat.selections){
+			console.log("hi");
+		}
 
-		// 2.) If the feat is not reapeatable (like power attack) we need to 
-		// varify that the character doesn't already have the feat.
-
-		// 3.) If all the available feat slots have been filled we need to set 
-		// feats task to completed. 
 		this.props.dispatch(submitFeatToState(feat));
 	}
 
 	render(){
+		let feats = this.props.feats;
 		let featToExpand ="";
 		if(this.props.featToExpand){
 			featToExpand = this.props.featToExpand.feat;
@@ -52,6 +52,21 @@ export class CardFeat extends React.Component{
 		if(thisExpanded){
 			featDetails = this.getFeatDetails(this.props.name);
 		}
+
+		// I only want to make the feat selection button if the feat prereqs are done and
+		// if the user doesn't already have the feat (if it isn't repeatable)
+		let selectable = true;
+		let errorMessage = "";
+		// Is feat repeatable if I already have it?
+		if(feats && !this.props.repeatable){	// I already have it AND it isn't repeatable
+			selectable = false;
+			errorMessage = "Feat is already selected";
+		};
+		// Are prereques complete?
+		if(this.props.prerequisites){
+			console.log(this.props.prerequisites);
+		}
+
 
 		return(
 			<div className="cardFeat">
@@ -104,7 +119,7 @@ function CardFeatExpanded(props){
 
 const mapStateToProps = state => ({
 	featToExpand:state.characterReducer.expanded,
-
+	feats:state.characterReducer.newCharacter.feats,
 });
 
 export default connect(mapStateToProps)(CardFeat);

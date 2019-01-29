@@ -16,6 +16,8 @@ Feats:
 		"normal": ,
 		"special": ,
 		"source": ,
+		"repeatable":false,
+		"selections":[],
 	}
 
 Race:

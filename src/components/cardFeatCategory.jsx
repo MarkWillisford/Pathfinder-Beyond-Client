@@ -52,6 +52,7 @@ class CardFeatCategory extends React.Component{
 					"name":featsList[i].name,
 					"prerequisites":prereqString,
 					"description":featsList[i].description,
+					"repeatable":featsList[i].repeatable,
 				};
 				featsListToReturn.push(feat);
 			}
@@ -92,7 +93,7 @@ class CardFeatCategory extends React.Component{
 				<button onClick={() => this.hide(this.props.name)} disabled={!thisExpanded}>Hide</button>
 				{thisExpanded && featsList.map((feat) => 
 					<CardFeat key={feat.name} name={feat.name} prerequisites={feat.prerequisites}
-					description={feat.description} />
+					description={feat.description} repeatable={feat.repeatable}/>
 				)}
 			</div>
 		)
