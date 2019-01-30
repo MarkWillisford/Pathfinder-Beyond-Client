@@ -47,8 +47,11 @@ const initialState = {
     },
   }],
 };
-
 export const characterReducer = (state=initialState, action) => {
+  // refactor to switch case
+  // return ...state,
+  //    changes: action.changes,
+
     if (action.type === actions.LOAD_CHARACTER) {
       return Object.assign({}, state, {
         char:action.char,
@@ -187,9 +190,8 @@ export const characterReducer = (state=initialState, action) => {
         disabledPrev:action.disabledPrev,         
       })
     } else if (action.type === actions.TOGGLE_RACE_EXPAND){
-      const race = state.racesArray.find(r => r.id === action.index);
+      const race = state.racesArray.find(r => r.id === action.index);// @todo could be null
       const expand = race.expand;
-      // THIS WORKS TO ENABLE THE CLICKED RACE 
       return { ...state, 
         racesArray:[ ...state.racesArray.filter(r => r.id < race.id), 
           { ...race, expand:!expand }, 
@@ -444,3 +446,7 @@ export const characterReducer = (state=initialState, action) => {
     }*/;
     return state;
 };
+
+// default:
+  // console.warn(`unhandled action: ${action.type}`);
+  // return state

@@ -63,18 +63,45 @@ export class CardFeat extends React.Component{
 			errorMessage = "Feat is already selected";
 		};
 		// Are prereques complete?
-		if(this.props.prerequisites){
-			console.log(this.props.prerequisites);
+		if(this.props.prerequisitesString){
+			let obj = this.props.prerequisites;
+			console.log(obj);
+			for(let i=0;i<obj.length;i++){
+				let key = obj[i].type;
+				   // do something with obj[key] which is an array
+				switch(key){
+					case "race":
+					break;
+					case "class":
+					break;
+					case "classFeature":
+					break;
+					case "level":
+					break;
+					case "stat":
+						console.log(obj[i]);
+						console.log(obj[i].data);	// object with stat and value
+						console.log("prereq is: ");
+						console.log("a " + obj[i].data.stat);
+						console.log("with a score of "+ obj[i].data.value);
+					break;
+					case "feat":
+					break;
+					case "options":
+					break;
+					default:
+				};
+			}
 		}
 
 
 		return(
 			<div className="cardFeat">
 				{!thisExpanded && <CardFeatSummery name={this.props.name}
-					prerequisites={this.props.prerequisites} description={this.props.description}
+					prerequisitesString={this.props.prerequisitesString} description={this.props.description}
 					hide={() => this.hide(this.props.name)} show={() => this.show(this.props.name)} 
 					thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}/> }
-				{thisExpanded && <CardFeatExpanded feat={featDetails} prerequisites={this.props.prerequisites}
+				{thisExpanded && <CardFeatExpanded feat={featDetails} prerequisitesString={this.props.prerequisitesString}
 					hide={() => this.hide(this.props.name)} show={() => this.show(this.props.name)} 
 					thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}/>}
 			</div>
@@ -86,7 +113,7 @@ function CardFeatSummery(props){
 	return(
 		<div>
 			<h3 className="featName">{props.name}</h3>
-			<div className="featPrerequisites">{props.prerequisites}</div>
+			<div className="featPrerequisites">{props.prerequisitesString}</div>
 			<div className="featDescription">{props.description}</div>
 			<button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
 			<button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
@@ -96,7 +123,6 @@ function CardFeatSummery(props){
 }
 
 function CardFeatExpanded(props){
-	console.log(props.feat);
 	let special = (props.feat.special == "" || props.feat.special == null) ? false : true;
 	let normal = (props.feat.normal == "" || props.feat.normal == null) ? false : true;
 	return(
@@ -106,7 +132,7 @@ function CardFeatExpanded(props){
 			<button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
 			<button onClick={() => props.submit()}>Select</button>
 			<div className="featDescription">{props.feat.description}</div>
-			<div className="featPrerequisites"><strong>Prerequisite(s): </strong>{props.prerequisites}</div>
+			<div className="featPrerequisites"><strong>Prerequisite(s): </strong>{props.prerequisitesString}</div>
 			<div className="featBenefit"><strong>Benefit: </strong>{props.feat.benefit}</div>
 			{normal && <div><strong>Normal: </strong>{props.feat.normal}</div>}
 			{special && <div><strong>Special: </strong>{props.feat.special}</div>}

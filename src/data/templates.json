@@ -11,6 +11,19 @@ Feats:
 		"prerequisites_level": ,
 		"prerequisites_stat": {},
 		"prerequisites_feat": [],
+
+
+		"prerequisites":[
+			{
+				"type":"",	// feat, race, class, options, etc
+				"data": ""	// this feat, or that class, etc. Note; if type is options
+							// this will be an array of these same type / data objects
+			}
+		],
+
+
+
+
 		"benefit": ,
 		"progromaticBenefit": ,
 		"normal": ,

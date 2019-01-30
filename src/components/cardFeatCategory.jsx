@@ -16,41 +16,43 @@ class CardFeatCategory extends React.Component{
 				//create string for prereqs
 				let prereqString = "";
 				let prereqStringArray = [];
-				if(featsList[i].prerequisites_list){
-					for(let j=0;j<featsList[i].prerequisites_list.length;j++){
-						//if this is an array, then loop throught that . . .   
-						if(Array.isArray(featsList[i].prerequisites_list[j])){
-							// this array could be objects (stats)
-							// or strings (list of feats)
-							if(typeof featsList[i].prerequisites_list[j][0] == 'string'){
-								// ok, its the list of feats; loop through and add each element to the prereqString
-								let str = featsList[i].prerequisites_list[j].join(", ");
-								if(prereqString != ""){
-									prereqString += str;
+				let prereqs = {};
+				if(featsList[i].prerequisites){
+					// If this is here, it is an array of prereq objects
+					for(let j=0;j<featsList[i].prerequisites.length;j++){
+						if(featsList[i].prerequisites[j].type === "options"){
+							// I know that data is an array of objects, 
+							for(let k=0;k<featsList[i].prerequisites[j].data.length;k++){
+								if(featsList[i].prerequisites[j].type === "stat"){
+									let str1 = Object.values(featsList[i].prerequisites[j].data[k].data).join(" ");
+									prereqStringArray.push(str1);					
 								} else {
-									prereqString = str;
+									let str1 = Object.values(featsList[i].prerequisites[j].data[k]).join(" ");
+									prereqStringArray.push(str1);			
 								}
 							}
-							else if(typeof featsList[i].prerequisites_list[j][0] == 'object'){
-								// in this case it is an array of stat objects
-								for(let k = 0; k<featsList[i].prerequisites_list[j].length;k++){
-									let str = Object.values(featsList[i].prerequisites_list[j][k]).join(" ");
-									prereqStringArray.push(str);
-								}
-								let str = prereqStringArray.join(", ")
-								if(prereqString != ""){
-									prereqString += str;
-								} else {
-									prereqString = str;
-								}
-							}
+						} else if(featsList[i].prerequisites[j].type === "stat"){
+							// now I know data is an object with "stat" and "value" keys
+							let str1 = Object.values(featsList[i].prerequisites[j].data).join(" ");
+							prereqStringArray.push(str1);					
+						} else {
+							// in this situation, I know that 'data' is a string; "paladin", "5", etc
+							let str1 = Object.values(featsList[i].prerequisites[j]).join(" ");
+							let prereqStringArray = [];
+							prereqStringArray.push(str1);						
 						}
 					}
+					let str = prereqStringArray.join(", ")
+					if(prereqString != ""){
+						prereqString += str;
+					} else {
+						prereqString = str;
+					}	
 				}
-
 				let feat = {
 					"name":featsList[i].name,
-					"prerequisites":prereqString,
+					"prerequisitesString":prereqString,
+					"prerequisites":featsList[i].prerequisites,
 					"description":featsList[i].description,
 					"repeatable":featsList[i].repeatable,
 				};
@@ -92,8 +94,8 @@ class CardFeatCategory extends React.Component{
 				<button onClick={() => this.show(this.props.name)} disabled={thisExpanded}>Show</button>
 				<button onClick={() => this.hide(this.props.name)} disabled={!thisExpanded}>Hide</button>
 				{thisExpanded && featsList.map((feat) => 
-					<CardFeat key={feat.name} name={feat.name} prerequisites={feat.prerequisites}
-					description={feat.description} repeatable={feat.repeatable}/>
+					<CardFeat key={feat.name} name={feat.name} prerequisitesString={feat.prerequisitesString}
+					description={feat.description} repeatable={feat.repeatable} prerequisites={feat.prerequisites}/>
 				)}
 			</div>
 		)
