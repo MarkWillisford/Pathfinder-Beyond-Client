@@ -182,6 +182,11 @@ export const setExpandedFeat = (name) => ({
 	name, 
 });
 
+export const ADD_BONUS = 'ADD_BONUS';
+export const addBonus = (bonus) => ({
+	type: ADD_BONUS,
+	bonus,
+})
 
 
 // Prep for future release
