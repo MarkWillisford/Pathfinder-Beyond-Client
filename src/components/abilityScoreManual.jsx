@@ -7,6 +7,8 @@ import { setAvailableStats } from '../actions/index';
 import { saveAbilityScoreOptions } from '../actions/index';
 import { submitAbilityScoreToState } from '../actions/index';
 import { setStepToComplete } from '../actions/index';
+import { addBonus } from '../actions/index';
+import { createBonus } from '../utility/statObjectFactories'
 
 export class AbilityScoreManual extends React.Component {
     onSubmit(values) {
@@ -21,6 +23,15 @@ export class AbilityScoreManual extends React.Component {
 		let ability = event.target.name.split(/(?=[A-Z])/)[0];
 		let value = event.target.value;
 		this.props.dispatch(submitAbilityScoreToState( ability, "base", value ));	
+
+		let bonus = createBonus({ 
+			name:"character base", 
+			source:"character base", 
+			stat:ability, 
+			type:"base", 
+			duration:-1, 
+			amount:value });
+		this.props.dispatch(addBonus(bonus));
 	}
 
 	render(){

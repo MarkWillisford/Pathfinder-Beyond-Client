@@ -9,8 +9,8 @@ export const createBonus = ({ name, source, stat, type, duration, amount }) => (
 	amount,
 });
 
-export const createStat = ({ name, flag = false, arrayOfBonuses, sum = { } }) => ({
-	name, flag, arrayOfBonuses, sum, 
+export const createStat = ({ name, flag = false, bonuses, sum = { } }) => ({
+	name, flag, bonuses, sum, 
 	// to get sum:
 	// sum is an object with the highest of each bonus type in it. 
 	// I.E. +4 deflection, +3 natural armor enhancement, etc . . .    
@@ -20,10 +20,8 @@ export const createStat = ({ name, flag = false, arrayOfBonuses, sum = { } }) =>
 	setSum(){
 		let total = 0;
 		let arrayOfHighestBonuses = [ ];
-		for(let i=0; i<this.arrayOfBonuses.length; i++){
-			let typeToFind = this.arrayOfBonuses[i].type;
-			// console.log('checking arrayOfHighestBonuses Array for type ');
-			// console.log(typeToFind);
+		for(let i=0; i<this.bonuses.length; i++){
+			let typeToFind = this.bonuses[i].type;
 
 			// **************  This is all if normal non-stacking bonuses are used *********
 			// ****  If the bonus is dodge or untyped then we need to skip part of this ****
@@ -36,7 +34,7 @@ export const createStat = ({ name, flag = false, arrayOfBonuses, sum = { } }) =>
 				for(let j=0; j<arrayOfHighestBonuses.length; j++){
 					if(arrayOfHighestBonuses[j].type == typeToFind){
 						// if so, compare and keep only the largest 
-						if(this.arrayOfBonuses[i].amount > arrayOfHighestBonuses[j].amount){
+						if(this.bonuses[i].amount > arrayOfHighestBonuses[j].amount){
 							// console.log('new bonus is larger')
 							found = true;
 							replace = true;
@@ -52,13 +50,13 @@ export const createStat = ({ name, flag = false, arrayOfBonuses, sum = { } }) =>
 				if(found && replace){
 					// we found it and we want to replace it
 					total = total - arrayOfHighestBonuses[foundAt].amount;
-					total = total + this.arrayOfBonuses[i].amount;
-					arrayOfHighestBonuses[foundAt] = this.arrayOfBonuses[i];
+					total = total + this.bonuses[i].amount;
+					arrayOfHighestBonuses[foundAt] = this.bonuses[i];
 				} else if(!found){
 					// if not, add this bonus to the array and be done
 					// console.log('no matching type found. adding first now')
-					arrayOfHighestBonuses.push(this.arrayOfBonuses[i]);
-					total = total + this.arrayOfBonuses[i].amount;
+					arrayOfHighestBonuses.push(this.bonuses[i]);
+					total = total + this.bonuses[i].amount;
 				};
 			} else { 
 				// this means that the type is dodge or untyped
@@ -66,15 +64,15 @@ export const createStat = ({ name, flag = false, arrayOfBonuses, sum = { } }) =>
 				// checking array of highest bonuses
 				for(let j=0; j<arrayOfHighestBonuses.length; j++){
 					if(arrayOfHighestBonuses[j].type == typeToFind){
-						arrayOfHighestBonuses[j].sum += this.arrayOfBonuses[i].amount;
-						arrayOfHighestBonuses[j].bonuses.push(this.arrayOfBonuses[i]);
+						arrayOfHighestBonuses[j].sum += this.bonuses[i].amount;
+						arrayOfHighestBonuses[j].bonuses.push(this.bonuses[i]);
 						found = true;
 					};
 				};
 
 				if(!found){
-					arrayOfHighestBonuses.push({bonuses: [this.arrayOfBonuses[i]]});
-					total = total + this.arrayOfBonuses[i].amount;
+					arrayOfHighestBonuses.push({bonuses: [this.bonuses[i]]});
+					total = total + this.bonuses[i].amount;
 				};
 			}; 
 
