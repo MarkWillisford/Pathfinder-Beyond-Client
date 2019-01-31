@@ -1,4 +1,5 @@
 import * as actions from '../actions';
+import { createStat } from '../utility/statObjectFactories'
 
 const initialState = {
   user:"Me",
@@ -47,119 +48,126 @@ const initialState = {
     },
   }],
 };
+const creationSteps = [
+  {name:"Character Basics",
+  id:0,
+  complete:false},
+  {name:"Race",
+  id:1,
+  complete:false},          
+  {name:"Class",
+  id:2,
+  complete:false},
+  {name:"Ability Scores",
+  id:3,
+  complete:false},
+  {name:"Details",
+  id:4,
+  complete:false},
+  {name:"Skills",
+  id:5,
+  url:"",
+  completedUrl:"",
+  complete:false},
+  {name:"Feats",
+  id:6,
+  url:"",
+  completedUrl:"",
+  complete:false},
+  {name:"Equipment",
+  id:7,
+  url:"",
+  completedUrl:"",
+  complete:false},
+];
+const newCharacter = {
+  "characterStats":[],
+  "strength": {
+    base: 0,
+    racial: 0,
+  },
+  "dexterity": {
+    base: 0,
+    racial: 0,
+  },
+  "constitution": {
+    base: 0,
+    racial: 0,
+  },
+  "intelligence": {
+    base: 0,
+    racial: 0,
+  },
+  "wisdom": {
+    base: 0,
+    racial: 0,
+  },
+  "charisma": {
+    base: 0,
+    racial: 0,
+  },
+  charClass:{
+    classFeatures:{
+      skills:0,
+    }
+  },
+  skills:{
+    "acrobatics": {},
+    "appraise": {},
+    "bluff": {},
+    "climb": {},
+    "craft": {},
+    "diplomacy": {},
+    "disableDevice": {},
+    "disguise": {},
+    "escapeArtist": {},
+    "fly": {},
+    "handleAnimal": {},
+    "heal": {},
+    "intimidate": {},
+    "knowledge (arcana)": {},
+    "knowledge (dungeoneering)": {},
+    "knowledge (engineering)": {},
+    "knowledge (geography)": {},
+    "knowledge (history)": {},
+    "knowledge (local)": {},
+    "knowledge (nature)": {},
+    "knowledge (nobility)": {},
+    "knowledge (planes)": {},
+    "knowledge (religion)": {},
+    "linguistics": {},
+    "perception": {},
+    "perform": {},
+    "profession": {},
+    "ride": {},
+    "senseMotive": {},
+    "sleightOfHand": {},
+    "spellcraft": {},
+    "stealth": {},
+    "survival": {},
+    "swim": {},
+    "useMagicDevice": {},
+  }
+};
 
 export const characterReducer = (state=initialState, action) => {
+  // refactor to switch case
+  // return ...state,
+  //    changes: action.changes,
+
     if (action.type === actions.LOAD_CHARACTER) {
       return Object.assign({}, state, {
         char:action.char,
       });
     } else if (action.type === actions.LOAD_CREATION_STEPS){
       return Object.assign({}, state, {
-        creationSteps:[
-          {name:"Character Basics",
-          id:0,
-          complete:false},
-          {name:"Race",
-          id:1,
-          complete:false},          
-          {name:"Class",
-          id:2,
-          complete:false},
-          {name:"Ability Scores",
-          id:3,
-          complete:false},
-          {name:"Details",
-          id:4,
-          complete:false},
-          {name:"Skills",
-          id:5,
-          url:"",
-          completedUrl:"",
-          complete:false},
-          {name:"Feats",
-          id:6,
-          url:"",
-          completedUrl:"",
-          complete:false},
-          {name:"Equipment",
-          id:7,
-          url:"",
-          completedUrl:"",
-          complete:false},
-        ],
+        creationSteps:creationSteps,
         help:false,
         currentStep:0,
         disabledNext: false,
         disabledPrev: true,
         // the actual character object that will be converted and saved in memory
-        newCharacter:{
-          "strength": {
-            base: 0,
-            racial: 0,
-          },
-          "dexterity": {
-            base: 0,
-            racial: 0,
-          },
-          "constitution": {
-            base: 0,
-            racial: 0,
-          },
-          "intelligence": {
-            base: 0,
-            racial: 0,
-          },
-          "wisdom": {
-            base: 0,
-            racial: 0,
-          },
-          "charisma": {
-            base: 0,
-            racial: 0,
-          },
-          charClass:{
-            classFeatures:{
-              skills:0,
-            }
-          },
-          skills:{
-            "acrobatics": {},
-            "appraise": {},
-            "bluff": {},
-            "climb": {},
-            "craft": {},
-            "diplomacy": {},
-            "disableDevice": {},
-            "disguise": {},
-            "escapeArtist": {},
-            "fly": {},
-            "handleAnimal": {},
-            "heal": {},
-            "intimidate": {},
-            "knowledge (arcana)": {},
-            "knowledge (dungeoneering)": {},
-            "knowledge (engineering)": {},
-            "knowledge (geography)": {},
-            "knowledge (history)": {},
-            "knowledge (local)": {},
-            "knowledge (nature)": {},
-            "knowledge (nobility)": {},
-            "knowledge (planes)": {},
-            "knowledge (religion)": {},
-            "linguistics": {},
-            "perception": {},
-            "perform": {},
-            "profession": {},
-            "ride": {},
-            "senseMotive": {},
-            "sleightOfHand": {},
-            "spellcraft": {},
-            "stealth": {},
-            "survival": {},
-            "swim": {},
-            "useMagicDevice": {},
-          }
-        },
+        newCharacter:newCharacter,
         abilityScoreGenerationMethod:"",
         statArrayToAssign:[],
         detailsExpand:[
@@ -187,9 +195,8 @@ export const characterReducer = (state=initialState, action) => {
         disabledPrev:action.disabledPrev,         
       })
     } else if (action.type === actions.TOGGLE_RACE_EXPAND){
-      const race = state.racesArray.find(r => r.id === action.index);
+      const race = state.racesArray.find(r => r.id === action.index);// @todo could be null
       const expand = race.expand;
-      // THIS WORKS TO ENABLE THE CLICKED RACE 
       return { ...state, 
         racesArray:[ ...state.racesArray.filter(r => r.id < race.id), 
           { ...race, expand:!expand }, 
@@ -397,22 +404,101 @@ export const characterReducer = (state=initialState, action) => {
       }    
     } else if (action.type === actions.SPEND_GOLD){
       let newGold = state.newCharacter.availableGold - action.cost;
-      console.log(newGold);
       return Object.assign({}, state, {
         newCharacter:{...state.newCharacter, availableGold:newGold,
         }
       })
-    } 
+    } else if (action.type === actions.SET_EXPANDED_FEAT_CATEGORY){
+      return Object.assign({}, state, {
+        expanded:{...state.expanded, featCategory:action.name}
+      })
+    } else if (action.type === actions.SET_EXPANDED_FEAT){
+      return Object.assign({}, state, {
+        expanded:{...state.expanded, feat:action.name}
+      })
+    } else if (action.type === actions.SUMBIT_FEAT_TO_STATE){
+      const indexOfStep = 6;
+      const step = state.creationSteps[indexOfStep];
+      if(!state.newCharacter.feats){
+        return Object.assign({}, state, {
+          creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
+            { ...step, complete:true},
+            ...state.creationSteps.filter(c => c.id > indexOfStep)
+          ], 
+          newCharacter:{...state.newCharacter, feats:[action.feat]}
+        })
+      } else {
+        return Object.assign({}, state, {
+          creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
+            { ...step, complete:true},
+            ...state.creationSteps.filter(c => c.id > indexOfStep)
+          ], 
+          newCharacter:{...state.newCharacter, feats:[...state.newCharacter.feats, action.feat]}
+        })        
+      }
+    } else if (action.type === actions.ADD_BONUS){
+      // flags
+      let statToAddBonusTo = action.bonus.stat;
+      let found = false;
+      let foundAt = null;
+      let entered = false;
+      // look through the bonus array for the bonus stat
+      for(let i=0;i<state.newCharacter.characterStats.length;i++){
+        if(state.newCharacter.characterStats[i].name === statToAddBonusTo){
+          found = true;
+          foundAt = i;
+        }
+      }
+      if(!found){
+        console.log("need a new stat created");
+        return Object.assign({}, state, {
+          newCharacter:{...state.newCharacter, characterStats:[
+            ...state.newCharacter.characterStats, createStat({
+              name:statToAddBonusTo,
+              bonuses:[action.bonus]
+            })]
+          }
+        })
+      } else {
+        console.log("add the bonus");
+        //statObject = state.newCharacter.characterStats[foundAt];
+        //statObjectBonuses = state.newCharacter.characterStats[foundAt].bonuses;
+/*        return Object.assign({}, state, {
+          newCharacter:{...state.newCharacter, characterStats:[
+            ...state.newCharacter.characterStats, statObject:{
+              ...statObject, bonuses:[
+                ...statObjectBonuses, action.item
+              ]
+            }]
+          }
+        }) */
+        console.log(action.bonus);
+        let bonuses = state.newCharacter.characterStats[foundAt].bonuses;
+        return{
+          ...state,
+          newCharacter:{
+            ...state.newCharacter,
+            characterStats: state.newCharacter.characterStats.map(
+              (content, i) => i === foundAt ? {...content, bonuses:[...bonuses, action.bonus]  } : content
+            )
 
 
-
-    // Prep for future release
-      /*else if (action.type === actions.TOGGLE_FEATURE_EXPAND){
-      const charClass = state.classesArray.find(r => r.name === action.charClass)
-      const feature = charClass.classFeatures.table.find(r => r[5].find(x => x.name === action.feature));
-      console.log(feature);
-
-      
-    }*/;
+            /*{
+              ...state.newCharacter.characterStats, 
+              [foundAt]:[
+                ...state.newCharacter.characterStats[foundAt],
+                bonuses:[
+                  ...state.newCharacter.characterStats[foundAt].bonuses, action.bonus
+                ]
+              ]
+            }*/
+          }
+        }
+      }
+    }
     return state;
 };
+
+// default:
+  // console.warn(`unhandled action: ${action.type}`);
+  // return state

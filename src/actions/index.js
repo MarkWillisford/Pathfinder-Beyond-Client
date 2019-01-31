@@ -98,6 +98,12 @@ export const submitClassToState = (index) => ({
 	index,
 });
 
+export const SUMBIT_FEAT_TO_STATE = 'SUMBIT_FEAT_TO_STATE';
+export const submitFeatToState = (feat) => ({
+	type: SUMBIT_FEAT_TO_STATE,
+	feat,
+});
+
 export const SUBMIT_DETAILS_TO_STATE = 'SUBMIT_DETAILS_TO_STATE';
 export const submitDetailsToState = (values) => ({
 	type: SUBMIT_DETAILS_TO_STATE,
@@ -163,6 +169,25 @@ export const spendGold = (cost) => ({
 	type: SPEND_GOLD,
 	cost, 
 });
+
+export const SET_EXPANDED_FEAT_CATEGORY = 'SET_EXPANDED_FEAT_CATEGORY';
+export const setExpandedFeatCategory = (name) => ({
+	type: SET_EXPANDED_FEAT_CATEGORY,
+	name, 
+});
+
+export const SET_EXPANDED_FEAT = 'SET_EXPANDED_FEAT';
+export const setExpandedFeat = (name) => ({
+	type: SET_EXPANDED_FEAT,
+	name, 
+});
+
+export const ADD_BONUS = 'ADD_BONUS';
+export const addBonus = (bonus) => ({
+	type: ADD_BONUS,
+	bonus,
+})
+
 
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
