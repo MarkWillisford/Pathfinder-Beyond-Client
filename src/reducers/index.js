@@ -150,6 +150,76 @@ const newCharacter = {
   }
 };
 
+function setSum(stat){
+  console.log(stat);
+  let total = 0;
+  let arrayOfHighestBonuses = [ ];
+  for(let i=0; i<stat.bonuses.length; i++){
+    let typeToFind = stat.bonuses[i].type;
+    console.log("we will be looking for");
+    console.log(typeToFind);
+    console.log("i = ");
+    console.log(i);
+      // **************  This is all if normal non-stacking bonuses are used *********
+      // ****  If the bonus is dodge or untyped then we need to skip part of this ****
+    if(typeToFind != 'dodge' && typeToFind != 'untyped'){    
+      console.log("we're in the IF") 
+      let found = false;
+      let replace = false;
+      let foundAt = null;
+      // checking current 'highest' bonuses
+      for(let j=0; j<arrayOfHighestBonuses.length; j++){
+        console.log("in the for loop, iteration #:");
+        console.log(j);
+        if(arrayOfHighestBonuses[j].type == typeToFind){
+          // if so, compare and keep only the largest
+          if(stat.bonuses[i].amount > arrayOfHighestBonuses[j].amount){
+             console.log('new bonus is larger')
+            found = true;
+            replace = true;
+            foundAt = j;
+          } else {
+            console.log("we found one, but it is already larger") ;
+            found = true;
+            replace = false;
+          };
+        };
+      };
+      if(found && replace){
+        // we found it and we want to replace it
+        total = total - arrayOfHighestBonuses[foundAt].amount;
+        total = total + stat.bonuses[i].amount;
+        arrayOfHighestBonuses[foundAt] = stat.bonuses[i];
+      } else if(!found){
+        // if not, add this bonus to the array and be done
+         console.log('no matching type found. adding first now')
+        arrayOfHighestBonuses.push(stat.bonuses[i]);
+        total = total + stat.bonuses[i].amount;
+      };
+    } else { 
+      // this means that the type is dodge or untyped
+      let found = false;
+      // checking array of highest bonuses
+      for(let j=0; j<arrayOfHighestBonuses.length; j++){
+        if(arrayOfHighestBonuses[j].type == typeToFind){
+          arrayOfHighestBonuses[j].sum += stat.bonuses[i].amount;
+          arrayOfHighestBonuses[j].bonuses.push(stat.bonuses[i]);
+          found = true;
+        };
+      };
+
+      if(!found){
+        arrayOfHighestBonuses.push({bonuses: [stat.bonuses[i]]});
+        total = total + stat.bonuses[i].amount;
+      };
+    }; 
+  };  // end of for loop - array of current bonuses
+
+  let sum = { "total": total, "bonuses": arrayOfHighestBonuses };
+  console.log(sum);
+  return sum;
+}
+
 export const characterReducer = (state=initialState, action) => {
   // refactor to switch case
   // return ...state,
@@ -445,57 +515,67 @@ export const characterReducer = (state=initialState, action) => {
       // look through the bonus array for the bonus stat
       for(let i=0;i<state.newCharacter.characterStats.length;i++){
         if(state.newCharacter.characterStats[i].name === statToAddBonusTo){
+          console.log("in reducer, found");
+          console.log(statToAddBonusTo);
+          console.log("at i = ");
+          console.log(i);
           found = true;
           foundAt = i;
         }
       }
+      // Not found so we need a new stat created.
       if(!found){
-        console.log("need a new stat created");
         return Object.assign({}, state, {
           newCharacter:{...state.newCharacter, characterStats:[
             ...state.newCharacter.characterStats, createStat({
               name:statToAddBonusTo,
+              flag:true,
               bonuses:[action.bonus]
             })]
           }
         })
       } else {
+        // found, so add it to the correct bonuses array
         console.log("add the bonus");
-        //statObject = state.newCharacter.characterStats[foundAt];
-        //statObjectBonuses = state.newCharacter.characterStats[foundAt].bonuses;
-/*        return Object.assign({}, state, {
-          newCharacter:{...state.newCharacter, characterStats:[
-            ...state.newCharacter.characterStats, statObject:{
-              ...statObject, bonuses:[
-                ...statObjectBonuses, action.item
-              ]
-            }]
-          }
-        }) */
-        console.log(action.bonus);
         let bonuses = state.newCharacter.characterStats[foundAt].bonuses;
         return{
           ...state,
           newCharacter:{
             ...state.newCharacter,
             characterStats: state.newCharacter.characterStats.map(
-              (content, i) => i === foundAt ? {...content, bonuses:[...bonuses, action.bonus]  } : content
+              (content, i) => i === foundAt ? {...content, 
+                bonuses:[...bonuses, action.bonus]} : content
             )
-
-
-            /*{
-              ...state.newCharacter.characterStats, 
-              [foundAt]:[
-                ...state.newCharacter.characterStats[foundAt],
-                bonuses:[
-                  ...state.newCharacter.characterStats[foundAt].bonuses, action.bonus
-                ]
-              ]
-            }*/
-          }
+          },
         }
       }
-    }
+    } else if (action.type === actions.SUM_BONUS){
+      // flags
+      let statToAddBonusTo = action.bonus.stat;
+      let found = false;
+      let foundAt = null;
+      // look through the bonus array for the bonus stat
+      for(let i=0;i<state.newCharacter.characterStats.length;i++){
+        if(state.newCharacter.characterStats[i].name === statToAddBonusTo){
+          console.log("in reducer, found");
+          console.log(statToAddBonusTo);
+          console.log("at i = ");
+          console.log(i);
+          found = true;
+          foundAt = i;
+        }
+        return{
+          ...state,
+          newCharacter:{
+            ...state.newCharacter,
+            characterStats: state.newCharacter.characterStats.map(
+              (content, i) => i === foundAt ? {...content, 
+                sum:setSum(state.newCharacter.characterStats[foundAt])} : content
+            )
+          },
+        }
+      }
+    } 
     return state;
 };
 
