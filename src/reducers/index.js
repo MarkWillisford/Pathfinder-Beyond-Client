@@ -221,15 +221,24 @@ function setSum(stat){
 }
 
 export const characterReducer = (state=initialState, action) => {
+  let indexOfStep = null;
+  let race = null;
+  let step = null;
+  let charClass = null;
+  let expand = null;
+  let statToAddBonusTo = null;
+  let found = null;
+  let foundAt = null;
   // refactor to switch case
   // return ...state,
   //    changes: action.changes,
-
-    if (action.type === actions.LOAD_CHARACTER) {
+  switch(action.type){
+    case actions.LOAD_CHARACTER:
       return Object.assign({}, state, {
         char:action.char,
       });
-    } else if (action.type === actions.LOAD_CREATION_STEPS){
+    break;
+    case actions.LOAD_CREATION_STEPS:
       return Object.assign({}, state, {
         creationSteps:creationSteps,
         help:false,
@@ -248,40 +257,47 @@ export const characterReducer = (state=initialState, action) => {
           {id:4, name:"detailsExtrasExpand", expand:false},
         ],
       });
-    } else if (action.type === actions.TOGGLE_STEP){
+    break;
+    case actions.TOGGLE_STEP:
       return Object.assign({}, state, {
         currentStep:action.index,
         disabledNext:action.disabledNext, 
         disabledPrev:action.disabledPrev, 
       })
-    } else if (action.type === actions.LOAD_RACES){
+    break;
+    case actions.LOAD_RACES:
       return Object.assign({}, state, {
         racesArray:action.races,
       });
-    } else if (action.type === actions.SET_STEP){
+    break;
+    case actions.SET_STEP:
       return Object.assign({}, state, {
         currentStep:action.index,
         disabledNext:action.disabledNext, 
         disabledPrev:action.disabledPrev,         
       })
-    } else if (action.type === actions.TOGGLE_RACE_EXPAND){
-      const race = state.racesArray.find(r => r.id === action.index);// @todo could be null
-      const expand = race.expand;
+    break;
+    case actions.TOGGLE_RACE_EXPAND:
+      race = state.racesArray.find(r => r.id === action.index);// @todo could be null
+      expand = race.expand;
       return { ...state, 
         racesArray:[ ...state.racesArray.filter(r => r.id < race.id), 
           { ...race, expand:!expand }, 
           ...state.racesArray.filter(r => r.id > race.id) 
         ] 
       };
-    } else if (action.type === actions.ABILITY_SCORE_GENERATION_METHOD){
+    break;
+    case actions.ABILITY_SCORE_GENERATION_METHOD:
       return Object.assign({}, state, {
         abilityScoreGenerationMethod:action.name,
       })
-    } else if (action.type === actions.SET_AVAILABLE_STATS){
+    break;
+    case actions.SET_AVAILABLE_STATS:
       return Object.assign({}, state, {
         statArrayToAssign:action.statArray,
       })
-    } else if (action.type === actions.ASSIGN_SCORE){
+    break;
+    case actions.ASSIGN_SCORE:
       const index = state.statArrayToAssign.findIndex(function(element){
           return element.value == action.value;
         });
@@ -289,9 +305,10 @@ export const characterReducer = (state=initialState, action) => {
         statArrayToAssign:[...state.statArrayToAssign.slice(0,index),
           ...state.statArrayToAssign.slice(index+1)]
       })
-    } else if (action.type === actions.SUBMIT_PREFERENCES_TO_STATE){
-      const indexOfStep = 0;
-      const step = state.creationSteps[indexOfStep];
+    break;
+    case actions.SUBMIT_PREFERENCES_TO_STATE:
+      indexOfStep = 0;
+      step = state.creationSteps[indexOfStep];
       return Object.assign({}, state, {
         // first set the completed tag for step 0 to true
         creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
@@ -309,14 +326,16 @@ export const characterReducer = (state=initialState, action) => {
           }
         }
       })
-    } else if (action.type === actions.TOGGLE_HELP){
+    break;
+    case actions.TOGGLE_HELP:
       return Object.assign({}, state, {
         help:!state.help,
       })
-    } else if (action.type === actions.SUBMIT_RACE_TO_STATE){
-      const race = state.racesArray.find(r => r.id === action.index);
-      const indexOfStep = 1;
-      const step = state.creationSteps[indexOfStep];
+    break;
+    case actions.SUBMIT_RACE_TO_STATE:
+      race = state.racesArray.find(r => r.id === action.index);
+      indexOfStep = 1;
+      step = state.creationSteps[indexOfStep];
       return Object.assign({}, state, {
         // first set the completed tag for step 1 to true
         creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
@@ -327,10 +346,11 @@ export const characterReducer = (state=initialState, action) => {
           race:race,
         }
       })
-    } else if (action.type === actions.SUBMIT_CLASS_TO_STATE){
-      const charClass = state.classesArray.find(r => r.id === action.index);
-      const indexOfStep = 2;  // Class
-      const step = state.creationSteps[indexOfStep];
+    break;
+    case actions.SUBMIT_CLASS_TO_STATE:
+      charClass = state.classesArray.find(r => r.id === action.index);
+      indexOfStep = 2;  // Class
+      step = state.creationSteps[indexOfStep];
       return Object.assign({}, state, {
         // first set the completed tag for step 2 to true
         creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
@@ -341,7 +361,8 @@ export const characterReducer = (state=initialState, action) => {
           charClass:charClass,
         }
       })
-    } else if (action.type === actions.SUBMIT_ABILITY_SCORES_TO_STATE){
+    break;
+    case actions.SUBMIT_ABILITY_SCORES_TO_STATE:
       return(Object.assign({}, state, {
         newCharacter:{
           ...state.newCharacter,
@@ -350,7 +371,8 @@ export const characterReducer = (state=initialState, action) => {
           }
         }
       }))
-    } else if (action.type === actions.SUBMIT_SKILLS_TO_STATE){
+    break;
+    case actions.SUBMIT_SKILLS_TO_STATE:
       return(Object.assign({}, state, {
         newCharacter:{
           ...state.newCharacter,
@@ -362,9 +384,10 @@ export const characterReducer = (state=initialState, action) => {
           }
         }           
       }))
-    } else if (action.type === actions.TOGGLE_CLASS_EXPAND){
-      const charClass = state.classesArray.find(r => r.id === action.index);
-      const expand = charClass.expand;
+    break;
+    case actions.TOGGLE_CLASS_EXPAND:
+      charClass = state.classesArray.find(r => r.id === action.index);
+      expand = charClass.expand;
       // THIS WORKS TO ENABLE THE CLICKED RACE 
       return { ...state, 
         classesArray:[ ...state.classesArray.filter(r => r.id < charClass.id), 
@@ -372,30 +395,35 @@ export const characterReducer = (state=initialState, action) => {
           ...state.classesArray.filter(r => r.id > charClass.id) 
         ] 
       };
-    } else if (action.type === actions.LOAD_CLASSES){
+    break;
+    case actions.LOAD_CLASSES:
       return Object.assign({}, state, {
         classesArray:action.classes,
       });
-    } else if (action.type === actions.LOAD_TRAITS){
+    break;
+    case actions.LOAD_TRAITS:
       return Object.assign({}, state, {
         traitsArray:action.traits,
       });
-    } else if (action.type === actions.TOGGLE_DETAILS_EXPAND){
+    break;
+    case actions.TOGGLE_DETAILS_EXPAND:
       const detail = state.detailsExpand.find(r => r.id == action.index);
-      const expand = detail.expand;
+      expand = detail.expand;
       return { ...state, 
         detailsExpand:[ ...state.detailsExpand.filter(r => r.id < detail.id), 
           { ...detail, expand:!expand }, 
           ...state.detailsExpand.filter(r => r.id > detail.id) 
         ] 
       }
-    } else if (action.type === actions.SAVE_ABILITY_SCORE_OPTIONS){
+    break;
+    case actions.SAVE_ABILITY_SCORE_OPTIONS:
       return Object.assign({}, state, {
         abilityScoreOptions:action.options,
       });
-    } else if (action.type === actions.SUBMIT_DETAILS_TO_STATE){
-      const indexOfStep = 4;
-      const step = state.creationSteps[indexOfStep];
+    break;
+    case actions.SUBMIT_DETAILS_TO_STATE:
+      indexOfStep = 4;
+      step = state.creationSteps[indexOfStep];
       return Object.assign({}, state, {
         // first set the completed tag for step 0 to true
         creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
@@ -423,9 +451,10 @@ export const characterReducer = (state=initialState, action) => {
           }
         }
       })
-    } else if (action.type === actions.SET_STEP_TO_COMPLETE){
-      const indexOfStep = action.step;
-      const step = state.creationSteps[indexOfStep];
+    break;
+    case actions.SET_STEP_TO_COMPLETE:
+      indexOfStep = action.step;
+      step = state.creationSteps[indexOfStep];
       return Object.assign({}, state, {
         // first set the completed tag for step 0 to true
         creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
@@ -433,21 +462,25 @@ export const characterReducer = (state=initialState, action) => {
           ...state.creationSteps.filter(c => c.id > indexOfStep)
         ]
       })
-    } else if (action.type === actions.EQUIPMENT_GENERATION_METHOD){
+    break;
+    case actions.EQUIPMENT_GENERATION_METHOD:
       return Object.assign({}, state, {
         equipmentGenerationMethod:action.value,
       })
-    } else if (action.type === actions.GOLD_GENERATION_METHOD){
+    break;
+    case actions.GOLD_GENERATION_METHOD:
       return Object.assign({}, state, {
         newCharacter:{...state.newCharacter, goldMethod:action.text,
         }
       })
-    } else if (action.type === actions.SET_GOLD){
+    break;
+    case actions.SET_GOLD:
       return Object.assign({}, state, {
         newCharacter:{...state.newCharacter, gold:action.value, availableGold:action.value,
         }
       })
-    } else if (action.type === actions.ADD_ITEM_TO_CHARACTER){
+    break;
+    case actions.ADD_ITEM_TO_CHARACTER:
       if(!state.newCharacter.gear){
           return Object.assign({}, state, {
             newCharacter:{...state.newCharacter, gear:[action.item]
@@ -459,7 +492,8 @@ export const characterReducer = (state=initialState, action) => {
           }
         })        
       }
-    } else if (action.type === actions.REMOVE_ITEM_FROM_CHARACTER){
+    break;
+    case actions.REMOVE_ITEM_FROM_CHARACTER:
       let indexOfItem = null;
       for(let i=0;i<state.newCharacter.gear.length;i++){
         if(state.newCharacter.gear[i] === action.item){
@@ -471,24 +505,28 @@ export const characterReducer = (state=initialState, action) => {
           newCharacter:{...state.newCharacter, gear:[...state.newCharacter.gear.slice(0, indexOfItem),
                         ...state.newCharacter.gear.slice(indexOfItem + 1)]}
         });
-      }    
-    } else if (action.type === actions.SPEND_GOLD){
+      }
+    break;
+    case actions.SPEND_GOLD:
       let newGold = state.newCharacter.availableGold - action.cost;
       return Object.assign({}, state, {
         newCharacter:{...state.newCharacter, availableGold:newGold,
         }
       })
-    } else if (action.type === actions.SET_EXPANDED_FEAT_CATEGORY){
+    break;
+    case actions.SET_EXPANDED_FEAT_CATEGORY:
       return Object.assign({}, state, {
         expanded:{...state.expanded, featCategory:action.name}
       })
-    } else if (action.type === actions.SET_EXPANDED_FEAT){
+    break;
+    case actions.SET_EXPANDED_FEAT:
       return Object.assign({}, state, {
         expanded:{...state.expanded, feat:action.name}
       })
-    } else if (action.type === actions.SUMBIT_FEAT_TO_STATE){
-      const indexOfStep = 6;
-      const step = state.creationSteps[indexOfStep];
+    break;
+    case actions.SUMBIT_FEAT_TO_STATE:
+      indexOfStep = 6;
+      step = state.creationSteps[indexOfStep];
       if(!state.newCharacter.feats){
         return Object.assign({}, state, {
           creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
@@ -506,7 +544,8 @@ export const characterReducer = (state=initialState, action) => {
           newCharacter:{...state.newCharacter, feats:[...state.newCharacter.feats, action.feat]}
         })        
       }
-    } else if (action.type === actions.ADD_BONUS){
+    break;
+    case actions.ADD_BONUS:
       // flags
       let statToAddBonusTo = action.bonus.stat;
       let found = false;
@@ -549,11 +588,12 @@ export const characterReducer = (state=initialState, action) => {
           },
         }
       }
-    } else if (action.type === actions.SUM_BONUS){
+    break;
+    case actions.SUM_BONUS:
       // flags
-      let statToAddBonusTo = action.bonus.stat;
-      let found = false;
-      let foundAt = null;
+      statToAddBonusTo = action.bonus.stat;
+      found = false;
+      foundAt = null;
       // look through the bonus array for the bonus stat
       for(let i=0;i<state.newCharacter.characterStats.length;i++){
         if(state.newCharacter.characterStats[i].name === statToAddBonusTo){
@@ -575,10 +615,11 @@ export const characterReducer = (state=initialState, action) => {
           },
         }
       }
-    } 
-    return state;
-};
+    break;
 
-// default:
-  // console.warn(`unhandled action: ${action.type}`);
-  // return state
+    default:
+      console.warn(`unhandled action: ${action.type}`);
+      return state
+
+  }
+};
