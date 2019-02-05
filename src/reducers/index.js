@@ -82,7 +82,7 @@ const creationSteps = [
 ];
 const newCharacter = {
   "characterStats":[],
-  "strength": {
+  /*"strength": {
     base: 0,
     racial: 0,
   },
@@ -105,7 +105,7 @@ const newCharacter = {
   "charisma": {
     base: 0,
     racial: 0,
-  },
+  },*/
   charClass:{
     classFeatures:{
       skills:0,
@@ -179,14 +179,14 @@ function setSum(stat){
       };
       if(found && replace){
         // we found it and we want to replace it
-        total = total - arrayOfHighestBonuses[foundAt].amount;
-        total = total + stat.bonuses[i].amount;
+        total = total - parseInt(arrayOfHighestBonuses[foundAt].amount, 10);
+        total = total + parseInt(stat.bonuses[i].amount, 10);
         arrayOfHighestBonuses[foundAt] = stat.bonuses[i];
       } else if(!found){
         // if not, add this bonus to the array and be done
         // 'no matching type found. adding first now'
         arrayOfHighestBonuses.push(stat.bonuses[i]);
-        total = total + stat.bonuses[i].amount;
+        total = total + parseInt(stat.bonuses[i].amount, 10);
       };
     } else { 
       // this means that the type is dodge, untyped, or ranks
@@ -202,7 +202,7 @@ function setSum(stat){
 
       if(!found){
         arrayOfHighestBonuses.push({bonuses: [stat.bonuses[i]]});
-        total = total + stat.bonuses[i].amount;
+        total = total + parseInt(stat.bonuses[i].amount, 10);
       };
     }; 
   };  // end of for loop - array of current bonuses

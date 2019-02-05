@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { submitSkillsToState } from '../actions/index';
 import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
+import { setStepToComplete } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories'
 
 import './newCharacterSkills.css';
@@ -23,14 +24,12 @@ export class NewCharacterSkills extends React.Component{
 		let mod = Math.floor((abilityScore-10)/2);
 		return mod;
 	}
-
 	onChangeHandler(event){
 		let value = event.target.value;
 		let skill = event.target.parentElement.parentElement.getAttribute("name");
 
 		this.props.dispatch(submitSkillsToState( skill, "ranks", value ));
 	}
-
 	statIndex(stats, name){
 		for(let i=0;i<stats.length;i++){
 			if(stats[i].name === name){
@@ -38,11 +37,29 @@ export class NewCharacterSkills extends React.Component{
 			}
 		}
 	}
+	onSubmit(props){		
+		let skillsObject = props.skills
+		Object.keys(skillsObject).forEach(function (item){
+			console.log(skillsObject[item]);
+			if(skillsObject[item].ranks){
+				let bonus = createBonus({ 
+					name:"skills", 
+					source:"skills", 
+					stat:item, 
+					type:"ranks", 
+					duration:-1, 
+					amount:skillsObject[item].ranks });
+				props.dispatch(addBonus(bonus));
+				props.dispatch(sumBonus(bonus));
+			}
+		});
+		props.dispatch(setStepToComplete(5));
+	}
 
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
-		// For now this is hard coded in. 
+		// For now this is hard-coded in. 
 		const hitDie = 1;
 		const charStats = this.props.charStats;
 		const strength = this.getModifier(charStats[this.statIndex(charStats, "strength")].sum.total);
@@ -101,13 +118,13 @@ export class NewCharacterSkills extends React.Component{
 			}
 		}, 0);
 		const remainingSkillRanks = ((this.props.classSkillsPerLevel + intelligence) > 0 ? this.props.classSkillsPerLevel + intelligence : 1) - ranksAssigned;
-
+		const disabled = remainingSkillRanks == 0 ? false : true;
 		// first here we must check to ensure that race, class, and ability scores are complete. 
 		// If not, we display an error message directing the user to complete those pages before 
 		// continuing. 
-		if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
+		/*if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
 			return ( <h1>NOT READY</h1> )
-		} else if(help){
+		} else */if(help){
 			// if help is true, that screen is displayed
 			return (
 				<div className="skillsHelp">
@@ -158,6 +175,7 @@ export class NewCharacterSkills extends React.Component{
 							)}
 			        	</tbody>
 			        </table>
+			        <button onClick={() => this.onSubmit(this.props)} disabled={disabled}>Submit</button>
 		        </div>
 		    );
 		} else {
