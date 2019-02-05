@@ -4,8 +4,11 @@ import RaceCard from './raceCard';
 
 import { toggleRaceExpand } from '../actions/index';
 import { submitRaceToState } from '../actions/index';
-import { submitAbilityScoreToState } from '../actions/index';
+//import { submitAbilityScoreToState } from '../actions/index';
 import { submitSkillsToState } from '../actions/index';
+import { addBonus } from '../actions/index';
+import { sumBonus } from '../actions/index';
+import { createBonus } from '../utility/statObjectFactories'
 
 import './newCharacterRace.css';
 
@@ -33,7 +36,16 @@ export class NewCharacterRace extends React.Component{
 				let abilityArray = this.props.racesArray[i].standardRacialTraits.base.abilityScoreRacialBonusArray;
 				if(abilityArray){		// find out if there are given ability score bonuses
 					for(let j=0; j<abilityArray.length; j++){
-						this.props.dispatch(submitAbilityScoreToState( abilityArray[j].stat, "racial", abilityArray[j].value ));
+						//this.props.dispatch(submitAbilityScoreToState( abilityArray[j].stat, "racial", abilityArray[j].value ));
+						let bonus = createBonus({ 
+							name:"race", 
+							source:"race", 
+							stat:abilityArray[j].stat, 
+							type:"racial", 
+							duration:-1, 
+							amount:abilityArray[j].value });
+						this.props.dispatch(addBonus(bonus));
+						this.props.dispatch(sumBonus(bonus));
 					}					
 				} else {		// nothing set means the user has to pick one. 
 					// TODO do a cool thing
@@ -42,6 +54,15 @@ export class NewCharacterRace extends React.Component{
 				if(skillArray){			// find out if there are any racial skill bonuses
 					for(let j=0; j<skillArray.length; j++){
 						this.props.dispatch(submitSkillsToState( skillArray[j].stat, "racial", skillArray[j].value ));
+						let bonus = createBonus({ 
+							name:"race", 
+							source:"race", 
+							stat:skillArray[j].stat, 
+							type:"racial", 
+							duration:-1, 
+							amount:skillArray[j].value });
+						this.props.dispatch(addBonus(bonus));
+						this.props.dispatch(sumBonus(bonus));
 					}
 				}
 			}

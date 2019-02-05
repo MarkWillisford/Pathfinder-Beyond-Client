@@ -82,7 +82,7 @@ const creationSteps = [
 ];
 const newCharacter = {
   "characterStats":[],
-  "strength": {
+  /*"strength": {
     base: 0,
     racial: 0,
   },
@@ -105,7 +105,7 @@ const newCharacter = {
   "charisma": {
     base: 0,
     racial: 0,
-  },
+  },*/
   charClass:{
     classFeatures:{
       skills:0,
@@ -151,26 +151,18 @@ const newCharacter = {
 };
 
 function setSum(stat){
-  console.log(stat);
   let total = 0;
   let arrayOfHighestBonuses = [ ];
   for(let i=0; i<stat.bonuses.length; i++){
     let typeToFind = stat.bonuses[i].type;
-    console.log("we will be looking for");
-    console.log(typeToFind);
-    console.log("i = ");
-    console.log(i);
       // **************  This is all if normal non-stacking bonuses are used *********
       // ****  If the bonus is dodge or untyped then we need to skip part of this ****
-    if(typeToFind != 'dodge' && typeToFind != 'untyped'){    
-      console.log("we're in the IF") 
+    if(typeToFind != 'dodge' && typeToFind != 'untyped' && typeToFind != 'rank'){    
       let found = false;
       let replace = false;
       let foundAt = null;
       // checking current 'highest' bonuses
       for(let j=0; j<arrayOfHighestBonuses.length; j++){
-        console.log("in the for loop, iteration #:");
-        console.log(j);
         if(arrayOfHighestBonuses[j].type == typeToFind){
           // if so, compare and keep only the largest
           if(stat.bonuses[i].amount > arrayOfHighestBonuses[j].amount){
@@ -187,17 +179,17 @@ function setSum(stat){
       };
       if(found && replace){
         // we found it and we want to replace it
-        total = total - arrayOfHighestBonuses[foundAt].amount;
-        total = total + stat.bonuses[i].amount;
+        total = total - parseInt(arrayOfHighestBonuses[foundAt].amount, 10);
+        total = total + parseInt(stat.bonuses[i].amount, 10);
         arrayOfHighestBonuses[foundAt] = stat.bonuses[i];
       } else if(!found){
         // if not, add this bonus to the array and be done
-         console.log('no matching type found. adding first now')
+        // 'no matching type found. adding first now'
         arrayOfHighestBonuses.push(stat.bonuses[i]);
-        total = total + stat.bonuses[i].amount;
+        total = total + parseInt(stat.bonuses[i].amount, 10);
       };
     } else { 
-      // this means that the type is dodge or untyped
+      // this means that the type is dodge, untyped, or ranks
       let found = false;
       // checking array of highest bonuses
       for(let j=0; j<arrayOfHighestBonuses.length; j++){
@@ -210,13 +202,12 @@ function setSum(stat){
 
       if(!found){
         arrayOfHighestBonuses.push({bonuses: [stat.bonuses[i]]});
-        total = total + stat.bonuses[i].amount;
+        total = total + parseInt(stat.bonuses[i].amount, 10);
       };
     }; 
   };  // end of for loop - array of current bonuses
 
   let sum = { "total": total, "bonuses": arrayOfHighestBonuses };
-  console.log(sum);
   return sum;
 }
 
@@ -553,7 +544,7 @@ export const characterReducer = (state=initialState, action) => {
         expanded:{...state.expanded, feat:action.name}
       }
     break;
-    case actions.SUMBIT_FEAT_TO_STATE:
+    case actions.SUBMIT_FEAT_TO_STATE:
       indexOfStep = 6;
       step = state.creationSteps[indexOfStep];
       if(!state.newCharacter.feats){
@@ -627,6 +618,8 @@ export const characterReducer = (state=initialState, action) => {
           found = true;
           foundAt = i;
         }
+      }
+      if(found){
         return{
           ...state,
           newCharacter:{
