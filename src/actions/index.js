@@ -98,9 +98,9 @@ export const submitClassToState = (index) => ({
 	index,
 });
 
-export const SUMBIT_FEAT_TO_STATE = 'SUMBIT_FEAT_TO_STATE';
+export const SUBMIT_FEAT_TO_STATE = 'SUBMIT_FEAT_TO_STATE';
 export const submitFeatToState = (feat) => ({
-	type: SUMBIT_FEAT_TO_STATE,
+	type: SUBMIT_FEAT_TO_STATE,
 	feat,
 });
 

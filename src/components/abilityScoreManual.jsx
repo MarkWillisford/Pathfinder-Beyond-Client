@@ -5,7 +5,7 @@ import { DynamicSelect } from './dynamicSelect';
 
 import { setAvailableStats } from '../actions/index';
 import { saveAbilityScoreOptions } from '../actions/index';
-import { submitAbilityScoreToState } from '../actions/index';
+//import { submitAbilityScoreToState } from '../actions/index';
 import { setStepToComplete } from '../actions/index';
 import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
@@ -23,7 +23,7 @@ export class AbilityScoreManual extends React.Component {
 		// on capital letters (the S in strength'S'electer) and taking only the first string in the result
 		let ability = event.target.name.split(/(?=[A-Z])/)[0];
 		let value = event.target.value;
-		this.props.dispatch(submitAbilityScoreToState( ability, "base", value ));	
+		// this.props.dispatch(submitAbilityScoreToState( ability, "base", value ));	
 
 		let bonus = createBonus({ 
 			name:"character base", 

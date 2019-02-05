@@ -3,6 +3,10 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 
 import { submitSkillsToState } from '../actions/index';
+import { addBonus } from '../actions/index';
+import { sumBonus } from '../actions/index';
+import { setStepToComplete } from '../actions/index';
+import { createBonus } from '../utility/statObjectFactories'
 
 import './newCharacterSkills.css';
 
@@ -20,25 +24,50 @@ export class NewCharacterSkills extends React.Component{
 		let mod = Math.floor((abilityScore-10)/2);
 		return mod;
 	}
-
 	onChangeHandler(event){
 		let value = event.target.value;
 		let skill = event.target.parentElement.parentElement.getAttribute("name");
 
 		this.props.dispatch(submitSkillsToState( skill, "ranks", value ));
 	}
+	statIndex(stats, name){
+		for(let i=0;i<stats.length;i++){
+			if(stats[i].name === name){
+				return i;
+			}
+		}
+	}
+	onSubmit(props){		
+		let skillsObject = props.skills
+		Object.keys(skillsObject).forEach(function (item){
+			console.log(skillsObject[item]);
+			if(skillsObject[item].ranks){
+				let bonus = createBonus({ 
+					name:"skills", 
+					source:"skills", 
+					stat:item, 
+					type:"ranks", 
+					duration:-1, 
+					amount:skillsObject[item].ranks });
+				props.dispatch(addBonus(bonus));
+				props.dispatch(sumBonus(bonus));
+			}
+		});
+		props.dispatch(setStepToComplete(5));
+	}
 
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
-		// For now this is hard coded in. 
+		// For now this is hard-coded in. 
 		const hitDie = 1;
-		const strength = this.getModifier(this.sumObject(_.get(this, "props.strength", "0")));
-		const dexterity = this.getModifier(this.sumObject(_.get(this, "props.dexterity", "0")));
-		const constitution = this.getModifier(this.sumObject(_.get(this, "props.constitution", "0")));
-		const intelligence = this.getModifier(this.sumObject(_.get(this, "props.intelligence", "0")));
-		const wisdom = this.getModifier(this.sumObject(_.get(this, "props.wisdom", "0")));
-		const charisma = this.getModifier(this.sumObject(_.get(this, "props.charisma", "0")));
+		const charStats = this.props.charStats;
+		const strength = this.getModifier(charStats[this.statIndex(charStats, "strength")].sum.total);
+		const dexterity = this.getModifier(charStats[this.statIndex(charStats, "dexterity")].sum.total);
+		const constitution = this.getModifier(charStats[this.statIndex(charStats, "constitution")].sum.total);
+		const intelligence = this.getModifier(charStats[this.statIndex(charStats, "intelligence")].sum.total);
+		const wisdom = this.getModifier(charStats[this.statIndex(charStats, "wisdom")].sum.total);
+		const charisma = this.getModifier(charStats[this.statIndex(charStats, "charisma")].sum.total);
 		const abilityMods = [{"name":"strength","value":strength},{"name":"dexterity","value":dexterity},{"name":"constitution","value":constitution},
 						{"name":"intelligence","value":intelligence},{"name":"wisdom","value":wisdom},{"name":"charisma","value":charisma}];
 
@@ -89,13 +118,13 @@ export class NewCharacterSkills extends React.Component{
 			}
 		}, 0);
 		const remainingSkillRanks = ((this.props.classSkillsPerLevel + intelligence) > 0 ? this.props.classSkillsPerLevel + intelligence : 1) - ranksAssigned;
-
+		const disabled = remainingSkillRanks == 0 ? false : true;
 		// first here we must check to ensure that race, class, and ability scores are complete. 
 		// If not, we display an error message directing the user to complete those pages before 
 		// continuing. 
-		if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
+		/*if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
 			return ( <h1>NOT READY</h1> )
-		} else if(help){
+		} else */if(help){
 			// if help is true, that screen is displayed
 			return (
 				<div className="skillsHelp">
@@ -146,6 +175,7 @@ export class NewCharacterSkills extends React.Component{
 							)}
 			        	</tbody>
 			        </table>
+			        <button onClick={() => this.onSubmit(this.props)} disabled={disabled}>Submit</button>
 		        </div>
 		    );
 		} else {
@@ -167,6 +197,7 @@ const mapStateToProps = state => ({
 	classSkillsPerLevel:state.characterReducer.newCharacter.charClass.classFeatures.skills,
 	classSkills:state.characterReducer.newCharacter.charClass.classFeatures.classSkills,
 	skills:state.characterReducer.newCharacter.skills,
+	charStats:state.characterReducer.newCharacter.characterStats,
 	strength: state.characterReducer.newCharacter.strength,
 	dexterity: state.characterReducer.newCharacter.dexterity,
 	constitution: state.characterReducer.newCharacter.constitution,
