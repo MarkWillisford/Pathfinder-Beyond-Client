@@ -8,6 +8,7 @@ import { saveAbilityScoreOptions } from '../actions/index';
 import { submitAbilityScoreToState } from '../actions/index';
 import { setStepToComplete } from '../actions/index';
 import { addBonus } from '../actions/index';
+import { sumBonus } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories'
 
 export class AbilityScoreManual extends React.Component {
@@ -32,6 +33,7 @@ export class AbilityScoreManual extends React.Component {
 			duration:-1, 
 			amount:value });
 		this.props.dispatch(addBonus(bonus));
+		this.props.dispatch(sumBonus(bonus));
 	}
 
 	render(){

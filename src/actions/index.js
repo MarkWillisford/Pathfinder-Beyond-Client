@@ -188,6 +188,12 @@ export const addBonus = (bonus) => ({
 	bonus,
 })
 
+export const SUM_BONUS = 'SUM_BONUS';
+export const sumBonus = (bonus) => ({
+	type: SUM_BONUS,
+	bonus,
+})
+
 
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
