@@ -5,8 +5,11 @@ import { DynamicSelect } from './dynamicSelect';
 
 import { setAvailableStats } from '../actions/index';
 import { saveAbilityScoreOptions } from '../actions/index';
-import { submitAbilityScoreToState } from '../actions/index';
+// import { submitAbilityScoreToState } from '../actions/index';
 import { setStepToComplete } from '../actions/index';
+import { addBonus } from '../actions/index';
+import { sumBonus } from '../actions/index';
+import { createBonus } from '../utility/statObjectFactories'
 
 /*onChange={()=> this.handleClick(this.refs.abilityScoreGenerationMethod.value)}*/
 export class AbilityScoreDice extends React.Component {
@@ -66,7 +69,17 @@ export class AbilityScoreDice extends React.Component {
 		// Get the name of the ability as a string by finding the name of the select element, splitting
 		// on capital letters (the S in strength'S'electer) and taking only the first string in the result
 		let ability = event.target.name.split(/(?=[A-Z])/)[0];
-		this.props.dispatch(submitAbilityScoreToState( ability, "base", value ));	
+		//this.props.dispatch(submitAbilityScoreToState( ability, "base", value ));	
+
+		let bonus = createBonus({ 
+			name:"character base", 
+			source:"character base", 
+			stat:ability, 
+			type:"base", 
+			duration:-1, 
+			amount:value });
+		this.props.dispatch(addBonus(bonus));
+		this.props.dispatch(sumBonus(bonus));
 	}
 
 	SaveAbilityScoreOptions(caller){

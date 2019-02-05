@@ -3,6 +3,9 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 
 import { submitSkillsToState } from '../actions/index';
+import { addBonus } from '../actions/index';
+import { sumBonus } from '../actions/index';
+import { createBonus } from '../utility/statObjectFactories'
 
 import './newCharacterSkills.css';
 
@@ -28,17 +31,26 @@ export class NewCharacterSkills extends React.Component{
 		this.props.dispatch(submitSkillsToState( skill, "ranks", value ));
 	}
 
+	statIndex(stats, name){
+		for(let i=0;i<stats.length;i++){
+			if(stats[i].name === name){
+				return i;
+			}
+		}
+	}
+
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
 		// For now this is hard coded in. 
 		const hitDie = 1;
-		const strength = this.getModifier(this.sumObject(_.get(this, "props.strength", "0")));
-		const dexterity = this.getModifier(this.sumObject(_.get(this, "props.dexterity", "0")));
-		const constitution = this.getModifier(this.sumObject(_.get(this, "props.constitution", "0")));
-		const intelligence = this.getModifier(this.sumObject(_.get(this, "props.intelligence", "0")));
-		const wisdom = this.getModifier(this.sumObject(_.get(this, "props.wisdom", "0")));
-		const charisma = this.getModifier(this.sumObject(_.get(this, "props.charisma", "0")));
+		const charStats = this.props.charStats;
+		const strength = this.getModifier(charStats[this.statIndex(charStats, "strength")].sum.total);
+		const dexterity = this.getModifier(charStats[this.statIndex(charStats, "dexterity")].sum.total);
+		const constitution = this.getModifier(charStats[this.statIndex(charStats, "constitution")].sum.total);
+		const intelligence = this.getModifier(charStats[this.statIndex(charStats, "intelligence")].sum.total);
+		const wisdom = this.getModifier(charStats[this.statIndex(charStats, "wisdom")].sum.total);
+		const charisma = this.getModifier(charStats[this.statIndex(charStats, "charisma")].sum.total);
 		const abilityMods = [{"name":"strength","value":strength},{"name":"dexterity","value":dexterity},{"name":"constitution","value":constitution},
 						{"name":"intelligence","value":intelligence},{"name":"wisdom","value":wisdom},{"name":"charisma","value":charisma}];
 
@@ -167,6 +179,7 @@ const mapStateToProps = state => ({
 	classSkillsPerLevel:state.characterReducer.newCharacter.charClass.classFeatures.skills,
 	classSkills:state.characterReducer.newCharacter.charClass.classFeatures.classSkills,
 	skills:state.characterReducer.newCharacter.skills,
+	charStats:state.characterReducer.newCharacter.characterStats,
 	strength: state.characterReducer.newCharacter.strength,
 	dexterity: state.characterReducer.newCharacter.dexterity,
 	constitution: state.characterReducer.newCharacter.constitution,
