@@ -22,3 +22,11 @@ export function getRandomInt(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+export function statIndex(stats, name){
+	for(let i=0;i<stats.length;i++){
+		if(stats[i].name === name){
+			return i;
+		}
+	}
+}

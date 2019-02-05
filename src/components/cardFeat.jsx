@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { capitalizeFirstLetter, arrayToSentence } from '../utility/helperFunctions';
+import { capitalizeFirstLetter, arrayToSentence, statIndex } from '../utility/helperFunctions';
 
 import { setExpandedFeat } from '../actions/index';
 import { submitFeatToState } from '../actions/index';
@@ -40,6 +40,7 @@ export class CardFeat extends React.Component{
 	render(){
 		let feats = this.props.feats;
 		let featToExpand ="";
+		let charStats = this.props.charStats;
 		if(this.props.featToExpand){
 			featToExpand = this.props.featToExpand.feat;
 		} else {
@@ -61,11 +62,11 @@ export class CardFeat extends React.Component{
 		if(feats && !this.props.repeatable){	// I already have it AND it isn't repeatable
 			selectable = false;
 			errorMessage = "Feat is already selected";
+			console.log(errorMessage);
 		};
 		// Are prereques complete?
 		if(this.props.prerequisitesString){
 			let obj = this.props.prerequisites;
-			console.log(obj);
 			for(let i=0;i<obj.length;i++){
 				let key = obj[i].type;
 				   // do something with obj[key] which is an array
@@ -79,11 +80,13 @@ export class CardFeat extends React.Component{
 					case "level":
 					break;
 					case "stat":
-						console.log(obj[i]);
-						console.log(obj[i].data);	// object with stat and value
-						console.log("prereq is: ");
-						console.log("a " + obj[i].data.stat);
-						console.log("with a score of "+ obj[i].data.value);
+						if(charStats[statIndex(charStats, obj[i].data.stat)].sum.total < obj[i].data.value){
+							selectable = false;
+							if(errorMessage != ""){
+								errorMessage += ", " + obj[i].data.stat + " must be at least " + obj[i].data.value
+							} else { errorMessage = obj[i].data.stat + " must be at least " + obj[i].data.value};
+							console.log(errorMessage);
+						}
 					break;
 					case "feat":
 					break;
@@ -100,10 +103,12 @@ export class CardFeat extends React.Component{
 				{!thisExpanded && <CardFeatSummery name={this.props.name}
 					prerequisitesString={this.props.prerequisitesString} description={this.props.description}
 					hide={() => this.hide(this.props.name)} show={() => this.show(this.props.name)} 
-					thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}/> }
+					thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}
+					selectable={selectable}/> }
 				{thisExpanded && <CardFeatExpanded feat={featDetails} prerequisitesString={this.props.prerequisitesString}
 					hide={() => this.hide(this.props.name)} show={() => this.show(this.props.name)} 
-					thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}/>}
+					thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}
+					selectable={selectable}/>}
 			</div>
 		)	
 	}	
@@ -117,7 +122,7 @@ function CardFeatSummery(props){
 			<div className="featDescription">{props.description}</div>
 			<button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
 			<button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
-			<button onClick={() => props.submit()}>Select</button>
+			<button onClick={() => props.submit()} disabled={!props.selectable}>Select</button>
 		</div>
 	)
 }
@@ -130,7 +135,7 @@ function CardFeatExpanded(props){
 			<h3 className="featName">{props.feat.name}</h3>
 			<button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
 			<button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
-			<button onClick={() => props.submit()}>Select</button>
+			<button onClick={() => props.submit()} disabled={!props.selectable}>Select</button>
 			<div className="featDescription">{props.feat.description}</div>
 			<div className="featPrerequisites"><strong>Prerequisite(s): </strong>{props.prerequisitesString}</div>
 			<div className="featBenefit"><strong>Benefit: </strong>{props.feat.benefit}</div>
@@ -138,7 +143,7 @@ function CardFeatExpanded(props){
 			{special && <div><strong>Special: </strong>{props.feat.special}</div>}
 			<button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
 			<button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
-			<button onClick={() => props.submit()}>Select</button>
+			<button onClick={() => props.submit()} disabled={!props.selectable}>Select</button>
 		</div>
 	)
 }
@@ -146,6 +151,7 @@ function CardFeatExpanded(props){
 const mapStateToProps = state => ({
 	featToExpand:state.characterReducer.expanded,
 	feats:state.characterReducer.newCharacter.feats,
+	charStats:state.characterReducer.newCharacter.characterStats,
 });
 
 export default connect(mapStateToProps)(CardFeat);

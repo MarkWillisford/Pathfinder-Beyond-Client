@@ -7,7 +7,7 @@ import AbilityScoreManual from './abilityScoreManual';
 
 import { abilityScoreGenerationMethod } from '../actions/index';
 import { assignScore } from '../actions/index';
-import { capitalizeFirstLetter } from '../utility/helperFunctions';
+import { capitalizeFirstLetter, statIndex } from '../utility/helperFunctions';
 
 import './newCharacterAbilityScores.css';
 
@@ -36,15 +36,32 @@ export class NewCharacterAbilityScores extends React.Component{
 		}
 	}
 
+	getModifier(abilityScore){
+		let mod = Math.floor((abilityScore-10)/2);
+		return mod;
+	}
+
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
-		const strengthTotal = this.abilitySum("strength");
-		const dexterityTotal = this.abilitySum("dexterity");
-		const constitutionTotal = this.abilitySum("constitution");
-		const intelligenceTotal = this.abilitySum("intelligence");
-		const wisdomTotal = this.abilitySum("wisdom");
-		const charismaTotal = this.abilitySum("charisma");
+
+
+
+		const charStats = this.props.charStats;
+		const strengthTotal = (charStats[statIndex(charStats, "strength")]) ? charStats[statIndex(charStats, "strength")].sum.total : "0";
+		const dexterityTotal = (charStats[statIndex(charStats, "dexterity")]) ? charStats[statIndex(charStats, "dexterity")].sum.total : "0";
+		const constitutionTotal = (charStats[statIndex(charStats, "constitution")]) ? charStats[statIndex(charStats, "constitution")].sum.total : "0";
+		const intelligenceTotal = (charStats[statIndex(charStats, "intelligence")]) ? charStats[statIndex(charStats, "intelligence")].sum.total : "0";
+		const wisdomTotal = (charStats[statIndex(charStats, "wisdom")]) ? charStats[statIndex(charStats, "wisdom")].sum.total : "0";
+		const charismaTotal = (charStats[statIndex(charStats, "charisma")]) ? charStats[statIndex(charStats, "charisma")].sum.total : "0";
+
+/*		const strengthMod = this.getModifier();
+		const dexterityMod = this.getModifier(charStats[this.statIndex(charStats, "dexterity")].sum.total);
+		const constitutionMod = this.getModifier(charStats[this.statIndex(charStats, "constitution")].sum.total);
+		const intelligenceMod = this.getModifier(charStats[this.statIndex(charStats, "intelligence")].sum.total);
+		const wisdomMod = this.getModifier(charStats[this.statIndex(charStats, "wisdom")].sum.total);
+		const charismaMod = this.getModifier(charStats[this.statIndex(charStats, "charisma")].sum.total);
+*/
 		const strengthMod = Math.floor((strengthTotal - 10) / 2);
 		const dexterityMod = Math.floor((dexterityTotal - 10) / 2);
 		const constitutionMod = Math.floor((constitutionTotal - 10) / 2);
@@ -226,19 +243,22 @@ const mapStateToProps = state => ({
 	help:state.characterReducer.help,
 	abilityScoreGenerationMethod:state.characterReducer.abilityScoreGenerationMethod,
 	statArrayToAssign:state.characterReducer.statArrayToAssign,
-	baseStrength: state.characterReducer.newCharacter.strength.base,//selector(state, "strengthSelecter"),
+	
+/*	baseStrength: state.characterReducer.newCharacter.strength.base,//selector(state, "strengthSelecter"),
 	baseDexterity: state.characterReducer.newCharacter.dexterity.base,//selector(state, "dexteritySelecter"),
 	baseConstitution: state.characterReducer.newCharacter.constitution.base,//selector(state, "constitutionSelecter"),
 	baseIntelligence: state.characterReducer.newCharacter.intelligence.base,//selector(state, "intelligenceSelecter"),
 	baseWisdom: state.characterReducer.newCharacter.wisdom.base,//selector(state, "wisdomSelecter"),
 	baseCharisma: state.characterReducer.newCharacter.charisma.base,//selector(state, "charismaSelecter"),
+	*/
+	charStats:state.characterReducer.newCharacter.characterStats,
 	abilityScoreOptions: state.characterReducer.abilityScoreOptions,
-	racialStrength: state.characterReducer.newCharacter.strength.racial,
+/*	racialStrength: state.characterReducer.newCharacter.strength.racial,
 	racialDexterity: state.characterReducer.newCharacter.dexterity.racial,
 	racialConstitution: state.characterReducer.newCharacter.constitution.racial,
 	racialIntelligence: state.characterReducer.newCharacter.intelligence.racial,
 	racialWisdom: state.characterReducer.newCharacter.wisdom.racial,
-	racialCharisma: state.characterReducer.newCharacter.charisma.racial,
+	racialCharisma: state.characterReducer.newCharacter.charisma.racial,*/
 });
 
 export default connect(mapStateToProps)(NewCharacterAbilityScores);
