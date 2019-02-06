@@ -30,3 +30,27 @@ export function statIndex(stats, name){
 		}
 	}
 }
+
+export function	getModifier(abilityScore){
+	let mod = Math.floor((abilityScore-10)/2);
+	return mod;
+}
+
+export function	findBonusIndexByType(arrayOfBonuses, type){
+	for(let i=0;i<arrayOfBonuses.length;i++){
+		if(arrayOfBonuses[i].type === type){
+			return i;
+		} else { return null; }
+	}
+}
+
+export function	findBonusAmountByType(stat, type){
+	const charStats = this.props.charStats;
+	let statObject = charStats[statIndex(charStats, stat)]
+	if(statObject){
+		let index = this.findBonusIndexByType(statObject.sum.bonuses, type);
+		if(index != null){
+			return statObject.sum.bonuses[index].amount;
+		} else { return "0"};			
+	} else { return "0" }
+}
