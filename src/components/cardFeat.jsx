@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { capitalizeFirstLetter, arrayToSentence, statIndex } from '../utility/helperFunctions';
-import ViewSelectionsForm from './viewSelectionsForm';
+import FeatSelectionsForm from './featSelectionsForm';
 
 import { setExpandedFeat } from '../actions/index';
 import { submitFeatToState } from '../actions/index';
@@ -141,7 +141,7 @@ function CardFeatSummery(props){
 		return(
 			<div>
 				<h3 className="featName">{props.name}</h3>
-				<ViewSelectionsForm name={props.name}/>
+				<FeatSelectionsForm name={props.name}/>
 			</div>
 		)
 	}

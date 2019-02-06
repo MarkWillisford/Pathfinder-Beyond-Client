@@ -14,7 +14,13 @@ Feats:
 		],
 
 		"benefit": ,
-		"progromaticBenefit": ,
+		"progromaticBenefit": {
+			"progromaticType":"action" // Power Attack
+							"static", // Spell Focus
+			"progromaticEffect":[
+				"bonus objects?"
+			]
+		},
 		"normal": ,
 		"special": ,
 		"source": ,

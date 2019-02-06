@@ -10,10 +10,14 @@ import { setSelections } from '../actions/index';
 const validate = values => {
 	const errors = {}
 
+	if(!values.selections){
+		errors.selections = "Required"
+	}
+	
 	return errors
 }
 
-export class ViewSelectionsForm extends React.Component{
+export class FeatSelectionsForm extends React.Component{
 	getFeatDetails(name){
 		// this will be an API call, but for now it searches the list and retreaves feat details
 		const featsList = require('../data/feats');
@@ -87,10 +91,10 @@ const mapStateToProps = state => ({
 	
 });
 
-ViewSelectionsForm = reduxForm({
-	form:'viewSelectionsForm',
+FeatSelectionsForm = reduxForm({
+	form:'FeatSelectionsForm',
 
     validate
-})(ViewSelectionsForm)
+})(FeatSelectionsForm)
 
-export default connect(mapStateToProps)(ViewSelectionsForm);
+export default connect(mapStateToProps)(FeatSelectionsForm);
