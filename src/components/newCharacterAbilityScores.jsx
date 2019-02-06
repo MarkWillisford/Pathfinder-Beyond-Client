@@ -7,7 +7,7 @@ import AbilityScoreManual from './abilityScoreManual';
 
 import { abilityScoreGenerationMethod } from '../actions/index';
 import { assignScore } from '../actions/index';
-import { capitalizeFirstLetter } from '../utility/helperFunctions';
+import { capitalizeFirstLetter, statIndex } from '../utility/helperFunctions';
 
 import './newCharacterAbilityScores.css';
 
@@ -36,15 +36,55 @@ export class NewCharacterAbilityScores extends React.Component{
 		}
 	}
 
+	getModifier(abilityScore){
+		let mod = Math.floor((abilityScore-10)/2);
+		return mod;
+	}
+
+	findBonusIndexByType(arrayOfBonuses, type){
+		for(let i=0;i<arrayOfBonuses.length;i++){
+			if(arrayOfBonuses[i].type === type){
+				return i;
+			} else { return null; }
+		}
+	}
+	findBonusAmountByType(stat, type){
+		const charStats = this.props.charStats;
+		let statObject = charStats[statIndex(charStats, stat)]
+		if(statObject){
+			let index = this.findBonusIndexByType(statObject.sum.bonuses, type);
+			if(index != null){
+				return statObject.sum.bonuses[index].amount;
+			} else { return "0"};			
+		} else { return "0" }
+	}
+
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
-		const strengthTotal = this.abilitySum("strength");
-		const dexterityTotal = this.abilitySum("dexterity");
-		const constitutionTotal = this.abilitySum("constitution");
-		const intelligenceTotal = this.abilitySum("intelligence");
-		const wisdomTotal = this.abilitySum("wisdom");
-		const charismaTotal = this.abilitySum("charisma");
+
+		const charStats = this.props.charStats;
+		const strengthTotal = (charStats[statIndex(charStats, "strength")]) ? charStats[statIndex(charStats, "strength")].sum.total : "0";
+		const dexterityTotal = (charStats[statIndex(charStats, "dexterity")]) ? charStats[statIndex(charStats, "dexterity")].sum.total : "0";
+		const constitutionTotal = (charStats[statIndex(charStats, "constitution")]) ? charStats[statIndex(charStats, "constitution")].sum.total : "0";
+		const intelligenceTotal = (charStats[statIndex(charStats, "intelligence")]) ? charStats[statIndex(charStats, "intelligence")].sum.total : "0";
+		const wisdomTotal = (charStats[statIndex(charStats, "wisdom")]) ? charStats[statIndex(charStats, "wisdom")].sum.total : "0";
+		const charismaTotal = (charStats[statIndex(charStats, "charisma")]) ? charStats[statIndex(charStats, "charisma")].sum.total : "0";
+
+		const strengthBase = this.findBonusAmountByType("strength", "base");
+		const dexterityBase = this.findBonusAmountByType("dexterity", "base");
+		const constitutionBase = this.findBonusAmountByType("constitution", "base");
+		const intelligenceBase = this.findBonusAmountByType("intelligence", "base");
+		const wisdomBase = this.findBonusAmountByType("wisdom", "base");
+		const charismaBase = this.findBonusAmountByType("charisma", "base");
+
+		const strengthRacial = this.findBonusAmountByType("strength", "racial");
+		const dexterityRacial = this.findBonusAmountByType("dexterity", "racial");
+		const constitutionRacial = this.findBonusAmountByType("constitution", "racial");
+		const intelligenceRacial = this.findBonusAmountByType("intelligence", "racial");
+		const wisdomRacial = this.findBonusAmountByType("wisdom", "racial");
+		const charismaRacial = this.findBonusAmountByType("charisma", "racial");
+
 		const strengthMod = Math.floor((strengthTotal - 10) / 2);
 		const dexterityMod = Math.floor((dexterityTotal - 10) / 2);
 		const constitutionMod = Math.floor((constitutionTotal - 10) / 2);
@@ -105,9 +145,9 @@ export class NewCharacterAbilityScores extends React.Component{
 				        		<tr>
 				        			<td>Strength</td>
 				        			<td id="strTotal">{strengthTotal}</td>
-				        			<td id="strMod">{ this.props.baseStrength ? strengthMod : "--" }</td>
-				        			<td id="strBase">{ this.props.baseStrength ? this.props.baseStrength : "--" }</td>
-				        			<td id="strRacial">{ this.props.racialStrength ? this.props.racialStrength : "0" }</td>
+				        			<td id="strMod">{ strengthBase ? strengthMod : "--" }</td>
+				        			<td id="strBase">{ strengthBase ? strengthBase : "--" }</td>
+				        			<td id="strRacial">{ strengthRacial ? strengthRacial : "0" }</td>
 				        			<td id="strEnhance">+0</td>
 				        			<td id="strInherent">+0</td>
 				        			<td id="strTemplate">+0</td>
@@ -115,9 +155,9 @@ export class NewCharacterAbilityScores extends React.Component{
 				        		<tr>
 				        			<td>Dexterity</td>
 				        			<td id="dexTotal">{dexterityTotal}</td>
-				        			<td id="dexMod">{ this.props.baseDexterity ? dexterityMod : "--" }</td>
-				        			<td id="dexBase">{ this.props.baseDexterity ? this.props.baseDexterity : "--"}</td>
-				        			<td id="dexRacial">{ this.props.racialDexterity ? this.props.racialDexterity : "0" }</td>
+				        			<td id="dexMod">{ dexterityBase ? dexterityMod : "--" }</td>
+				        			<td id="dexBase">{ dexterityBase ? dexterityBase : "--"}</td>
+				        			<td id="dexRacial">{ dexterityRacial ? dexterityRacial : "0" }</td>
 				        			<td id="dexEnhance">+0</td>
 				        			<td id="dexInherent">+0</td>
 				        			<td id="dexTemplate">+0</td>
@@ -125,9 +165,9 @@ export class NewCharacterAbilityScores extends React.Component{
 				        		<tr>
 				        			<td>Constitution</td>
 				        			<td id="conTotal">{constitutionTotal}</td>
-				        			<td id="conMod">{ this.props.baseConstitution ? constitutionMod : "--" }</td>
-				        			<td id="conBase">{ this.props.baseConstitution ? this.props.baseConstitution : "--" }</td>
-				        			<td id="conRacial">{ this.props.racialConstitution ? this.props.racialConstitution : "0" }</td>
+				        			<td id="conMod">{ constitutionBase ? constitutionMod : "--" }</td>
+				        			<td id="conBase">{ constitutionBase ? constitutionBase : "--" }</td>
+				        			<td id="conRacial">{ constitutionRacial ? constitutionRacial : "0" }</td>
 				        			<td id="conEnhance">+0</td>
 				        			<td id="conInherent">+0</td>
 				        			<td id="conTemplate">+0</td>
@@ -135,9 +175,9 @@ export class NewCharacterAbilityScores extends React.Component{
 				        		<tr>
 				        			<td>Intelligence</td>
 				        			<td id="intTotal">{intelligenceTotal}</td>
-				        			<td id="intMod">{ this.props.baseIntelligence ? intelligenceMod : "--" }</td>
-				        			<td id="intBase">{ this.props.baseIntelligence ? this.props.baseIntelligence : "--" }</td>
-				        			<td id="intRacial">{ this.props.racialIntelligence ? this.props.racialIntelligence : "0" }</td>
+				        			<td id="intMod">{ intelligenceBase ? intelligenceMod : "--" }</td>
+				        			<td id="intBase">{ intelligenceBase ? intelligenceBase : "--" }</td>
+				        			<td id="intRacial">{ intelligenceRacial ? intelligenceRacial : "0" }</td>
 				        			<td id="intEnhance">+0</td>
 				        			<td id="intInherent">+0</td>
 				        			<td id="intTemplate">+0</td>
@@ -145,9 +185,9 @@ export class NewCharacterAbilityScores extends React.Component{
 				        		<tr>
 				        			<td>Wisdom</td>
 				        			<td id="wisTotal">{wisdomTotal}</td>
-				        			<td id="wisMod">{ this.props.baseWisdom ? wisdomMod : "--" }</td>
-				        			<td id="wisBase">{ this.props.baseWisdom ? this.props.baseWisdom : "--"}</td>
-				        			<td id="wisRacial">{ this.props.racialWisdom ? this.props.racialWisdom : "0" }</td>
+				        			<td id="wisMod">{ wisdomBase ? wisdomMod : "--" }</td>
+				        			<td id="wisBase">{ wisdomBase ? wisdomBase : "--"}</td>
+				        			<td id="wisRacial">{ wisdomRacial ? wisdomRacial : "0" }</td>
 				        			<td id="wisEnhance">+0</td>
 				        			<td id="wisInherent">+0</td>
 				        			<td id="wisTemplate">+0</td>
@@ -155,9 +195,9 @@ export class NewCharacterAbilityScores extends React.Component{
 				        		<tr>
 				        			<td>Charisma</td>
 				        			<td id="chaTotal">{charismaTotal}</td>
-				        			<td id="chaMod">{ this.props.baseCharisma ? charismaMod : "--" }</td>
-				        			<td id="chaBase">{ this.props.baseCharisma ? this.props.baseCharisma : "--" }</td>
-				        			<td id="chaRacial">{ this.props.racialCharisma ? this.props.racialCharisma : "0" }</td>
+				        			<td id="chaMod">{ charismaBase ? charismaMod : "--" }</td>
+				        			<td id="chaBase">{ charismaBase ? charismaBase : "--" }</td>
+				        			<td id="chaRacial">{ charismaRacial ? charismaRacial : "0" }</td>
 				        			<td id="chaEnhance">+0</td>
 				        			<td id="chaInherent">+0</td>
 				        			<td id="chaTemplate">+0</td>
@@ -226,19 +266,22 @@ const mapStateToProps = state => ({
 	help:state.characterReducer.help,
 	abilityScoreGenerationMethod:state.characterReducer.abilityScoreGenerationMethod,
 	statArrayToAssign:state.characterReducer.statArrayToAssign,
-	baseStrength: state.characterReducer.newCharacter.strength.base,//selector(state, "strengthSelecter"),
+	
+/*	baseStrength: state.characterReducer.newCharacter.strength.base,//selector(state, "strengthSelecter"),
 	baseDexterity: state.characterReducer.newCharacter.dexterity.base,//selector(state, "dexteritySelecter"),
 	baseConstitution: state.characterReducer.newCharacter.constitution.base,//selector(state, "constitutionSelecter"),
 	baseIntelligence: state.characterReducer.newCharacter.intelligence.base,//selector(state, "intelligenceSelecter"),
 	baseWisdom: state.characterReducer.newCharacter.wisdom.base,//selector(state, "wisdomSelecter"),
 	baseCharisma: state.characterReducer.newCharacter.charisma.base,//selector(state, "charismaSelecter"),
+	*/
+	charStats:state.characterReducer.newCharacter.characterStats,
 	abilityScoreOptions: state.characterReducer.abilityScoreOptions,
-	racialStrength: state.characterReducer.newCharacter.strength.racial,
+/*	racialStrength: state.characterReducer.newCharacter.strength.racial,
 	racialDexterity: state.characterReducer.newCharacter.dexterity.racial,
 	racialConstitution: state.characterReducer.newCharacter.constitution.racial,
 	racialIntelligence: state.characterReducer.newCharacter.intelligence.racial,
 	racialWisdom: state.characterReducer.newCharacter.wisdom.racial,
-	racialCharisma: state.characterReducer.newCharacter.charisma.racial,
+	racialCharisma: state.characterReducer.newCharacter.charisma.racial,*/
 });
 
 export default connect(mapStateToProps)(NewCharacterAbilityScores);

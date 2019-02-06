@@ -198,12 +198,6 @@ const mapStateToProps = state => ({
 	classSkills:state.characterReducer.newCharacter.charClass.classFeatures.classSkills,
 	skills:state.characterReducer.newCharacter.skills,
 	charStats:state.characterReducer.newCharacter.characterStats,
-	strength: state.characterReducer.newCharacter.strength,
-	dexterity: state.characterReducer.newCharacter.dexterity,
-	constitution: state.characterReducer.newCharacter.constitution,
-	intelligence: state.characterReducer.newCharacter.intelligence,
-	wisdom: state.characterReducer.newCharacter.wisdom,
-	charisma: state.characterReducer.newCharacter.charisma,
 	// draw in the sum of the abilityScores here 
 });
 

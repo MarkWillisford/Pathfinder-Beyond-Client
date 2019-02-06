@@ -4,6 +4,9 @@ import CardClass from './cardClass';
 
 import { toggleClassExpand } from '../actions/index';
 import { submitClassToState } from '../actions/index';
+import { addBonus } from '../actions/index';
+import { sumBonus } from '../actions/index';
+import { createBonus } from '../utility/statObjectFactories'
 
 import './newCharacterClass.css';
 
@@ -23,6 +26,15 @@ export class NewCharacterClass extends React.Component{
 			// if this is the clicked element toggle it 
 			if( i===id ){
 				this.props.dispatch(submitClassToState(i));
+				let bonus = createBonus({ 
+					name:"classBAB", 
+					source:"class", 
+					stat:"bab", 
+					type:"untyped", 
+					duration:-1, 
+					amount:this.props.classesArray[i].classFeatures.table[1][1] });
+				this.props.dispatch(addBonus(bonus));
+				this.props.dispatch(sumBonus(bonus));				
 			}
 		}		
 	}

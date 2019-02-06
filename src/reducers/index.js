@@ -632,6 +632,12 @@ export const characterReducer = (state=initialState, action) => {
         }
       }
     break;
+    case actions.SET_SELECTIONS:
+      return {
+        ...state,
+        selections:action.name
+      }
+    break;
 
     default:
       console.warn(`unhandled action: ${action.type}`);
