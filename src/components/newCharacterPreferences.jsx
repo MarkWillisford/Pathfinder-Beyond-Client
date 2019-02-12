@@ -16,7 +16,7 @@ const validate = values => {
 	if(!values.hpSelecter){
 		errors.hpSelecter = "Required"
 	}
-	if(!values.encumberence){
+	/*if(!values.encumberence){
 		errors.encumberence = "Required"
 	}
 	if(!values.coinWeight){
@@ -27,7 +27,7 @@ const validate = values => {
 	}
 	if(!values.templateRuleSelecter){
 		errors.templateRuleSelecter = "Required"
-	}
+	}*/
 
 	return errors
 }
@@ -109,7 +109,7 @@ export class NewCharacterPreferencesForm extends React.Component{
 			        		<option value="manual">Manual</option>
 			        		<option value="optional">Optional</option>		
 						</Field>
-						<Field name="encumberence" component={RadioGroup} label="Will this character use the optional encumberence rules?" options={[
+{/*						<Field name="encumberence" component={RadioGroup} label="Will this character use the optional encumberence rules?" options={[
 						    { title: 'Yes', value: 'yes' },	// Why do I have to click this twice???
 						    { title: 'No', value: 'no' }
 						]} />
@@ -127,9 +127,9 @@ export class NewCharacterPreferencesForm extends React.Component{
 			        		<option value="none">None</option>
 			        		<option value="level">Level</option>
 			        		<option value="crRefunds">CR Refunds</option>	
-						</Field>
+						</Field>*/}
 					</div>
-					<button type="submit" disabled={submitting}>Next</button>
+					<button type="submit" disabled={submitting}>Submit</button>
 				</form>
 		    );
 		} else {

@@ -43,6 +43,7 @@ export class FeatSelectionsForm extends React.Component{
 			// 2.) find the field that needs the selected value
 			// 3.) set that field from the values prop
 			feat.specialization = values.selections;
+			this.props.dispatch(setSelections(""));
 			this.props.dispatch(submitFeatToState(feat));
 		};
 		const createRenderer = render => ({ input, meta, label, options, ...rest }) => 

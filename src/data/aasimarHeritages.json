@@ -1,0 +1,52 @@
+[
+	{
+		"id":0,
+		"name":["Agathion-Blooded", "Idyllkin"],
+		"alignment":"NG",
+		"abilities":["constitution", "charisma"],
+		"skills":["handleAnimal", "survival"],
+		"spellLikeAbility":"Summon Nature's Ally II",
+		"description":"Idyllkin possess bestial aspects and calm dispositions, and often act as peaceful intermediaries between lawful and chaotic agents of good."
+	},{
+		"id":1,
+		"name":["Angel-Blooded", "Angelkin"],
+		"alignment":"Good",
+		"abilities":["strength", "charisma"],
+		"skills":["heal", "knowledge (Planes)"],
+		"spellLikeAbility":"Alter self",
+		"description":"Angelkin are mortal paragons of exceptional beauty, and they serve as exemplars of good and light regardless of the myriad forms they may take."
+	},{
+		"id":2,
+		"name":["Archon-Blooded", "Lawbringers"],
+		"alignment":"LG",
+		"abilities":["constitution", "wisdom"],
+		"skills":["intimitdate", "sense motive"],
+		"spellLikeAbility":"conitnual flame",
+		"description":"Lawbringers are champions of justice and of doling out punishment to the wicked, and often believe chaos is the cause of all mortal suffering."
+	},{
+		"id":3,
+		"name":["Azata-Blooded", "Musetouched"],
+		"alignment":"CG",
+		"abilities":["dexterity", "charisma"],
+		"skills":["diplomacy", "perform"],
+		"spellLikeAbility":"glitterdust",
+		"description":"The musetouched epitomize freedom and joy, and travel the world to liberate less fortunate individuals."
+	},{
+		"id":4,
+		"name":["Garuda-Blooded", "Plumekith"],
+		"alignment":"CG",
+		"abilities":["dexterity", "wisdom"],
+		"skills":["acrobatics", "fly"],
+		"spellLikeAbility":"see invisibility",
+		"description":"The musetouched epitomize freedom and joy, and travel the world to liberate less fortunate individuals."
+	},{
+		"id":5,
+		"name":["Peri-Blooded", "Emberkin"],
+		"alignment":"NG",
+		"abilities":["intelligence", "charisma"],
+		"skills":["knowledge (planes)", "spellcraft"],
+		"spellLikeAbility":"pyrotechnics",
+		"description":"Masters of fire magic, emberkin feel the dual pull of their peri forebear as well as that of a fallen angel further down their ancestry, and wrestle with their urges to do both good and evil."
+	}
+
+]
