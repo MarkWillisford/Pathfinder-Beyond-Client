@@ -350,6 +350,27 @@ export const characterReducer = (state=initialState, action) => {
         }
       }
     break;
+    case actions.SUBMIT_AASIMAR_RACE_TO_STATE:
+      race = action.race;
+      console.log(race);
+      //race = state.racesArray.find(r => r.id === action.index);
+
+
+
+      indexOfStep = 1;
+      step = state.creationSteps[indexOfStep];
+      return {
+        ...state,
+        // first set the completed tag for step 1 to true
+        creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
+          { ...step, complete:true},
+          ...state.creationSteps.filter(c => c.id > indexOfStep)
+        ]//, newCharacter:{ ...state.newCharacter,
+          // add the values to the state
+        //  race:race,
+        //}
+      }
+    break;
     case actions.SUBMIT_CLASS_TO_STATE:
       charClass = state.classesArray.find(r => r.id === action.index);
       indexOfStep = 2;  // Class

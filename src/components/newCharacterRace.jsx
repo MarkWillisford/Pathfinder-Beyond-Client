@@ -34,7 +34,6 @@ export class NewCharacterRace extends React.Component{
 			// if this is the clicked element toggle it 
 			if( i===id ){
 				// if the class doesn't have selections . . .    
-				console.log(this.props.racesArray[i]);
 				if(!this.props.racesArray[i].standardRacialTraits.selections){
 					this.props.dispatch(submitRaceToState(i));
 					let abilityArray = this.props.racesArray[i].standardRacialTraits.base.abilityScoreRacialBonusArray;
