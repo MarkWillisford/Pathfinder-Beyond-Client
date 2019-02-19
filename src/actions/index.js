@@ -194,6 +194,12 @@ export const sumBonus = (bonus) => ({
 	bonus,
 })
 
+export const SET_SELECTIONS = 'SET_SELECTIONS';
+export const setSelections = (name) => ({
+	type: SET_SELECTIONS,
+	name,
+})
+
 
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';

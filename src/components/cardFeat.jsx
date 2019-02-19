@@ -1,9 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { capitalizeFirstLetter, arrayToSentence } from '../utility/helperFunctions';
+import { capitalizeFirstLetter, arrayToSentence, statIndex } from '../utility/helperFunctions';
+import FeatSelectionsForm from './featSelectionsForm';
 
 import { setExpandedFeat } from '../actions/index';
 import { submitFeatToState } from '../actions/index';
+import { setSelections } from '../actions/index';
 
 export class CardFeat extends React.Component{
 	getFeatDetails(name){
@@ -31,21 +33,31 @@ export class CardFeat extends React.Component{
 		// the user, 
 		let selections = null;
 		if(feat.selections){
-			console.log("hi");
+			// If the feat has selections, then toggle the flag, displaying the selection radios
+			this.props.dispatch(setSelections(name));
+		} else {
+			this.props.dispatch(submitFeatToState(feat));
+			// If the feat doesn't have selections then submit. 
 		}
-
-		this.props.dispatch(submitFeatToState(feat));
 	}
 
 	render(){
 		let feats = this.props.feats;
 		let featToExpand ="";
+		let showSelections = "";
+		let charStats = this.props.charStats;
 		if(this.props.featToExpand){
 			featToExpand = this.props.featToExpand.feat;
 		} else {
 			featToExpand = false;
 		}
+		if(this.props.showSelections){
+			showSelections = this.props.showSelections
+		} else {
+			showSelections = false;
+		}
 		let thisExpanded = ((featToExpand == this.props.name) ? true : false);
+		let showTheseSelections = ((showSelections == this.props.name) ? true : false);
 
 		// get the list of feats only if this is expanded
 		let featDetails = null;
@@ -61,11 +73,11 @@ export class CardFeat extends React.Component{
 		if(feats && !this.props.repeatable){	// I already have it AND it isn't repeatable
 			selectable = false;
 			errorMessage = "Feat is already selected";
+			console.log(errorMessage);
 		};
 		// Are prereques complete?
 		if(this.props.prerequisitesString){
 			let obj = this.props.prerequisites;
-			console.log(obj);
 			for(let i=0;i<obj.length;i++){
 				let key = obj[i].type;
 				   // do something with obj[key] which is an array
@@ -79,11 +91,13 @@ export class CardFeat extends React.Component{
 					case "level":
 					break;
 					case "stat":
-						console.log(obj[i]);
-						console.log(obj[i].data);	// object with stat and value
-						console.log("prereq is: ");
-						console.log("a " + obj[i].data.stat);
-						console.log("with a score of "+ obj[i].data.value);
+						if(charStats[statIndex(charStats, obj[i].data.stat)].sum.total < obj[i].data.value){
+							selectable = false;
+							if(errorMessage != ""){
+								errorMessage += ", " + obj[i].data.stat + " must be at least " + obj[i].data.value
+							} else { errorMessage = obj[i].data.stat + " must be at least " + obj[i].data.value};
+							console.log(errorMessage);
+						}
 					break;
 					case "feat":
 					break;
@@ -100,52 +114,75 @@ export class CardFeat extends React.Component{
 				{!thisExpanded && <CardFeatSummery name={this.props.name}
 					prerequisitesString={this.props.prerequisitesString} description={this.props.description}
 					hide={() => this.hide(this.props.name)} show={() => this.show(this.props.name)} 
-					thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}/> }
+					thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}
+					selectable={selectable} showTheseSelections={showTheseSelections}/> }
 				{thisExpanded && <CardFeatExpanded feat={featDetails} prerequisitesString={this.props.prerequisitesString}
 					hide={() => this.hide(this.props.name)} show={() => this.show(this.props.name)} 
-					thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}/>}
+					thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}
+					selectable={selectable} showTheseSelections={showTheseSelections}/>}
 			</div>
 		)	
 	}	
 }
 
 function CardFeatSummery(props){
-	return(
-		<div>
-			<h3 className="featName">{props.name}</h3>
-			<div className="featPrerequisites">{props.prerequisitesString}</div>
-			<div className="featDescription">{props.description}</div>
-			<button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
-			<button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
-			<button onClick={() => props.submit()}>Select</button>
-		</div>
-	)
+	if(!props.showTheseSelections){
+		return(
+			<div>
+				<h3 className="featName">{props.name}</h3>
+				<div className="featPrerequisites">{props.prerequisitesString}</div>
+				<div className="featDescription">{props.description}</div>
+				<button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
+				<button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
+				<button onClick={() => props.submit()} disabled={!props.selectable}>Select</button>
+			</div>
+		)
+	} else {
+		return(
+			<div>
+				<h3 className="featName">{props.name}</h3>
+				<FeatSelectionsForm name={props.name}/>
+			</div>
+		)
+	}
 }
 
 function CardFeatExpanded(props){
 	let special = (props.feat.special == "" || props.feat.special == null) ? false : true;
 	let normal = (props.feat.normal == "" || props.feat.normal == null) ? false : true;
-	return(
-		<div className="featExpandedTrue">
-			<h3 className="featName">{props.feat.name}</h3>
-			<button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
-			<button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
-			<button onClick={() => props.submit()}>Select</button>
-			<div className="featDescription">{props.feat.description}</div>
-			<div className="featPrerequisites"><strong>Prerequisite(s): </strong>{props.prerequisitesString}</div>
-			<div className="featBenefit"><strong>Benefit: </strong>{props.feat.benefit}</div>
-			{normal && <div><strong>Normal: </strong>{props.feat.normal}</div>}
-			{special && <div><strong>Special: </strong>{props.feat.special}</div>}
-			<button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
-			<button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
-			<button onClick={() => props.submit()}>Select</button>
-		</div>
-	)
+	
+	if(!props.showTheseSelections){
+		return(
+			<div className="featExpandedTrue">
+				<h3 className="featName">{props.feat.name}</h3>
+				<button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
+				<button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
+				<button onClick={() => props.submit()} disabled={!props.selectable}>Select</button>
+				<div className="featDescription">{props.feat.description}</div>
+				<div className="featPrerequisites"><strong>Prerequisite(s): </strong>{props.prerequisitesString}</div>
+				<div className="featBenefit"><strong>Benefit: </strong>{props.feat.benefit}</div>
+				{normal && <div><strong>Normal: </strong>{props.feat.normal}</div>}
+				{special && <div><strong>Special: </strong>{props.feat.special}</div>}
+				<button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
+				<button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
+				<button onClick={() => props.submit()} disabled={!props.selectable}>Select</button>
+			</div>
+		)
+	} else {
+		return(
+			<div>
+				<h3 className="featName">{props.feat.name}</h3>
+				<ViewSelectionsForm name={props.feat.name}/>
+			</div>
+		)		
+	}
 }
 
 const mapStateToProps = state => ({
 	featToExpand:state.characterReducer.expanded,
 	feats:state.characterReducer.newCharacter.feats,
+	charStats:state.characterReducer.newCharacter.characterStats,
+	showSelections:state.characterReducer.selections,
 });
 
 export default connect(mapStateToProps)(CardFeat);
