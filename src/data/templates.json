@@ -16,7 +16,8 @@ Feats:
 		"benefit": ,
 		"progromaticBenefit": {
 			"progromaticType":"action" // Power Attack
-							"static", // Spell Focus
+							"conditional", // Spell Focus
+							"static" // +2 Acrobatics 
 			"progromaticEffect":[
 				"bonus objects?"
 			]
@@ -42,7 +43,8 @@ Race:
       {"name":"", "description":""},
       {"name":"", "description":""},
       {"name":"", "description":""}
-    ]
+    ],
+	"selections":[]
   }}
 
  Class:

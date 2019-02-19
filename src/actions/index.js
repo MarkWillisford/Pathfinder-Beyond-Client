@@ -80,6 +80,12 @@ export const submitRaceToState = (index) => ({
 	index,
 });
 
+export const SUBMIT_AASIMAR_RACE_TO_STATE = 'SUBMIT_AASIMAR_RACE_TO_STATE';
+export const submitAasimarRaceToState = (race) => ({
+	type: SUBMIT_AASIMAR_RACE_TO_STATE,
+	race,
+});
+
 export const SUBMIT_ABILITY_SCORES_TO_STATE = 'SUBMIT_ABILITY_SCORES_TO_STATE';
 export const submitAbilityScoreToState = (ability, bonusType, bonus) => ({
 	type: SUBMIT_ABILITY_SCORES_TO_STATE, 

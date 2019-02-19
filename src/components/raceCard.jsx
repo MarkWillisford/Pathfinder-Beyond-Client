@@ -1,7 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import SelectionFormRace from './selectionFormRace';
 
-export default class RaceCard extends React.Component{
+export class RaceCard extends React.Component{
 	render(){
+		let showSelections = "";
+		if(this.props.showSelections){
+			showSelections = this.props.showSelections
+		} else {
+			showSelections = false;
+		};
+
+		let showTheseSelections = ((showSelections == this.props.name) ? true : false);
+		
 		return(
 			<div className="raceCard">
 				<div className="raceDiv" >
@@ -11,7 +22,7 @@ export default class RaceCard extends React.Component{
 				{ !this.props.expand && <button ref={this.props.name + "button"} onClick={this.props.callback}>More</button> }
 				{ this.props.expand && <RaceExpanded thum={this.props.thum} name={this.props.name} 
 					expand={this.props.expand} traits={this.props.traits} callback={this.props.callback} 
-					addRaceCallback={this.props.addRaceCallback}/> }
+					addRaceCallback={this.props.addRaceCallback} showTheseSelections={showTheseSelections}/> }
 			</div>
 		)	
 	}	
@@ -20,23 +31,36 @@ export default class RaceCard extends React.Component{
 function RaceExpanded(props){
 	let traitNames = "";
 	let blurb = props.traits.blurb;
+	let showTheseSelections = props.showTheseSelections;
 	for(let i=0;i<props.traits.racial.length;i++){
 		traitNames = traitNames + props.traits.racial[i].name + ", ";
 	};
-	return(
-		<div className="raceExpanded">
-			<button onClick={props.addRaceCallback}>Add Race</button>
-			<button onClick={props.callback}>Cancel</button>
-			<p>{blurb}</p>
-			<p>Ability Scores: {props.traits.base.abilityScoreRacialBonuses}, { traitNames }</p>
-				{ props.traits.racial.map(({name, description}) =>
-					<div key={name}>
-						<p><strong>{name}</strong></p>
-						<p>{description}</p>
-					</div>
-				)}
-			<button onClick={props.addRaceCallback}>Add Race</button>
-			<button onClick={props.callback}>Cancel</button>
-		</div>
-	)
+	if(showTheseSelections){
+		return(
+			<SelectionFormRace name={props.name}/>			
+		)
+	} else {
+		return(
+			<div className="raceExpanded">
+				<button onClick={props.addRaceCallback}>Add Race</button>
+				<button onClick={props.callback}>Cancel</button>
+				<p>{blurb}</p>
+				<p>Ability Scores: {props.traits.base.abilityScoreRacialBonuses}, { traitNames }</p>
+					{ props.traits.racial.map(({name, description}) =>
+						<div key={name}>
+							<p><strong>{name}</strong></p>
+							<p>{description}</p>
+						</div>
+					)}
+				<button onClick={props.addRaceCallback}>Add Race</button>
+				<button onClick={props.callback}>Cancel</button>
+			</div>
+		)		
+	}
 }
+
+const mapStateToProps = state => ({
+	showSelections:state.characterReducer.selections,
+});
+
+export default connect(mapStateToProps)(RaceCard);

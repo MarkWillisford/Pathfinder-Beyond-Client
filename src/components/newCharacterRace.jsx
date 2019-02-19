@@ -8,6 +8,7 @@ import { submitRaceToState } from '../actions/index';
 import { submitSkillsToState } from '../actions/index';
 import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
+import { setSelections } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories'
 
 import './newCharacterRace.css';
@@ -32,38 +33,44 @@ export class NewCharacterRace extends React.Component{
 		for(let i=0; i<this.props.racesArray.length;i++){
 			// if this is the clicked element toggle it 
 			if( i===id ){
-				this.props.dispatch(submitRaceToState(i));
-				let abilityArray = this.props.racesArray[i].standardRacialTraits.base.abilityScoreRacialBonusArray;
-				if(abilityArray){		// find out if there are given ability score bonuses
-					for(let j=0; j<abilityArray.length; j++){
-						//this.props.dispatch(submitAbilityScoreToState( abilityArray[j].stat, "racial", abilityArray[j].value ));
-						let bonus = createBonus({ 
-							name:"race", 
-							source:"race", 
-							stat:abilityArray[j].stat, 
-							type:"racial", 
-							duration:-1, 
-							amount:abilityArray[j].value });
-						this.props.dispatch(addBonus(bonus));
-						this.props.dispatch(sumBonus(bonus));
-					}					
-				} else {		// nothing set means the user has to pick one. 
-					// TODO do a cool thing
-				}
-				let skillArray = this.props.racesArray[i].standardRacialTraits.base.skillRacialBonusArray;
-				if(skillArray){			// find out if there are any racial skill bonuses
-					for(let j=0; j<skillArray.length; j++){
-						this.props.dispatch(submitSkillsToState( skillArray[j].stat, "racial", skillArray[j].value ));
-						let bonus = createBonus({ 
-							name:"race", 
-							source:"race", 
-							stat:skillArray[j].stat, 
-							type:"racial", 
-							duration:-1, 
-							amount:skillArray[j].value });
-						this.props.dispatch(addBonus(bonus));
-						this.props.dispatch(sumBonus(bonus));
+				// if the class doesn't have selections . . .    
+				if(!this.props.racesArray[i].standardRacialTraits.selections){
+					this.props.dispatch(submitRaceToState(i));
+					let abilityArray = this.props.racesArray[i].standardRacialTraits.base.abilityScoreRacialBonusArray;
+					if(abilityArray){		// find out if there are given ability score bonuses
+						for(let j=0; j<abilityArray.length; j++){
+							//this.props.dispatch(submitAbilityScoreToState( abilityArray[j].stat, "racial", abilityArray[j].value ));
+							let bonus = createBonus({ 
+								name:"race", 
+								source:"race", 
+								stat:abilityArray[j].stat, 
+								type:"racial", 
+								duration:-1, 
+								amount:abilityArray[j].value });
+							this.props.dispatch(addBonus(bonus));
+							this.props.dispatch(sumBonus(bonus));
+						}					
+					} else {		// nothing set means the user has to pick one. 
+						// TODO do a cool thing
 					}
+					let skillArray = this.props.racesArray[i].standardRacialTraits.base.skillRacialBonusArray;
+					if(skillArray){			// find out if there are any racial skill bonuses
+						for(let j=0; j<skillArray.length; j++){
+							this.props.dispatch(submitSkillsToState( skillArray[j].stat, "racial", skillArray[j].value ));
+							let bonus = createBonus({ 
+								name:"race", 
+								source:"race", 
+								stat:skillArray[j].stat, 
+								type:"racial", 
+								duration:-1, 
+								amount:skillArray[j].value });
+							this.props.dispatch(addBonus(bonus));
+							this.props.dispatch(sumBonus(bonus));
+						}
+					}
+				} else {
+					// this means that the feat does have selections
+					this.props.dispatch(setSelections(this.props.racesArray[i].name));
 				}
 			}
 		}		

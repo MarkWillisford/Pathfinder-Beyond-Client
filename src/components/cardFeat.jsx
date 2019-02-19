@@ -172,7 +172,7 @@ function CardFeatExpanded(props){
 		return(
 			<div>
 				<h3 className="featName">{props.feat.name}</h3>
-				<ViewSelectionsForm name={props.feat.name}/>
+				<FeatSelectionsForm name={props.feat.name}/>
 			</div>
 		)		
 	}
