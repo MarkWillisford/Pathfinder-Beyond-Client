@@ -212,6 +212,11 @@ export const submitFavoredClassToState = (favoredClass) => ({
 	favoredClass,
 });
 
+export const SET_CLASS_SELECTIONS_VIEW = 'SET_CLASS_SELECTIONS_VIEW';
+export const setClassSelectionsView = (charClass) => ({
+	type: SET_CLASS_SELECTIONS_VIEW, 
+	charClass,
+});
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
 export const toggleFeatureExpand = (charClass, feature) => ({

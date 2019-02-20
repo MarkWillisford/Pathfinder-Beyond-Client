@@ -26,6 +26,12 @@ export class NewCharacterClass extends React.Component{
 			// find the class object
 			if( i===id ){
 				let name = this.props.classesArray[i].name;
+
+/* 				Ranger:		Favored Enemy
+				Cleric:		Diety => Domains
+				Druid:		Nature Bond
+				Sorcerer:	Spells, Bloodline */
+
 				switch(name){
 					case "cleric":
 						console.log("cleric");

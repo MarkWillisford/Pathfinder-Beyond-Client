@@ -631,6 +631,18 @@ export const characterReducer = (state=initialState, action) => {
           newCharacter:{...state.newCharacter, favoredClass:[...state.newCharacter.favoredClass, action.favoredClass]}
         }    
       }
+      case actions.SET_CLASS_SELECTIONS_VIEW:
+        if(!state.classSelectionsView){
+          return {
+            ...state,
+            classSelectionsView:[action.charClass]
+          }
+        } else {
+          return {
+            ...state,
+            classSelectionsView:[...state.classSelectionsView, action.charClass]
+          }    
+        }
 
     default:
       console.warn(`unhandled action: ${action.type}`);
