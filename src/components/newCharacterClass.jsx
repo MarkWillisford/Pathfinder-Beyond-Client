@@ -21,6 +21,31 @@ export class NewCharacterClass extends React.Component{
 		}
 	}
 
+	checkForSelections(id){
+		for(let i=0; i<this.props.classesArray.length;i++){
+			// find the class object
+			if( i===id ){
+				let name = this.props.classesArray[i].name;
+				switch(name){
+					case "cleric":
+						console.log("cleric");
+						break;
+					case "druid":
+						console.log("druid");
+						break;
+					case "ranger":
+						console.log("ranger");
+						break;
+					case "sorcerer":
+						console.log("sorcerer");
+						break;
+					default:
+						this.addClass(id);
+				}
+			}
+		}
+	}
+
 	addClass(id){
 		for(let i=0; i<this.props.classesArray.length;i++){
 			// if this is the clicked element toggle it 
@@ -58,16 +83,23 @@ export class NewCharacterClass extends React.Component{
 			);
 		} 
 		else if(!complete){
+
+			// If classSelections has not been toggled then get class options and display
+
 			// Not complete, get choices and display
 			return (
 		        <div className="newCharacterClass">
 		        	<h1>Character Class - todo</h1>	
 		        	{this.props.classesArray.map(({id,thum,name,expand,classFeatures}) => 
 		        		<CardClass key={id} thum={thum} name={name} expand={expand} features={classFeatures}
-		        			callback={()=> this.handleClick(id)} addClassCallback={()=> this.addClass(id)}/>
+		        			callback={()=> this.handleClick(id)} addClassCallback={()=> this.checkForSelections(id)}/>
 		        	)}
 		        </div>
-		    )
+			)
+			
+			// If classSelections has been toggled, then get options and display
+
+
 		} else {
 			return(
 		        <div className="newCharacterClass">
