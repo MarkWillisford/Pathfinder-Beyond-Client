@@ -58,6 +58,27 @@
 		"repeatable":false,
 		"selections":null,
 		"source": "Core Rule Book"
+	},{
+		"name": "Skill Focus",
+		"specialization": null,
+		"type": ["general"],
+		"description": "Choose a skill. You are particularly adept at that skill.",
+		"prerequisites_list": null,
+		"prerequisites_race": null,
+		"prerequisites_class": null,
+		"prerequisites_classFeature": null,
+		"prerequisites_level": null,
+		"prerequisites_stat": null,
+		"prerequisites_feat": null,
+		"benefit": "You get a +3 bonus on all checks involving the chosen skill. If you have 10 or more ranks in that skill, this bonus increases to +6.",
+		"progromaticBenefit": null,
+		"normal": null,
+		"special": "You can gain this feat multiple times. Its effects do not stack. Each time you take the feat, it applies to a new skill.",		
+		"repeatable":true,
+		"selections":[
+			"acrobatics", "appraise", "bluff", "climb", "craft", "diplomacy", "disableDevice", "disguise", "escapeArtist", "fly", "handleAnimal", "heal", "intimidate", "knowledge (arcana)", "knowledge (dungeoneering)", "knowledge (engineering)", "knowledge (geography)", "knowledge (history)", "knowledge (local)", "knowledge (nature)", "knowledge (nobility)", "knowledge (planes)", "knowledge (religion)", "linguistics", "perception", "perform", "profession", "ride", "senseMotive", "sleightOfHand", "spellcraft", "stealth", "survival", "swim", "useMagicDevice"
+		],
+		"source": "Core Rule Book"
 	},
 	{"name":"Power Attack0","specialization":"","type":["combat"],"description":"You can make exceptionally deadly melee attacks by sacrificing accuracy for strength.","prerequisites_list":[[{"stat":"strength","value":"13"},{"stat":"bab","value":"1"}]],"prerequisites_race":"","prerequisites_class":"","prerequisites_classFeature":"","prerequisites_level":"","prerequisites_stat":[{"stat":"str","value":"13"},{"stat":"bab","value":"1"}],"prerequisites_feat":[],"benefit":["You can choose to take a –1 penalty on all melee attack rolls and combat maneuver checks to gain a +2 bonus on all melee damage rolls. This bonus to damage is increased by half (+50%) if you are making an attack with a two-handed weapon, a one handed weapon using two hands, or a primary natural weapon that adds 1-1/2 times your Strength modifier on damage rolls. This bonus to damage is halved (–50%) if you are making an attack with an off-hand weapon or secondary natural weapon.","When your base attack bonus reaches +4, and every 4 points thereafter, the penalty increases by –1 and the bonus to damage increases by +2.","You must choose to use this feat before making an attack roll, and its effects last until your next turn. The bonus damage does not apply to touch attacks or effects that do not deal hit point damage."],"progromaticBenefit":"","normal":"","special":"","repeatable":false,"selections":null,"source":""},
 	{"name":"Power Attack","specialization":"","type":["combat"],"description":"You can make exceptionally deadly melee attacks by sacrificing accuracy for strength.",

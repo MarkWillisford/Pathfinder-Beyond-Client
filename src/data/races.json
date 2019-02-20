@@ -21,7 +21,7 @@
       {"name":"Weapon Familiarity", "description":"Elves are proficient with longbows (including composite longbows), longswords, rapiers, and shortbows (including composite shortbows), and treat any weapon with the word “elven” in its name as a martial weapon."},
       {"name":"Low-Light Vision", "description":"Elves can see twice as far as humans in conditions of dim light."}
     ],
-    "selections":[]
+    "selections":null
   }},
   {"id":2,"thum":"img","name":"Dwarf","expand":false, "standardRacialTraits":{
     "blurb":"These short and stocky defenders of mountain fortresses are often seen as stern and humorless. Known for mining the earth’s treasures and crafting magnificent items from ore and gemstones, they have an unrivaled affinity for the bounties of the deep earth. Dwarves also have a tendency toward traditionalism and isolation that sometimes manifests as xenophobia.",
@@ -35,7 +35,7 @@
       {"name":"Hatred", "description":"Dwarves gain a +1 racial bonus on attack rolls against humanoid creatures of the orc and goblinoid subtypes because of their special training against these hated foes."},
       {"name":"Weapon Familiarity", "description":"Dwarves are proficient with battleaxes, heavy picks, and warhammers, and treat any weapon with the word “dwarven” in its name as a martial weapon."}
     ],
-    "selections":[]
+    "selections":null
   }},
   {"id":3,"thum":"img","name":"Gnome","expand":false, "standardRacialTraits":{
     "blurb":"Expatriates of the strange land of fey, these small folk have a reputation for flighty and eccentric behavior. Many gnomes are whimsical artisans and tinkers, creating strange devices powered by magic, alchemy, and their quirky imagination. Gnomes have an insatiable need for new experiences that often gets them in trouble.",
@@ -91,7 +91,7 @@
       {"name":"Weapon Familiarity", "description":"Halflings are proficient with slings and treat any weapon with the word “halfling” in its name as a martial weapon."},
       {"name":"Keen Senses", "description":"Halflings receive a +2 racial bonus on Perception checks."}
     ],
-    "selections":[]
+    "selections":null
   }},
   {"id":7,"thum":"img","name":"Kitsune","expand":false, "standardRacialTraits":{
     "blurb":"These shapeshifting, fox-like folk share a love of mischief, art, and the finer things in life. They can appear as a single human as well as their true form, that of a foxlike humanoid. Kitsune are quick-witted, nimble, and gregarious, and because of this, a fair number of them become adventurers.",
@@ -104,7 +104,7 @@
       {"name":"Natural Weapons", "description":"In her natural form, a kitsune has a bite attack that deals 1d4 points of damage."},
       {"name":"Low-Light Vision", "description":"Kitsune can see twice as far as humans in conditions of dim light."}
     ],
-    "selections":[]
+    "selections":null
   }},
   {"id":8,"thum":"img","name":"Catfolk","expand":false, "standardRacialTraits":{
     "blurb":"A race of graceful explorers, catfolk are both clannish and curious by nature. They tend to get along with races that treat them well and respect their boundaries. They love exploration, both physical and intellectual, and tend to be natural adventurers.",
@@ -116,7 +116,7 @@
       {"name":"Sprinter", "description":"Catfolk gain a 10-foot racial bonus to their speed when using the charge, run, or withdraw actions."},
       {"name":"Low-Light Vision", "description":"Catfolk have low-light vision allowing them to see twice as far as humans in dim light."}
     ],
-    "selections":[]
+    "selections":null
   }},
   {"id":9,"thum":"img","name":"Aasimar","expand":false, "standardRacialTraits":{
     "blurb":"Creatures blessed with a celestial bloodline, aasimars seem human except for some exotic quality that betrays their otherworldly origin. While aasimars are nearly always beautiful, something simultaneously a part of and apart from humanity, not all of them are good, though very few are evil.",
@@ -143,6 +143,6 @@
       {"name":"Survivor", "description":"Half-giants gain a +4 racial bonus to Survival checks."},
       {"name":"Low-Light Vision", "description":"Half-giants have low-light vision allowing them to see twice as far as humans in dim light."}
     ],
-    "selections":[]
+    "selections":null
   }}
 ]

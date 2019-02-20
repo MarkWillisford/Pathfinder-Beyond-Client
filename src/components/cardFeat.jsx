@@ -31,7 +31,7 @@ export class CardFeat extends React.Component{
 		// We now have the feat the user selected;
 		// 1.) If there are any selections required we need to get those from 
 		// the user, 
-		let selections = null;
+		let selections = null; 
 		if(feat.selections){
 			// If the feat has selections, then toggle the flag, displaying the selection radios
 			this.props.dispatch(setSelections(name));

@@ -2,6 +2,10 @@ export function capitalizeFirstLetter(string){
     return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
+export function lowercaseFirstLetter(string){
+    return string.charAt(0).toLowerCase() + string.slice(1);
+};
+
 export function arrayToSentence(array){
 	let sentence = "";
 	for(let i=0;i<array.length;i++){

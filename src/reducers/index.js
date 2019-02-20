@@ -332,7 +332,7 @@ export const characterReducer = (state=initialState, action) => {
       return {
         ...state,
         help:!state.help,
-      }
+      } 
     break;
     case actions.SUBMIT_RACE_TO_STATE:
       race = state.racesArray.find(r => r.id === action.index);
@@ -353,9 +353,6 @@ export const characterReducer = (state=initialState, action) => {
     case actions.SUBMIT_AASIMAR_RACE_TO_STATE:
       race = action.race;
       console.log(race);
-      //race = state.racesArray.find(r => r.id === action.index);
-
-
 
       indexOfStep = 1;
       step = state.creationSteps[indexOfStep];
@@ -365,10 +362,10 @@ export const characterReducer = (state=initialState, action) => {
         creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
           { ...step, complete:true},
           ...state.creationSteps.filter(c => c.id > indexOfStep)
-        ]//, newCharacter:{ ...state.newCharacter,
+        ], newCharacter:{ ...state.newCharacter,
           // add the values to the state
-        //  race:race,
-        //}
+          race:race,
+        }
       }
     break;
     case actions.SUBMIT_CLASS_TO_STATE:
@@ -657,6 +654,19 @@ export const characterReducer = (state=initialState, action) => {
       return {
         ...state,
         selections:action.name
+      }
+    break;
+    case actions.SUBMIT_FAVORED_CLASS_TO_STATE:
+      if(!state.newCharacter.favoredClass){
+        return {
+          ...state,
+          newCharacter:{...state.newCharacter, favoredClass:[action.favoredClass]}
+        }
+      } else {
+        return {
+          ...state,
+          newCharacter:{...state.newCharacter, favoredClass:[...state.newCharacter.favoredClass, action.favoredClass]}
+        }    
       }
     break;
 

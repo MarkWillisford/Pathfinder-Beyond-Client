@@ -206,6 +206,11 @@ export const setSelections = (name) => ({
 	name,
 })
 
+export const SUBMIT_FAVORED_CLASS_TO_STATE = 'SUBMIT_FAVORED_CLASS_TO_STATE';
+export const submitFavoredClassToState = (favoredClass) => ({
+	type: SUBMIT_FAVORED_CLASS_TO_STATE, 
+	favoredClass,
+});
 
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
