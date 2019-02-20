@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Equipment_StartingEquipment from './equipment_StartingEquipment';
-import Equipment_Gold from './equipment_Gold';
+import EquipmentStartingEquipment from './equipment_StartingEquipment';
+import EquipmentGold from './equipment_Gold';
 
 import { equipmentGenerationMethod } from '../actions/index';
 
@@ -65,18 +65,16 @@ export class NewCharacterEquipment extends React.Component{
 		        	<h1>Character Equipment - done</h1>	
 		        </div>			
 			);
-		};		
+		}
 	}
 }
 
 function EquipmentMethod(props){
 	switch(props.method){
 		case "equipment": 
-			return (<Equipment_StartingEquipment />);
-			break;
+			return (<EquipmentStartingEquipment />)
 		case "gold": 
-			return (<Equipment_Gold />);
-			break;
+			return (<EquipmentGold />)
 		default:
 			return null;			
 	}

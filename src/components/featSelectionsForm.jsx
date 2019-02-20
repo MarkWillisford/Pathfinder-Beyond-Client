@@ -1,9 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {reduxForm, Field, SubmissionError, focus, formValueSelector, change } from 'redux-form';
-import { capitalizeFirstLetter, arrayToSentence, statIndex } from '../utility/helperFunctions';
+import {reduxForm, Field } from 'redux-form';
 
-import { setExpandedFeat } from '../actions/index';
 import { submitFeatToState } from '../actions/index';
 import { setSelections } from '../actions/index';
 
@@ -46,15 +44,6 @@ export class FeatSelectionsForm extends React.Component{
 			this.props.dispatch(setSelections(""));
 			this.props.dispatch(submitFeatToState(feat));
 		};
-		const createRenderer = render => ({ input, meta, label, options, ...rest }) => 
-			<div>
-				<label>{label}</label>
-				{render(input, label, rest, options)}
-				{meta.touched && meta.error && <span>{meta.error}</span>}
-			</div>
-		const RenderRadio = createRenderer((input, label, value) => 
-			<input type="radio" value={value} { ... input}/>
-		)
 		class RadioGroup extends React.Component {
 		    render() {
 		        const { input, meta, options, label } = this.props

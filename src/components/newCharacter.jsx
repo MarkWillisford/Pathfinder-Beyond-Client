@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import {withRouter} from 'react-router';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 import NewCharacterCreationMethod from './newCharacterCreationMethod';
 import QuickBuild from './quickBuild';

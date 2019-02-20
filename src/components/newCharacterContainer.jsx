@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import NewCharacterNavLinks from './newCharacterNavLinks';
 import NewCharacterPreferences from './newCharacterPreferences';
 import NewCharacterRace from './newCharacterRace';
@@ -15,11 +14,7 @@ import LoadOptions from './loadNewCharacterOptions';
 import Next from './next';
 import Prev from './prev';
 
-import {decrementCurrentStep} from '../actions/index';
-import {incrementCurrentStep} from '../actions/index';
 import {toggleStep} from '../actions/index';
-import {loadRaces} from '../actions/index';
-import TestingRoutes from './testingRoutes';
 
 import './newCharacterContainer.css';
 
@@ -45,7 +40,6 @@ export class NewCharacterContainer extends React.Component{
 	render(){
 		const stepsArray = this.props.creationSteps;
 		const currentStep = this.props.currentStep;
-		const help = this.props.help;
 		const disabledPrev = this.props.disabledPrev;
 		const disabledNext = this.props.disabledNext;
 		
@@ -92,7 +86,6 @@ export class NewCharacterContainer extends React.Component{
 const mapStateToProps = state => ({
 	creationSteps:state.characterReducer.creationSteps,
 	currentStep:state.characterReducer.currentStep,
-	help:state.characterReducer.help,
     disabledNext:state.characterReducer.disabledNext,
     disabledPrev:state.characterReducer.disabledPrev,
 });

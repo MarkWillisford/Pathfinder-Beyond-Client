@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {reduxForm, Field, SubmissionError, focus, formValueSelector, change } from 'redux-form';
+import {reduxForm, Field, focus } from 'redux-form';
 import EquipmentSelection from './equipment_Selection';
 
 import { goldGenerationMethod } from '../actions/index';
@@ -8,7 +8,7 @@ import { setGold } from '../actions/index';
 
 import './equipment_Gold.css';
 
-export class Equipment_Gold extends React.Component {
+export class EquipmentGold extends React.Component {
 	handleGold(text){
 		// set the state.goldGenerationMethod to text
 		this.props.dispatch(goldGenerationMethod(text));		
@@ -49,13 +49,10 @@ function GoldGeneration(props){
 		switch(goldMethod){
 			case "roll": 
 				return (<RollGold wealth={props.wealth} dispatch={props.dispatch}/>);
-				break;
 			case "average": 
 				return (<AverageGold wealth={props.wealth} dispatch={props.dispatch}/>);
-				break;
 			case "manual": 
 				return (<ManualGold dispatch={props.dispatch}/>);
-				break;
 			default:
 				return null;
 		}
@@ -65,10 +62,6 @@ function GoldGeneration(props){
 }
 
 class RollGold extends React.Component{
-	constructor(props){
-		super(props);
-	}
-
 	handleClick(){
 		let gold = 0;
 		for(let i=0;i<this.props.wealth.number;i++){
@@ -87,10 +80,6 @@ class RollGold extends React.Component{
 }
 
 class AverageGold extends React.Component{
-	constructor(props){
-		super(props);
-	}
-
 	handleClick(avg){
 		this.props.dispatch(setGold(avg));
 	}
@@ -106,10 +95,6 @@ class AverageGold extends React.Component{
 }
 
 class ManualGold extends React.Component{
-	constructor(props){
-		super(props);
-	}    
-
 	onSubmit(values){
     	this.props.dispatch(setGold(values.goldInput));
     }
@@ -154,4 +139,4 @@ const mapStateToProps = state => ({
 	gold:state.characterReducer.newCharacter.gold
 })
 
-export default connect(mapStateToProps)(Equipment_Gold);
+export default connect(mapStateToProps)(EquipmentGold);

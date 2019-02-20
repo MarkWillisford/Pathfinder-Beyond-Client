@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const createBonus = ({ name, source, stat, type, duration, amount }) => ({
 	name,
 	source,

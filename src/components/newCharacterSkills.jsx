@@ -184,7 +184,7 @@ export class NewCharacterSkills extends React.Component{
 		        	<h1>Character Skills - done</h1>	
 		        </div>			
 			);
-		};		
+		}
 	}
 }
 

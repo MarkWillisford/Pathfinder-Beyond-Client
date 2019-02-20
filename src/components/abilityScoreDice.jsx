@@ -1,9 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {reduxForm, Field, SubmissionError, focus, formValueSelector, change } from 'redux-form';
+import {reduxForm, Field, formValueSelector } from 'redux-form';
 import { DynamicSelect } from './dynamicSelect';
 
-import { setAvailableStats } from '../actions/index';
 import { saveAbilityScoreOptions } from '../actions/index';
 // import { submitAbilityScoreToState } from '../actions/index';
 import { setStepToComplete } from '../actions/index';

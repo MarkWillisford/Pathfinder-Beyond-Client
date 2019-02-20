@@ -40,7 +40,7 @@
   {"id":3,"thum":"img","name":"Gnome","expand":false, "standardRacialTraits":{
     "blurb":"Expatriates of the strange land of fey, these small folk have a reputation for flighty and eccentric behavior. Many gnomes are whimsical artisans and tinkers, creating strange devices powered by magic, alchemy, and their quirky imagination. Gnomes have an insatiable need for new experiences that often gets them in trouble.",
     "base":{"abilityScoreRacialBonuses": "+2 Constitution, +2 Charisma, and –2 Strength", "abilityScoreRacialBonusArray":[{"stat":"constitution", "value":2},{"stat":"charisma", "value":2},{"stat":"strength", "value":-2}], 
-            "skillRacialBonusArray":[{"stat":"perception", "value":2}, {"stat":["craft", "profession"], "value":2}], 
+            "skillRacialBonusArray":[{"stat":"perception", "value":2}], 
             "age":"normal", "size":"small", "type":"Humanoid [Gnome]", "speed":"(slow speed) Gnomes have a base speed of 20 feet.", "Languages":{"start":["Common","Gnome", "Sylvan"], "learn":["Draconic", "Dwarven", "Elven", "Giant", "Goblin", "Orc"]}},
     "racial":[{"name":"Defensive Training", "description":"Gnomes gain a +4 dodge bonus to AC against monsters of the giant subtype."},
       {"name":"Illusion Resistance", "description":"Gnomes gain a +2 racial saving throw bonus against illusion spells and effects."},

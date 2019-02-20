@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 /*import {BrowserRouter as Router, Route, Link} from 'react-router-dom';*/
 import CharacterCard from './characterCard';
-import NewCharacter from './newCharacter';
 
 import './myCharactersArray.css';
 
@@ -21,7 +20,7 @@ export function MyCharactersArray(props){
         	{characters}
             <Link to={ '/playerDemo/newCharacter'}>
             	<div className="newCharacter">
-            		<img src="plus.jpg" alt="Plus Sign Image"></img>
+            		<img src="plus.jpg" alt="Plus Sign"></img>
                 	<div className="characterCardName">New Character</div>
             	</div>
             </Link>

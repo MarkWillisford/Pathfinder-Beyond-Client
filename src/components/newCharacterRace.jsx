@@ -122,7 +122,7 @@ export class NewCharacterRace extends React.Component{
 		        	<h1>Character Race - done</h1>	
 		        </div>			
 			);
-		};		
+		}		
 	}
 }
 

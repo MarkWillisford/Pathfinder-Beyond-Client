@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import './characterDetails.css';
@@ -11,7 +10,6 @@ export class CharacterDetails extends React.Component{
         const characterPic = character.pic;
         const characterName = character.name;
         const characterLevel = character.level;
-        const characterRace = character.race;
         const characterClass = character.class;
         const characterStats = character.stats;
         const characterAbilityScores = character.stats.abilityScores;

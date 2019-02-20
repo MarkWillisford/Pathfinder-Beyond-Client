@@ -55,6 +55,6 @@ export function	findBonusAmountByType(stat, type){
 		let index = this.findBonusIndexByType(statObject.sum.bonuses, type);
 		if(index != null){
 			return statObject.sum.bonuses[index].amount;
-		} else { return "0"};			
+		} else { return "0"}			
 	} else { return "0" }
 }

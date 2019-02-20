@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {reduxForm, Field, Fields, SubmissionError, focus, formValueSelector, change } from 'redux-form';
-import { capitalizeFirstLetter, lowercaseFirstLetter, arrayToSentence, statIndex } from '../utility/helperFunctions';
+import {reduxForm, Field} from 'redux-form';
+import { capitalizeFirstLetter, lowercaseFirstLetter} from '../utility/helperFunctions';
 
 import { setSelections } from '../actions/index';
 import { submitRaceToState } from '../actions/index';
@@ -41,7 +41,6 @@ export class SelectionFormRace extends React.Component{
 	}
 
 	render(){
-		const race = "";
 		const submitting = this.props.submitting;
 		const onSubmitFormAasimar = (values) => {
 			const selectionsHeritage = capitalizeFirstLetter(values.selectionsHeritage);
@@ -66,6 +65,7 @@ export class SelectionFormRace extends React.Component{
 					amount:2 });
 				this.props.dispatch(addBonus(bonus));
 				this.props.dispatch(sumBonus(bonus));
+				return null
 			});
 			// create bonuses foreach in .skills
 			heritage.standardRacialTraits.base.skillRacialBonusArray.map(skill => {
@@ -78,6 +78,7 @@ export class SelectionFormRace extends React.Component{
 					amount:2 });
 				this.props.dispatch(addBonus(bonus));
 				this.props.dispatch(sumBonus(bonus));
+				return null
 			});
 
 			// Now dispatch a special action to create the assimar race . . .
@@ -100,7 +101,6 @@ export class SelectionFormRace extends React.Component{
 			for(let i=0; i<this.props.racesArray.length;i++){
 				if(this.props.racesArray[i].name === "Gnome"){
 					this.props.racesArray[i].standardRacialTraits.base.abilityScoreRacialBonusArray.map(ability => {
-						console.log(ability);
 						let bonus = createBonus({ 
 							name:"race", 
 							source:"race", 
@@ -110,8 +110,10 @@ export class SelectionFormRace extends React.Component{
 							amount:ability.value });
 						this.props.dispatch(addBonus(bonus));
 						this.props.dispatch(sumBonus(bonus));
+						return null
 					});
 					this.props.racesArray[i].standardRacialTraits.base.skillRacialBonusArray.map(skill => {
+						console.log(this.props.racesArray[i].standardRacialTraits.base.skillRacialBonusArray);
 						let bonus = createBonus({ 
 							name:"race", 
 							source:"race", 
@@ -121,6 +123,7 @@ export class SelectionFormRace extends React.Component{
 							amount:skill.value });
 						this.props.dispatch(addBonus(bonus));
 						this.props.dispatch(sumBonus(bonus));
+						return null
 					});
 					break;
 				}
@@ -188,9 +191,6 @@ export class SelectionFormRace extends React.Component{
 				{render(input, label, rest, options)}
 				{meta.touched && meta.error && <span>{meta.error}</span>}
 			</div>
-		const RenderRadio = createRenderer((input, label, value) => 
-			<input type="radio" value={value} { ... input}/>
-		)
 		class RadioGroup extends React.Component {
 		    render() {
 		        const { input, meta, options, label } = this.props
@@ -338,7 +338,7 @@ export class SelectionFormRace extends React.Component{
 				)
 			default:
 				return null;			
-		};
+		}
 	}	
 }
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { capitalizeFirstLetter, arrayToSentence } from '../utility/helperFunctions';
-import { toggleFeatureExpand } from '../actions/index';
 
 export default class CardClass extends React.Component{
 	render(){
@@ -20,7 +19,6 @@ export default class CardClass extends React.Component{
 }
 
 function ClassExpanded(props){
-	let featureNames = "";
 	const blurb = props.features.blurb;
 	const alignment = props.features.alignment;
 	const hd = props.features.hd;

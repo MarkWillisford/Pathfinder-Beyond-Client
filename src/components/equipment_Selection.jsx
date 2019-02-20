@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {reduxForm, Field, SubmissionError, focus, formValueSelector, change } from 'redux-form';
 import CardGoodsOrService from './cardGoodsOrService'
 
 import { spendGold } from '../actions/index';
@@ -107,25 +106,6 @@ export class Equipment_Selection extends React.Component {
 		const weaponsList = require('../data/weapons');
 		const armorList = require('../data/armor');
 		const goodsAndServicesList = require('../data/goodsAndServices');
-
-		// create a list of weapon categories ('simple, martial, etc')
-		let weaponsCategory = [];		// list of categories
-/*		let foundCategory = false;		// flag
-		for(let i = 0; i<weaponsList.length;i++){			// for each weapon
-			let categoryString = weaponsList[i].category;	// get the category
-			foundCategory = false;							// make sure the marker is false 
-			for(let j=0;j<weaponsCategory.length;j++){		// search the list
-				if(weaponsCategory[j] == categoryString){	// if the category is found
-					foundCategory = true;					// set the marker
-				}
-			};
-			if(!foundCategory){ 							// if there is no marker, then it is a new category
-				weaponsCategory.push(categoryString); 		// add it to the list
-			};
-		};
-		// Do I really need this?  Will I ever have anything that isn't simple, marital etc?
-		// I think I over complicated this for unneccisary expandable possiblities. */
-		weaponsCategory = ["simple", "martial", "exotic"];
 
 		// Love this, found on https://stackoverflow.com/questions/14696326/break-array-of-objects-into-separate-arrays-based-on-a-property
 		let weaponsListsCategory = groupBy2(weaponsList, "category");
@@ -412,7 +392,6 @@ function TradeGood(props){
 
 function Weapons(props){
 	const name=props.name;
-	const description=props.description;
 	const cost=props.cost;
 	const dmgS=props.dmgS;
 	const dmgM=props.dmgM;
@@ -421,7 +400,6 @@ function Weapons(props){
 	const weight=props.weight;
 	const type=props.type;
 	const special=props.special;
-	const expand=props.expand;
 	const availableGold = props.availableGold;
 	const disabledAdd = (availableGold < cost) ? true : false;
 	const purchasedGear = props.purchasedGear;
@@ -459,7 +437,6 @@ function Weapons(props){
 
 function Armor(props){
 	const name=props.name;
-	const description=props.description;
 	const cost=props.cost	
 	const bonus=props.bonus[Object.keys(props.bonus)[0]];
 	const maxDexBonus=props.maxDexBonus;
@@ -468,7 +445,6 @@ function Armor(props){
 	const weight=props.weight;
 	const speed20=props.speed[Object.keys(props.speed)[0]];
 	const speed30=props.speed[Object.keys(props.speed)[1]];
-	const expand=props.expand;
 	const purchasedGear = props.purchasedGear;
 	const availableGold = props.availableGold;
 	const disabledAdd = (availableGold < cost) ? true : false;

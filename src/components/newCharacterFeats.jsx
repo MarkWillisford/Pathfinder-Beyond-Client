@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import CardFeatCategory from './cardFeatCategory';
-import CardFeat from './cardFeat';
 
 import './newCharacterFeats.css';
 
@@ -63,7 +62,7 @@ export class NewCharacterFeats extends React.Component{
 		        	<h1>Character Feats - done</h1>	
 		        </div>			
 			);
-		};		
+		}	
 	}
 }
 

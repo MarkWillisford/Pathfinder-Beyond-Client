@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {reduxForm, Field, SubmissionError, focus, formValueSelector, change } from 'redux-form';
+import {reduxForm, Field, focus } from 'redux-form';
 
 import { toggleDetailsExpand } from '../actions/index';
 import { submitDetailsToState } from '../actions/index';
@@ -30,7 +30,7 @@ export class NewCharacterDetails extends React.Component{
 		const help = this.props.help;
 		const expand = this.props.expand;
 		// this constant is just an abstraction for the moment, in the future this will be an editable variable
-		const numberOfTraits = 3;
+		// const numberOfTraits = 3;
 
 		// if help is true, that screen is displayed
 		if(help){
@@ -74,7 +74,7 @@ export class NewCharacterDetails extends React.Component{
 		        	<h1>Character Details - done</h1>	
 		        </div>			
 			);
-		};		
+		}	
 	}
 }
 
@@ -164,9 +164,6 @@ const RenderSelect = createRenderer((input, label, { children }) =>
 	{children}
 	</select>			
 )
-const RenderRadio = createRenderer((input, label, value) => 
-	<input type="radio" value={value} { ... input}/>
-)
 const RenderTextarea = createRenderer((input, label, value) =>
 	<input type="textarea" { ... input}/>)
 
@@ -186,9 +183,6 @@ class RadioGroup extends React.Component {
 }
 
 function DisplayCharacterDetails(props){
-	const alignments = ["Chaotic Evil", "Chaotic Good", "Chaotic Neutral",
-						"Lawful Evil", "Lawful Good", "Lawful Neutral",
-						"Neutral", "Neutral Evil", "Neutral Good"];
 	return(
 		<div>
 		<Field name={"alignments"} component={RenderSelect} label={"Alignment"}>

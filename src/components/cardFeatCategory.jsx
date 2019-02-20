@@ -16,7 +16,6 @@ class CardFeatCategory extends React.Component{
 				//create string for prereqs
 				let prereqString = "";
 				let prereqStringArray = [];
-				let prereqs = {};
 				if(featsList[i].prerequisites){
 					// If this is here, it is an array of prereq objects
 					for(let j=0;j<featsList[i].prerequisites.length;j++){

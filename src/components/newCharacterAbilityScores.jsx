@@ -1,21 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { formValueSelector } from 'redux-form';
 import _ from 'lodash';
 import AbilityScoreDice from './abilityScoreDice';
 import AbilityScoreManual from './abilityScoreManual';
 
 import { abilityScoreGenerationMethod } from '../actions/index';
-import { assignScore } from '../actions/index';
 import { capitalizeFirstLetter, statIndex } from '../utility/helperFunctions';
 
 import './newCharacterAbilityScores.css';
 
 export class NewCharacterAbilityScores extends React.Component{
-	constructor(props){
-		super(props);
-	}
-
 	handleClick(text){
 		// set the state.abilityScoreGenerationMethod to text
 		this.props.dispatch(abilityScoreGenerationMethod(text));
@@ -55,7 +49,7 @@ export class NewCharacterAbilityScores extends React.Component{
 			let index = this.findBonusIndexByType(statObject.sum.bonuses, type);
 			if(index != null){
 				return statObject.sum.bonuses[index].amount;
-			} else { return "0"};			
+			} else { return "0"}		
 		} else { return "0" }
 	}
 
@@ -214,7 +208,7 @@ export class NewCharacterAbilityScores extends React.Component{
 		        	<h1>Character Ability Scores - done</h1>
 		        </div>			
 			);
-		};		
+		}		
 	}
 }
 
@@ -222,16 +216,12 @@ function AbilityScoreMethod(props){
 	switch(props.method){
 		case "arrays": 
 			return (<AbilityScoreArrays />);
-			break;
 		case "dice": 
 			return (<AbilityScoreDice statArrayToAssign={props.statArrayToAssign} />);
-			break;
 		case "manual": 
 			return (<AbilityScoreManual />);
-			break;
 		case "pointBuy": 
 			return (<AbilityScorePointBuy />);
-			break;
 		default:
 			return null;			
 	}
@@ -260,7 +250,6 @@ function AbilityScorePointBuy(){
 	)
 }
 
-const selector = formValueSelector('diceForm');
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[3].complete,
 	help:state.characterReducer.help,

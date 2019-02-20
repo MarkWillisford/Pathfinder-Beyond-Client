@@ -1,11 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {reduxForm, Field, SubmissionError, focus, formValueSelector, change } from 'redux-form';
-import { DynamicSelect } from './dynamicSelect';
+import {reduxForm, Field, focus } from 'redux-form';
 
-import { setAvailableStats } from '../actions/index';
-import { saveAbilityScoreOptions } from '../actions/index';
-//import { submitAbilityScoreToState } from '../actions/index';
 import { setStepToComplete } from '../actions/index';
 import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
@@ -96,10 +92,6 @@ export class AbilityScoreManual extends React.Component {
 		)
 	}
 }
-
-const dynamicFields = ["strengthSelecter", "dexteritySelecter", "constitutionSelecter", 
-					"intelligenceSelecter", "wisdomSelecter", "charismaSelecter"];
-const selector = formValueSelector('diceForm');
 
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[3].complete,

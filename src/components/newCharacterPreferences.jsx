@@ -1,11 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {reduxForm, Field, SubmissionError, focus, formValueSelector, change } from 'redux-form';
+import {reduxForm, Field } from 'redux-form';
 import {submitPreferencesToState} from '../actions/index';
 
 import './newCharacterPreferences.css';
-// for testing
-import showResults from './showResults';
 
 const validate = values => {
 	const errors = {}
@@ -53,13 +51,13 @@ export class NewCharacterPreferencesForm extends React.Component{
 			{children}
 			</select>			
 		)
-		const RenderRadio = createRenderer((input, label, value) => 
+/* 		const RenderRadio = createRenderer((input, label, value) => 
 			<input type="radio" value={value} { ... input}/>
-		)
+		) */
 /*		const RadioGroup = createRenderer((input, label, options) => 	
 			{options.map(o => <label key={o.value}><input type="radio" {...input} value={o.value} checked={o.value === input.value} /> {o.title}</label>)}
 		)*/
-		class RadioGroup extends React.Component {
+/* 		class RadioGroup extends React.Component {
 		    render() {
 		        const { input, meta, options, label } = this.props
 		        const hasError = meta.touched && meta.error;
@@ -72,7 +70,7 @@ export class NewCharacterPreferencesForm extends React.Component{
 		            </div>
 		        );
 		    }
-		}			
+		} */			
 
 
 		// if help is true, that screen is displayed
@@ -138,7 +136,7 @@ export class NewCharacterPreferencesForm extends React.Component{
 		        	<h1>Character Basics - done</h1>	
 		        </div>			
 			);
-		};		
+		}		
 	}
 }
 

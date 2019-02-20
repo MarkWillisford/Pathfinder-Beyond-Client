@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { capitalizeFirstLetter, arrayToSentence } from '../utility/helperFunctions';
 
 import { spendGold } from '../actions/index';
 import { addItemToCharacter } from '../actions/index';

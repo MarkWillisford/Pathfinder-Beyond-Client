@@ -67,14 +67,14 @@ export class NewCharacterClass extends React.Component{
 		        			callback={()=> this.handleClick(id)} addClassCallback={()=> this.addClass(id)}/>
 		        	)}
 		        </div>
-		    );
+		    )
 		} else {
 			return(
 		        <div className="newCharacterClass">
 		        	<h1>Character Class - done</h1>	
 		        </div>			
 			);
-		};		
+		}		
 	}
 }
 

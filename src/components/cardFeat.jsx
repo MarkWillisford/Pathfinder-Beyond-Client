@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { capitalizeFirstLetter, arrayToSentence, statIndex } from '../utility/helperFunctions';
+import { statIndex } from '../utility/helperFunctions';
 import FeatSelectionsForm from './featSelectionsForm';
 
 import { setExpandedFeat } from '../actions/index';
@@ -31,7 +31,6 @@ export class CardFeat extends React.Component{
 		// We now have the feat the user selected;
 		// 1.) If there are any selections required we need to get those from 
 		// the user, 
-		let selections = null; 
 		if(feat.selections){
 			// If the feat has selections, then toggle the flag, displaying the selection radios
 			this.props.dispatch(setSelections(name));
