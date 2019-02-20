@@ -217,6 +217,12 @@ export const setClassSelectionsView = (charClass) => ({
 	type: SET_CLASS_SELECTIONS_VIEW, 
 	charClass,
 });
+
+export const SUBMIT_FAVORED_ENEMY = 'SUBMIT_FAVORED_ENEMY';
+export const submitFavoredEnemy = (favoredEnemy) => ({
+	type: SUBMIT_FAVORED_ENEMY, 
+	favoredEnemy,
+});
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
 export const toggleFeatureExpand = (charClass, feature) => ({

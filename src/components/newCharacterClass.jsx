@@ -6,7 +6,9 @@ import { toggleClassExpand } from '../actions/index';
 import { submitClassToState } from '../actions/index';
 import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
-import { createBonus } from '../utility/statObjectFactories'
+import { setClassSelectionsView } from '../actions/index';
+import { createBonus } from '../utility/statObjectFactories';
+import * as ClassSelections from './classSelectionFiles/';
 
 import './newCharacterClass.css';
 
@@ -27,23 +29,26 @@ export class NewCharacterClass extends React.Component{
 			if( i===id ){
 				let name = this.props.classesArray[i].name;
 
-/* 				Ranger:		Favored Enemy
-				Cleric:		Diety => Domains
+/* 				Cleric:		Diety => Domains
 				Druid:		Nature Bond
 				Sorcerer:	Spells, Bloodline */
 
 				switch(name){
 					case "cleric":
 						console.log("cleric");
+						this.props.dispatch(setClassSelectionsView("cleric"));
 						break;
 					case "druid":
 						console.log("druid");
+						this.props.dispatch(setClassSelectionsView("druid"));
 						break;
 					case "ranger":
 						console.log("ranger");
+						this.props.dispatch(setClassSelectionsView("ranger"));
 						break;
 					case "sorcerer":
 						console.log("sorcerer");
+						this.props.dispatch(setClassSelectionsView("sorcerer"));
 						break;
 					default:
 						this.addClass(id);
@@ -73,6 +78,7 @@ export class NewCharacterClass extends React.Component{
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
+		const classSelections = this.props.classSelections;
 
 		// if help is true, that screen is displayed
 		if(help){
@@ -89,23 +95,56 @@ export class NewCharacterClass extends React.Component{
 			);
 		} 
 		else if(!complete){
+			if(classSelections){
+				// If classSelections has been toggled, then get options and display
+				switch(classSelections[0]){
+					case "cleric":
+						console.log("in cleric");
+						return(
+							<div>
+								<h1>Cleric customization</h1>
+								{<ClassSelections.ClassSelectionsCleric />}
+							</div>
+						)
+					case "druid":
+						console.log("in druid");
+						return (
+							<div>
+								<h1>Druid customization</h1>
+								{<ClassSelections.ClassSelectionsDruid />}
+							</div>
+						)
+					case "ranger":
+						console.log("in ranger");
+						return (
+							<div>
+								<h1>Ranger customization</h1>
+								{<ClassSelections.ClassSelectionsRanger />}
+							</div>
+						)
+					case "sorcerer":
+						console.log("in sorcerer");
+						return (
+							<div>
+								<h1>Sorcerer customization</h1>
+								{<ClassSelections.ClassSelectionsSorcerer />}
+							</div>
+						)
+					default:
+				}
 
-			// If classSelections has not been toggled then get class options and display
-
-			// Not complete, get choices and display
-			return (
-		        <div className="newCharacterClass">
-		        	<h1>Character Class - todo</h1>	
-		        	{this.props.classesArray.map(({id,thum,name,expand,classFeatures}) => 
-		        		<CardClass key={id} thum={thum} name={name} expand={expand} features={classFeatures}
-		        			callback={()=> this.handleClick(id)} addClassCallback={()=> this.checkForSelections(id)}/>
-		        	)}
-		        </div>
-			)
-			
-			// If classSelections has been toggled, then get options and display
-
-
+			} else {
+				// Not complete, with no class needing selections, therefore get choices and display
+				return (
+					<div className="newCharacterClass">
+						<h1>Character Class - todo</h1>	
+						{this.props.classesArray.map(({id,thum,name,expand,classFeatures}) => 
+							<CardClass key={id} thum={thum} name={name} expand={expand} features={classFeatures}
+								callback={()=> this.handleClick(id)} addClassCallback={()=> this.checkForSelections(id)}/>
+						)}
+					</div>
+				)
+			}
 		} else {
 			return(
 		        <div className="newCharacterClass">
@@ -120,6 +159,7 @@ const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[2].complete,
 	classesArray:state.characterReducer.classesArray,
 	help:state.characterReducer.help,
+	classSelections:state.characterReducer.classSelectionsView,
 });
 
 export default connect(mapStateToProps)(NewCharacterClass);

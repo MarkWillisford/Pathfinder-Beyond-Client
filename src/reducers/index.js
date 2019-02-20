@@ -643,6 +643,25 @@ export const characterReducer = (state=initialState, action) => {
             classSelectionsView:[...state.classSelectionsView, action.charClass]
           }    
         }
+        case actions.SUBMIT_FAVORED_ENEMY:
+          let tableLevel = state.newCharacter.charClass.classFeatures.table[1];
+          let levelSpecial = state.newCharacter.charClass.classFeatures.table[1][5];
+          let favoredEnemy = state.newCharacter.charClass.classFeatures.table[1][5][0];
+          return {
+            ...state,
+            newCharacter:{...state.newCharacter, charClass:{
+              ...state.newCharacter.charClass, classFeatures:{
+                ...state.newCharacter.charClass.classFeatures, table:[
+                  ...state.newCharacter.charClass.classFeatures.table.filter(r => r[0] === "level"),
+                    [...tableLevel.filter(d => typeof d === "string"), 
+                      [...levelSpecial.filter(o => o.name < "favored enemy"), 
+                        {...favoredEnemy, specialty: action.favoredEnemy},
+                      ...levelSpecial.filter(o => o.name > "favored enemy")]],
+                    ...state.newCharacter.charClass.classFeatures.table.filter(r => r[0] > 1)
+                ]
+              }
+            }}
+          }
 
     default:
       console.warn(`unhandled action: ${action.type}`);
