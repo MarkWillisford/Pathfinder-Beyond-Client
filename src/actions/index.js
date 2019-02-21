@@ -223,6 +223,12 @@ export const submitFavoredEnemy = (favoredEnemy) => ({
 	type: SUBMIT_FAVORED_ENEMY, 
 	favoredEnemy,
 });
+
+export const SET_GENERIC_EXPAND = 'SET_GENERIC_EXPAND';
+export const setGenericExpand = (name) => ({
+	type: SET_GENERIC_EXPAND, 
+	name,
+});
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
 export const toggleFeatureExpand = (charClass, feature) => ({

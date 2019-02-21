@@ -35,19 +35,15 @@ export class NewCharacterClass extends React.Component{
 
 				switch(name){
 					case "cleric":
-						console.log("cleric");
 						this.props.dispatch(setClassSelectionsView("cleric"));
 						break;
 					case "druid":
-						console.log("druid");
 						this.props.dispatch(setClassSelectionsView("druid"));
 						break;
 					case "ranger":
-						console.log("ranger");
 						this.props.dispatch(setClassSelectionsView("ranger"));
 						break;
 					case "sorcerer":
-						console.log("sorcerer");
 						this.props.dispatch(setClassSelectionsView("sorcerer"));
 						break;
 					default:
@@ -99,7 +95,6 @@ export class NewCharacterClass extends React.Component{
 				// If classSelections has been toggled, then get options and display
 				switch(classSelections[0]){
 					case "cleric":
-						console.log("in cleric");
 						return(
 							<div>
 								<h1>Cleric customization</h1>
@@ -107,7 +102,6 @@ export class NewCharacterClass extends React.Component{
 							</div>
 						)
 					case "druid":
-						console.log("in druid");
 						return (
 							<div>
 								<h1>Druid customization</h1>
@@ -115,7 +109,6 @@ export class NewCharacterClass extends React.Component{
 							</div>
 						)
 					case "ranger":
-						console.log("in ranger");
 						return (
 							<div>
 								<h1>Ranger customization</h1>
@@ -123,7 +116,6 @@ export class NewCharacterClass extends React.Component{
 							</div>
 						)
 					case "sorcerer":
-						console.log("in sorcerer");
 						return (
 							<div>
 								<h1>Sorcerer customization</h1>

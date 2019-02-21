@@ -44,8 +44,6 @@ export class ClassSelectionsRanger extends React.Component{
         const favoredEnemies = require('../../data/rangerFavoredEnemy');
 		const submitting = this.props.submitting;
 		const onSubmitForm = (values) => {
-            console.log("you picked: ");
-            console.log(values);
             this.addClass(values.selections);
 		};
 

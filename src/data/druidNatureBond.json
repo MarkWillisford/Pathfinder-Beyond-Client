@@ -1,0 +1,132 @@
+[
+    {
+        "type":"domain",
+        "name":"air",
+        "description":"You can manipulate lightning, mist, and wind, traffic with air creatures, and are resistant to electricity damage.",
+        "grantedPowers":[
+            {"name":"Lightning Arc",
+            "type":"Sp",
+            "level":1,
+            "description":"As a standard action, you can unleash an arc of electricity targeting any foe within 30 feet as a ranged touch attack. This arc of electricity deals 1d6 points of electricity damage + 1 point for every two cleric levels you possess. You can use this ability a number of times per day equal to 3 + your Wisdom modifier."
+            },
+            {"name":"Electricity Resistance",
+                "type":"Ex",
+                "level":6,
+                "description":"At 6th level, you gain resist electricity 10. This resistance increases to 20 at 12th level. At 20th level, you gain immunity to electricity."
+            }
+        ],
+        "domainSpells":[{"1st":"obscuring mist"},{"2nd":"wind wall"},{"3rd":"gaseous form"},
+            {"4th":"air walk"},{"5th":"control winds"},{"6th":"chain lightning"},
+            {"7th":"elemental body IV","limitation":"air"},{"8th":"whirlwind"},{"9th":"elemental swarm","limitation":"air"}]
+    },{
+        "type":"animal companion",
+        "name":"bear",
+        "startingStatistics":{
+            "size":"Small",
+            "speed":"40",
+            "ac":{
+                "amount":2,
+                "type":"natural armor"
+            },
+            "attack":[{
+                "type":"bite",
+                "damage":"1d4"
+            },{
+                "type":"claw",
+                "damage":"1d3"
+            },{
+                "type":"claw",
+                "damage":"1d3"
+            }],
+            "abilityScores":{
+                "strength":15,
+                "dexterity":15,
+                "constitution":13,
+                "intelligence":2,
+                "wisdom":12,
+                "charisma":6
+            },
+            "specialQualitites":["low-light vision", "scent"]
+        },
+        "advancement":{
+            "level":4,
+            "size":"Medium",
+            "attack":[{
+                "type":"bite",
+                "damage":"1d6"
+            },{
+                "type":"claw",
+                "damage":"1d4"
+            },{
+                "type":"claw",
+                "damage":"1d4"
+            }],
+            "abilityScores":{
+                "strength":4,
+                "dexterity":-2,
+                "constitution":2
+            }            
+        }
+    },{
+        "type":"domain",
+        "name":"earth",
+        "description":"You have mastery over earth, metal, and stone, can fire darts of acid, and command earth creatures.",
+        "grantedPowers":[
+            {"name":"Acid Dart",
+            "type":"Sp",
+            "level":1,
+            "description":"As a standard action, you can unleash an acid dart targeting any foe within 30 feet as a ranged touch attack. This acid dart deals 1d6 points of acid damage + 1 point for every two cleric levels you possess. You can use this ability a number of times per day equal to 3 + your Wisdom modifier."
+            },
+            {"name":"Acid Resistance",
+                "type":"Ex",
+                "level":6,
+                "description":"At 6th level, you gain resist acid 10. This resistance increases to 20 at 12th level. At 20th level, you gain immunity to acid."
+            }
+        ],
+        "domainSpells":[{"1st":"magic stone"},{"2nd":"soften earth and stone"},{"3rd":"stone shape"},
+            {"4th":"spike stones"},{"5th":"wall of stone"},{"6th":"stoneskin"},
+            {"7th":"elemental body IV","limitation":"earth"},{"8th":"earthquake"},{"9th":"elemental swarm","limitation":"earth"}]
+    },{
+        "type":"animal companion",
+        "name":"wolf",
+        "startingStatistics":{
+            "size":"medium",
+            "speed":"50",
+            "ac":{
+                "amount":2,
+                "type":"natural armor"
+            },
+            "attack":[{
+                "type":"bite",
+                "damage":"1d6",
+                "special":"trip"
+            }],
+            "abilityScores":{
+                "strength":13,
+                "dexterity":15,
+                "constitution":15,
+                "intelligence":2,
+                "wisdom":12,
+                "charisma":6
+            },
+            "specialQualitites":["low-light vision", "scent"]
+        },
+        "advancement":{
+            "level":7,
+            "size":"large",
+            "ac":{
+                "amount":2,
+                "type":"natural armor"
+            },
+            "attack":[{
+                "type":"bite",
+                "damage":"1d8"
+            }],
+            "abilityScores":{
+                "strength":8,
+                "dexterity":-2,
+                "constitution":4
+            }            
+        }
+    }
+]
