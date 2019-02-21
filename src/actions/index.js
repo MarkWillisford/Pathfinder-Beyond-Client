@@ -229,6 +229,12 @@ export const setGenericExpand = (name) => ({
 	type: SET_GENERIC_EXPAND, 
 	name,
 });
+
+export const SUBMIT_NATURE_BOND = 'SUBMIT_NATURE_BOND';
+export const submitNatureBond = (bond) => ({
+	type: SUBMIT_NATURE_BOND, 
+	bond,
+});
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
 export const toggleFeatureExpand = (charClass, feature) => ({

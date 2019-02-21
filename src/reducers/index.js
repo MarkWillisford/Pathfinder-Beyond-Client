@@ -662,6 +662,32 @@ export const characterReducer = (state=initialState, action) => {
           }
         }}
       }
+    case actions.SUBMIT_NATURE_BOND:
+    console.log(action.bond);
+      tableLevel = state.newCharacter.charClass.classFeatures.table[1];
+      levelSpecial = state.newCharacter.charClass.classFeatures.table[1][5];
+      foundAt = null;
+      for(let i=0;i<levelSpecial.length;i++){
+        if(levelSpecial[i].name === "nature bond"){
+          console.log("found it at ");
+          console.log(i);
+          console.log("should be 3");
+          foundAt = i;
+        }
+      }
+      return {
+        ...state,
+        newCharacter:{...state.newCharacter, charClass:{
+          ...state.newCharacter.charClass, classFeatures:{
+            ...state.newCharacter.charClass.classFeatures, table:[
+              ...state.newCharacter.charClass.classFeatures.table.filter(r => r[0] === "level"),
+                tableLevel.map((content, i) => i === 5 ? 
+                  levelSpecial.map((content2, j) => j === foundAt ? {...content2, specialty: action.bond } : content2 ) : content),
+                ...state.newCharacter.charClass.classFeatures.table.filter(r => r[0] > 1)
+            ]
+          }
+        }}
+      }
     case actions.SET_GENERIC_EXPAND:
       return {
         ...state,

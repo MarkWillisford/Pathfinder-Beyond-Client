@@ -1,7 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import { CardDomain } from '../cardDomain';
 
 import { setGenericExpand } from '../../actions/index';
+import { submitNatureBond } from '../../actions/index';
+import { submitClassToState } from '../../actions/index';
+import { addBonus } from '../../actions/index';
+import { sumBonus } from '../../actions/index';
+import { createBonus } from '../../utility/statObjectFactories';
 
 import './classSelectionsDruid.css';
 
@@ -17,18 +23,39 @@ export class ClassSelectionsDruid extends React.Component{
                 {druidNatureBond.domain.map(({name, description, domainSpells, grantedPowers}) =>
                     <CardDomain key={name} name={name} description={description} domainSpells={domainSpells} grantedPowers={grantedPowers}
                     expand={(expand === name) ? true : false}
-                    onExpandClick={()=>this.onExpandClick(name)}/>
+                    onExpandClick={()=>this.onExpandClick(name)}
+                    onSelectClick={()=>this.onSelectClick({name, description, domainSpells, grantedPowers})}/>
                 )}
                 <p>Animal Companions:</p>
                 {druidNatureBond["animal companion"].map(({name, startingStatistics, advancement}) =>
                     <CardAnimalCompanion key={name} name={name} startingStatistics={startingStatistics} advancement={advancement}
                     expand={(expand === name) ? true : false}
-                    onExpandClick={()=>this.onExpandClick(name)}/>
+                    onExpandClick={()=>this.onExpandClick(name)}
+                    onSelectClick={()=>this.onSelectClick({name, startingStatistics, advancement})}/>
                 )}
             </div>
         )
     }
     
+    onSelectClick(natureBond){
+        for(let i=0; i<this.props.classesArray.length;i++){
+			// if this is the clicked element toggle it 
+			if( this.props.classesArray[i].name==="druid" ){
+				let bonus = createBonus({ 
+					name:"classBAB", 
+					source:"class", 
+					stat:"bab", 
+					type:"untyped", 
+					duration:-1, 
+					amount:this.props.classesArray[i].classFeatures.table[1][1] });
+				this.props.dispatch(addBonus(bonus));
+				this.props.dispatch(sumBonus(bonus));
+                this.props.dispatch(submitClassToState(i));
+                this.props.dispatch(submitNatureBond(natureBond));
+			}
+		}
+    }
+
     onExpandClick(name){
         const expand = this.props.expand;
         if(expand !== name){
@@ -49,32 +76,9 @@ export class ClassSelectionsDruid extends React.Component{
     }
 }
 
-class CardDomain extends React.Component{
-    render(){
-        if(this.props.expand){
-            return (
-                <div>
-                    EXPANDED
-                    <button>Select</button>
-                    <button onClick={this.props.onExpandClick}>Expand</button>
-                </div>
-            )
-        } else {            
-            return (
-                <div>
-                <p>{this.props.name}</p>
-                    <button>Select</button>
-                    <button onClick={this.props.onExpandClick}>Expand</button>
-                </div>
-            )
-        }
-    }
-}
-
 class CardAnimalCompanion extends React.Component{
     render(){
         if(this.props.expand){
-            console.log(this.props);
             const start = this.props.startingStatistics;
             const sas = start.abilityScores;
             const adv = this.props.advancement;
@@ -114,13 +118,13 @@ class CardAnimalCompanion extends React.Component{
             }
             return (
                 <div>
-                    <p>{this.props.name}</p>
-                    <p>Starting Statistics</p>
+                    <h3>{this.props.name}</h3>
+                    <h4>Starting Statistics</h4>
                     <p>Size {start.size}; Speed {start.speed} ft.; AC +{start.ac.amount} {start.ac.type}; Attack {start.attack.map(attack =>
                         (attack.special) ? `${attack.type} (${attack.damage} + ${attack.special})` : `${attack.type} (${attack.damage})` 
                     ).join(", ")}; Ability Scores Str {sas.strength}; Dex {sas.dexterity}; Con {sas.constitution}; Int {sas.intelligence}; Wis {
                     sas.wisdom}; Cha {sas.charisma}; Special Qualitites {start.specialQualitites.map(sq => sq).join(", ")};</p>
-                    <p>{numSytax(adv.level)} Lvl Advancement</p>
+                    <h4>{numSytax(adv.level)} Lvl Advancement</h4>
                     <p>
                         {(adv.size ? `Size ${adv.size}; `: ``)}
                         {(adv.ac ? `AC +${start.ac.amount} ${start.ac.type}; `: ``)}
@@ -136,7 +140,7 @@ class CardAnimalCompanion extends React.Component{
                             <p>Special Qualities ${adv.specialDescriptions.type}</p>
                             <p>${adv.specialDescriptions.description}</p>`: ``)}                        
                     </p>
-                    <button>Select</button>
+                    <button onClick={this.props.onSelectClick}>Select</button>
                     <button onClick={this.props.onExpandClick}>Hide</button>
                 </div>
             )
@@ -145,7 +149,7 @@ class CardAnimalCompanion extends React.Component{
                 <div>
                     <p>{this.props.name}</p>
                     <p>{this.props.startingStatistics.size}</p>
-                    <button>Select</button>
+                    <button onClick={this.props.onSelectClick}>Select</button>
                     <button onClick={this.props.onExpandClick}>Expand</button>
                 </div>
             )
