@@ -1,0 +1,69 @@
+[
+    {
+        "name":"caves",
+        "associatedDomain": "earth",
+        "replacementPower": {
+            "replaces":"Acid Resistance",
+            "name":"Tunnel Runner",
+            "type": "Su",
+            "level": 8,
+            "description": ["you can move through tunnels and caves with ease. Activating this ability is a standard action. You can move across any stone surface as if under the effects of spider climb. You can also see very well in darkness, gaining darkvision out to a range of 60 feet. If you already possess darkvision, extend the range by 60 feet. While underground, you also gain an insight bonus equal to your cleric level on Stealth skill checks and an insight bonus equal to your Wisdom modifier on initiative checks. You can use this ability for 1 minute per day per cleric level you possess. These minutes do not need to be consecutive, but they must be spent in 1-minute increments."]
+        },
+        "replacementDomainSpells":[{"2nd":"create pit"},{"3rd":"spiked pit"},{"6th":"hungry pit"}]
+    },{
+        "name":"petrification",
+        "associatedDomain": "earth",
+        "replacementPower": {
+            "replaces":"Acid Dart",
+            "name":"Fossil Form",
+            "type": "Su",
+            "level": 1,
+            "description": ["At the beginning of your turn as a swift action, you can infuse your flesh with minerals, granting you cumbersome security. Until the beginning of your next turn, you are staggered, gain hardness 2, and gain a +2 bonus on saving throws against petrification. This hardness increases by 2 and your saving throw bonus increases by 1 for every 4 cleric levels you have. You can use this ability a number of times per day equal to 3 + your Wisdom modifier."]
+        },
+        "replacementDomainSpells":[{"4th":"calcific touch"},{"5th":"stoneskin"},{"6th":"flesh to stone"},{"8th":"statue"}]
+    },{
+        "name":"radiation",
+        "associatedDomain": "earth",
+        "replacementPower": {
+            "replaces":"Acid Dart",
+            "name":"Radiating Touch",
+            "type": "Su",
+            "level": 1,
+            "description": ["As a standard action that provokes attacks of opportunity, you can irradiate any unattended object for a number of rounds equal to your cleric level. While an object is irradiated, it emits a faint aura of transmutation.","Any creature that passes within 5 feet of the aura must succeed at a Will save (DC equal to 10 + 1/2 your cleric level + your Wisdom modifier) or become sickened. You’re immune to this object’s effect. You can use this ability a number of times per day equal to 3 + your Wisdom modifier."]
+        },
+        "replacementDomainSpells":[{"2nd":"defoliate"},{"4th":"blight"},{"8th":"horrid wilting"}]
+    },{
+        "name":"wind",
+        "associatedDomain": "air",
+        "replacementPower": {
+            "replaces":"Lightning Arc",
+            "name":"Wind Blast",
+            "type": "Su",
+            "level": 1,
+            "description": ["As a standard action, you can unleash a blast of air in a 30-foot line. Make a combat maneuver check against each creature in the line, using your caster level as your base attack bonus and your Wisdom modifier in place of your Strength modifier. Treat the results as a bull rush attempt. You can use this ability a number of times per day equal to 3 + your Wisdom modifier."]
+        },
+        "replacementDomainSpells":[{"1st":"whispering wind"},{"6th":"wind walk"},{"9th":"winds of vengeance"}]
+    },{
+        "name":"cloud",
+        "associatedDomain": "air",
+        "replacementPower": {
+            "replaces":"Electricity Resistance",
+            "name":"Thundercloud",
+            "type": "Su",
+            "level": 8,
+            "description": ["you can, as a standard action, summon a storm cloud. This power functions as fog cloud except that creatures inside the cloud are deafened and take 2d6 points of electricity damage each round from the flashes of thunder and lightning. Once created, you can concentrate on the cloud to move it up to 30 feet each round. You can use this ability for a number of rounds per day equal to your cleric level. These rounds do not need to be consecutive."]
+        },
+        "replacementDomainSpells":[{"4th":"solid fog"},{"9th":"storm of vengeance"}]
+    },{
+        "name":"lightning",
+        "associatedDomain": "air",
+        "replacementPower": {
+            "replaces":"Electricity Resistance",
+            "name":"Lightning Rod",
+            "type": "Su",
+            "level": 1,
+            "description": ["As a swift action when you cast a spell with the electricity descriptor, you can designate one creature within line of sight. The spell’s damage against that creature increases by 50%, as if affected by the Empower Spell feat. This additional damage results from divine power that is not subject to being reduced by electricity resistance, and you take an equal amount of electricity damage immediately after you cast the spell.","The spell can deal this additional damage only once, even if it could affect the target multiple times. You can use this ability once per day at 8th level and one additional time per day for every 4 cleric levels you have beyond 8th."]
+        },
+        "replacementDomainSpells":[{"1st":"shocking grasp"},{"2nd":"flame blade","limitation":"electricity"},{"3rd":"lightning bolt"}]
+    }
+]

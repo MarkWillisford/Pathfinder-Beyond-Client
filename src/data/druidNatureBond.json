@@ -17,7 +17,8 @@
         ],
         "domainSpells":[{"1st":"obscuring mist"},{"2nd":"wind wall"},{"3rd":"gaseous form"},
             {"4th":"air walk"},{"5th":"control winds"},{"6th":"chain lightning"},
-            {"7th":"elemental body IV","limitation":"air"},{"8th":"whirlwind"},{"9th":"elemental swarm","limitation":"air"}]
+            {"7th":"elemental body IV","limitation":"air"},{"8th":"whirlwind"},{"9th":"elemental swarm","limitation":"air"}],
+        "subdomains":["cloud", "lightning", "wind"]
     },{
         "type":"animal companion",
         "name":"bear",
@@ -85,7 +86,8 @@
         ],
         "domainSpells":[{"1st":"magic stone"},{"2nd":"soften earth and stone"},{"3rd":"stone shape"},
             {"4th":"spike stones"},{"5th":"wall of stone"},{"6th":"stoneskin"},
-            {"7th":"elemental body IV","limitation":"earth"},{"8th":"earthquake"},{"9th":"elemental swarm","limitation":"earth"}]
+            {"7th":"elemental body IV","limitation":"earth"},{"8th":"earthquake"},{"9th":"elemental swarm","limitation":"earth"}],
+            "subdomains":["Caves", "Petrification", "Radiation"]
     },{
         "type":"animal companion",
         "name":"wolf",

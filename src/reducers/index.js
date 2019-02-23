@@ -693,6 +693,11 @@ export const characterReducer = (state=initialState, action) => {
         ...state,
         expand:action.name
       }
+      case actions.SET_AVAILABLE_DOMAINS:
+        return {
+          ...state,
+          availableDomains:action.domains
+        }
     default:
       console.warn(`unhandled action: ${action.type}`);
       return state

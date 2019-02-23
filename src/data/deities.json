@@ -1,0 +1,38 @@
+[
+    {"name":"Sarenrae",
+        "overview":{
+            "titles":["The Dawnflower",
+                "The Cleansing Light",
+                "The Everlight",
+                "The Healing Light",
+                "The Healing Flame"],
+            "home":	["Sarenrae's Realm", "Nirvana"],
+            "alignment": "Neutral good",
+            "areasOfConcern":	["Sun", "Redemption" ,"Honesty" ,"Healing"],
+            "worshipers": ["Healers", "farmers", "redeemed evil-doers"],
+            "clericAlignments": ["LG", "NG", "CG", "N"],
+            "domains": ["Fire", "Glory", "Good", "Healing", "Sun"],
+            "subdomains": ["Agathion", "Day", "Heroism", "Light", "(Redemption)", "Restoration", "Resurrection", "(Revelation)"],
+            "favoredWeapon": ["Scimitar"],
+            "symbol": ["Angelic ankh"],
+            "sacredAnimal": ["Dove"],
+            "sacredColors": ["Blue", "gold"]            
+        }
+    },{
+        "name":"Milani",
+        "overview":{
+            "titles": ["The Everbloom"],
+            "home":	["Refuge of the Red Rose", "Axis / Milani's Garden", "Elysium"],
+            "alignment": "Chaotic good",
+            "areasOfConcern":	["Hope", "Devotion", "Uprisings"],
+            "worshipers": ["Freedom fighters: mainly human with some half-elf & half-orc"],
+            "clericAlignments": ["NG", "CG", "CN"],
+            "domains": ["Chaos", "Good", "Healing", "Liberation", "Protection"],
+            "subdomains": ["Azata", "Defense", "Freedom", "Purity", "Restoration", "Revolution", "Riot"],
+            "favoredWeapon": ["Morningstar"],
+            "symbol": ["Rose on bloody street"],
+            "sacredAnimal":[ "Mouse"],
+            "sacredColors": ["Red", "white"]
+        }
+    }
+]

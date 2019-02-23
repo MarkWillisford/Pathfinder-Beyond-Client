@@ -50,6 +50,7 @@ export class ClassSelectionsDruid extends React.Component{
 					amount:this.props.classesArray[i].classFeatures.table[1][1] });
 				this.props.dispatch(addBonus(bonus));
 				this.props.dispatch(sumBonus(bonus));
+                this.props.dispatch(setGenericExpand(""));
                 this.props.dispatch(submitClassToState(i));
                 this.props.dispatch(submitNatureBond(natureBond));
 			}

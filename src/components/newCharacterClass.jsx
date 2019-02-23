@@ -30,7 +30,6 @@ export class NewCharacterClass extends React.Component{
 				let name = this.props.classesArray[i].name;
 
 /* 				Cleric:		Diety => Domains
-				Druid:		Nature Bond
 				Sorcerer:	Spells, Bloodline */
 
 				switch(name){

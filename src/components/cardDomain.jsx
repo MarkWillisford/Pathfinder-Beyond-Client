@@ -40,6 +40,7 @@ export class CardDomain extends React.Component{
                     )}</div>
                     <h4>Domain Spells</h4>
                     <div>{displaySpells(gSpells)}</div>
+                    {/* I will want to add subdomains. For now however . . .     */}
                     <button onClick={this.props.onSelectClick}>Select</button>
                     <button onClick={this.props.onExpandClick}>Hide</button>
                 </div>
