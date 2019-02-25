@@ -48,7 +48,7 @@ export class CardDomain extends React.Component{
         } else {            
             return (
                 <div>
-                    <p>{this.props.name}{capitalizeFirstLetter(this.props.name)} Domain</p>
+                    <p>{capitalizeFirstLetter(this.props.name)} Domain</p>
                     <button onClick={this.props.onSelectClick}>Select</button>
                     <button onClick={this.props.onExpandClick}>Expand</button>
                 </div>
