@@ -7,6 +7,7 @@ export class CardDomain extends React.Component{
     render(){
         const gPower = this.props.grantedPowers;
         const gSpells = this.props.domainSpells;
+        const disableSelect = (this.props.disableSelect) ? this.props.disableSelect : false;
         function displaySpells(spells){
             let stringSpells;
             spells.map(spell =>
@@ -41,7 +42,7 @@ export class CardDomain extends React.Component{
                     <h4>Domain Spells</h4>
                     <div>{displaySpells(gSpells)}</div>
                     {/* I will want to add subdomains. For now however . . .     */}
-                    <button onClick={this.props.onSelectClick}>Select</button>
+                    <button onClick={this.props.onSelectClick} disabled={disableSelect}>Select</button>
                     <button onClick={this.props.onExpandClick}>Hide</button>
                 </div>
             )
@@ -49,7 +50,7 @@ export class CardDomain extends React.Component{
             return (
                 <div>
                     <p>{capitalizeFirstLetter(this.props.name)} Domain</p>
-                    <button onClick={this.props.onSelectClick}>Select</button>
+                    <button onClick={this.props.onSelectClick} disabled={disableSelect}>Select</button>
                     <button onClick={this.props.onExpandClick}>Expand</button>
                 </div>
             )

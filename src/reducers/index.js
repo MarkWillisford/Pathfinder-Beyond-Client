@@ -693,14 +693,58 @@ export const characterReducer = (state=initialState, action) => {
         ...state,
         expand:action.name
       }
-      case actions.SET_AVAILABLE_DOMAINS:
-        return {
-          ...state,
-          availableDomains:action.domains
+    case actions.SET_AVAILABLE_DOMAINS:
+      return {
+        ...state,
+        availableDomains:action.domains
+      }
+    case actions.SUBMIT_DOMAIN:
+      console.log(action.domain);
+      /* tableLevel = state.newCharacter.charClass.classFeatures.table[1];
+      levelSpecial = state.newCharacter.charClass.classFeatures.table[1][5];
+      foundAt = null;
+      for(let i=0;i<levelSpecial.length;i++){
+        if(levelSpecial[i].name === "nature bond"){
+          console.log("found it at ");
+          console.log(i);
+          console.log("should be 3");
+          foundAt = i;
         }
+      } */
+      /* return {
+        ...state,
+        newCharacter:{...state.newCharacter, charClass:{
+          ...state.newCharacter.charClass, classFeatures:{
+            ...state.newCharacter.charClass.classFeatures, table:[
+              ...state.newCharacter.charClass.classFeatures.table.filter(r => r[0] === "level"),
+                tableLevel.map((content, i) => i === 5 ? 
+                  levelSpecial.map((content2, j) => j === foundAt ? {...content2, specialty: action.bond } : content2 ) : content),
+                ...state.newCharacter.charClass.classFeatures.table.filter(r => r[0] > 1)
+            ]
+          }
+        }}
+      }  */
+    break;
+    case actions.SET_DEITY:
+      return {
+        ...state,
+        clericDetails:{deity:action.deity}
+      }
+    case actions.SET_DOMAIN:
+    if(!state.clericDetails.domains){
+      return {
+        ...state,
+        clericDetails:{...state.clericDetails, domains:[action.domain]}
+      }
+    } else {
+      return {
+        ...state,
+        clericDetails:{ ...state.clericDetails, 
+          domains:[...state.clericDetails.domains, action.domain]}
+      }
+    }
     default:
       console.warn(`unhandled action: ${action.type}`);
       return state
-
   }
 };

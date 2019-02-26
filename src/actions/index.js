@@ -241,6 +241,25 @@ export const setAvailableDomains = (domains) => ({
 	type: SET_AVAILABLE_DOMAINS, 
 	domains,
 });
+
+export const SUBMIT_DOMAIN = 'SUBMIT_DOMAIN';
+export const submitDomain = (domain) => ({
+	type: SUBMIT_DOMAIN, 
+	domain,
+}); 
+
+export const SET_DEITY = 'SET_DEITY';
+export const setDeity = (deity) => ({
+	type: SET_DEITY, 
+	deity,
+});
+
+export const SET_DOMAIN = 'SET_DOMAIN';
+export const setDomain = (domain) => ({
+	type: SET_DOMAIN, 
+	domain,
+});
+
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
 export const toggleFeatureExpand = (charClass, feature) => ({

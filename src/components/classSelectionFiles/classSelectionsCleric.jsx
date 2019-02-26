@@ -4,7 +4,9 @@ import { CardDomain } from '../cardDomain';
 
 import { setGenericExpand } from '../../actions/index';
 import { setAvailableDomains } from '../../actions/index';
+import { setDeity } from '../../actions/index';
 import { submitClassToState } from '../../actions/index';
+import { setDomain } from '../../actions/index';
 import { addBonus } from '../../actions/index';
 import { sumBonus } from '../../actions/index';
 import { createBonus } from '../../utility/statObjectFactories';
@@ -31,6 +33,7 @@ export class ClassSelectionsCleric extends React.Component{
         const availableDomainsList = this.props.availableDomainsList;   // this is currently just an array of domain names . . .   
         const availableDomains = this.getDomains(availableDomainsList);
         const expand = this.props.expand;
+        const clericDetails = this.props.clericDetails; 
 
         return (
             <div>
@@ -42,7 +45,7 @@ export class ClassSelectionsCleric extends React.Component{
                         {/* display list of deities for selection */}
                         {deities.map(deity => 
                             <CardDeities key={deity.name} name={deity.name} overview={deity.overview}
-                            {/* When a deity is clicked on, set a temporary array to the available domains */}
+                            /* When a deity is clicked on, set a temporary array to the available domains */
                             onDeityClick={()=> this.onDeityClick(deity)}/>    
                         )}
                 </div>
@@ -54,9 +57,22 @@ export class ClassSelectionsCleric extends React.Component{
                         <CardDomain key={name} name={name} description={description} domainSpells={domainSpells} grantedPowers={grantedPowers}
                         expand={(expand === name) ? true : false}
                         onExpandClick={()=>this.onExpandClick(name)}
-                        onSelectClick={()=>this.onSelectClick({name, description, domainSpells, grantedPowers})}/>
+                        onSelectClick={()=>this.onDomainClick({name, description, domainSpells, grantedPowers})}
+                        disableSelect={(clericDetails.domains) ? (
+                            /* if domain[1] exists, we know there are already two domains and must disable all */
+                            clericDetails.domains[1] ? true : (
+                                /* if it doesn't, then check if [0].name equals */
+                                clericDetails.domains[0].name === name ? true : false
+                            )
+                        ) : false}
+                        />
                     )}
                 </div>}
+
+
+                
+
+
 
                 {/* Once two domains have been selected allow a submit */}
 
@@ -73,18 +89,20 @@ export class ClassSelectionsCleric extends React.Component{
         }
     }
 
-    onSelectClick(domain){
+    onDomainClick(domain){
         console.log(domain);
+        // add the selected domain to an array. When that array has a length of 2, all domain selection buttons must be disabled
+        this.props.dispatch(setDomain(domain));
+
         // hide select button for this domain
         // show cancel button for this domain
-        // add the selected domain to an array. When that array has a length of 2, all domain selection buttons must be disabled
     }
 
     onDeityClick(deity){
         {/* When a deity is clicked on, set a temporary array to the available domains */}
         let availableDomains = deity.overview.domains;
         this.props.dispatch(setAvailableDomains(availableDomains));
-        {/* #TODO! save the selected deity */}
+        this.props.dispatch(setDeity(deity));
     }
 }
 
@@ -100,9 +118,10 @@ class CardDeities extends React.Component{
 }
 
 const mapStateToProps = state => ({
+	classesArray:state.characterReducer.classesArray,
     availableDomainsList:state.characterReducer.availableDomains,
     expand:state.characterReducer.expand,
-
+    clericDetails:state.characterReducer.clericDetails,
 });
 
 export default connect(mapStateToProps)(ClassSelectionsCleric);
