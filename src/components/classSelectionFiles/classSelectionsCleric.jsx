@@ -9,6 +9,7 @@ import { submitClassToState } from '../../actions/index';
 import { setDomain } from '../../actions/index';
 import { addBonus } from '../../actions/index';
 import { sumBonus } from '../../actions/index';
+import { submitDomain } from '../../actions/index';
 import { createBonus } from '../../utility/statObjectFactories';
 import { capitalizeFirstLetter } from '../../utility/helperFunctions';
 
@@ -34,13 +35,22 @@ export class ClassSelectionsCleric extends React.Component{
         const availableDomains = this.getDomains(availableDomainsList);
         const expand = this.props.expand;
         const clericDetails = this.props.clericDetails; 
+        const deityDone = (!clericDetails) ? (false) : (
+            (!clericDetails.deity) ? (false) : true
+        )
+        const clericDetailsDone = (!clericDetails) ? (false) : (
+            (!clericDetails.domains) ? (false) : (
+                (clericDetails.domains[1]) ? (true) : false
+            )
+        )
 
         return (
             <div>
                 <p>A cleric’s deity influences her alignment, what magic she can perform, her values, and how others see her. A cleric chooses two domains from among those belonging to her deity. A cleric can select an alignment domain (Chaos, Evil, Good, or Law) only if her alignment matches that domain. If a cleric is not devoted to a particular deity, she still selects two domains to represent her spiritual inclinations and abilities (subject to GM approval). The restriction on alignment domains still applies.</p>
                 <p>Each domain grants a number of domain powers, dependent upon the level of the cleric, as well as a number of bonus spells. A cleric gains one domain spell slot for each level of cleric spell she can cast, from 1st on up. Each day, a cleric can prepare one of the spells from her two domains in that slot. If a domain spell is not on the cleric spell list, a cleric can prepare it only in her domain spell slot. Domain spells cannot be used to cast spells spontaneously.</p>
                 <p>In addition, a cleric gains the listed powers from both of her domains, if she is of a high enough level. Unless otherwise noted, activating a domain power is a standard action.</p>
-                <div>
+                {/* #TODO! I need to build a "back" button for these selections. */}
+                {(!deityDone) && <div>
                     <p>Deities:</p>
                         {/* display list of deities for selection */}
                         {deities.map(deity => 
@@ -48,8 +58,10 @@ export class ClassSelectionsCleric extends React.Component{
                             /* When a deity is clicked on, set a temporary array to the available domains */
                             onDeityClick={()=> this.onDeityClick(deity)}/>    
                         )}
-                </div>
+                </div>}
                 {/* display list of domains for selection */}
+                {/* Once two domains have been selected allow a submit */}
+                {clericDetailsDone && <button onClick={()=>this.onSubmitClick()}>Submit</button>}
                 {/* This should only be displayed if there are domains to select from */}
                 {availableDomains && <div>
                     <p>Domains:</p>
@@ -58,28 +70,53 @@ export class ClassSelectionsCleric extends React.Component{
                         expand={(expand === name) ? true : false}
                         onExpandClick={()=>this.onExpandClick(name)}
                         onSelectClick={()=>this.onDomainClick({name, description, domainSpells, grantedPowers})}
-                        disableSelect={(clericDetails.domains) ? (
-                            /* if domain[1] exists, we know there are already two domains and must disable all */
+                        /* disableSelect={(clericDetails) ? ((clericDetails.domains) ? (
+                            // if domain[1] exists, we know there are already two domains and must disable all 
                             clericDetails.domains[1] ? true : (
-                                /* if it doesn't, then check if [0].name equals */
+                                // if it doesn't, then check if [0].name equals 
                                 clericDetails.domains[0].name === name ? true : false
                             )
-                        ) : false}
+                        ) : false) : false}  */
+                        disableSelect={(!clericDetails) ? (false) : (
+                            (!clericDetails.domains) ? (false) : (
+                                (clericDetails.domains[1]) ? (true) : (
+                                    (clericDetails.domains[0].name === name) ? (true) : (false)
+                                )
+                            )
+                        )}
                         />
                     )}
                 </div>}
-
-
-                
-
-
-
                 {/* Once two domains have been selected allow a submit */}
-
+                {clericDetailsDone && <button onClick={()=>this.onSubmitClick()}>Submit</button>}
             </div>
         )
     }
-       
+    
+    onSubmitClick(){
+        console.log("submitting");
+        console.log(this.props.clericDetails);
+        
+        for(let i=0; i<this.props.classesArray.length;i++){
+			// if this is the clicked element toggle it 
+			if( this.props.classesArray[i].name==="cleric" ){
+				let bonus = createBonus({ 
+					name:"classBAB", 
+					source:"class", 
+					stat:"bab", 
+					type:"untyped", 
+					duration:-1, 
+					amount:this.props.classesArray[i].classFeatures.table[1][1] });
+				this.props.dispatch(addBonus(bonus));
+				this.props.dispatch(sumBonus(bonus));
+                this.props.dispatch(setGenericExpand(""));
+                this.props.dispatch(submitClassToState(i));
+                this.props.dispatch(submitDomain(this.props.clericDetails));
+			}
+		}
+
+    }
+
     onExpandClick(name){
         const expand = this.props.expand;
         if(expand !== name){
@@ -90,12 +127,13 @@ export class ClassSelectionsCleric extends React.Component{
     }
 
     onDomainClick(domain){
-        console.log(domain);
+        const expand = this.props.expand;
         // add the selected domain to an array. When that array has a length of 2, all domain selection buttons must be disabled
         this.props.dispatch(setDomain(domain));
-
-        // hide select button for this domain
-        // show cancel button for this domain
+        // close the details section if it is open
+        if(expand === domain.name){
+            this.onExpandClick(domain.name);
+        }
     }
 
     onDeityClick(deity){

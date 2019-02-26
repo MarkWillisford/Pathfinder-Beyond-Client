@@ -34,6 +34,8 @@ export class CardDomain extends React.Component{
             return (
                 <div>
                     <h3>{capitalizeFirstLetter(this.props.name)} Domain</h3>
+                    <button onClick={this.props.onSelectClick} disabled={disableSelect}>Select</button>
+                    <button onClick={this.props.onExpandClick}>Hide</button>
                     <p>{this.props.description}</p>
                     <h4>Granted Powers</h4>
                     <div>{gPower.map(power => 
