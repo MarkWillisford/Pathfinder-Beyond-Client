@@ -29,8 +29,10 @@ export class NewCharacterClass extends React.Component{
 			if( i===id ){
 				let name = this.props.classesArray[i].name;
 
-/* 				Cleric:		Diety => Domains
-				Sorcerer:	Spells, Bloodline */
+/* 				Sorcerer:	Spells, Bloodline 
+					spells: 4 0 level spells + 2 1st level spells
+					Bloodline
+					*/
 
 				switch(name){
 					case "cleric":
