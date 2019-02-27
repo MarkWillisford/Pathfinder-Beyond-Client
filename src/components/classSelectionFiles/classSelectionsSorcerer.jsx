@@ -9,19 +9,28 @@ import { capitalizeFirstLetter } from '../../utility/helperFunctions';
 export class ClassSelectionsSorcerer extends React.Component{
 	render(){
         const bloodlines = require('../../data/bloodlines');
+        const spells = require('../../data/spells');
         const expand = this.props.expand;
 
+        // okay, spells has an unsorted array of spell objects. I need to find all the spells that have a level object with a class attribute of "sorcerer/wizard"
+        // then sort that list by level object's attribute "num"
+        // This will be done server side, for now a basic function built in here. 
         return (
             <div>
-                <p>Each sorcerer has a source of magic somewhere in her heritage that grants her spells, bonus feats, an additional class skill, and other special abilities. This source can represent a blood relation or an extreme event involving a creature somewhere in the family’s past. For example, a sorcerer might have a dragon as a distant relative or her grandfather might have signed a terrible contract with a devil. Regardless of the source, this influence manifests in a number of ways as the sorcerer gains levels. A sorcerer must pick one bloodline upon taking her first level of sorcerer. Once made, this choice cannot be changed.</p>
-                <p>Bloodlines:</p>
-                {bloodlines.map(({name, description, classSkill, bonusSpells, bonusFeats, bloodlineArcana, bloodlinePowers}) => 
-                    <CardBloodline key={name} name={name} description={description} classSkill={classSkill} bonusSpells={bonusSpells}
-                    bonusFeats={bonusFeats} bloodlineArcana={bloodlineArcana} bloodlinePowers={bloodlinePowers}
-                    expand={(expand === name) ? true : false}
-                    onExpandClick={()=>this.onExpandClick(name)}
-                    onSelectClick={()=>this.onSelectClick(name)}/>
-                )}
+                <div>
+                    <p>Each sorcerer has a source of magic somewhere in her heritage that grants her spells, bonus feats, an additional class skill, and other special abilities. This source can represent a blood relation or an extreme event involving a creature somewhere in the family’s past. For example, a sorcerer might have a dragon as a distant relative or her grandfather might have signed a terrible contract with a devil. Regardless of the source, this influence manifests in a number of ways as the sorcerer gains levels. A sorcerer must pick one bloodline upon taking her first level of sorcerer. Once made, this choice cannot be changed.</p>
+                    <p>Bloodlines:</p>
+                    {bloodlines.map(({name, description, classSkill, bonusSpells, bonusFeats, bloodlineArcana, bloodlinePowers}) => 
+                        <CardBloodline key={name} name={name} description={description} classSkill={classSkill} bonusSpells={bonusSpells}
+                        bonusFeats={bonusFeats} bloodlineArcana={bloodlineArcana} bloodlinePowers={bloodlinePowers}
+                        expand={(expand === name) ? true : false}
+                        onExpandClick={()=>this.onExpandClick(name)}
+                        onSelectClick={()=>this.onSelectClick(name)}/>
+                    )}
+                </div>
+                <div>
+                    <p>Spells</p>
+                </div>
             </div>
         )
     }

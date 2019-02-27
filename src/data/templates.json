@@ -169,3 +169,30 @@ Equipment - Goods:
 		"cost": ,
 		"weight": 
 	}
+
+Spell
+{
+	"name":"Resistance",
+	"school":{
+		"school":"abjuration",
+		"subSchool":null,
+		"descriptor":null
+	},
+	"level":[{
+			"class":"bard",
+			"num":0
+	}],
+	"casting":{
+			"castingTime":"standard",
+			"components":["V","S","M/DF (a miniature cloak)"]
+	},
+	"effect":{
+			"range":"touch",
+			"target":"creature touched",
+			"duration":"1 minute",
+			"savingThrow": ["Will","negates"],
+			"spellResistance":"yes"
+	},
+	"description":["You imbue the subject with magical energy that protects it from harm, granting it a +1 resistance bonus on saves.",
+			"Resistance can be made permanent with a permanency spell."]
+}
