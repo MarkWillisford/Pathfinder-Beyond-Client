@@ -731,18 +731,36 @@ export const characterReducer = (state=initialState, action) => {
         clericDetails:{deity:action.deity}
       }
     case actions.SET_DOMAIN:
-    if(!state.clericDetails.domains){
+      if(!state.clericDetails.domains){
+        return {
+          ...state,
+          clericDetails:{...state.clericDetails, domains:[action.domain]}
+        }
+      } else {
+        return {
+          ...state,
+          clericDetails:{ ...state.clericDetails, 
+            domains:[...state.clericDetails.domains, action.domain]}
+        }
+      }
+    case actions.SET_BLOODLINE:
       return {
         ...state,
-        clericDetails:{...state.clericDetails, domains:[action.domain]}
+        sorcererDetails:{...state.sorcererDetails, bloodline:[action.bloodline]}
       }
-    } else {
-      return {
-        ...state,
-        clericDetails:{ ...state.clericDetails, 
-          domains:[...state.clericDetails.domains, action.domain]}
-      }
-    }
+    /* case actions.SET_BLOODLINE:
+      if(!state.sorcererDetails.bloodline){
+        return {
+          ...state,
+          sorcererDetails:{...state.sorcererDetails, bloodline:[action.bloodline]}
+        }
+      } else {
+        return {
+          ...state,
+          sorcererDetails:{ ...state.sorcererDetails, 
+            bloodline:[...state.sorcererDetails.bloodline, action.bloodline]}
+        }
+      } */
     default:
       console.warn(`unhandled action: ${action.type}`);
       return state

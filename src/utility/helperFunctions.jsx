@@ -6,6 +6,12 @@ export function lowercaseFirstLetter(string){
     return string.charAt(0).toLowerCase() + string.slice(1);
 };
 
+export function seporateOnCapitals(string){
+	// seporate on capital letters
+	let outputString = string.split(/(?=[A-Z])/).join(" ");
+	return outputString;
+}
+
 export function arrayToSentence(array){
 	let sentence = "";
 	for(let i=0;i<array.length;i++){

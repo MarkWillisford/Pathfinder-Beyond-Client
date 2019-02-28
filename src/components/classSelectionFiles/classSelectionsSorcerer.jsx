@@ -4,20 +4,27 @@ import {connect} from 'react-redux';
 import './classSelectionsSorcerer.css';
 
 import { setGenericExpand } from '../../actions/index';
-import { capitalizeFirstLetter } from '../../utility/helperFunctions';
+import { setBloodline } from '../../actions/index';
+import { capitalizeFirstLetter, seporateOnCapitals, arrayToSentence } from '../../utility/helperFunctions';
 
 export class ClassSelectionsSorcerer extends React.Component{
 	render(){
         const bloodlines = require('../../data/bloodlines');
         const spells = require('../../data/spells');
         const expand = this.props.expand;
+        const sorcererDetails = this.props.sorcererDetails; 
+        const bloodlineDone = (!sorcererDetails) ? (false) : (
+            (!sorcererDetails.bloodline) ? (false) : true
+        )
 
         // okay, spells has an unsorted array of spell objects. I need to find all the spells that have a level object with a class attribute of "sorcerer/wizard"
         // then sort that list by level object's attribute "num"
-        // This will be done server side, for now a basic function built in here. 
+        // This will be done server side, for now a basic function built in here.
+        let filteredSpellList = this.filterSpells(spells, "sorcerer/wizard", [0,1]); 
+
         return (
             <div>
-                <div>
+                {!bloodlineDone && <div>
                     <p>Each sorcerer has a source of magic somewhere in her heritage that grants her spells, bonus feats, an additional class skill, and other special abilities. This source can represent a blood relation or an extreme event involving a creature somewhere in the family’s past. For example, a sorcerer might have a dragon as a distant relative or her grandfather might have signed a terrible contract with a devil. Regardless of the source, this influence manifests in a number of ways as the sorcerer gains levels. A sorcerer must pick one bloodline upon taking her first level of sorcerer. Once made, this choice cannot be changed.</p>
                     <p>Bloodlines:</p>
                     {bloodlines.map(({name, description, classSkill, bonusSpells, bonusFeats, bloodlineArcana, bloodlinePowers}) => 
@@ -25,16 +32,44 @@ export class ClassSelectionsSorcerer extends React.Component{
                         bonusFeats={bonusFeats} bloodlineArcana={bloodlineArcana} bloodlinePowers={bloodlinePowers}
                         expand={(expand === name) ? true : false}
                         onExpandClick={()=>this.onExpandClick(name)}
-                        onSelectClick={()=>this.onSelectClick(name)}/>
+                        onSelectClick={()=>this.onSelectBloodlineClick({name, description, classSkill, bonusSpells, bonusFeats, bloodlineArcana, bloodlinePowers})}/>
                     )}
-                </div>
-                <div>
-                    <p>Spells</p>
-                </div>
+                </div>}
+                {bloodlineDone && <div>
+                    <p>A sorcerer’s selection of spells is extremely limited. A sorcerer begins play knowing four 0-level spells and two 1st-level spells of her choice. At each new sorcerer level, she gains one or more new spells. These new spells can be common spells chosen from the sorcerer/wizard spell list, or they can be unusual spells that the sorcerer has gained some understanding of through study.</p>
+                    <p>Spells:</p>
+                    <p>0 level spells:</p>
+                    {filteredSpellList[0].map(spell => <CardSpell key={spell.name} name={spell.name} school={spell.school} level={spell.level}
+                        casting={spell.casting} effect={spell.effect} description={spell.description}
+                        disabled={false} expand={(expand === spell.name) ? true : false}
+                        onExpandClick={()=>this.onExpandClick(spell.name)}
+                        onSelectClick={()=>this.onSelectSpellClick(spell)}
+                    />)}
+                    <p>1st level spells:</p>
+                    {filteredSpellList[1].map(spell => <CardSpell key={spell.name} name={spell.name} school={spell.school} level={spell.level}
+                        casting={spell.casting} effect={spell.effect} description={spell.description}
+                        disabled={false} expand={(expand === spell.name) ? true : false}
+                        onExpandClick={()=>this.onExpandClick(spell.name)}
+                        onSelectClick={()=>this.onSelectSpellClick(spell)}
+                    />)}
+                </div>}
             </div>
         )
     }
     
+    filterSpells(spells, list, range){
+        let grouped = {};
+        for(let i=0;i<spells.length;i++){
+            for(let j=0;j<spells[i].level.length;j++){
+                if(spells[i].level[j].class === list && range.includes(spells[i].level[j].num)){
+                    let p = spells[i].level[j].num;
+                    if (!grouped[p]) { grouped[p] = []; }
+                    grouped[p].push(spells[i]);
+                }
+            }
+        }
+        return grouped;
+    }
     groupBy(xs, prop){
         let grouped = {};
         for (let i=0; i<xs.length; i++) {
@@ -52,8 +87,98 @@ export class ClassSelectionsSorcerer extends React.Component{
             this.props.dispatch(setGenericExpand(""));
         }
     }
-    onSelectClick(name){
-        console.log(name);
+    onSelectBloodlineClick(bloodline){
+        this.props.dispatch(setBloodline(bloodline));
+    }
+    onSelectSpellClick(spell){
+        console.log(spell);
+    }
+}
+
+class CardSpell extends React.Component{
+    displaySchool(obj){
+        let returnString = `${obj.school}`;
+        if(obj.subSchool){
+            returnString += ` (${obj.subSchool})`;
+        }
+        if(obj.descriptor){
+            returnString += ` [${obj.descriptor}]`;
+        }
+        return returnString;
+    }
+    displayTable(tableData){
+        console.log(tableData);
+        let tableHeaders = tableData.slice(0, 1);
+        tableData = tableData.splice(1,tableData.length-1)
+        console.log("slicing");
+        console.log(tableHeaders);
+        console.log(tableData);
+        return (
+            <table>
+                <thead>
+                    <tr>
+                        {tableHeaders.map(data => (
+                            <th>{data}</th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        )
+    }
+
+    render(){
+        const effect = this.props.effect;
+        const casting = this.props.casting;
+        const level = this.props.level;
+        const schoolObj = this.props.school;
+        if(this.props.expand){
+            return (
+                <div>
+                    <p>{capitalizeFirstLetter(this.props.name)}</p> 
+                    <button onClick={this.props.onSelectClick}>Select</button>
+                    <button onClick={this.props.onExpandClick}>Cancel</button>
+                    <strong>School </strong>{this.displaySchool(schoolObj)};
+                        <strong> Level </strong>{
+                        level.map(level => (
+                            `${level.class} ${level.num}`
+                        )).join(", ")
+                
+                    }
+                    {Object.keys(casting).map((key) => (
+                        <DisplayKey key={key} name={key} value={casting[key]} />
+                    )) }
+                    {Object.keys(effect).map((key) => (
+                        <DisplayKey key={key} name={key} value={effect[key]} />
+                    )) }
+                    {this.props.description.map(sentence => (
+                        <p>{typeof sentence === "string" ? sentence : this.displayTable(sentence)}</p>
+                    ))}
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <p>{capitalizeFirstLetter(this.props.name)}
+                    <button onClick={this.props.onSelectClick}>Select</button>
+                    <button onClick={this.props.onExpandClick}>Expand</button></p>
+                </div>
+            )
+        }
+    }
+}
+
+class DisplayKey extends React.Component{
+    render(){
+        const value = this.props.value;
+        return(
+            <div>
+                <strong>{capitalizeFirstLetter(seporateOnCapitals(this.props.name).toLowerCase())} </strong> {
+                    (Array.isArray(value)) ? value.join(" ") : value};
+            </div>
+        )
     }
 }
 
@@ -87,7 +212,7 @@ class CardBloodline extends React.Component{
                 <div>
                     <h3>{capitalizeFirstLetter(this.props.name)} Bloodline</h3>
                     <button onClick={this.props.onSelectClick}>Select</button>
-                    <button onClick={this.props.onExpandClick}>Hide</button>
+                    <button onClick={this.props.onExpandClick}>Cancel</button>
                     <p>{this.props.description}</p>
                     <h4>Class Skill: </h4>{this.props.classSkill}
                     <h4>Bonus Spells: </h4>{displaySpells(bonusSpells)}
@@ -99,7 +224,7 @@ class CardBloodline extends React.Component{
                         <p>{power.name} ({power.type}): {power.description}</p>
                     )}</div>
                     <button onClick={this.props.onSelectClick}>Select</button>
-                    <button onClick={this.props.onExpandClick}>Hide</button>
+                    <button onClick={this.props.onExpandClick}>Cancel</button>
                 </div>
             )
         } else {
@@ -116,6 +241,7 @@ class CardBloodline extends React.Component{
 
 const mapStateToProps = state => ({
     expand:state.characterReducer.expand,
+    sorcererDetails:state.characterReducer.sorcererDetails,
 });
 
 export default connect(mapStateToProps)(ClassSelectionsSorcerer);

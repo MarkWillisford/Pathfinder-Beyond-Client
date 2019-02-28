@@ -260,6 +260,12 @@ export const setDomain = (domain) => ({
 	domain,
 });
 
+export const SET_BLOODLINE = 'SET_BLOODLINE';
+export const setBloodline = (bloodline) => ({
+	type: SET_BLOODLINE, 
+	bloodline,
+});
+
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
 export const toggleFeatureExpand = (charClass, feature) => ({
