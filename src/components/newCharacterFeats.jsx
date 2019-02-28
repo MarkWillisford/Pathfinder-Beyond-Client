@@ -32,7 +32,7 @@ export class NewCharacterFeats extends React.Component{
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
-		const featCategories = this.getCategoryList();
+		const featCategories = this.getCategoryList(); 
 
 		// first here we must check to ensure that race, class, and ability scores are complete. 
 		// If not, we display an error message directing the user to complete those pages before 

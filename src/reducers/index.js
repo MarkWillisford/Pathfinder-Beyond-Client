@@ -82,30 +82,6 @@ const creationSteps = [
 ];
 const newCharacter = {
   "characterStats":[],
-  /*"strength": {
-    base: 0,
-    racial: 0,
-  },
-  "dexterity": {
-    base: 0,
-    racial: 0,
-  },
-  "constitution": {
-    base: 0,
-    racial: 0,
-  },
-  "intelligence": {
-    base: 0,
-    racial: 0,
-  },
-  "wisdom": {
-    base: 0,
-    racial: 0,
-  },
-  "charisma": {
-    base: 0,
-    racial: 0,
-  },*/
   charClass:{
     classFeatures:{
       skills:0,
@@ -147,7 +123,12 @@ const newCharacter = {
     "survival": {},
     "swim": {},
     "useMagicDevice": {},
-  }
+  },
+  featSlots:[
+    { "type":"any",
+      "selection":null
+    }
+  ]
 };
 
 function setSum(stat){
@@ -460,7 +441,7 @@ export const characterReducer = (state=initialState, action) => {
       step = state.creationSteps[indexOfStep];
       return {
         ...state,
-        // first set the completed tag for step 0 to true
+        // first set the completed tag for step to true
         creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
           { ...step, complete:true},
           ...state.creationSteps.filter(c => c.id > indexOfStep)
@@ -530,27 +511,20 @@ export const characterReducer = (state=initialState, action) => {
         expanded:{...state.expanded, feat:action.name}
       }
     case actions.SUBMIT_FEAT_TO_STATE:
-      indexOfStep = 6;
-      step = state.creationSteps[indexOfStep];
-      if(!state.newCharacter.feats){
-        return {
-          ...state,
-          creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
-            { ...step, complete:true},
-            ...state.creationSteps.filter(c => c.id > indexOfStep)
-          ], 
-          newCharacter:{...state.newCharacter, feats:[action.feat]}
+      foundAt = null;
+      for(let i = 0;i<state.newCharacter.featSlots.length; i++){
+        if(!state.newCharacter.featSlots[i].selection){
+          foundAt = i;
+          break;
         }
-      } else {
-        return {
-          ...state,
-          creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
-            { ...step, complete:true},
-            ...state.creationSteps.filter(c => c.id > indexOfStep)
-          ], 
-          newCharacter:{...state.newCharacter, feats:[...state.newCharacter.feats, action.feat]}
-        }    
       }
+      let newFeat = state.newCharacter.featSlots;
+      return {
+        ...state,
+        newCharacter:{...state.newCharacter, featSlots:
+          newFeat.map((content, i) => i === foundAt ? {...content, selection:action.feat } : content )
+        }
+      }    
     case actions.ADD_BONUS:
       // flags
       let statToAddBonusTo = action.bonus.stat;
@@ -765,7 +739,6 @@ export const characterReducer = (state=initialState, action) => {
         }
       } 
     case actions.SUBMIT_SORCERER_DETAILS:
-      console.log(action.details.bloodline[0].bloodlinePowers.list.filter(p=>(p.level === 1))[0]);
       tableLevel = state.newCharacter.charClass.classFeatures.table[1];
       levelSpecial = state.newCharacter.charClass.classFeatures.table[1][5];
       let spellsKnown = state.newCharacter.charClass.classFeatures.table[1][7];
@@ -774,17 +747,11 @@ export const characterReducer = (state=initialState, action) => {
       foundAt = null;
       for(let i=0;i<levelSpecial.length;i++){
         if(levelSpecial[i].name === "bloodline"){
-          console.log("found it at ");
-          console.log(i);
-          console.log("should be 2");
           bloodlineFoundAt = i;
         }
       } 
       for(let i=0;i<levelSpecial.length;i++){
         if(levelSpecial[i].name === "bloodline power"){
-          console.log("found it at ");
-          console.log(i);
-          console.log("should be 3");
           foundAt = i;
         }
       } 

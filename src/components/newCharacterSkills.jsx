@@ -59,18 +59,6 @@ export class NewCharacterSkills extends React.Component{
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
-		// For now this is hard-coded in. 
-		const hitDie = 1;
-		const charStats = this.props.charStats;
-		const strength = this.getModifier(charStats[this.statIndex(charStats, "strength")].sum.total);
-		const dexterity = this.getModifier(charStats[this.statIndex(charStats, "dexterity")].sum.total);
-		const constitution = this.getModifier(charStats[this.statIndex(charStats, "constitution")].sum.total);
-		const intelligence = this.getModifier(charStats[this.statIndex(charStats, "intelligence")].sum.total);
-		const wisdom = this.getModifier(charStats[this.statIndex(charStats, "wisdom")].sum.total);
-		const charisma = this.getModifier(charStats[this.statIndex(charStats, "charisma")].sum.total);
-		const abilityMods = [{"name":"strength","value":strength},{"name":"dexterity","value":dexterity},{"name":"constitution","value":constitution},
-						{"name":"intelligence","value":intelligence},{"name":"wisdom","value":wisdom},{"name":"charisma","value":charisma}];
-
 		const listOfSkills = [
 			{"name":"acrobatics","ability":"dexterity"},
 			{"name":"appraise","ability":"intelligence"},
@@ -108,23 +96,12 @@ export class NewCharacterSkills extends React.Component{
 			{"name":"swim","ability":"strength"},
 			{"name":"useMagicDevice","ability":"charisma"},
 		];
-		const path1 = "props.skills"
-		let array = this.props.skills;
-		let ranksAssigned = Object.keys(array).reduce(function (previous, key) {
-			if(array[key].ranks){
-		    	return previous + Number(array[key].ranks);
-			} else {
-				return previous;
-			}
-		}, 0);
-		const remainingSkillRanks = ((this.props.classSkillsPerLevel + intelligence) > 0 ? this.props.classSkillsPerLevel + intelligence : 1) - ranksAssigned;
-		const disabled = remainingSkillRanks == 0 ? false : true;
 		// first here we must check to ensure that race, class, and ability scores are complete. 
 		// If not, we display an error message directing the user to complete those pages before 
 		// continuing. 
-		/*if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
+		if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
 			return ( <h1>NOT READY</h1> )
-		} else */if(help){
+		} else if(help){
 			// if help is true, that screen is displayed
 			return (
 				<div className="skillsHelp">
@@ -136,6 +113,28 @@ export class NewCharacterSkills extends React.Component{
 				</div>
 			);
 		} else if(!complete){
+			// For now this is hard-coded in. 
+			const hitDie = 1;
+			const charStats = this.props.charStats;
+			const strength = this.getModifier(charStats[this.statIndex(charStats, "strength")].sum.total);
+			const dexterity = this.getModifier(charStats[this.statIndex(charStats, "dexterity")].sum.total);
+			const constitution = this.getModifier(charStats[this.statIndex(charStats, "constitution")].sum.total);
+			const intelligence = this.getModifier(charStats[this.statIndex(charStats, "intelligence")].sum.total);
+			const wisdom = this.getModifier(charStats[this.statIndex(charStats, "wisdom")].sum.total);
+			const charisma = this.getModifier(charStats[this.statIndex(charStats, "charisma")].sum.total);
+			const abilityMods = [{"name":"strength","value":strength},{"name":"dexterity","value":dexterity},{"name":"constitution","value":constitution},
+							{"name":"intelligence","value":intelligence},{"name":"wisdom","value":wisdom},{"name":"charisma","value":charisma}];
+			const path1 = "props.skills"
+			let array = this.props.skills;
+			let ranksAssigned = Object.keys(array).reduce(function (previous, key) {
+				if(array[key].ranks){
+					return previous + Number(array[key].ranks);
+				} else {
+					return previous;
+				}
+			}, 0);
+			const remainingSkillRanks = ((this.props.classSkillsPerLevel + intelligence) > 0 ? this.props.classSkillsPerLevel + intelligence : 1) - ranksAssigned;
+			const disabled = remainingSkillRanks == 0 ? false : true;
 			return (
 		        <div className="newCharacterSkills">
 		        	<h1>Character Skills</h1>

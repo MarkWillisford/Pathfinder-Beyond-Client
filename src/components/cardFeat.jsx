@@ -6,6 +6,7 @@ import FeatSelectionsForm from './featSelectionsForm';
 import { setExpandedFeat } from '../actions/index';
 import { submitFeatToState } from '../actions/index';
 import { setSelections } from '../actions/index';
+import { setStepToComplete } from '../actions/index';
 
 export class CardFeat extends React.Component{
 	getFeatDetails(name){
@@ -35,13 +36,19 @@ export class CardFeat extends React.Component{
 			// If the feat has selections, then toggle the flag, displaying the selection radios
 			this.props.dispatch(setSelections(name));
 		} else {
-			this.props.dispatch(submitFeatToState(feat));
 			// If the feat doesn't have selections then submit. 
+			this.props.dispatch(submitFeatToState(feat));  
+			// finally, here I need a flag to check if we have enough feats. For example, selecting a human grants a 2nd feat. 
+			// Better yet; an array of feat slot objects. when all have the selection field not null . . .   
+			// then set step to complete. 
+
+			// currently placing new feat correctly. I need the check and to be able to add feat slots. 
+			this.props.dispatch(setStepToComplete(6));
 		}
 	}
 
 	render(){
-		let feats = this.props.feats;
+		let feats = this.props.feats; // An array of feat slot objects { type: "category", selection: "feat name"}
 		let featToExpand ="";
 		let showSelections = "";
 		let charStats = this.props.charStats;
@@ -69,7 +76,7 @@ export class CardFeat extends React.Component{
 		let selectable = true;
 		let errorMessage = "";
 		// Is feat repeatable if I already have it?
-		if(feats && !this.props.repeatable){	// I already have it AND it isn't repeatable
+		if((feats.filter(f => f.selection === this.props.name).length > 0) && !this.props.repeatable){	// I already have it AND it isn't repeatable
 			selectable = false;
 			errorMessage = "Feat is already selected";
 			console.log(errorMessage);
@@ -179,7 +186,7 @@ function CardFeatExpanded(props){
 
 const mapStateToProps = state => ({
 	featToExpand:state.characterReducer.expanded,
-	feats:state.characterReducer.newCharacter.feats,
+	feats:state.characterReducer.newCharacter.featSlots,
 	charStats:state.characterReducer.newCharacter.characterStats,
 	showSelections:state.characterReducer.selections,
 });
