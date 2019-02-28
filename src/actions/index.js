@@ -266,6 +266,18 @@ export const setBloodline = (bloodline) => ({
 	bloodline,
 });
 
+export const SET_SPELLS = 'SET_SPELLS';
+export const setSpells = (spell, asLevel) => ({
+	type: SET_SPELLS, 
+	spell, asLevel,
+});
+
+export const SUBMIT_SORCERER_DETAILS = 'SUBMIT_SORCERER_DETAILS';
+export const submitSorcDetails = (details) => ({
+	type: SUBMIT_SORCERER_DETAILS, 
+	details,
+});
+
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
 export const toggleFeatureExpand = (charClass, feature) => ({

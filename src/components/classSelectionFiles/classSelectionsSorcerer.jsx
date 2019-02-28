@@ -5,7 +5,13 @@ import './classSelectionsSorcerer.css';
 
 import { setGenericExpand } from '../../actions/index';
 import { setBloodline } from '../../actions/index';
-import { capitalizeFirstLetter, seporateOnCapitals, arrayToSentence } from '../../utility/helperFunctions';
+import { setSpells } from '../../actions/index';
+import { submitSorcDetails } from '../../actions/index';
+import { addBonus } from '../../actions/index';
+import { sumBonus } from '../../actions/index';
+import { submitClassToState } from '../../actions/index';
+import { createBonus } from '../../utility/statObjectFactories';
+import { capitalizeFirstLetter, seporateOnCapitals } from '../../utility/helperFunctions';
 
 export class ClassSelectionsSorcerer extends React.Component{
 	render(){
@@ -16,6 +22,10 @@ export class ClassSelectionsSorcerer extends React.Component{
         const bloodlineDone = (!sorcererDetails) ? (false) : (
             (!sorcererDetails.bloodline) ? (false) : true
         )
+        const sorcererDetailsDone = (!sorcererDetails) ? (false) : (
+            (sorcererDetails.spells[0].length === 4 && sorcererDetails.spells[1].length === 2) ? true : false
+        )
+        
 
         // okay, spells has an unsorted array of spell objects. I need to find all the spells that have a level object with a class attribute of "sorcerer/wizard"
         // then sort that list by level object's attribute "num"
@@ -43,16 +53,28 @@ export class ClassSelectionsSorcerer extends React.Component{
                         casting={spell.casting} effect={spell.effect} description={spell.description}
                         disabled={false} expand={(expand === spell.name) ? true : false}
                         onExpandClick={()=>this.onExpandClick(spell.name)}
-                        onSelectClick={()=>this.onSelectSpellClick(spell)}
+                        onSelectClick={()=>this.onSelectSpellClick(spell, 0)}
+                        disableSelect={(!sorcererDetails) ? (false) : (
+                            sorcererDetails.spells[0].filter((i) => i.name === spell.name).length > 0 ? true : (
+                                sorcererDetails.spells[0].length === 4 ? true : false
+                            )
+                        )}
                     />)}
                     <p>1st level spells:</p>
                     {filteredSpellList[1].map(spell => <CardSpell key={spell.name} name={spell.name} school={spell.school} level={spell.level}
                         casting={spell.casting} effect={spell.effect} description={spell.description}
                         disabled={false} expand={(expand === spell.name) ? true : false}
                         onExpandClick={()=>this.onExpandClick(spell.name)}
-                        onSelectClick={()=>this.onSelectSpellClick(spell)}
+                        onSelectClick={()=>this.onSelectSpellClick(spell, 1)}
+                        disableSelect={(!sorcererDetails) ? (false) : (
+                            sorcererDetails.spells[1].filter((i) => i.name === spell.name).length > 0 ? true : (
+                                sorcererDetails.spells[1].length === 2 ? true : false
+                            )
+                        )}
                     />)}
                 </div>}
+                {/* Once two level 1s and 4 level 0s have been selected allow a submit */}
+                {sorcererDetailsDone && <button onClick={()=>this.onSubmitClick()}>Submit</button>}
             </div>
         )
     }
@@ -90,8 +112,34 @@ export class ClassSelectionsSorcerer extends React.Component{
     onSelectBloodlineClick(bloodline){
         this.props.dispatch(setBloodline(bloodline));
     }
-    onSelectSpellClick(spell){
-        console.log(spell);
+    onSelectSpellClick(spell, asLevel){
+        const expand = this.props.expand;
+        // add the selected domain to an array. 
+        this.props.dispatch(setSpells(spell, asLevel));
+        // close the details section if it is open
+        if(expand === spell.name){
+            this.onExpandClick(spell.name);
+        }
+    }
+    onSubmitClick(){        
+        for(let i=0; i<this.props.classesArray.length;i++){
+			// if this is the clicked element toggle it 
+			if( this.props.classesArray[i].name==="sorcerer" ){
+				let bonus = createBonus({ 
+					name:"classBAB", 
+					source:"class", 
+					stat:"bab", 
+					type:"untyped", 
+					duration:-1, 
+					amount:this.props.classesArray[i].classFeatures.table[1][1] });
+				this.props.dispatch(addBonus(bonus));
+				this.props.dispatch(sumBonus(bonus));
+                this.props.dispatch(setGenericExpand(""));
+                this.props.dispatch(submitClassToState(i));
+
+                this.props.dispatch(submitSorcDetails(this.props.sorcererDetails));
+			}
+		}
     }
 }
 
@@ -107,22 +155,25 @@ class CardSpell extends React.Component{
         return returnString;
     }
     displayTable(tableData){
-        console.log(tableData);
         let tableHeaders = tableData.slice(0, 1);
         tableData = tableData.splice(1,tableData.length-1)
-        console.log("slicing");
-        console.log(tableHeaders);
-        console.log(tableData);
         return (
             <table>
                 <thead>
                     <tr>
-                        {tableHeaders.map(data => (
+                        {tableHeaders[0].map(data => (
                             <th>{data}</th>
                         ))}
                     </tr>
                 </thead>
                 <tbody>
+                    {tableData.map(row => (
+                        <tr>
+                            {row.map(data => (
+                                <td>{data}</td>
+                            ))}
+                        </tr>
+                    ))}
                     
                 </tbody>
             </table>
@@ -134,11 +185,12 @@ class CardSpell extends React.Component{
         const casting = this.props.casting;
         const level = this.props.level;
         const schoolObj = this.props.school;
+        const disableSelect = (this.props.disableSelect) ? this.props.disableSelect : false;
         if(this.props.expand){
             return (
                 <div>
                     <p>{capitalizeFirstLetter(this.props.name)}</p> 
-                    <button onClick={this.props.onSelectClick}>Select</button>
+                    <button onClick={this.props.onSelectClick} disabled={disableSelect}>Select</button>
                     <button onClick={this.props.onExpandClick}>Cancel</button>
                     <strong>School </strong>{this.displaySchool(schoolObj)};
                         <strong> Level </strong>{
@@ -156,13 +208,15 @@ class CardSpell extends React.Component{
                     {this.props.description.map(sentence => (
                         <p>{typeof sentence === "string" ? sentence : this.displayTable(sentence)}</p>
                     ))}
+                    <button onClick={this.props.onSelectClick} disabled={disableSelect}>Select</button>
+                    <button onClick={this.props.onExpandClick}>Cancel</button>
                 </div>
             )
         } else {
             return (
                 <div>
                     <p>{capitalizeFirstLetter(this.props.name)}
-                    <button onClick={this.props.onSelectClick}>Select</button>
+                    <button onClick={this.props.onSelectClick} disabled={disableSelect}>Select</button>
                     <button onClick={this.props.onExpandClick}>Expand</button></p>
                 </div>
             )
@@ -240,6 +294,7 @@ class CardBloodline extends React.Component{
 }
 
 const mapStateToProps = state => ({
+	classesArray:state.characterReducer.classesArray,
     expand:state.characterReducer.expand,
     sorcererDetails:state.characterReducer.sorcererDetails,
 });

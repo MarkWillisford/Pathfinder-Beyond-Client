@@ -699,19 +699,15 @@ export const characterReducer = (state=initialState, action) => {
         availableDomains:action.domains
       }
     case actions.SUBMIT_DOMAIN:
-      console.log(action.domain);
        tableLevel = state.newCharacter.charClass.classFeatures.table[1];
       levelSpecial = state.newCharacter.charClass.classFeatures.table[1][5];
       foundAt = null;
       for(let i=0;i<levelSpecial.length;i++){
         if(levelSpecial[i].name === "domains"){
-          console.log("found it at ");
-          console.log(i);
-          console.log("should be 4");
           foundAt = i;
         }
       } 
-       return {
+      return {
         ...state,
         newCharacter:{...state.newCharacter, charClass:{
           ...state.newCharacter.charClass, classFeatures:{
@@ -724,7 +720,6 @@ export const characterReducer = (state=initialState, action) => {
           }
         }}
       }  
-    break;
     case actions.SET_DEITY:
       return {
         ...state,
@@ -746,21 +741,71 @@ export const characterReducer = (state=initialState, action) => {
     case actions.SET_BLOODLINE:
       return {
         ...state,
-        sorcererDetails:{...state.sorcererDetails, bloodline:[action.bloodline]}
+        sorcererDetails:{...state.sorcererDetails, bloodline:[action.bloodline], spells:[[],[]]},
+        
       }
-    /* case actions.SET_BLOODLINE:
-      if(!state.sorcererDetails.bloodline){
+    case actions.SET_SPELLS:
+      const level = action.asLevel;
+      let spellsArray = state.sorcererDetails.spells
+      if(!state.sorcererDetails.spells){
         return {
           ...state,
-          sorcererDetails:{...state.sorcererDetails, bloodline:[action.bloodline]}
-        }
+          sorcererDetails:{
+            ...state.sorcererDetails, spells:[
+              (level === 0) ? ([action.spell],[]) : ([ ],[action.spell])
+            ]
+          }
+        } 
       } else {
-        return {
+        return { 
           ...state,
-          sorcererDetails:{ ...state.sorcererDetails, 
-            bloodline:[...state.sorcererDetails.bloodline, action.bloodline]}
+          sorcererDetails:{ 
+            ...state.sorcererDetails, spells:[
+              ...spellsArray.map((content, i) => i === level ? [...content, action.spell] : content)]}
         }
-      } */
+      } 
+    case actions.SUBMIT_SORCERER_DETAILS:
+      console.log(action.details.bloodline[0].bloodlinePowers.list.filter(p=>(p.level === 1))[0]);
+      tableLevel = state.newCharacter.charClass.classFeatures.table[1];
+      levelSpecial = state.newCharacter.charClass.classFeatures.table[1][5];
+      let spellsKnown = state.newCharacter.charClass.classFeatures.table[1][7];
+      let bloodlineFoundAt = null;
+      let power = action.details.bloodline[0].bloodlinePowers.list.filter(p=>(p.level === 1))[0];
+      foundAt = null;
+      for(let i=0;i<levelSpecial.length;i++){
+        if(levelSpecial[i].name === "bloodline"){
+          console.log("found it at ");
+          console.log(i);
+          console.log("should be 2");
+          bloodlineFoundAt = i;
+        }
+      } 
+      for(let i=0;i<levelSpecial.length;i++){
+        if(levelSpecial[i].name === "bloodline power"){
+          console.log("found it at ");
+          console.log(i);
+          console.log("should be 3");
+          foundAt = i;
+        }
+      } 
+      return {
+        ...state,
+         newCharacter:{...state.newCharacter, charClass:{
+          ...state.newCharacter.charClass, classFeatures:{
+            ...state.newCharacter.charClass.classFeatures, table:[
+              ...state.newCharacter.charClass.classFeatures.table.filter(r => r[0] === "level"),
+                tableLevel.map((content, i) => i === 5 ? 
+                  levelSpecial.map((content2, j) => j === bloodlineFoundAt ? {...content2, specialty: action.details.bloodline[0] } : (
+                    j === foundAt ? {...content2, specialty: power } : content2
+                  )) : (
+                    i === 7 ? {...spellsKnown, specialty: action.details.spells} : content
+                  )),
+                ...state.newCharacter.charClass.classFeatures.table.filter(r => r[0] > 1)
+            ]
+          }
+        }} 
+      }  
+
     default:
       console.warn(`unhandled action: ${action.type}`);
       return state

@@ -77,7 +77,7 @@ export class ClassSelectionsCleric extends React.Component{
                                 clericDetails.domains[0].name === name ? true : false
                             )
                         ) : false) : false}  */
-                        disableSelect={(!clericDetails) ? (false) : (
+                        disableSelect={(!clericDetails) ? (false) : ( 
                             (!clericDetails.domains) ? (false) : (
                                 (clericDetails.domains[1]) ? (true) : (
                                     (clericDetails.domains[0].name === name) ? (true) : (false)
@@ -128,7 +128,7 @@ export class ClassSelectionsCleric extends React.Component{
 
     onDomainClick(domain){
         const expand = this.props.expand;
-        // add the selected domain to an array. When that array has a length of 2, all domain selection buttons must be disabled
+        // add the selected domain to an array. 
         this.props.dispatch(setDomain(domain));
         // close the details section if it is open
         if(expand === domain.name){
