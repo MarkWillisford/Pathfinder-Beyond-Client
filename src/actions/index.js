@@ -278,6 +278,12 @@ export const submitSorcDetails = (details) => ({
 	details,
 });
 
+export const ADD_FEAT_SLOT = 'ADD_FEAT_SLOT';
+export const addFeatSlot = (category) => ({
+	type: ADD_FEAT_SLOT, 
+	category,
+});
+
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
 export const toggleFeatureExpand = (charClass, feature) => ({

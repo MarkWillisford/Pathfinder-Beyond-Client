@@ -11,6 +11,7 @@ import { sumBonus } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories';
 import { submitFeatToState } from '../actions/index';
 import { submitFavoredClassToState } from '../actions/index';
+import { addFeatSlot } from '../actions/index';
 
 // validation
 const required = value => value ? undefined : "Required";
@@ -182,6 +183,7 @@ export class SelectionFormRace extends React.Component{
 				amount:2 });
 			this.props.dispatch(addBonus(bonus));
 			this.props.dispatch(sumBonus(bonus));
+			this.props.dispatch(addFeatSlot("any"));
 			this.submitRace("Human");
 		};
 

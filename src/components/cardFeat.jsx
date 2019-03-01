@@ -42,9 +42,20 @@ export class CardFeat extends React.Component{
 			// Better yet; an array of feat slot objects. when all have the selection field not null . . .   
 			// then set step to complete. 
 
-			// currently placing new feat correctly. I need the check and to be able to add feat slots. 
-			this.props.dispatch(setStepToComplete(6));
+			// currently placing new feat correctly, I'm adding slots as needed,  I need the check. 
+			if(this.props.feats[this.props.feats.length-1].selection){
+				// the last feat slot has a valid selection attribute, thus we have made all selections available
+				console.log(this.props.feats);
+				console.log(this.props.feats[this.props.feats.length-1]);
+				console.log(this.props.feats[this.props.feats.length-1].selection);
+				this.setComplete();
+				// store isn't updating before this check . . .    okay. Now what?
+			}
 		}
+	}
+
+	setComplete(){
+		this.props.dispatch(setStepToComplete(6));
 	}
 
 	render(){

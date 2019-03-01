@@ -33,8 +33,6 @@ export class FeatSelectionsForm extends React.Component{
 		// **************************************
 		const submitting = this.props.submitting;
 		const onSubmitForm = (values) => {
-			console.log("doing a cool thing");
-			console.log(values);
 			// Okay, Here I need to:
 			// 1.) get the feat
 			let feat = this.getFeatDetails(this.props.name);

@@ -772,6 +772,16 @@ export const characterReducer = (state=initialState, action) => {
           }
         }} 
       }  
+    case actions.ADD_FEAT_SLOT:
+      return {
+        ...state,
+        newCharacter:{...state.newCharacter, featSlots:[
+          ...state.newCharacter.featSlots, { type: action.category, selection:null }
+        ]}
+      }
+
+
+
 
     default:
       console.warn(`unhandled action: ${action.type}`);
