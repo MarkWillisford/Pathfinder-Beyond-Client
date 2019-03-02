@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import _ from 'lodash';
 import { statIndex } from '../utility/helperFunctions';
 import FeatSelectionsForm from './featSelectionsForm';
 
@@ -30,32 +31,27 @@ export class CardFeat extends React.Component{
 	submitFeatToState(name){
 		let feat = this.getFeatDetails(name);
 		// We now have the feat the user selected;
-		// 1.) If there are any selections required we need to get those from 
+		// If there are any selections required we need to get those from 
 		// the user, 
 		if(feat.selections){
 			// If the feat has selections, then toggle the flag, displaying the selection radios
 			this.props.dispatch(setSelections(name));
 		} else {
+			// check to see if there is exactly 1 feat slot object with a selection of "null"
+			let remainingSlots = (this.props.feats.filter(f => f.selection === null));
+			let lastFeatSelected = false;
+			if(remainingSlots.length === 1){
+				lastFeatSelected = true;
+			};
+
 			// If the feat doesn't have selections then submit. 
 			this.props.dispatch(submitFeatToState(feat));  
-			// finally, here I need a flag to check if we have enough feats. For example, selecting a human grants a 2nd feat. 
-			// Better yet; an array of feat slot objects. when all have the selection field not null . . .   
-			// then set step to complete. 
 
-			// currently placing new feat correctly, I'm adding slots as needed,  I need the check. 
-			if(this.props.feats[this.props.feats.length-1].selection){
-				// the last feat slot has a valid selection attribute, thus we have made all selections available
-				console.log(this.props.feats);
-				console.log(this.props.feats[this.props.feats.length-1]);
-				console.log(this.props.feats[this.props.feats.length-1].selection);
-				this.setComplete();
-				// store isn't updating before this check . . .    okay. Now what?
+			// Finaly if the last feat has been selected, set the step to complete. 
+			if(lastFeatSelected){
+				this.props.dispatch(setStepToComplete(6));
 			}
 		}
-	}
-
-	setComplete(){
-		this.props.dispatch(setStepToComplete(6));
 	}
 
 	render(){
@@ -86,8 +82,16 @@ export class CardFeat extends React.Component{
 		// if the user doesn't already have the feat (if it isn't repeatable)
 		let selectable = true;
 		let errorMessage = "";
-		// Is feat repeatable if I already have it?
-		if((feats.filter(f => f.selection === this.props.name).length > 0) && !this.props.repeatable){	// I already have it AND it isn't repeatable
+		// do I already have the feat?
+		let found = false;
+		for(let i=0;i<feats.length;i++){
+			if(feats[i].selection){
+				if(feats[i].selection.name === this.props.name){
+					found = true;
+				}
+			}
+		}
+		if(found && !this.props.repeatable){	// I already have it AND it isn't repeatable
 			selectable = false;
 			errorMessage = "Feat is already selected";
 			console.log(errorMessage);
@@ -97,11 +101,25 @@ export class CardFeat extends React.Component{
 			let obj = this.props.prerequisites;
 			for(let i=0;i<obj.length;i++){
 				let key = obj[i].type;
-				   // do something with obj[key] which is an array
+				// do something with obj[key] which is an array
 				switch(key){
 					case "race":
+						if(this.props.race.localeCompare( obj[i].data , undefined, { sensitivity: 'accent' }) !== 0){							
+							selectable = false;
+							if(errorMessage != ""){
+								errorMessage += ", " + obj[i].type + " must be " + obj[i].data
+							} else { errorMessage = obj[i].type + " must be " + obj[i].data};
+							//console.log(errorMessage);
+						}
 					break;
 					case "class":
+						if(this.props.characterClass.localeCompare( obj[i].data , undefined, { sensitivity: 'accent' }) !== 0){							
+							selectable = false;
+							if(errorMessage != ""){
+								errorMessage += ", " + obj[i].type + " must be " + obj[i].data
+							} else { errorMessage = obj[i].type + " must be " + obj[i].data};
+							//console.log(errorMessage);
+						}
 					break;
 					case "classFeature":
 					break;
@@ -200,6 +218,8 @@ const mapStateToProps = state => ({
 	feats:state.characterReducer.newCharacter.featSlots,
 	charStats:state.characterReducer.newCharacter.characterStats,
 	showSelections:state.characterReducer.selections,
+	characterClass:state.characterReducer.newCharacter.charClass.name,
+	race:state.characterReducer.newCharacter.race.name,
 });
 
 export default connect(mapStateToProps)(CardFeat);

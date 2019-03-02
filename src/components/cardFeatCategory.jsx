@@ -36,8 +36,8 @@ class CardFeatCategory extends React.Component{
 							prereqStringArray.push(str1);					
 						} else {
 							// in this situation, I know that 'data' is a string; "paladin", "5", etc
+							console.log("in final else statement")
 							let str1 = Object.values(featsList[i].prerequisites[j]).join(" ");
-							let prereqStringArray = [];
 							prereqStringArray.push(str1);						
 						}
 					}
@@ -74,6 +74,8 @@ class CardFeatCategory extends React.Component{
 
 	render(){
 		let categoryToExpand ="";
+		let feats = this.props.feats; // An array of feat slot objects { type: "category", selection: "feat name"}
+
 		if(this.props.categoryToExpand){
 			categoryToExpand = this.props.categoryToExpand.featCategory;
 		} else {

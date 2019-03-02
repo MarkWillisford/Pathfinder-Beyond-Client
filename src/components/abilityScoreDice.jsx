@@ -68,7 +68,6 @@ export class AbilityScoreDice extends React.Component {
 		// Get the name of the ability as a string by finding the name of the select element, splitting
 		// on capital letters (the S in strength'S'electer) and taking only the first string in the result
 		let ability = event.target.name.split(/(?=[A-Z])/)[0];
-		//this.props.dispatch(submitAbilityScoreToState( ability, "base", value ));	
 
 		let bonus = createBonus({ 
 			name:"character base", 

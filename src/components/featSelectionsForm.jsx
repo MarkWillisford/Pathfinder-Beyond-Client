@@ -4,6 +4,7 @@ import {reduxForm, Field } from 'redux-form';
 
 import { submitFeatToState } from '../actions/index';
 import { setSelections } from '../actions/index';
+import { setStepToComplete } from '../actions/index';
 
 const validate = values => {
 	const errors = {}
@@ -31,6 +32,13 @@ export class FeatSelectionsForm extends React.Component{
 		// **************************************
 		// form variables, methods and elements:
 		// **************************************
+		// check to see if there is exactly 1 feat slot object with a selection of "null"
+		let remainingSlots = (this.props.feats.filter(f => f.selection === null));
+		let lastFeatSelected = false;
+		if(remainingSlots.length === 1){
+			lastFeatSelected = true;
+		};
+
 		const submitting = this.props.submitting;
 		const onSubmitForm = (values) => {
 			// Okay, Here I need to:
@@ -41,6 +49,11 @@ export class FeatSelectionsForm extends React.Component{
 			feat.specialization = values.selections;
 			this.props.dispatch(setSelections(""));
 			this.props.dispatch(submitFeatToState(feat));
+
+			// Finaly if the last feat has been selected, set the step to complete. 
+			if(lastFeatSelected){
+				this.props.dispatch(setStepToComplete(6));
+			}
 		};
 		class RadioGroup extends React.Component {
 		    render() {
@@ -76,7 +89,7 @@ export class FeatSelectionsForm extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	
+	feats:state.characterReducer.newCharacter.featSlots,	
 });
 
 FeatSelectionsForm = reduxForm({
