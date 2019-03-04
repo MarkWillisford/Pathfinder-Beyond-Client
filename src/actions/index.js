@@ -295,4 +295,4 @@ export const addFeatSlot = (category) => ({
 export const toggleFeatureExpand = (charClass, feature) => ({
 	type: TOGGLE_FEATURE_EXPAND,
 	charClass, feature, 
-});*/
+}); I doubt I need this */
