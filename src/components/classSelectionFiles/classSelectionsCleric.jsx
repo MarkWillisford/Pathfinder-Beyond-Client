@@ -10,6 +10,7 @@ import { setDomain } from '../../actions/index';
 import { addBonus } from '../../actions/index';
 import { sumBonus } from '../../actions/index';
 import { submitDomain } from '../../actions/index';
+import { submitDeity } from '../../actions/index';
 import { createBonus } from '../../utility/statObjectFactories';
 import { capitalizeFirstLetter } from '../../utility/helperFunctions';
 
@@ -112,6 +113,7 @@ export class ClassSelectionsCleric extends React.Component{
                 this.props.dispatch(setGenericExpand(""));
                 this.props.dispatch(submitClassToState(i));
                 this.props.dispatch(submitDomain(this.props.clericDetails));
+                this.props.dispatch(submitDeity(this.props.clericDetails.deity));
 			}
 		}
 

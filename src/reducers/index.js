@@ -423,7 +423,7 @@ export const characterReducer = (state=initialState, action) => {
             backstory:action.values.backstory,
             enemies:action.values.enemies,
             eyes:action.values.eyes,
-            faith:action.values.faith,
+            deity:action.values.faith,
             flaws:action.values.flaws,
             gender:action.values.gender,
             hair:action.values.hair,
@@ -778,6 +778,22 @@ export const characterReducer = (state=initialState, action) => {
         newCharacter:{...state.newCharacter, featSlots:[
           ...state.newCharacter.featSlots, { type: action.category, selection:null }
         ]}
+      }
+    case actions.SUBMIT_DEITY:
+      if(state.newCharacter.details){
+        return {
+          ...state,
+          newCharacter:{...state.newCharacter, details:{
+            ...state.newCharacter.details, deity:action.deity, ...state.newCharacter.details
+          }}
+        }          
+      } else {
+        return {
+          ...state,
+          newCharacter:{...state.newCharacter, details:{
+            deity:action.deity
+          }}
+        }    
       }
 
 

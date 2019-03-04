@@ -248,6 +248,12 @@ export const submitDomain = (domain) => ({
 	domain,
 }); 
 
+export const SUBMIT_DEITY = 'SUBMIT_DEITY';
+export const submitDeity = (deity) => ({
+	type: SUBMIT_DEITY, 
+	deity,
+}); 
+
 export const SET_DEITY = 'SET_DEITY';
 export const setDeity = (deity) => ({
 	type: SET_DEITY, 
