@@ -28,18 +28,15 @@ export class NewCharacterClass extends React.Component{
 			// find the class object
 			if( i===id ){
 				let name = this.props.classesArray[i].name;
-
-/* 				Sorcerer:	Spells, Bloodline 
-					spells: 4 0 level spells + 2 1st level spells
-					Bloodline
-					*/
-
 				switch(name){
 					case "cleric":
 						this.props.dispatch(setClassSelectionsView("cleric"));
 						break;
 					case "druid":
 						this.props.dispatch(setClassSelectionsView("druid"));
+						break;
+					case "paladin":
+						this.props.dispatch(setClassSelectionsView("paladin"));
 						break;
 					case "ranger":
 						this.props.dispatch(setClassSelectionsView("ranger"));
@@ -114,6 +111,13 @@ export class NewCharacterClass extends React.Component{
 							<div>
 								<h1>Ranger customization</h1>
 								{<ClassSelections.ClassSelectionsRanger />}
+							</div>
+						)
+					case "paladin":
+						return (
+							<div>
+								<h1>Paladin customization</h1>
+								{<ClassSelections.ClassSelectionsPaladin />}
 							</div>
 						)
 					case "sorcerer":

@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { CardDomain } from '../cardDomain';
+import { CardDeity } from '../cardDeity';
 
 import { setGenericExpand } from '../../actions/index';
 import { setAvailableDomains } from '../../actions/index';
@@ -11,6 +12,7 @@ import { addBonus } from '../../actions/index';
 import { sumBonus } from '../../actions/index';
 import { submitDomain } from '../../actions/index';
 import { submitDeity } from '../../actions/index';
+import { submitAlignmentRestrictions } from '../../actions/index';
 import { createBonus } from '../../utility/statObjectFactories';
 import { capitalizeFirstLetter } from '../../utility/helperFunctions';
 
@@ -55,7 +57,7 @@ export class ClassSelectionsCleric extends React.Component{
                     <p>Deities:</p>
                         {/* display list of deities for selection */}
                         {deities.map(deity => 
-                            <CardDeities key={deity.name} name={deity.name} overview={deity.overview}
+                            <CardDeity key={deity.name} name={deity.name} overview={deity.overview}
                             /* When a deity is clicked on, set a temporary array to the available domains */
                             onDeityClick={()=> this.onDeityClick(deity)}/>    
                         )}
@@ -114,6 +116,7 @@ export class ClassSelectionsCleric extends React.Component{
                 this.props.dispatch(submitClassToState(i));
                 this.props.dispatch(submitDomain(this.props.clericDetails));
                 this.props.dispatch(submitDeity(this.props.clericDetails.deity));
+                this.props.dispatch(submitAlignmentRestrictions(this.props.clericDetails.deity.overview.clericAlignments))
 			}
 		}
 
@@ -143,17 +146,6 @@ export class ClassSelectionsCleric extends React.Component{
         let availableDomains = deity.overview.domains;
         this.props.dispatch(setAvailableDomains(availableDomains));
         this.props.dispatch(setDeity(deity));
-    }
-}
-
-class CardDeities extends React.Component{
-    render(){
-        return (
-            <div>
-                <p>{this.props.name}</p>
-                <button onClick={this.props.onDeityClick}>Select</button>
-            </div>
-        );
     }
 }
 

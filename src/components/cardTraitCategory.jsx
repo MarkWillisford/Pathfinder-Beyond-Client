@@ -1,12 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import CardFeat from './cardFeat'; 
+import CardTrait from './cardTrait';
 
-import { setExpandedFeatCategory } from '../actions/index'; 
+import { setExpandedTraitCategory } from '../actions/index'; 
 
-import './cardFeatCategory.css';
+import './cardTraitCategory.css';
 
-class CardFeatCategory extends React.Component{
+class CardTraitCategory extends React.Component{
 	getFeatList(category){
 		// this will be an API call, but for now it loops through the list of feats on its own
 		const featsList = require('../data/feats');
@@ -63,18 +63,18 @@ class CardFeatCategory extends React.Component{
 
 	show(name){
 		// set the name of the expanded category in state
-		this.props.dispatch(setExpandedFeatCategory(name));
+		this.props.dispatch(setExpandedTraitCategory(name));
 	}
 
 	hide(name){
 		name = "";
 		// remove the name of the expanded category in state
-		this.props.dispatch(setExpandedFeatCategory(name));
+		this.props.dispatch(setExpandedTraitCategory(name));
 	}
 
 	render(){
 		let categoryToExpand ="";
-		let feats = this.props.feats; // An array of feat slot objects { type: "category", selection: "feat name"}
+		let traits = this.props.traits; // An array of feat slot objects { type: "category", selection: "feat name"}
 
 		if(this.props.categoryToExpand){
 			categoryToExpand = this.props.categoryToExpand.featCategory;

@@ -28,8 +28,8 @@ export class NewCharacterFeats extends React.Component{
 		};
 		return featsCategory;
 	}
-
-	render(){
+ 
+	render(){ 
 		const complete = this.props.complete;
 		const help = this.props.help;
 		const featCategories = this.getCategoryList(); 

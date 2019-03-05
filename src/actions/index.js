@@ -284,6 +284,12 @@ export const submitSorcDetails = (details) => ({
 	details,
 });
 
+export const SUBMIT_ALIGNMENT_RESTRICTIONS = 'SUBMIT_ALIGNMENT_RESTRICTIONS';
+export const submitAlignmentRestrictions = (alignmentRestrictions) => ({
+	type: SUBMIT_ALIGNMENT_RESTRICTIONS, 
+	alignmentRestrictions,
+});
+
 export const ADD_FEAT_SLOT = 'ADD_FEAT_SLOT';
 export const addFeatSlot = (category) => ({
 	type: ADD_FEAT_SLOT, 

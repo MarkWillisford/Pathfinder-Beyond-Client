@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, Field, focus } from 'redux-form';
+import { CardDeity } from './cardDeity';
 
 import { toggleDetailsExpand } from '../actions/index';
 import { submitDetailsToState } from '../actions/index';
@@ -29,6 +30,10 @@ export class NewCharacterDetails extends React.Component{
 		const complete = this.props.complete;
 		const help = this.props.help;
 		const expand = this.props.expand;
+		const deity = this.props.charDetails ? this.props.charDetails.deity : null;
+		const alignmentRestrictions = this.props.charDetails ? ( 
+			this.props.charDetails.alignmentRestrictions ? this.props.charDetails.alignmentRestrictions : null
+			) : null;
 		// this constant is just an abstraction for the moment, in the future this will be an editable variable
 		// const numberOfTraits = 3;
 
@@ -51,7 +56,7 @@ export class NewCharacterDetails extends React.Component{
 
 				        <div><h2>Character Details</h2><p>Alignment and faith</p>
 				        <button onClick={this.handleToggle.bind(this, "1")}>Expand</button></div>
-				        {expand[1].expand && <DisplayCharacterDetails />}
+				        {expand[1].expand && <DisplayCharacterDetails deity={deity} alignmentRestrictions={alignmentRestrictions}/>}
 
 				        <div><h2>Physical Characteristics</h2><p>Hair, skin, eyes, height, weight, age, and gender</p>
 				        <button onClick={this.handleToggle.bind(this, "2")}>Expand</button></div>
@@ -86,6 +91,7 @@ function DisplayTraits(){
 	let traitsToDisplay=[];
 	let index = 0;
 	let count = 0;
+	// these two loops get five of each of the above types and basic types to display
 	for(let i=0;i<traitBasicTypes.length;i++){
 		while(count < 5){
 			if(traitsList[index].Type === "Basic"){
@@ -169,35 +175,56 @@ const RenderTextarea = createRenderer((input, label, value) =>
 
 class RadioGroup extends React.Component {
     render() {
-        const { input, meta, options, label } = this.props
+        const { input, meta, options, label, preset } = this.props
         const hasError = meta.touched && meta.error;
 
-        return (
-            <div>
-				<label>{label}</label>
-                {options.map(o => <label key={o.value}><input type="radio" {...input} value={o.value} checked={o.value === input.value} /> {o.title}</label>)}
-                {hasError && <span className="error">{meta.error}</span>}
-            </div>
-        );
+        if(preset){
+			return (
+				<div>
+					<label>{label}</label>
+					{options.map(o => <label key={o.value}><input type="radio" {...input} value={o.value} checked={o.checked}
+						disabled={o.disabled} /> {o.title}</label>)}
+					{hasError && <span className="error">{meta.error}</span>}
+				</div>
+			);
+		} else {
+			return (
+				<div>
+					<label>{label}</label>
+					{options.map(o => <label key={o.value}><input type="radio" {...input} value={o.value} checked={o.value === input.value} /> {o.title}</label>)}
+					{hasError && <span className="error">{meta.error}</span>}
+				</div>
+			)
+		}
     }
 }
 
 function DisplayCharacterDetails(props){
+	const deities = require('../data/deities');
+	const defaultAlignments = ["Chaotic evil", "Chaotic good", "Chaotic neutral",
+		"Lawful evil", "Lawful good", "Lawful neutral",
+		"Neutral", "Neutral evil", "Neutral good"];
+	const possibleAlignments = props.alignmentRestrictions ? props.alignmentRestrictions : defaultAlignments;
+	
 	return(
 		<div>
 		<Field name={"alignments"} component={RenderSelect} label={"Alignment"}>
 			<option>--</option>
-			<option value="Chaotic Evil">Chaotic Evil</option>
-			<option value="Chaotic Good">Chaotic Good</option>
-			<option value="Chaotic Neutral">Chaotic Neutral</option>
-			<option value="Lawful Evil">Lawful Evil</option>
-			<option value="Lawful Good">Lawful Good</option>
-			<option value="Lawful Neutral">Lawful Neutral</option>
-			<option value="Neutral">Neutral</option>
-			<option value="Neutral Evil">Neutral Evil</option>
-			<option value="Neutral Good">Neutral Good</option>
+			{possibleAlignments.map((alignment => (
+				<option key={alignment} value={alignment}>{alignment}</option>
+			)))}
 		</Field>
-		<Field name={"faith"} component={RenderInput} label={"Faith"}></Field>
+		{props.deity && <Field name="deity" component={RadioGroup} label="Deity" preset={true} options={
+			deities.map((deity) => (
+				{ title: capitalizeFirstLetter(deity.name), value: deity.name, checked: props.deity.name === deity.name ? true : false, 
+				disabled: props.deity.name === deity.name ? false : true }
+			))
+		} />}
+		{!props.deity && <Field name="deity" component={RadioGroup} label="Deity" preset={false} options={
+			deities.map((deity) => (
+				{ title: capitalizeFirstLetter(deity.name), value: deity.name}
+			))
+		} />}
 		</div>
 	)
 }
@@ -259,6 +286,7 @@ const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[4].complete,
 	help:state.characterReducer.help,
 	expand:state.characterReducer.detailsExpand,
+	charDetails:state.characterReducer.newCharacter.details,
 });
 
 NewCharacterDetails = reduxForm({

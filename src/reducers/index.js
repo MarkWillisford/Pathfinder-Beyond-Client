@@ -128,6 +128,14 @@ const newCharacter = {
     { "type":"any",
       "selection":null
     }
+  ],
+  traitSlots:[
+    { "type":"any",
+      "selection":null
+    },
+    { "type":"any",
+      "selection":null
+    }
   ]
 };
 
@@ -792,6 +800,22 @@ export const characterReducer = (state=initialState, action) => {
           ...state,
           newCharacter:{...state.newCharacter, details:{
             deity:action.deity
+          }}
+        }    
+      }
+    case actions.SUBMIT_ALIGNMENT_RESTRICTIONS:
+      if(state.newCharacter.details){
+        return {
+          ...state,
+          newCharacter:{...state.newCharacter, details:{
+            ...state.newCharacter.details, alignmentRestrictions:action.alignmentRestrictions, ...state.newCharacter.details
+          }}
+        }          
+      } else {
+        return {
+          ...state,
+          newCharacter:{...state.newCharacter, details:{
+            alignmentRestrictions:action.alignmentRestrictions
           }}
         }    
       }
