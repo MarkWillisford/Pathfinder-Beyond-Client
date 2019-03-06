@@ -1,53 +1,7 @@
 import * as actions from '../actions';
 import { createStat } from '../utility/statObjectFactories'
 
-const initialState = {
-  user:"Me",
-  isLoggedIn:true,
-  chars:[{
-    pic:{      src:"lizardPic.gif",      alt:"Slick's Pic",    },
-  	thum:{  		src:"lizardThum.gif",  		alt:"Slick's Thum",  	},
-  	name:"Slick",
-  	level:18,
-  	race:"Lizardfolk",
-  	class:"Fighter",
-    bio:"Slick explored Blackrock Mountain before entering the Dark Tower",
-    background:"Raised in the cliff cities, Slick learned to fight",
-    stats:{
-      abilityScores:{
-        strength:18,
-        dexterity:16,
-        constitution:18,
-        intelligence:10,
-        wisdom:12,
-        charisma:10,
-      },
-      maxHitPoints:300,
-      armorClass:28,
-    },
-  },{    
-    pic:{      src:"ElfPic.gif",      alt:"Syren's Pic",    },
-    thum:{      src:"Elf.gif",      alt:"Syren's Image",    },
-    name:"Syren",
-    level:16,
-    race:"Elf",
-    class:"Ranger",
-    bio:"After helping the Cloud Giants, Syren has had many little adventures",
-    background:"Born a Princess",
-    stats:{
-      abilityScores:{
-        strength:14,
-        dexterity:18,
-        constitution:14,
-        intelligence:12,
-        wisdom:16,
-        charisma:14,
-      },
-      maxHitPoints:150,
-      armorClass:22,
-    },
-  }],
-};
+
 const creationSteps = [
   {name:"Character Basics",
   id:0,
@@ -138,7 +92,69 @@ const newCharacter = {
     }
   ]
 };
-
+const initialState = {
+  user:"Me",
+  isLoggedIn:true,
+  chars:[{
+    pic:{      src:"lizardPic.gif",      alt:"Slick's Pic",    },
+  	thum:{  		src:"lizardThum.gif",  		alt:"Slick's Thum",  	},
+  	name:"Slick",
+  	level:18,
+  	race:"Lizardfolk",
+  	class:"Fighter",
+    bio:"Slick explored Blackrock Mountain before entering the Dark Tower",
+    background:"Raised in the cliff cities, Slick learned to fight",
+    stats:{
+      abilityScores:{
+        strength:18,
+        dexterity:16,
+        constitution:18,
+        intelligence:10,
+        wisdom:12,
+        charisma:10,
+      },
+      maxHitPoints:300,
+      armorClass:28,
+    },
+  },{    
+    pic:{      src:"ElfPic.gif",      alt:"Syren's Pic",    },
+    thum:{      src:"Elf.gif",      alt:"Syren's Image",    },
+    name:"Syren",
+    level:16,
+    race:"Elf",
+    class:"Ranger",
+    bio:"After helping the Cloud Giants, Syren has had many little adventures",
+    background:"Born a Princess",
+    stats:{
+      abilityScores:{
+        strength:14,
+        dexterity:18,
+        constitution:14,
+        intelligence:12,
+        wisdom:16,
+        charisma:14,
+      },
+      maxHitPoints:150,
+      armorClass:22,
+    },
+  }],
+  creationSteps:creationSteps,
+  help:false,
+  currentStep:0,
+  disabledNext: false,
+  disabledPrev: true,
+  // the actual character object that will be converted and saved in memory
+  newCharacter:newCharacter,
+  abilityScoreGenerationMethod:"",
+  statArrayToAssign:[],
+  detailsExpand:[
+    {id:0, name:"detailsTraitsExpand", expand:false},
+    {id:1, name:"detailsCharacterDetailsExpand", expand:false},
+    {id:2, name:"detailsPhysicalExpand", expand:false},
+    {id:3, name:"detailsPersonalityExpand", expand:false},
+    {id:4, name:"detailsExtrasExpand", expand:false},
+  ],
+};
 function setSum(stat){
   let total = 0;
   let arrayOfHighestBonuses = [ ];
@@ -215,7 +231,7 @@ export const characterReducer = (state=initialState, action) => {
         ...state,
         char:action.char
       }
-    case actions.LOAD_CREATION_STEPS:
+    /* case actions.LOAD_CREATION_STEPS:
       return { 
         ...state,
         creationSteps:creationSteps,
@@ -234,7 +250,7 @@ export const characterReducer = (state=initialState, action) => {
           {id:3, name:"detailsPersonalityExpand", expand:false},
           {id:4, name:"detailsExtrasExpand", expand:false},
         ],
-      };
+      }; */
     case actions.TOGGLE_STEP:
       return {
         ...state,

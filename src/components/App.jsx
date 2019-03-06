@@ -1,13 +1,10 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Landing from './landing';
-import PlayerHomePage from './playerHomePage';
-import CharacterDetails from './characterDetails';
-import NewCharacter from './newCharacter';
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
+import NewCharacterContainer from './newCharacterContainer';
 
 import './App.css';
 
-export default function App(props) {  
+export default function App(props) {
     return (
         <Router>
             <div className="app">
@@ -16,10 +13,10 @@ export default function App(props) {
                 </header>*/}
                 <main>
                     <Switch>
-                        <Route exact path="/" component={Landing} />
-                        <Route exact path="/playerDemo" component={PlayerHomePage} />    
-                        <Route exact path="/playerDemo/character/:characterID" component={CharacterDetails} />
-                        <Route path="/playerDemo/newCharacter" component={NewCharacter} />                     
+                        
+                        <Route exact path="/" render={() => <Redirect to="/playerDemo/newCharacter/home" />} />
+		        	    <Route exact path="/playerDemo/newCharacter/home" component={NewCharacterContainer} /> 
+		        		
                     </Switch>
                 </main>
             </div>
