@@ -1,6 +1,5 @@
 [
-	{
-		"name": "Spell Focus",
+	{"name": "Spell Focus",
 		"specialization": "necromancy",
 		"type": ["general"],
 		"description": "Choose a school of magic. Any spells you cast of that school are more difficult to resist.",
@@ -12,8 +11,7 @@
 		"selections":["Abjuration", "Conjuration", "Divination", "Enchantment", "Evocation", "Illusion", "Necromancy", "Transmutation"],
 		"source": "Core Rule Book"
 	},
-	{
-		"name": "Spell Penetration",
+	{"name": "Spell Penetration",
 		"specialization": null,
 		"type": ["general"],
 		"description": "Your spells break through spell resistance more easily than most.",
@@ -25,8 +23,7 @@
 		"selections":null,
 		"source": "Core Rule Book"
 	},
-	{
-		"name": "Combat Casting",
+	{"name": "Combat Casting",
 		"specialization": null,
 		"type": ["general"],
 		"description": "You are adept at spellcasting when threatened or distracted.",
@@ -37,8 +34,8 @@
 		"repeatable":false,
 		"selections":null,
 		"source": "Core Rule Book"
-	},{
-		"name": "Skill Focus",
+	},
+	{"name": "Skill Focus",
 		"specialization": null,
 		"type": ["general"],
 		"description": "Choose a skill. You are particularly adept at that skill.",
@@ -87,8 +84,8 @@
 		"repeatable":false,
 		"selections":null,
 		"source":"Core Rule Book"
-	},{
-		"name":"Race Test",
+	},
+	{"name":"Race Test",
 			"specialization":null,
 			"type":["general"],
 			"description":"Testing race Prereqs - Elf",
@@ -105,23 +102,23 @@
 			"repeatable":false,
 			"selections":null,
 			"source":"Core Rule Book"
-		},{
-			"name":"Class Test",
-				"specialization":null,
-				"type":["general"],
-				"description":"Testing class Prereqs - Ranger",
-				"prerequisites":[
-					{
-						"type":"class",
-						"data": "ranger"
-					}
-				],
-				"benefit":["You can choose to take a –1 penalty on all melee attack rolls and combat maneuver checks to gain a +2 bonus on all melee damage rolls. This bonus to damage is increased by half (+50%) if you are making an attack with a two-handed weapon, a one handed weapon using two hands, or a primary natural weapon that adds 1-1/2 times your Strength modifier on damage rolls. This bonus to damage is halved (–50%) if you are making an attack with an off-hand weapon or secondary natural weapon.","When your base attack bonus reaches +4, and every 4 points thereafter, the penalty increases by –1 and the bonus to damage increases by +2.","You must choose to use this feat before making an attack roll, and its effects last until your next turn. The bonus damage does not apply to touch attacks or effects that do not deal hit point damage."],
-				"progromaticBenefit":"",
-				"normal":"",
-				"special":"",
-				"repeatable":false,
-				"selections":null,
-				"source":"Core Rule Book"
+	},
+	{"name":"Class Test",
+		"specialization":null,
+		"type":["general"],
+		"description":"Testing class Prereqs - Ranger",
+		"prerequisites":[
+			{
+				"type":"class",
+				"data": "ranger"
 			}
+		],
+		"benefit":["You can choose to take a –1 penalty on all melee attack rolls and combat maneuver checks to gain a +2 bonus on all melee damage rolls. This bonus to damage is increased by half (+50%) if you are making an attack with a two-handed weapon, a one handed weapon using two hands, or a primary natural weapon that adds 1-1/2 times your Strength modifier on damage rolls. This bonus to damage is halved (–50%) if you are making an attack with an off-hand weapon or secondary natural weapon.","When your base attack bonus reaches +4, and every 4 points thereafter, the penalty increases by –1 and the bonus to damage increases by +2.","You must choose to use this feat before making an attack roll, and its effects last until your next turn. The bonus damage does not apply to touch attacks or effects that do not deal hit point damage."],
+		"progromaticBenefit":"",
+		"normal":"",
+		"special":"",
+		"repeatable":false,
+		"selections":null,
+		"source":"Core Rule Book"
+	}
 ]

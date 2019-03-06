@@ -13,7 +13,8 @@
     "react-scripts": "2.1.1",
     "redux": "^4.0.1",
     "redux-form": "^7.4.2",
-    "redux-watch": "^1.1.1"
+    "redux-watch": "^1.1.1",
+    "travis-ci": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

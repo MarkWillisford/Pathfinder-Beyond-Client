@@ -112,10 +112,10 @@ export class NewCharacterAbilityScores extends React.Component{
 		        	<p>How would you like to generate ability scores?
 		        	<select ref="abilityScoreGenerationMethod" onChange={()=> this.handleClick(this.refs.abilityScoreGenerationMethod.value)}>
 		        		<option value="0">Select how to generate scores</option>
-		        		<option value="arrays">Arrays</option>
+		        		{/* <option value="arrays">Arrays</option> */}
 		        		<option value="dice">Dice</option>
 		        		<option value="manual">Manual</option>
-		        		<option value="pointBuy">Point Buy</option>
+		        		{/* <option value="pointBuy">Point Buy</option> */}
 		        	</select>{/*<button onClick={()=> this.handleClick(this.refs.abilityScoreGenerationMethod.value)}>Select</button>*/}</p>
 			        <div className="abilityScoreGenerator">
 			        	<AbilityScoreMethod method={this.props.abilityScoreGenerationMethod} statArrayToAssign={this.props.statArrayToAssign} dispatch={this.props.dispatch}/>

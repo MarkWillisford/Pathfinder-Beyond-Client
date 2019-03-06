@@ -6,11 +6,20 @@ import './App.css';
 
 export default function App(props) {
     return (
-        <Router>
+    <Router>
+        <div className="app">
+            <main>
+                <Switch>
+                    <Redirect exact push from='/' to="/playerDemo/newCharacter/home"  />
+                    <Route exact path="/playerDemo/newCharacter/home" component={NewCharacterContainer} />                     
+                </Switch>
+            </main>
+        </div>
+        {/* <Router>
             <div className="app">
-            {/* <header>
+             <header>
                     <h1></h1>
-                </header>*/}
+                </header>
                 <main>
                     <Switch>
                         
@@ -20,6 +29,9 @@ export default function App(props) {
                     </Switch>
                 </main>
             </div>
-        </Router>
+        </Router> */}
+    </Router>        
     );
 }
+
+// https://blooming-crag-44038.herokuapp.com/playerDemo/newCharacter/home
