@@ -128,6 +128,14 @@ const newCharacter = {
     { "type":"any",
       "selection":null
     }
+  ],
+  traitSlots:[
+    { "type":"any",
+      "selection":null
+    },
+    { "type":"any",
+      "selection":null
+    }
   ]
 };
 
@@ -505,11 +513,31 @@ export const characterReducer = (state=initialState, action) => {
         ...state,
         expanded:{...state.expanded, featCategory:action.name}
       }
+    case actions.SET_EXPANDED_TRAIT_CATEGORY:
+      return {
+        ...state,
+        expanded:{...state.expanded, traitCategory:action.name}
+      }
     case actions.SET_EXPANDED_FEAT:
       return {
         ...state,
         expanded:{...state.expanded, feat:action.name}
       }
+      case actions.SUBMIT_TRAIT_TO_STATE:
+      foundAt = null;
+      for(let i = 0;i<state.newCharacter.traitSlots.length; i++){
+        if(!state.newCharacter.traitSlots[i].selection){
+          foundAt = i;
+          break;
+        }
+      }
+      let newTrait = state.newCharacter.traitSlots;
+      return {
+        ...state,
+        newCharacter:{...state.newCharacter, traitSlots:
+          newTrait.map((content, i) => i === foundAt ? {...content, selection:action.trait } : content )
+        }
+      }  
     case actions.SUBMIT_FEAT_TO_STATE:
       foundAt = null;
       for(let i = 0;i<state.newCharacter.featSlots.length; i++){
@@ -792,6 +820,38 @@ export const characterReducer = (state=initialState, action) => {
           ...state,
           newCharacter:{...state.newCharacter, details:{
             deity:action.deity
+          }}
+        }    
+      }
+    case actions.SUBMIT_ALIGNMENT_RESTRICTIONS:
+      if(state.newCharacter.details){
+        return {
+          ...state,
+          newCharacter:{...state.newCharacter, details:{
+            ...state.newCharacter.details, alignmentRestrictions:action.alignmentRestrictions, ...state.newCharacter.details
+          }}
+        }          
+      } else {
+        return {
+          ...state,
+          newCharacter:{...state.newCharacter, details:{
+            alignmentRestrictions:action.alignmentRestrictions
+          }}
+        }    
+      }
+    case actions.SET_TRAITS_TO_COMPLETE:
+      if(state.newCharacter.details){
+        return {
+          ...state,
+          newCharacter:{...state.newCharacter, details:{
+            ...state.newCharacter.details, traitsCompleted:true
+          }}
+        }          
+      } else {
+        return {
+          ...state,
+          newCharacter:{...state.newCharacter, details:{
+            traitsCompleted:true
           }}
         }    
       }

@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import CardFeat from './cardFeat';
+import CardFeat from './cardFeat'; 
 
 import { setExpandedFeatCategory } from '../actions/index'; 
 
