@@ -1,18 +1,24 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, Field, focus } from 'redux-form';
-import { CardDeity } from './cardDeity';
 
 import { toggleDetailsExpand } from '../actions/index';
 import { submitDetailsToState } from '../actions/index';
 import { capitalizeFirstLetter } from '../utility/helperFunctions';
 
 import './newCharacterDetails.css';
+import CardTraitCategory from './cardTraitCategory';
 
 export class NewCharacterDetails extends React.Component{
 	submitHandler(values) {
-	    console.log(values);
-	    this.props.dispatch(submitDetailsToState(values));
+		const details = this.props.charDetails;
+		const traitsCompleted = details ? (details.traitsCompleted ? (details.traitsCompleted === true ? true : false) : false) : false;
+        if(traitsCompleted){
+			console.log(values);
+			this.props.dispatch(submitDetailsToState(values));
+		} else { 
+			console.log("traits not done");
+		}
 	}
 
 	handleToggle(id, event){
@@ -30,31 +36,34 @@ export class NewCharacterDetails extends React.Component{
 		const complete = this.props.complete;
 		const help = this.props.help;
 		const expand = this.props.expand;
-		const deity = this.props.charDetails ? this.props.charDetails.deity : null;
-		const alignmentRestrictions = this.props.charDetails ? ( 
-			this.props.charDetails.alignmentRestrictions ? this.props.charDetails.alignmentRestrictions : null
+		const details = this.props.charDetails;
+		const deity = details ? details.deity : null;
+		const alignmentRestrictions = details ? ( 
+			details.alignmentRestrictions ? details.alignmentRestrictions : null
 			) : null;
-		// this constant is just an abstraction for the moment, in the future this will be an editable variable
-		// const numberOfTraits = 3;
+		const traitsCompleted = details ? (details.traitsCompleted ? (details.traitsCompleted === true ? true : false) : false) : false;
 
 		// if help is true, that screen is displayed
-		if(help){
+		if( !(this.props.race && this.props.charClass ) ){
+			return ( <h1>NOT READY</h1> )
+		} else if(help){
 			return ( 
 				<div className="detailsHelp">
 					<h2>Character Details</h2>
 					<p>In this step, you will flesh your character out as a person. You’ll need to decide your character’s appearance and personality. Choose your character’s alignment (the moral compass that guides his or her decisions) and ideals. Identify the things your character holds most dear, called bonds, and the flaws that could one day undermine him or her.</p>
 				</div>
+
 			);
 		} else if(!complete){
 			return (
-				<form onSubmit={this.props.handleSubmit(this.submitHandler.bind(this))}>
-			        <div className="newCharacterDetails">
-				        <h1>Character Details</h1>
-				        <div><h2>Traits</h2>
-				        <button onClick={this.handleToggle.bind(this, "0")}>Expand</button></div>
-				        {expand[0].expand && <DisplayTraits />}
+				<div className="newCharacterDetails">
+					<h1>Character Details</h1>
+					<div><h2>Traits</h2>
+					<button onClick={this.handleToggle.bind(this, "0")}>Expand</button></div>
+					{expand[0].expand && <DisplayTraits />}
+					<form onSubmit={this.props.handleSubmit(this.submitHandler.bind(this))}>
 
-				        <div><h2>Character Details</h2><p>Alignment and faith</p>
+				        <div><h2>Belief Details</h2><p>Alignment and faith</p>
 				        <button onClick={this.handleToggle.bind(this, "1")}>Expand</button></div>
 				        {expand[1].expand && <DisplayCharacterDetails deity={deity} alignmentRestrictions={alignmentRestrictions}/>}
 
@@ -68,10 +77,10 @@ export class NewCharacterDetails extends React.Component{
 
 				        <div><h2>Extras and Notes</h2><p>Organizations, allies, enemies, backstory, and other notes</p>
 				        <button onClick={this.handleToggle.bind(this, "4")}>Expand</button></div>
-				        {expand[4].expand && <DisplayExtras />}				        
-			        </div>
-			    	<button type="submit" disabled={this.props.pristine || this.props.submitting}>Submit</button>
-				</form>
+				        {expand[4].expand && <DisplayExtras />}	
+						<button type="submit" disabled={this.props.pristine || this.props.submitting || !traitsCompleted}>Submit</button>
+					</form>			        
+			    </div>
 		    );
 		} else {
 			return(
@@ -84,37 +93,7 @@ export class NewCharacterDetails extends React.Component{
 }
 
 function DisplayTraits(){
-	const traitsList = require('../data/traits');
-
-	let traitBasicTypes = ["Combat", "Faith", "Magic", "Social"];
-	let traitTypes = ["Race", "Regional", "Religion"];
-	let traitsToDisplay=[];
-	let index = 0;
-	let count = 0;
-	// these two loops get five of each of the above types and basic types to display
-	for(let i=0;i<traitBasicTypes.length;i++){
-		while(count < 5){
-			if(traitsList[index].Type === "Basic"){
-				if(traitsList[index].Category === traitBasicTypes[i]){
-					traitsToDisplay.push(traitsList[index]);
-					count++;
-				}
-			}
-			index++
-		};
-		count = 0;		
-	}
-	for(let i=0;i<traitTypes.length;i++){
-		while(count < 5){
-			if(traitsList[index].Type === traitTypes[i]){
-				traitsToDisplay.push(traitsList[index]);
-				count++;
-			}
-			index++
-		};
-		count = 0;		
-	}
-
+	const traitCategories = ["Combat", "Faith", "Magic", "Social", "Race", "Regional", "Religion"];
 	return(
 		<div>
         	<p>A character trait isn’t just another kind of power you can add on to your character — 
@@ -124,36 +103,13 @@ function DisplayTraits(){
         	personality and history. Alternatively, if you’ve already got a background in your head or 
         	written down for your character, you can view picking his traits as a way to quantify that 
         	background.</p>
-        	<p><strong>Combat</strong></p>
-        	{<DisplayTraitOptions traitsToDisplay={traitsToDisplay} type="Combat"/> }
-        	<p><strong>Faith</strong></p>
-        	{<DisplayTraitOptions traitsToDisplay={traitsToDisplay} type="Faith"/> }
-        	<p><strong>Magic</strong></p>
-        	{<DisplayTraitOptions traitsToDisplay={traitsToDisplay} type="Magic"/> }
-        	<p><strong>Social</strong></p>
-        	{<DisplayTraitOptions traitsToDisplay={traitsToDisplay} type="Social"/> }
-        	<p><strong>Campaign</strong></p>
-        	{<DisplayTraitOptions traitsToDisplay={traitsToDisplay} type="Campaign"/> }
-        	<p><strong>Race</strong></p>
-        	{<DisplayTraitOptions traitsToDisplay={traitsToDisplay} type="Race"/> }
-        	<p><strong>Regional</strong></p>
-        	{<DisplayTraitOptions traitsToDisplay={traitsToDisplay} type="Regional"/> }
-        	<p><strong>Religion</strong></p>
-        	{<DisplayTraitOptions traitsToDisplay={traitsToDisplay} type="Religion"/> }
+			{traitCategories.map((category) => (
+				<div key={category} ><p><strong>{category}</strong></p>
+					<CardTraitCategory name={category} />
+				</div>
+			))}
+			
     	</div>
-	)
-}
-
-function DisplayTraitOptions(props){
-	let type = props.type;
-	let array = [];
-	for(let i=0;i<props.traitsToDisplay.length;i++){
-		if(props.traitsToDisplay[i].Type == type || props.traitsToDisplay[i].Category == type){
-			array.push( { title: props.traitsToDisplay[i].Name, value: props.traitsToDisplay[i].Name } );
-		}
-	}
-	return(
-		<Field name={type} component={RadioGroup} options={array} />
 	)
 }
 
@@ -284,8 +240,10 @@ const validate = values => {
 
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[4].complete,
+	race:state.characterReducer.creationSteps[1].complete,
 	help:state.characterReducer.help,
 	expand:state.characterReducer.detailsExpand,
+	charClass:state.characterReducer.creationSteps[2].complete,
 	charDetails:state.characterReducer.newCharacter.details,
 });
 

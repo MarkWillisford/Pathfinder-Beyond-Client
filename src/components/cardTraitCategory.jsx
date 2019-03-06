@@ -7,58 +7,22 @@ import { setExpandedTraitCategory } from '../actions/index';
 import './cardTraitCategory.css';
 
 class CardTraitCategory extends React.Component{
-	getFeatList(category){
-		// this will be an API call, but for now it loops through the list of feats on its own
-		const featsList = require('../data/feats');
-		let featsListToReturn = [];
-		for(let i=0; i<featsList.length; i++){
-			if(featsList[i].type.includes(category)){
-				//create string for prereqs
-				let prereqString = "";
-				let prereqStringArray = [];
-				if(featsList[i].prerequisites){
-					// If this is here, it is an array of prereq objects
-					for(let j=0;j<featsList[i].prerequisites.length;j++){
-						if(featsList[i].prerequisites[j].type === "options"){
-							// I know that data is an array of objects, 
-							for(let k=0;k<featsList[i].prerequisites[j].data.length;k++){
-								if(featsList[i].prerequisites[j].type === "stat"){
-									let str1 = Object.values(featsList[i].prerequisites[j].data[k].data).join(" ");
-									prereqStringArray.push(str1);					
-								} else {
-									let str1 = Object.values(featsList[i].prerequisites[j].data[k]).join(" ");
-									prereqStringArray.push(str1);			
-								}
-							}
-						} else if(featsList[i].prerequisites[j].type === "stat"){
-							// now I know data is an object with "stat" and "value" keys
-							let str1 = Object.values(featsList[i].prerequisites[j].data).join(" ");
-							prereqStringArray.push(str1);					
-						} else {
-							// in this situation, I know that 'data' is a string; "paladin", "5", etc
-							console.log("in final else statement")
-							let str1 = Object.values(featsList[i].prerequisites[j]).join(" ");
-							prereqStringArray.push(str1);						
-						}
-					}
-					let str = prereqStringArray.join(", ")
-					if(prereqString != ""){
-						prereqString += str;
-					} else {
-						prereqString = str;
-					}	
-				}
-				let feat = {
-					"name":featsList[i].name,
-					"prerequisitesString":prereqString,
-					"prerequisites":featsList[i].prerequisites,
-					"description":featsList[i].description,
-					"repeatable":featsList[i].repeatable,
-				};
-				featsListToReturn.push(feat);
+	getTraitList(category, base){
+		// this will be an API call, but for now it loops through the list of traits on its own
+		const traitsList = require('../data/traits');
+
+		let traitsToDisplay=[];
+		let count = 0;
+		let index = 0 + base;
+
+		while(count < 5){
+			if(traitsList[index].Type === category || traitsList[index].Category === category){
+				traitsToDisplay.push(traitsList[index]);
+				count++;
 			}
+			index++;
 		}
-		return featsListToReturn;
+		return traitsToDisplay;
 	}
 
 	show(name){
@@ -74,29 +38,28 @@ class CardTraitCategory extends React.Component{
 
 	render(){
 		let categoryToExpand ="";
-		let traits = this.props.traits; // An array of feat slot objects { type: "category", selection: "feat name"}
-
+		
 		if(this.props.categoryToExpand){
-			categoryToExpand = this.props.categoryToExpand.featCategory;
+			categoryToExpand = this.props.categoryToExpand.traitCategory;
 		} else {
 			categoryToExpand = false;
 		}
 		let thisExpanded = ((categoryToExpand == this.props.name) ? true : false);
 
 		// get the list of feats only if this is expanded
-		let featsList = null;
+		let traitsList = null;
 		if(thisExpanded){
-			featsList = this.getFeatList(this.props.name);
+			traitsList = this.getTraitList(this.props.name, 0);	// This extra param is for adding page ability
+			console.log(traitsList);
 		}
 
 		return(
 			<div>
-				<h2>{this.props.name}</h2>
 				<button onClick={() => this.show(this.props.name)} disabled={thisExpanded}>Show</button>
 				<button onClick={() => this.hide(this.props.name)} disabled={!thisExpanded}>Hide</button>
-				{thisExpanded && featsList.map((feat) => 
-					<CardFeat key={feat.name} name={feat.name} prerequisitesString={feat.prerequisitesString}
-					description={feat.description} repeatable={feat.repeatable} prerequisites={feat.prerequisites}/>
+				{thisExpanded && traitsList.map((trait) => 
+					<CardTrait key={trait.Name} name={trait.Name} prerequisitesString={trait.prerequisitesString}
+					description={trait.Description} prerequisites={trait.prerequisites}/>
 				)}
 			</div>
 		)
@@ -108,4 +71,4 @@ const mapStateToProps = state => ({
 
 });
 
-export default connect(mapStateToProps)(CardFeatCategory);
+export default connect(mapStateToProps)(CardTraitCategory);
