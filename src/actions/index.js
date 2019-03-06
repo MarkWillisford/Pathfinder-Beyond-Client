@@ -188,6 +188,18 @@ export const setExpandedFeat = (name) => ({
 	name, 
 });
 
+export const SET_EXPANDED_TRAIT_CATEGORY = 'SET_EXPANDED_TRAIT_CATEGORY';
+export const setExpandedTraitCategory = (name) => ({
+	type: SET_EXPANDED_TRAIT_CATEGORY,
+	name, 
+});
+
+export const SUBMIT_TRAIT_TO_STATE = 'SUBMIT_TRAIT_TO_STATE';
+export const sumbmitTraitToState = (trait) => ({
+	type: SUBMIT_TRAIT_TO_STATE,
+	trait, 
+});
+
 export const ADD_BONUS = 'ADD_BONUS';
 export const addBonus = (bonus) => ({
 	type: ADD_BONUS,
@@ -284,15 +296,25 @@ export const submitSorcDetails = (details) => ({
 	details,
 });
 
+export const SUBMIT_ALIGNMENT_RESTRICTIONS = 'SUBMIT_ALIGNMENT_RESTRICTIONS';
+export const submitAlignmentRestrictions = (alignmentRestrictions) => ({
+	type: SUBMIT_ALIGNMENT_RESTRICTIONS, 
+	alignmentRestrictions,
+});
+
 export const ADD_FEAT_SLOT = 'ADD_FEAT_SLOT';
 export const addFeatSlot = (category) => ({
 	type: ADD_FEAT_SLOT, 
 	category,
 });
 
+export const SET_TRAITS_TO_COMPLETE = 'SET_TRAITS_TO_COMPLETE';
+export const setTraitsToComplete = () => ({
+	type: SET_TRAITS_TO_COMPLETE, 
+});
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
 export const toggleFeatureExpand = (charClass, feature) => ({
 	type: TOGGLE_FEATURE_EXPAND,
 	charClass, feature, 
-});*/
+}); I doubt I need this */

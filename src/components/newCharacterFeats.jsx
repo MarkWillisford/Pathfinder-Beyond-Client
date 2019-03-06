@@ -28,8 +28,8 @@ export class NewCharacterFeats extends React.Component{
 		};
 		return featsCategory;
 	}
-
-	render(){
+ 
+	render(){ 
 		const complete = this.props.complete;
 		const help = this.props.help;
 		const featCategories = this.getCategoryList(); 
@@ -65,86 +65,6 @@ export class NewCharacterFeats extends React.Component{
 		}	
 	}
 }
-
-/*class FeatCategory extends React.Component{
-
-	handleClick(name){
-		this.getDetails(name);
-	}
-
-	getDetails(name){
-		// currently static, will be an api call
-		const featsList = require('../data/feats');
-		let feat = featsList.find( feat => feat.name === name);
-		
-		console.log(feat);
-		// okay, now I have the feat. I need to display additional information
-		// toggle the feat.expand. 
-
-	}
-		let index = 0;
-		let featsToDisplay = [];
-
-		console.log("testing method: ");
-		console.log(this.getFeatDetails("Spell Focus"));
-
-		//while(featsToDisplay.length < 3){
-		for(let i=0;i<featsList.length;i++){
-			if(featsList[index].type.includes(this.props.name)){
-				//create string for prereqs
-				//featsList[index].prerequisites_list
-				let prereqString = "";
-				let prereqStringArray = [];
-				if(featsList[index].prerequisites_list){
-					for(let j=0;j<featsList[index].prerequisites_list.length;j++){
-						//if this is an array, then loop throught that . . .   
-						if(Array.isArray(featsList[index].prerequisites_list[j])){
-							// this array could be objects (stats)
-							// or strings (list of feats)
-							if(typeof featsList[index].prerequisites_list[j][0] == 'string'){
-								// ok, its the list of feats; loop through and add each element to the prereqString
-								let str = featsList[index].prerequisites_list[j].join(", ");
-								if(prereqString != ""){
-									prereqString += str;
-								} else {
-									prereqString = str;
-								}
-							}
-							else if(typeof featsList[index].prerequisites_list[j][0] == 'object'){
-								// in this case it is an array of stat objects
-								for(let k = 0; k<featsList[index].prerequisites_list[j].length;k++){
-									let str = Object.values(featsList[index].prerequisites_list[j][k]).join(" ");
-									prereqStringArray.push(str);
-								}
-								let str = prereqStringArray.join(", ")
-								if(prereqString != ""){
-									prereqString += str;
-								} else {
-									prereqString = str;
-								}
-							}
-						}
-					}
-				}
-
-				let feat = {
-					"name":featsList[index].name,
-					"prerequisites":prereqString,
-					"description":featsList[index].description,
-				};
-				featsToDisplay.push(feat);
-			}
-			index++
-		};
-		return (
-			<div>
-				{featsToDisplay.map(({name, prerequisites, description}) => 
-					<CardFeat key={name} name={name} prerequisites={prerequisites} description={description} 
-					callback={()=> this.handleClick(name)} expand={false}/>
-				)}
-			</div>
-		)
-}*/
 
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[6].complete,
