@@ -139,7 +139,7 @@ const initialState = {
     },
   }],
   creationSteps:creationSteps,
-  help:false,
+  help:false, 
   currentStep:0,
   disabledNext: false,
   disabledPrev: true,
