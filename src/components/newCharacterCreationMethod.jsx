@@ -6,7 +6,7 @@ import {loadCreationSteps} from '../actions/index';
 import './newCharacterCreationMethod.css';
 
 export class NewCharacterCreationMethod extends React.Component{
-    loadCreationSteps(){
+    loadCreationSteps(){ 
 		this.props.dispatch(loadCreationSteps());
 		
     }
