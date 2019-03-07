@@ -79,6 +79,7 @@ export class NewCharacterRace extends React.Component{
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
+		const racesArray = require('../data/races');
 
 		// if help is true, that screen is displayed
 		if(help){
