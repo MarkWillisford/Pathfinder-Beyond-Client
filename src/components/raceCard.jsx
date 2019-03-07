@@ -11,7 +11,7 @@ export class RaceCard extends React.Component{
 			showSelections = false;
 		};
 
-		let showTheseSelections = ((showSelections == this.props.name) ? true : false);
+		let showTheseSelections = ((showSelections.name === this.props.name) ? true : false);
 		
 		return(
 			<div className="raceCard">

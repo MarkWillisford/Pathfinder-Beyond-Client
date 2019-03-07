@@ -8,7 +8,7 @@ export default function LoadOptions(props, dispatch){
 	switch(props){
     case 1:
         // call load races
-		dispatch(loadRaces(races)); 
+		// dispatch(loadRaces(races)); 
         break;
     case 2:
         // call load classes
