@@ -7,6 +7,7 @@ import { submitClassToState } from '../actions/index';
 import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
 import { setClassSelectionsView } from '../actions/index';
+import { setExpandedClass } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories';
 import * as ClassSelections from './classSelectionFiles/';
 
@@ -14,13 +15,23 @@ import './newCharacterClass.css';
 
 export class NewCharacterClass extends React.Component{
 	handleClick(id){
-		for(let i=0; i<this.props.classesArray.length;i++){
+/* 		for(let i=0; i<this.props.classesArray.length;i++){
 			// if this is the clicked element toggle it **OR**
 			// if this is not the clicked element and it is expanded, toggle it
 			if( (i===id) || (i!==id && this.props.classesArray[i].expand === true) ){
 				this.props.dispatch(toggleClassExpand(i));
 			}
+		} */
+		let name = "";
+		for(let i=0; i<this.props.classesArray.length;i++){
+			if( i === id){
+				name = this.props.classesArray[i].name
+			}
 		}
+		if(name === ""){
+			console.log("Error! Couldn't find class")
+		}
+		this.props.dispatch(setExpandedClass(name));
 	}
 
 	checkForSelections(id){
@@ -55,7 +66,7 @@ export class NewCharacterClass extends React.Component{
 		for(let i=0; i<this.props.classesArray.length;i++){
 			// if this is the clicked element toggle it 
 			if( i===id ){
-				this.props.dispatch(submitClassToState(i));
+				this.props.dispatch(submitClassToState(this.props.classesArray[i]));
 				let bonus = createBonus({ 
 					name:"classBAB", 
 					source:"class", 
@@ -73,6 +84,13 @@ export class NewCharacterClass extends React.Component{
 		const complete = this.props.complete;
 		const help = this.props.help;
 		const classSelections = this.props.classSelections;
+		const classesArray = this.props.classesArray;
+		let toExpand = "";
+		if(this.props.toExpand){
+			if(this.props.toExpand.charClass){
+				toExpand = this.props.toExpand.charClass;
+			}
+		}	
 
 		// if help is true, that screen is displayed
 		if(help){
@@ -135,9 +153,10 @@ export class NewCharacterClass extends React.Component{
 				return (
 					<div className="newCharacterClass">
 						<h1>Character Class - todo</h1>	
-						{this.props.classesArray.map(({id,thum,name,expand,classFeatures}) => 
-							<CardClass key={id} thum={thum} name={name} expand={expand} features={classFeatures}
-								callback={()=> this.handleClick(id)} addClassCallback={()=> this.checkForSelections(id)}/>
+						{classesArray.map(({id,thum,name,classFeatures}) => 
+							<CardClass key={id} thum={thum} name={name} expand={ toExpand === name ? true : false } 
+								features={classFeatures} callback={()=> this.handleClick(id)} 
+								addClassCallback={()=> this.checkForSelections(id)}/>
 						)}
 					</div>
 				)
@@ -154,9 +173,10 @@ export class NewCharacterClass extends React.Component{
 
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[2].complete,
-	classesArray:state.characterReducer.classesArray,
+	classesArray:require('../data/classes'),
 	help:state.characterReducer.help,
 	classSelections:state.characterReducer.classSelectionsView,
+	toExpand:state.characterReducer.expanded, 
 });
 
 export default connect(mapStateToProps)(NewCharacterClass);

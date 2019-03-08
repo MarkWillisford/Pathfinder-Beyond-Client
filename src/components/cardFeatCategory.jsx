@@ -104,7 +104,7 @@ class CardFeatCategory extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	categoryToExpand:state.characterReducer.expanded,
+	categoryToExpand:state.characterReducer.expanded, 
 
 });
 

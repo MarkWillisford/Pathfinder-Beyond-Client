@@ -27,19 +27,15 @@ export class SelectionFormRace extends React.Component{
 	hideSelections(){
 		this.props.dispatch(setSelections(""));
 	}
-	submitRace(name){
-		for(let i=0; i<this.props.racesArray.length;i++){
-			if(this.props.racesArray[i].name === name){
-				this.props.dispatch(submitRaceToState(i));
-			}
-		}
+	submitRace(race){
+		this.props.dispatch(submitRaceToState(race));
 	}
-	getFeatDetails(name){
+/* 	getFeatDetails(name){
 		// this will be an API call, but for now it searches the list and retreaves feat details
 		const featsList = require('../data/feats');
 		let featToReturn = featsList.find( feat => feat.name === name);
 		return featToReturn;
-	}
+	} */
 
 	render(){
 		const submitting = this.props.submitting;
@@ -55,7 +51,6 @@ export class SelectionFormRace extends React.Component{
 				}
 			}	// Now I have the heritage data in 'heritage'
 			// create bonuses foreach in 
-			console.log(heritage);
 			heritage.standardRacialTraits.base.abilityScoreRacialBonusArray.map(ability => {
 				let bonus = createBonus({ 
 					name:"race", 
@@ -86,7 +81,7 @@ export class SelectionFormRace extends React.Component{
 			this.props.dispatch(submitAasimarRaceToState(heritage));
 		};
 		const onSubmitFormGnome = (values) => {
-			console.log(values);
+			const selections = this.props.selections;
 			values = lowercaseFirstLetter(values.selectionsObsessive);
 			let bonus = createBonus({ 
 				name:"race", 
@@ -98,37 +93,32 @@ export class SelectionFormRace extends React.Component{
 			this.props.dispatch(addBonus(bonus));
 			this.props.dispatch(sumBonus(bonus));
 			this.props.dispatch(setSelections(""));
-			this.submitRace("Gnome");
-			for(let i=0; i<this.props.racesArray.length;i++){
-				if(this.props.racesArray[i].name === "Gnome"){
-					this.props.racesArray[i].standardRacialTraits.base.abilityScoreRacialBonusArray.map(ability => {
-						let bonus = createBonus({ 
-							name:"race", 
-							source:"race", 
-							stat:ability.stat, 
-							type:"racial", 
-							duration:-1, 
-							amount:ability.value });
-						this.props.dispatch(addBonus(bonus));
-						this.props.dispatch(sumBonus(bonus));
-						return null
-					});
-					this.props.racesArray[i].standardRacialTraits.base.skillRacialBonusArray.map(skill => {
-						console.log(this.props.racesArray[i].standardRacialTraits.base.skillRacialBonusArray);
-						let bonus = createBonus({ 
-							name:"race", 
-							source:"race", 
-							stat:skill.stat, 
-							type:"racial", 
-							duration:-1, 
-							amount:skill.value });
-						this.props.dispatch(addBonus(bonus));
-						this.props.dispatch(sumBonus(bonus));
-						return null
-					});
-					break;
-				}
-			}
+			this.submitRace(selections);
+			selections.standardRacialTraits.base.abilityScoreRacialBonusArray.map(ability => {
+				let bonus = createBonus({ 
+					name:"race", 
+					source:"race", 
+					stat:ability.stat, 
+					type:"racial", 
+					duration:-1, 
+					amount:ability.value });
+				this.props.dispatch(addBonus(bonus));
+				this.props.dispatch(sumBonus(bonus));
+				return null
+			});
+			selections.standardRacialTraits.base.skillRacialBonusArray.map(skill => {
+				console.log(selections.standardRacialTraits.base.skillRacialBonusArray);
+				let bonus = createBonus({ 
+					name:"race", 
+					source:"race", 
+					stat:skill.stat, 
+					type:"racial", 
+					duration:-1, 
+					amount:skill.value });
+				this.props.dispatch(addBonus(bonus));
+				this.props.dispatch(sumBonus(bonus));
+				return null
+			});
 		};
 		const onSubmitFormHalfElf = (values) => {
 			this.props.dispatch(setSelections(""));
@@ -345,8 +335,8 @@ export class SelectionFormRace extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	racesArray:state.characterReducer.racesArray,
-	
+	//racesArray:state.characterReducer.racesArray,
+	selections:state.characterReducer.selections,
 });
 
 SelectionFormRace = reduxForm({

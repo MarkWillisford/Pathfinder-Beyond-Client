@@ -10,8 +10,8 @@ export default function App(props) {
         <div className="app">
             <main>
                 <Switch>
-                    <Redirect exact push from='/' to="/playerDemo/newCharacter/home"  />
-                    <Route exact path="/playerDemo/newCharacter/home" component={NewCharacterContainer} />                     
+                    <Redirect exact push from='/' to="/playerDemo/newCharacter/"  />
+                    <Route path="/playerDemo/newCharacter/" component={NewCharacterContainer} />                     
                 </Switch>
             </main>
         </div>
