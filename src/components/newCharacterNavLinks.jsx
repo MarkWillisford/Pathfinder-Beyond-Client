@@ -24,7 +24,7 @@ export class NewCharacterNavLinks extends React.Component{
 			disabledNext = true;
 		}
 		// Will need to be async . . .     
-		LoadOptions(step, this.props.dispatch);
+		// LoadOptions(step, this.props.dispatch);					// <---!!!  This may be causing a lot of issues. 
 		this.props.dispatch(setStep(step, disabledNext, disabledPrev));
 	}
 

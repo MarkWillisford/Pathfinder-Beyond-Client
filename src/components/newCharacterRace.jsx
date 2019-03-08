@@ -9,34 +9,45 @@ import { submitSkillsToState } from '../actions/index';
 import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
 import { setSelections } from '../actions/index';
+import { setExpandedRace } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories'
 
 import './newCharacterRace.css';
 
 export class NewCharacterRace extends React.Component{
-	handleClick(id){
-		for(let i=0; i<this.props.racesArray.length;i++){
-			// if this is the clicked element toggle it **OR**
+	showExpandedRace(id){		
+		const racesArray = require('../data/races');
+		let name = "";
+		for(let i=0; i<racesArray.length;i++){
+			/* // if this is the clicked element toggle it **OR**
 			// if this is not the clicked element and it is expanded, toggle it
-			if( (i===id) || (i!==id && this.props.racesArray[i].expand === true) ){
-				this.props.dispatch(toggleRaceExpand(i));
-			}
+			if( (i===id) || (i!==id && racesArray[i].expand === true) ){
+				this.props.dispatch(toggleRaceExpand(i));				// <--- This requires that the races are already in store
+			}															// !TODO refactor to use state.characterReducer.expanded
 			// again we have to find the element that called this function
 			if( i===id ){
 				// and set its child component button to display off. 
 				// TODO! by ref or by state?
+			} */
+			if( i === id){
+				name = racesArray[i].name
 			}
 		}
+		if(name === ""){
+			console.log("Error! Couldn't find race")
+		}
+		this.props.dispatch(setExpandedRace(name));
 	}
 
 	addRace(id){
-		for(let i=0; i<this.props.racesArray.length;i++){
+		const racesArray = require('../data/races');
+		for(let i=0; i<racesArray.length;i++){
 			// if this is the clicked element toggle it 
 			if( i===id ){
 				// if the class doesn't have selections . . .    
-				if(!this.props.racesArray[i].standardRacialTraits.selections){
-					this.props.dispatch(submitRaceToState(i));
-					let abilityArray = this.props.racesArray[i].standardRacialTraits.base.abilityScoreRacialBonusArray;
+				if(!racesArray[i].standardRacialTraits.selections){
+					this.props.dispatch(submitRaceToState(racesArray[i]));
+					let abilityArray = racesArray[i].standardRacialTraits.base.abilityScoreRacialBonusArray;
 					if(abilityArray){		// find out if there are given ability score bonuses
 						for(let j=0; j<abilityArray.length; j++){
 							//this.props.dispatch(submitAbilityScoreToState( abilityArray[j].stat, "racial", abilityArray[j].value ));
@@ -53,7 +64,7 @@ export class NewCharacterRace extends React.Component{
 					} else {		// nothing set means the user has to pick one. 
 						// TODO do a cool thing
 					}
-					let skillArray = this.props.racesArray[i].standardRacialTraits.base.skillRacialBonusArray;
+					let skillArray = racesArray[i].standardRacialTraits.base.skillRacialBonusArray;
 					if(skillArray){			// find out if there are any racial skill bonuses
 						for(let j=0; j<skillArray.length; j++){
 							this.props.dispatch(submitSkillsToState( skillArray[j].stat, "racial", skillArray[j].value ));
@@ -70,7 +81,7 @@ export class NewCharacterRace extends React.Component{
 					}
 				} else {
 					// this means that the feat does have selections
-					this.props.dispatch(setSelections(this.props.racesArray[i].name));
+					this.props.dispatch(setSelections(racesArray[i]));
 				}
 			}
 		}		
@@ -79,6 +90,13 @@ export class NewCharacterRace extends React.Component{
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
+		const racesArray = require('../data/races');
+		let toExpand = "";
+		if(this.props.toExpand){
+			if(this.props.toExpand.race){
+				toExpand = this.props.toExpand.race;
+			}
+		}	
 
 		// if help is true, that screen is displayed
 		if(help){
@@ -110,9 +128,10 @@ export class NewCharacterRace extends React.Component{
 			return (
 		        <div className="newCharacterRace">
 		        	<h1>Character Race - todo</h1>	
-		        	{this.props.racesArray.map(({id,thum,name,expand,standardRacialTraits}) => 
-		        		<RaceCard key={id} thum={thum} name={name} expand={expand} traits={standardRacialTraits} 
-		        			callback={()=> this.handleClick(id)} addRaceCallback={()=> this.addRace(id)}/>
+		        	{racesArray.map(({id,thum,name,standardRacialTraits}) => 
+						<RaceCard key={id} thum={thum} name={name} expand={ toExpand === name ? true : false } 
+							traits={standardRacialTraits} callback={()=> this.showExpandedRace(id)} 
+							addRaceCallback={()=> this.addRace(id)}/>
 		        	)}
 		        </div>
 		    );
@@ -128,8 +147,9 @@ export class NewCharacterRace extends React.Component{
 
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[1].complete,
-	racesArray:state.characterReducer.racesArray,
+	//racesArray:state.characterReducer.racesArray,
 	help:state.characterReducer.help,
+	toExpand:state.characterReducer.expanded, 
 });
 
 export default connect(mapStateToProps)(NewCharacterRace);

@@ -113,7 +113,7 @@ export class ClassSelectionsCleric extends React.Component{
 				this.props.dispatch(addBonus(bonus));
 				this.props.dispatch(sumBonus(bonus));
                 this.props.dispatch(setGenericExpand(""));
-                this.props.dispatch(submitClassToState(i));
+                this.props.dispatch(submitClassToState(this.props.classesArray[i]));
                 this.props.dispatch(submitDomain(this.props.clericDetails));
                 this.props.dispatch(submitDeity(this.props.clericDetails.deity));
                 this.props.dispatch(submitAlignmentRestrictions(this.props.clericDetails.deity.overview.clericAlignments))
@@ -150,7 +150,7 @@ export class ClassSelectionsCleric extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	classesArray:state.characterReducer.classesArray,
+	classesArray:require('../../data/classes'),
     availableDomainsList:state.characterReducer.availableDomains,
     expand:state.characterReducer.expand,
     clericDetails:state.characterReducer.clericDetails,

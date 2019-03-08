@@ -42,7 +42,6 @@ export class NewCharacterContainer extends React.Component{
 		const currentStep = this.props.currentStep;
 		const disabledPrev = this.props.disabledPrev;
 		const disabledNext = this.props.disabledNext;
-		
 		let prevUrl = "";
 		if(currentStep !== 0){
 			prevUrl = `/playerDemo/newCharacter/${stepsArray[currentStep-1].name}`;
@@ -65,16 +64,16 @@ export class NewCharacterContainer extends React.Component{
 		        	<div>
 		        		{/* 8 sections, each of which has a completed property
 			        		which controls which component is displayed */}
-			        	<Route exact path="/playerDemo/newCharacter/Character Basics" render={() => <Redirect to="/playerDemo/newCharacter/home" />} />
-		        		<Route exact path="/playerDemo/newCharacter/home" component={NewCharacterPreferences} />
-		        		<Route exact path="/playerDemo/newCharacter/Race" component={NewCharacterRace} />
-		        		<Route exact path="/playerDemo/newCharacter/Class" component={NewCharacterClass} />
-			        	<Route exact path="/playerDemo/newCharacter/Ability Scores" render={() => <Redirect to="/playerDemo/newCharacter/AbilityScores" />} />
-		        		<Route exact path="/playerDemo/newCharacter/AbilityScores" component={NewCharacterAbilityScores} />
-		        		<Route exact path="/playerDemo/newCharacter/Details" component={NewCharacterDetails} />
-		        		<Route exact path="/playerDemo/newCharacter/Skills" component={NewCharacterSkills} />
-		        		<Route exact path="/playerDemo/newCharacter/Feats" component={NewCharacterFeats} />
-		        		<Route exact path="/playerDemo/newCharacter/Equipment" component={NewCharacterEquipment} />
+			        	<Route  path="/playerDemo/newCharacter/Character Basics" render={() => <Redirect to="/playerDemo/newCharacter/home" />} />
+		        		<Route  path="/playerDemo/newCharacter/home" component={NewCharacterPreferences} />
+		        		<Route  path="/playerDemo/newCharacter/Race" component={NewCharacterRace} />
+		        		<Route  path="/playerDemo/newCharacter/Class" component={NewCharacterClass} />
+			        	<Route  path="/playerDemo/newCharacter/Ability Scores" render={() => <Redirect to="/playerDemo/newCharacter/AbilityScores" />} />
+		        		<Route  path="/playerDemo/newCharacter/AbilityScores" component={NewCharacterAbilityScores} />
+		        		<Route  path="/playerDemo/newCharacter/Details" component={NewCharacterDetails} />
+		        		<Route  path="/playerDemo/newCharacter/Skills" component={NewCharacterSkills} />
+		        		<Route  path="/playerDemo/newCharacter/Feats" component={NewCharacterFeats} />
+		        		<Route  path="/playerDemo/newCharacter/Equipment" component={NewCharacterEquipment} />
 		        	</div>
 		        	<Next toggle={(e) => this.toggleNext(e)} disabled={disabledNext} url={nextUrl}/>
 		        </div>

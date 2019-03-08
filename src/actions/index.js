@@ -213,9 +213,9 @@ export const sumBonus = (bonus) => ({
 })
 
 export const SET_SELECTIONS = 'SET_SELECTIONS';
-export const setSelections = (name) => ({
+export const setSelections = (race) => ({
 	type: SET_SELECTIONS,
-	name,
+	race,
 })
 
 export const SUBMIT_FAVORED_CLASS_TO_STATE = 'SUBMIT_FAVORED_CLASS_TO_STATE';
@@ -311,6 +311,18 @@ export const addFeatSlot = (category) => ({
 export const SET_TRAITS_TO_COMPLETE = 'SET_TRAITS_TO_COMPLETE';
 export const setTraitsToComplete = () => ({
 	type: SET_TRAITS_TO_COMPLETE, 
+});
+
+export const SET_EXPANDED_RACE = 'SET_EXPANDED_RACE';
+export const setExpandedRace = (name) => ({
+	type: SET_EXPANDED_RACE, 
+	name,
+});
+
+export const SET_EXPANDED_CLASS = 'SET_EXPANDED_CLASS';
+export const setExpandedClass = (name) => ({
+	type: SET_EXPANDED_CLASS, 
+	name,
 });
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
