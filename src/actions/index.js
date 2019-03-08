@@ -318,6 +318,12 @@ export const setExpandedRace = (name) => ({
 	type: SET_EXPANDED_RACE, 
 	name,
 });
+
+export const SET_EXPANDED_CLASS = 'SET_EXPANDED_CLASS';
+export const setExpandedClass = (name) => ({
+	type: SET_EXPANDED_CLASS, 
+	name,
+});
 // Prep for future release
 /*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
 export const toggleFeatureExpand = (charClass, feature) => ({

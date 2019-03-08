@@ -12,7 +12,7 @@ export default function LoadOptions(props, dispatch){
         break;
     case 2:
         // call load classes
-        dispatch(loadClasses(classes));
+        //dispatch(loadClasses(classes));
         break;
     case 4:
         // call load traits

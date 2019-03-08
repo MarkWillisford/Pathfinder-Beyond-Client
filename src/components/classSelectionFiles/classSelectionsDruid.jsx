@@ -51,7 +51,7 @@ export class ClassSelectionsDruid extends React.Component{
 				this.props.dispatch(addBonus(bonus));
 				this.props.dispatch(sumBonus(bonus));
                 this.props.dispatch(setGenericExpand(""));
-                this.props.dispatch(submitClassToState(i));
+                this.props.dispatch(submitClassToState(this.props.classesArray[i]));
                 this.props.dispatch(submitNatureBond(natureBond));
 			}
 		}
@@ -159,7 +159,7 @@ class CardAnimalCompanion extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	classesArray:state.characterReducer.classesArray,
+	classesArray:require('../../data/classes'),
     expand:state.characterReducer.expand,
 });
 

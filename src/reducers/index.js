@@ -357,7 +357,7 @@ export const characterReducer = (state=initialState, action) => {
         }
       }
     case actions.SUBMIT_CLASS_TO_STATE:
-      charClass = state.classesArray.find(r => r.id === action.index);
+      charClass = action.index;
       indexOfStep = 2;  // Class
       step = state.creationSteps[indexOfStep];
       return {
@@ -542,6 +542,11 @@ export const characterReducer = (state=initialState, action) => {
       return {
         ...state,
         expanded:{...state.expanded, race:action.name}
+      }
+    case actions.SET_EXPANDED_CLASS:
+      return {
+        ...state,
+        expanded:{...state.expanded, charClass:action.name}
       }
     case actions.SUBMIT_TRAIT_TO_STATE:
       foundAt = null;
