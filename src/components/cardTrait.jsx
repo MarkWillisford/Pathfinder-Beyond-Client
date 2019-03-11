@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import { sumbmitTraitToState } from '../actions/index';
 import { setTraitsToComplete } from '../actions/index';
+import { setExpandedTraitCategory } from '../actions/index'; 
 
 export class CardTrait extends React.Component{
 	sumbmitTraitToState(trait){
@@ -15,8 +16,15 @@ export class CardTrait extends React.Component{
         this.props.dispatch(sumbmitTraitToState(trait));
         if(lastTraitSelected){
             // disable all options if all of our traits have now been selected.
-            this.props.dispatch(setTraitsToComplete());
+			this.props.dispatch(setTraitsToComplete()); 
+			this.hide();
         }
+	}
+
+	hide(){
+		let name = "";
+		// remove the name of the expanded category in state
+		this.props.dispatch(setExpandedTraitCategory(name));
 	}
 
 	render(){
@@ -38,7 +46,6 @@ export class CardTrait extends React.Component{
 		if(found){	// I already have it
 			selectable = false;
 			errorMessage = "Trait is already selected";
-			console.log(errorMessage);
 		};
 
         selectable = details ? (details.traitsCompleted ? (details.traitsCompleted === true ? false : selectable) : selectable) : selectable;

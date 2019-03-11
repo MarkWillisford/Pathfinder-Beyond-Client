@@ -50,7 +50,6 @@ class CardTraitCategory extends React.Component{
 		let traitsList = null;
 		if(thisExpanded){
 			traitsList = this.getTraitList(this.props.name, 0);	// This extra param is for adding page ability
-			console.log(traitsList);
 		}
 
 		return(

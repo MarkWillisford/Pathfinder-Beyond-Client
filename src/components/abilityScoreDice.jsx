@@ -19,7 +19,8 @@ export class AbilityScoreDice extends React.Component {
 
     onSubmit(values) {
     	// at this point, the ability scores are already saved in the store. We just need to toggle the 
-    	// step.complete to rerender.
+		// step.complete to rerender.
+		console.log(values);
     	this.props.dispatch(setStepToComplete(3));
     }
 
@@ -171,6 +172,30 @@ export class AbilityScoreDice extends React.Component {
 	}
 }
 
+const validate = values => {
+	const errors = {}
+
+	if(!values.strengthSelecter){
+		errors.strengthSelecter = "Required"
+	}
+	if(!values.dexteritySelecter){
+		errors.dexteritySelecter = "Required"
+	}
+	if(!values.constitutionSelecter){
+		errors.constitutionSelecter = "Required"
+	}
+	if(!values.intelligenceSelecter){
+		errors.intelligenceSelecter = "Required"
+	}
+	if(!values.wisdomSelecter){
+		errors.wisdomSelecter = "Required"
+	}
+	if(!values.charismaSelecter){
+		errors.charismaSelecter = "Required"
+	}
+	return errors
+}
+
 const dynamicFields = ["strengthSelecter", "dexteritySelecter", "constitutionSelecter", 
 					"intelligenceSelecter", "wisdomSelecter", "charismaSelecter"];
 const selector = formValueSelector('diceForm');
@@ -184,8 +209,9 @@ const mapStateToProps = state => ({
 
 AbilityScoreDice = reduxForm({
     form: 'diceForm',
-/*    onSubmitFail: (errors, dispatch) =>
-        dispatch(focus('dice', Object.keys(errors)[0]))*/
+/*     onSubmitFail: (errors, dispatch) =>
+        dispatch(focus('dice', Object.keys(errors)[0])), */
+    validate
 })(AbilityScoreDice)
 
-export default connect(mapStateToProps)(AbilityScoreDice);
+export default connect(mapStateToProps)(AbilityScoreDice); 

@@ -33,16 +33,6 @@ export class AbilityScoreManual extends React.Component {
 	}
 
 	render(){
-		const createRenderer = render => ({ input, meta, label, ...rest }) => 
-			<div>
-			<label>{label}</label>
-			{render(input, label, rest)}
-			</div>
-
-		const RenderInput = createRenderer((input, label) => 
-			<input { ... input} placeholder={label}></input>			
-		)
-
 		return (
 			<form onSubmit={ this.props.handleSubmit(values=>this.onSubmit(values) )}> 		
 				<Field 
@@ -93,14 +83,62 @@ export class AbilityScoreManual extends React.Component {
 	}
 }
 
+const createRenderer = render => ({ input, meta: {touched, error}, label, ...rest }) => 
+<div>
+<label>{label}</label>
+{render(input, label, rest)}			
+{touched && (error && <p className="help is-danger">{error}</p>)}
+</div>
+
+const RenderInput = createRenderer((input, label) => 
+<input { ... input} placeholder={label}></input>			
+)
+
+const validate = values => {
+	const errors = {}
+
+	if(!values.strengthSelecter){
+		errors.strengthSelecter = "Required"
+	} else if(isNaN(Number(values.strengthSelecter))){
+		errors.strengthSelecter = 'Must be a number'
+	}
+	if(!values.dexteritySelecter){
+		errors.dexteritySelecter = "Required"
+	} else if(isNaN(Number(values.dexteritySelecter))){
+		errors.dexteritySelecter = 'Must be a number'
+	}
+	if(!values.constitutionSelecter){
+		errors.constitutionSelecter = "Required"
+	} else if(isNaN(Number(values.constitutionSelecter))){
+		errors.constitutionSelecter = 'Must be a number'
+	}
+	if(!values.intelligenceSelecter){
+		errors.intelligenceSelecter = "Required"
+	} else if(isNaN(Number(values.intelligenceSelecter))){
+		errors.intelligenceSelecter = 'Must be a number'
+	}
+	if(!values.wisdomSelecter){
+		errors.wisdomSelecter = "Required"
+	} else if(isNaN(Number(values.wisdomSelecter))){
+		errors.wisdomSelecter = 'Must be a number'
+	}
+	if(!values.charismaSelecter){
+		errors.charismaSelecter = "Required"
+	} else if(isNaN(Number(values.charismaSelecter))){
+		errors.charismaSelecter = 'Must be a number'
+	}
+	return errors
+}
+
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[3].complete,
 })
 
 AbilityScoreManual = reduxForm({
     form: 'manualForm',
-    onSubmitFail: (errors, dispatch) =>
-        dispatch(focus('manual', Object.keys(errors)[0]))
+/*     onSubmitFail: (errors, dispatch) =>
+        dispatch(focus('manual', Object.keys(errors)[0])), */
+    validate
 })(AbilityScoreManual)
 
 export default connect(mapStateToProps)(AbilityScoreManual);
