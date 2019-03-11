@@ -22,10 +22,7 @@ export class NewCharacterEquipment extends React.Component{
 		// first here we must check to ensure that race, class, and ability scores are complete. 
 		// If not, we display an error message directing the user to complete those pages before 
 		// continuing. 
-		//if( !(this.props.race && this.props.charClassComplete && this.props.abilityScores) ){
-		if( !(this.props.race && this.props.charClassComplete && this.props.abilityScores) ){
-			return ( <h1>NOT READY</h1> )
-		} else if(help){
+		if(help){
 			// if help is true, that screen is displayed
 			return (
 				<div className="equipmentHelp">
@@ -35,6 +32,12 @@ export class NewCharacterEquipment extends React.Component{
 					<p>Your Strength score limits the amount of gear you can carry. Try not to purchase equipment with a total weight (in pounds) exceeding your Strength score times 15.</p>
 				</div>
 			);
+		} else if( !(this.props.race && this.props.charClassComplete && this.props.abilityScores) ){
+			return (
+				<div>
+					<h3>Please finish your race, class and ability score selections before choosing your equipment.</h3> 
+				</div>
+			)
 		} else if(!complete){
 			if(defaultGear){
 				return (

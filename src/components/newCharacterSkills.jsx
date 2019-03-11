@@ -99,9 +99,7 @@ export class NewCharacterSkills extends React.Component{
 		// first here we must check to ensure that race, class, and ability scores are complete. 
 		// If not, we display an error message directing the user to complete those pages before 
 		// continuing. 
-		if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
-			return ( <h1>NOT READY</h1> )
-		} else if(help){
+		if(help){
 			// if help is true, that screen is displayed
 			return (
 				<div className="skillsHelp">
@@ -112,6 +110,12 @@ export class NewCharacterSkills extends React.Component{
 					<p>In addition, each class has a number of favored skills, called class skills. It is easier for your character to become more proficient in these skills, as they represent part of his professional training and constant practice. You gain a +3 bonus on all class skills that you put ranks into. If you have more than one class and both grant you a class skill bonus, these bonuses do not stack.</p>
 				</div>
 			);
+		} else if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
+			return (
+				<div>
+					<h3>Please finish your race, class and ability score selections before filling in your skills.</h3> 
+				</div>
+			)
 		} else if(!complete){
 			// For now this is hard-coded in. 
 			const hitDie = 1;

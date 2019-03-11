@@ -37,16 +37,20 @@ export class NewCharacterFeats extends React.Component{
 		// first here we must check to ensure that race, class, and ability scores are complete. 
 		// If not, we display an error message directing the user to complete those pages before 
 		// continuing. 
-		if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
-			return ( <h1>NOT READY</h1> )
-		} else if(help){
-		// if help is true, that screen is displayed
+		if(help){
+			// if help is true, that screen is displayed
 			return (
 				<div className="">
 					<h2>Selecting Feats</h2>
 					<p>Some abilities are not tied to your race, class, or skill-things like particularly quick reflexes that allow you to react to danger more swiftly, the ability to craft magic items, the training to deliver powerful strikes with melee weapons, or the knack for deflecting arrows fired at you. These abilities are represented as feats. While some feats are more useful to certain types of characters than others, and many of them have special prerequisites that must be met before they are selected, as a general rule feats represent abilities outside of the normal scope of your character’s race and class. Many of them alter or enhance class abilities or soften class restrictions, while others might apply bonuses to your statistics or grant you the ability to take actions otherwise prohibited to you. By selecting feats, you can customize and adapt your character to be uniquely yours.</p>
 				</div>
 			);
+		} else if( !(this.props.race && this.props.charClass && this.props.abilityScores) ){
+			return ( 
+				<div>
+					<h3>Please finish your race, class and ability score selections before choosing your feats.</h3> 
+				</div>
+			 )
 		} else if(!complete){
 			return (
 		        <div className="newCharacterFeats">

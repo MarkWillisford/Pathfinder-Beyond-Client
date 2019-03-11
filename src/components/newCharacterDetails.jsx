@@ -44,9 +44,7 @@ export class NewCharacterDetails extends React.Component{
 		const traitsCompleted = details ? (details.traitsCompleted ? (details.traitsCompleted === true ? true : false) : false) : false;
 
 		// if help is true, that screen is displayed
-		if( !(this.props.race && this.props.charClass ) ){
-			return ( <h1>NOT READY</h1> )
-		} else if(help){
+		if(help){
 			return ( 
 				<div className="detailsHelp">
 					<h2>Character Details</h2>
@@ -54,6 +52,12 @@ export class NewCharacterDetails extends React.Component{
 				</div>
 
 			);
+		} else if( !(this.props.race && this.props.charClass ) ){
+			return (
+				<div>
+					<h3>Please finish your race and class selections before attempting the finer details.</h3> 
+				</div>
+			)
 		} else if(!complete){
 			return (
 				<div className="newCharacterDetails">
