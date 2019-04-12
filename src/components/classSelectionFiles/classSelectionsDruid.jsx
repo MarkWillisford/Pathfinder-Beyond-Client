@@ -7,7 +7,7 @@ import { submitNatureBond } from '../../actions/index';
 import { submitClassToState } from '../../actions/index';
 import { addBonus } from '../../actions/index';
 import { sumBonus } from '../../actions/index';
-import { createBonus } from '../../utility/statObjectFactories';
+import { createBonus } from '../../utility/statObjectFactories'; 
 
 import './classSelectionsDruid.css';
 
