@@ -15,7 +15,7 @@ export class NewCharacter extends React.Component{
 		return (
 	        <Router>
 		        <div className="newCharacter">
-					<Route exact path="/playerDemo/newCharacter" component={NewCharacterCreationMethod} />
+					    <Route exact path="/playerDemo/newCharacter" component={NewCharacterCreationMethod} />
 		        	<Route exact path="/playerDemo/testingRoutes" component={TestingRoutes} />
 		        	<Route exact path="/playerDemo/newCharacter/quickBuild" component={QuickBuild} />
 		        	<Route exact path="/playerDemo/newCharacter/home" component={NewCharacterContainer} /> 
