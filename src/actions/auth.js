@@ -35,14 +35,15 @@ export const authError = error => ({
 
 // Stores the auth token in state and localStorage, and decodes and stores
 // the user data stored in the token
-const storeAuthInfo = (authToken, dispatch) => {
-    const decodedToken = jwtDecode(authToken);
-    dispatch(setAuthToken(authToken));
-    dispatch(authSuccess(decodedToken.user));
-    saveAuthToken(authToken);
+const storeAuthInfo = (token, _id, dispatch) => {
+  const decodedToken = jwtDecode(token);
+  dispatch(setAuthToken(token));
+  dispatch(authSuccess(decodedToken));
+  saveAuthToken(token);
 };
 
 export const login = (email, password) => dispatch => {
+    // set a loading indicator to true and clearing any earlier errors
     dispatch(authRequest());
     return (
         fetch(`${API_BASE_URL}/users/login`, {
@@ -59,7 +60,7 @@ export const login = (email, password) => dispatch => {
             // errors which follow a consistent format
             .then(res => normalizeResponseErrors(res))
             .then(res => res.json())
-            .then(({authToken}) => storeAuthInfo(authToken, dispatch))
+            .then(({token, _id}) => storeAuthInfo(token, _id, dispatch))
             .catch(err => {
                 const {code} = err;
                 const message =
