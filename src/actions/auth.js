@@ -42,16 +42,16 @@ const storeAuthInfo = (authToken, dispatch) => {
     saveAuthToken(authToken);
 };
 
-export const login = (username, password) => dispatch => {
+export const login = (email, password) => dispatch => {
     dispatch(authRequest());
     return (
-        fetch(`${API_BASE_URL}/auth/login`, {
+        fetch(`${API_BASE_URL}/users/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                username,
+                email,
                 password
             })
         })
