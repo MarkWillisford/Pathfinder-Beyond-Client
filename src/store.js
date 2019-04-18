@@ -3,6 +3,7 @@ import {reducer as formReducer} from 'redux-form'
 
 import {characterReducer} from './reducers/index';
 import authReducer from './reducers/auth';
+import protectedDataReducer from './reducers/protectedData';
 import {loadAuthToken} from './localStorage';
 import {setAuthToken, refreshAuthToken} from './actions/auth';
 
@@ -10,7 +11,8 @@ const store = createStore(
 	combineReducers({
 		characterReducer: characterReducer,
     form: formReducer,
-    auth: authReducer
+    auth: authReducer,    
+    protectedData: protectedDataReducer
   }),
 	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
