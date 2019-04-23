@@ -1,6 +1,8 @@
 import React from 'react';
 import {Field, reduxForm, focus} from 'redux-form';
 import Input from './input';
+import GoogleLogin from 'react-google-login';
+
 import {login} from '../actions/auth';
 import {required, nonEmpty} from '../utility/validators';
 
@@ -10,6 +12,9 @@ export class LoginForm extends React.Component {
     }
 
     render() {
+      const responseGoogle = (response) => {
+        console.log(response);
+      }
         let error;
         if (this.props.error) {
             error = (
@@ -19,6 +24,7 @@ export class LoginForm extends React.Component {
             );
         }
         return (
+          <div>
             <form
                 className="login-form"
                 onSubmit={this.props.handleSubmit(values =>
@@ -45,6 +51,15 @@ export class LoginForm extends React.Component {
                     Log in
                 </button>
             </form>
+
+            <GoogleLogin
+            clientId="916807456829-i5iksjetkuinmltcu0svi8leh7lckhjh.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={'single_host_origin'}
+            />
+          </div>
         );
     }
 }
