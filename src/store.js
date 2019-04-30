@@ -25,6 +25,7 @@ const store = createStore(
   enhancer
 );
 
+// Hydrate the authToken from localStorage if it exist
 const authToken = loadAuthToken();
 if (authToken) {
     const token = authToken;

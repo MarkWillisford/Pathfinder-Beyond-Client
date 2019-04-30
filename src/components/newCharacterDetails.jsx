@@ -13,8 +13,7 @@ export class NewCharacterDetails extends React.Component{
 	submitHandler(values) {
 		const details = this.props.charDetails;
 		const traitsCompleted = details ? (details.traitsCompleted ? (details.traitsCompleted === true ? true : false) : false) : false;
-        if(traitsCompleted){
-			console.log(values);
+    if(traitsCompleted){
 			this.props.dispatch(submitDetailsToState(values));
 		} else { 
 			console.log("traits not done");

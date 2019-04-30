@@ -39,8 +39,13 @@ export class NewCharacterRace extends React.Component{
 		this.props.dispatch(setExpandedRace(name));
 	}
 
+  getRaceData(){
+    return require('../data/races');
+    
+  }
+
 	addRace(id){
-		const racesArray = require('../data/races');
+		const racesArray = this.getRaceData();
 		for(let i=0; i<racesArray.length;i++){
 			// if this is the clicked element toggle it 
 			if( i===id ){

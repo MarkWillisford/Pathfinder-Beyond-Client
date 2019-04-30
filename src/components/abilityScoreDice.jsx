@@ -20,7 +20,6 @@ export class AbilityScoreDice extends React.Component {
     onSubmit(values) {
     	// at this point, the ability scores are already saved in the store. We just need to toggle the 
 		// step.complete to rerender.
-		console.log(values);
     	this.props.dispatch(setStepToComplete(3));
     }
 

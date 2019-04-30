@@ -137,7 +137,7 @@ export const saveAbilityScoreOptions = (options) => ({
 export const SET_STEP_TO_COMPLETE = 'SET_STEP_TO_COMPLETE';
 export const setStepToComplete = (step) => ({
 	type: SET_STEP_TO_COMPLETE,
-	step,
+	step, 
 })
 
 export const EQUIPMENT_GENERATION_METHOD = 'EQUIPMENT_GENERATION_METHOD';
@@ -330,3 +330,7 @@ export const toggleFeatureExpand = (charClass, feature) => ({
 	type: TOGGLE_FEATURE_EXPAND,
 	charClass, feature, 
 }); I doubt I need this */
+
+export const setStepToCompleteCheckCharacter = (step, dispatch) => {
+  dispatch(setStepToComplete(step));
+}

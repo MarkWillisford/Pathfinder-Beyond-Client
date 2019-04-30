@@ -15,8 +15,6 @@ export class Equipment_Selection extends React.Component {
 	}
 
 	addItem(name){
-		console.log("in addItem, name is: ");
-		console.log(name);
 		const tradeGoodsList = require('../data/tradeGoods');
 		const weaponsList = require('../data/weapons');
 		const armorList = require('../data/armor');
@@ -93,7 +91,10 @@ export class Equipment_Selection extends React.Component {
 	}
 
 	done(){
-		this.props.dispatch(setStepToComplete(7));
+    // we set the 7th step to complete
+    this.props.dispatch(setStepToComplete(7));
+    // We know that equipment is the last thing to do there for at this point the character is ready for confirmation
+    //this.props.history.push("/newCharacter/review");
 	}
 
 	render(){

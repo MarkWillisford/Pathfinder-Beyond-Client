@@ -40,7 +40,7 @@ export class NewCharacterNavLinks extends React.Component{
 	        	<ul>
 		        	{this.props.creationSteps.map(({name, id}) => (
 		        		<li key={id}>
-		        			<Link to={`/playerDemo/newCharacter/${name}`} onClick={this.setStep.bind(this,id)}>{name}</Link>
+		        			<Link to={`/newCharacter/${name}`} onClick={this.setStep.bind(this,id)}>{name}</Link>
 		        		</li>
 		        	))}
 		        </ul>
