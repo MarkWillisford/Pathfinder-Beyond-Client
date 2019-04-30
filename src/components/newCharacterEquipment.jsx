@@ -75,6 +75,7 @@ export class NewCharacterEquipment extends React.Component{
 
 		} else {
       return <Redirect to="/review" />;
+      // this.props.history.push("/review"); 
 			/* return(
 		        <div className="newCharacterEquipment">
 		        	<h1>Character Equipment - done</h1>	

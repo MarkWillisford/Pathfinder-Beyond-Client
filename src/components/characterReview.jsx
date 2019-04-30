@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import requiresLogin from './requiresLogin';
 
 import './characterReview.css';
 
@@ -17,4 +18,4 @@ const mapStateToProps = state => ({
   
 });
 
-export default connect(mapStateToProps)(CharacterReview);
+export default requiresLogin()(connect(mapStateToProps)(CharacterReview));
