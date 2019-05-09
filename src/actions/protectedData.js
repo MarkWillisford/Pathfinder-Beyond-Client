@@ -57,21 +57,8 @@ export const fetchProtectedCharactersData = () => (dispatch, getState) => {
 }
 
 export const fetchProtectedRaceData = () => (dispatch, getState) => {
-  console.log("in action");
   const authToken = getState().auth.authToken;
-  /* return fetch(`${API_BASE_URL}/races`, {
-    method: 'GET',
-    headers: {
-      // Provide our auth token as credentials
-      Authorization: `Bearer ${authToken}`
-    }
-  })
-    .then(res => normalizeResponseErrors(res))
-    .then(res => res.json())
-    .then(({data}) => dispatch(fetchProtectedDataSuccess(data)))
-    .catch(err => {
-      dispatch(fetchProtectedDataError(err));
-    }); */
+
   fetch(`${API_BASE_URL}/races`, {
     method: 'GET',
     headers: {
@@ -80,9 +67,6 @@ export const fetchProtectedRaceData = () => (dispatch, getState) => {
     }
   }).then(res => normalizeResponseErrors(res)
   ).then(res => {
-    /* if (!res.ok) {
-        return Promise.reject(res.statusText);
-    } */
     return res.json();
   }).then(data => {
       dispatch(fetchProtectedDataSuccess(data));

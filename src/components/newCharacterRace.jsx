@@ -17,13 +17,12 @@ import './newCharacterRace.css';
 
 export class NewCharacterRace extends React.Component{  
   componentDidMount(){
-    console.log("mounting");
     this.props.dispatch(fetchProtectedRaceData());
   }
 
 	showExpandedRace(id){		
-		const racesArray = require('../data/races');
-		let name = "";
+		const racesArray = this.props.racesArray;
+    let name = "";
 		for(let i=0; i<racesArray.length;i++){
 			/* // if this is the clicked element toggle it **OR**
 			// if this is not the clicked element and it is expanded, toggle it
@@ -35,7 +34,7 @@ export class NewCharacterRace extends React.Component{
 				// and set its child component button to display off. 
 				// TODO! by ref or by state?
 			} */
-			if( i === id){
+			if( racesArray[i].id === id){
 				name = racesArray[i].name
 			}
 		}
@@ -51,13 +50,9 @@ export class NewCharacterRace extends React.Component{
 
 	addRace(id){
     const racesArray = this.props.racesArray;   // this.getRaceData();
-    
-
-
-
-		for(let i=0; i<racesArray.length;i++){
+    for(let i=0; i<racesArray.length;i++){
 			// if this is the clicked element toggle it 
-			if( i===id ){
+			if(  racesArray[i].id===id ){
 				// if the class doesn't have selections . . .    
 				if(!racesArray[i].standardRacialTraits.selections){
 					this.props.dispatch(submitRaceToState(racesArray[i]));
@@ -143,7 +138,7 @@ export class NewCharacterRace extends React.Component{
       )
     } else {
       if(!complete){
-      const racesArray = /* this.props.racesArray; */ require('../data/races');
+      const racesArray = this.props.racesArray; // require('../data/races');
 			// Not complete, get choices and display
 			return (
 		        <div className="newCharacterRace">
