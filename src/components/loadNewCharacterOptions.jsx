@@ -20,11 +20,9 @@ export default function LoadOptions(props, dispatch){
         break;
     case 6:
         // call load feats
-		console.log("feats");
         break;
     case 7:
         // call load equipment
-		console.log("equipment");
         break;
     default:
         

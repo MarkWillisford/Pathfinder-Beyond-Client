@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Redirect} from 'react-router-dom';
+import {Redirect, Link} from 'react-router-dom';
 import EquipmentStartingEquipment from './equipment_StartingEquipment';
 import EquipmentGold from './equipment_Gold';
 
@@ -20,13 +20,13 @@ export class NewCharacterEquipment extends React.Component{
 		const wealth = this.props.wealth;
     const defaultGear = this.props.defaultGear;
     const ready = (
-      //this.props.basics &&
+      this.props.basics &&
       this.props.race && 
-      this.props.charClassComplete && 
-      this.props.abilityScores //&&
-      //this.props.details &&
-      //this.props.skills &&
-      //this.props.feats
+      this.props.charClassComplete &&  
+      this.props.abilityScores &&
+      this.props.details &&
+      this.props.skills &&
+      this.props.feats 
     );
 
 		// first here we must check to ensure that race, class, and ability scores are complete. 
@@ -71,20 +71,19 @@ export class NewCharacterEquipment extends React.Component{
 			        </div>
 			    );
 			}
-
-
 		} else {
-      return <Redirect to="/review" />;
+      return <Redirect to="/newCharacter/review" />;
+		}
+	}
+}
+
       // this.props.history.push("/review"); 
 			/* return(
 		        <div className="newCharacterEquipment">
 		        	<h1>Character Equipment - done</h1>	
 		        </div>			
-			); */
-		}
-	}
-}
-
+      ); */
+      
 function EquipmentMethod(props){
 	switch(props.method){
 		case "equipment": 

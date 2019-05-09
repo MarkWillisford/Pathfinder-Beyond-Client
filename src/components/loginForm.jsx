@@ -15,6 +15,7 @@ export class LoginForm extends React.Component {
     const responseGoogle = (response) => {
       console.log(response);
     }
+    
     let error;
     if (this.props.error) {
       error = (

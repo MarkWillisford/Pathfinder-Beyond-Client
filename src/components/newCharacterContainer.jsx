@@ -11,6 +11,7 @@ import NewCharacterSkills from './newCharacterSkills';
 import NewCharacterFeats from './newCharacterFeats';
 import NewCharacterEquipment from './newCharacterEquipment';
 import LoadOptions from './loadNewCharacterOptions';
+import CharacterReview from './characterReview';
 import Next from './next';
 import Prev from './prev';
 import requiresLogin from './requiresLogin';
@@ -75,6 +76,8 @@ export class NewCharacterContainer extends React.Component{
 		        		<Route  path="/newCharacter/Skills" component={NewCharacterSkills} />
 		        		<Route  path="/newCharacter/Feats" component={NewCharacterFeats} />
 		        		<Route  path="/newCharacter/Equipment" component={NewCharacterEquipment} />
+                <Route  path="/newCharacter/review" component={CharacterReview} />
+
 		        	</div>
 		        	<Next toggle={(e) => this.toggleNext(e)} disabled={disabledNext} url={nextUrl}/>
 		        </div>

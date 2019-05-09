@@ -4,7 +4,6 @@ import NewCharacterContainer from './newCharacterContainer';
 import LandingPage from './landingPage';
 import Dashboard from './dashboard';
 import RegistrationPage from './registrationPage';
-import CharacterReview from './characterReview';
 import NavBar from './navBar';
 import './App.css';
 
@@ -26,7 +25,6 @@ export default function App(props) {
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/register" component={RegistrationPage} />
-          <Route exact path="/review" component={CharacterReview} />
           <Route path="/newCharacter/" component={NewCharacterContainer} />
         </Switch>
       </main>

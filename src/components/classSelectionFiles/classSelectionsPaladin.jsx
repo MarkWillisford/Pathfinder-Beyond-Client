@@ -43,16 +43,19 @@ export class ClassSelectionsPaladin extends React.Component{
         
         for(let i=0; i<this.props.classesArray.length;i++){
 			// if this is the clicked element toggle it 
-			if( this.props.classesArray[i].name==="cleric" ){
-				let bonus = createBonus({ 
-					name:"classBAB", 
-					source:"class", 
-					stat:"bab", 
-					type:"untyped", 
-					duration:-1, 
-					amount:this.props.classesArray[i].classFeatures.table[1][1] });
-				this.props.dispatch(addBonus(bonus));
-				this.props.dispatch(sumBonus(bonus));
+			if( this.props.classesArray[i].name==="paladin" ){
+				
+        for(let j=1;j<5;j++){
+          let bonus = createBonus({ 
+            name:"class"+ capitalizeFirstLetter(this.props.classesArray[i].classFeatures.table[0][j]), 
+            source:"class", 
+            stat:this.props.classesArray[i].classFeatures.table[0][j], 
+            type:"untyped", 
+            duration:-1, 
+            amount:this.props.classesArray[i].classFeatures.table[1][j] });
+          this.props.dispatch(addBonus(bonus));
+          this.props.dispatch(sumBonus(bonus));
+        }
                 this.props.dispatch(setGenericExpand(""));
                 this.props.dispatch(submitClassToState(this.props.classesArray[i]));
                 this.props.dispatch(submitDeity(deity));

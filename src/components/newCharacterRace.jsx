@@ -10,11 +10,17 @@ import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
 import { setSelections } from '../actions/index';
 import { setExpandedRace } from '../actions/index';
+import { fetchProtectedRaceData } from '../actions/protectedData';
 import { createBonus } from '../utility/statObjectFactories'
 
 import './newCharacterRace.css';
 
-export class NewCharacterRace extends React.Component{
+export class NewCharacterRace extends React.Component{  
+  componentDidMount(){
+    console.log("mounting");
+    this.props.dispatch(fetchProtectedRaceData());
+  }
+
 	showExpandedRace(id){		
 		const racesArray = require('../data/races');
 		let name = "";
@@ -40,12 +46,15 @@ export class NewCharacterRace extends React.Component{
 	}
 
   getRaceData(){
-    return require('../data/races');
-    
+    // return require('../data/races');
   }
 
 	addRace(id){
-		const racesArray = this.getRaceData();
+    const racesArray = this.props.racesArray;   // this.getRaceData();
+    
+
+
+
 		for(let i=0; i<racesArray.length;i++){
 			// if this is the clicked element toggle it 
 			if( i===id ){
@@ -94,8 +103,8 @@ export class NewCharacterRace extends React.Component{
 
 	render(){
 		const complete = this.props.complete;
-		const help = this.props.help;
-		const racesArray = require('../data/races');
+    const help = this.props.help;
+    const loading = this.props.loading;
 		let toExpand = "";
 		if(this.props.toExpand){
 			if(this.props.toExpand.race){
@@ -127,8 +136,14 @@ export class NewCharacterRace extends React.Component{
 					<p>The languages section gives you the languages that your race can learn to read, write and speak.</p>
 				</div>
 			);
-		} 
-		else if(!complete){
+    } 
+    else if(loading){
+      return (
+        <div>Loading . . .    </div>
+      )
+    } else {
+      if(!complete){
+      const racesArray = /* this.props.racesArray; */ require('../data/races');
 			// Not complete, get choices and display
 			return (
 		        <div className="newCharacterRace">
@@ -140,13 +155,14 @@ export class NewCharacterRace extends React.Component{
 		        	)}
 		        </div>
 		    );
-		} else {
-			return(
-		        <div className="newCharacterRace">
-		        	<h1>Character Race - done</h1>	
-		        </div>			
-			);
-		}		
+      } else {
+        return(
+              <div className="newCharacterRace">
+                <h1>Character Race - done</h1>	
+              </div>			
+        );
+      };
+    }	
 	}
 }
 
@@ -154,7 +170,9 @@ const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[1].complete,
 	//racesArray:state.characterReducer.racesArray,
 	help:state.characterReducer.help,
-	toExpand:state.characterReducer.expanded, 
+  toExpand:state.characterReducer.expanded, 
+  racesArray:state.protectedData.data,
+  loading:state.protectedData.loading,
 });
 
 export default connect(mapStateToProps)(NewCharacterRace);

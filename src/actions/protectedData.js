@@ -13,7 +13,12 @@ export const fetchProtectedDataError = error => ({
     error
 });
 
-export const fetchProtectedData = () => (dispatch, getState) => {
+export const SET_LOADING = 'SET_LOADING';
+export const setLoading = () => ({
+    type: SET_LOADING
+});
+
+/* export const fetchProtectedData = () => (dispatch, getState) => {
     const authToken = getState().auth.authToken;
     return fetch(`${API_BASE_URL}/protected`, {
         method: 'GET',
@@ -28,10 +33,14 @@ export const fetchProtectedData = () => (dispatch, getState) => {
         .catch(err => {
             dispatch(fetchProtectedDataError(err));
         });
-};
+}; */
 
 export const fetchProtectedCharactersData = () => (dispatch, getState) => {  
   const authToken = getState().auth.authToken;
+  console.log('dispatching loading');
+  dispatch(setLoading());
+
+  console.log('returning fetch');
   return fetch(`${API_BASE_URL}/users/characters`, {
     method: 'GET',
     headers: {
@@ -46,3 +55,38 @@ export const fetchProtectedCharactersData = () => (dispatch, getState) => {
     dispatch(fetchProtectedDataError(err));
   });
 }
+
+export const fetchProtectedRaceData = () => (dispatch, getState) => {
+  console.log("in action");
+  const authToken = getState().auth.authToken;
+  /* return fetch(`${API_BASE_URL}/races`, {
+    method: 'GET',
+    headers: {
+      // Provide our auth token as credentials
+      Authorization: `Bearer ${authToken}`
+    }
+  })
+    .then(res => normalizeResponseErrors(res))
+    .then(res => res.json())
+    .then(({data}) => dispatch(fetchProtectedDataSuccess(data)))
+    .catch(err => {
+      dispatch(fetchProtectedDataError(err));
+    }); */
+  fetch(`${API_BASE_URL}/races`, {
+    method: 'GET',
+    headers: {
+      // Provide our auth token as credentials
+      Authorization: `Bearer ${authToken}`
+    }
+  }).then(res => normalizeResponseErrors(res)
+  ).then(res => {
+    /* if (!res.ok) {
+        return Promise.reject(res.statusText);
+    } */
+    return res.json();
+  }).then(data => {
+      dispatch(fetchProtectedDataSuccess(data));
+  }).catch(err => {
+      dispatch(fetchProtectedDataError(err));
+  });
+};

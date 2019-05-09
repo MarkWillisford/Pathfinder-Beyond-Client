@@ -9,6 +9,7 @@ import { sumBonus } from '../actions/index';
 import { setClassSelectionsView } from '../actions/index';
 import { setExpandedClass } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories';
+import { capitalizeFirstLetter } from '../utility/helperFunctions';
 import * as ClassSelections from './classSelectionFiles/';
 
 import './newCharacterClass.css';
@@ -67,15 +68,18 @@ export class NewCharacterClass extends React.Component{
 			// if this is the clicked element toggle it 
 			if( i===id ){
 				this.props.dispatch(submitClassToState(this.props.classesArray[i]));
-				let bonus = createBonus({ 
-					name:"classBAB", 
-					source:"class", 
-					stat:"bab", 
-					type:"untyped", 
-					duration:-1, 
-					amount:this.props.classesArray[i].classFeatures.table[1][1] });
-				this.props.dispatch(addBonus(bonus));
-				this.props.dispatch(sumBonus(bonus));				
+				
+        for(let j=1;j<5;j++){
+          let bonus = createBonus({ 
+            name:"class"+ capitalizeFirstLetter(this.props.classesArray[i].classFeatures.table[0][j]), 
+            source:"class", 
+            stat:this.props.classesArray[i].classFeatures.table[0][j], 
+            type:"untyped", 
+            duration:-1, 
+            amount:this.props.classesArray[i].classFeatures.table[1][j] });
+          this.props.dispatch(addBonus(bonus));
+          this.props.dispatch(sumBonus(bonus));
+        }
 			}
 		}		
 	}

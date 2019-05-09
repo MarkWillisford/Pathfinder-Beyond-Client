@@ -6,6 +6,9 @@ import { spendGold } from '../actions/index';
 import { addItemToCharacter } from '../actions/index';
 import { removeItemFromCharacter } from '../actions/index';
 import { setStepToComplete } from '../actions/index';
+import { addBonus } from '../actions/index';
+import { sumBonus } from '../actions/index';
+import { createBonus } from '../utility/statObjectFactories'
 
 import './equipment_Selection.css';
 
@@ -21,27 +24,48 @@ export class Equipment_Selection extends React.Component {
 		const goodsAndServicesList = require('../data/goodsAndServices');
 		let item = null;
 		for(let i=0;i<tradeGoodsList.length;i++){
-			if(tradeGoodsList[i].name == name){
+			if(tradeGoodsList[i].name === name){
 				item = tradeGoodsList[i];
 			}
 		};
-		if(item == null){
+		if(item === null){
 			for(let i=0;i<weaponsList.length;i++){
-				if(weaponsList[i].name == name){
+				if(weaponsList[i].name === name){
 					item = weaponsList[i];
 				}
 			};
 		} 
-		if(item == null){
+		if(item === null){
 			for(let i=0;i<armorList.length;i++){
-				if(armorList[i].name == name){
-					item = armorList[i];
+				if(armorList[i].name === name){
+          item = armorList[i];
+
+          // If we are adding armor, add the acp
+          const skillList = require('../data/skills');
+          let acpSkills = [];
+          for(let j=0; j<skillList.length; j++){
+            if(skillList[j].armorCheckPenalty === true){
+              acpSkills.push(skillList[j].name);
+            }
+          }
+
+          for(let k=0; k<acpSkills.length;k++){   
+            let bonus = createBonus({ 
+              name:"armorCheckPenalty", 
+              source:item, 
+              stat:acpSkills[k], 
+              type:"armorCheckPenalty", 
+              duration:-1, 
+              amount:item.armorCheckPenalty});
+            this.props.dispatch(addBonus(bonus));
+            this.props.dispatch(sumBonus(bonus));
+          }
 				}
 			};			
 		}
-		if(item == null){
+		if(item === null){
 			for(let i=0;i<goodsAndServicesList.length;i++){
-				if(goodsAndServicesList[i].name == name){
+				if(goodsAndServicesList[i].name === name){
 					item = goodsAndServicesList[i];
 				}
 			};			
@@ -95,7 +119,84 @@ export class Equipment_Selection extends React.Component {
     this.props.dispatch(setStepToComplete(7));
     // We know that equipment is the last thing to do there for at this point the character is ready for confirmation
     //this.props.history.push("/newCharacter/review"); 
-	}
+    
+    let bonus = createBonus({ 
+			name:"base", 
+			source:"base", 
+			stat:"armorClass", 
+			type:"base", 
+			duration:-1, 
+			amount:10 });
+		this.props.dispatch(addBonus(bonus));
+    this.props.dispatch(sumBonus(bonus));
+    
+    let bonus2 = createBonus({ 
+			name:"base", 
+			source:"base", 
+			stat:"flatFootedArmorClass", 
+			type:"base", 
+			duration:-1, 
+			amount:10 });
+		this.props.dispatch(addBonus(bonus2));
+    this.props.dispatch(sumBonus(bonus2));
+
+    let bonus3 = createBonus({ 
+			name:"base", 
+			source:"base", 
+			stat:"touchArmorClass", 
+			type:"base", 
+			duration:-1, 
+			amount:10 });
+		this.props.dispatch(addBonus(bonus3));
+    this.props.dispatch(sumBonus(bonus3));
+    
+    let bonus4 = createBonus({ 
+			name:"base", 
+			source:"base", 
+			stat:"combatManeuverDefense", 
+			type:"base", 
+			duration:-1, 
+			amount:10 });
+		this.props.dispatch(addBonus(bonus4));
+    this.props.dispatch(sumBonus(bonus4));
+
+    // update Skills
+    let characterToUpdate = this.props.characterToUpdate;
+    let classSkillList = characterToUpdate.charClass.classFeatures.classSkills;
+    //console.log(classSkillList);
+    //console.log(characterToUpdate);
+    let skillRanks = characterToUpdate.characterStats;
+  
+    for(let i=0; i<classSkillList.length;i++){
+      let name=classSkillList[i];
+      //console.log('searching for ');
+      //console.log(name);
+      for(let j=0;j<skillRanks.length;j++){
+        //console.log("checking skillRanks[j].name");
+        //console.log(skillRanks[j].name);
+        if(skillRanks[j].name === name){
+          //console.log("found it");
+          //console.log("searching through .bonuses");
+          //console.log(skillRanks[j].bonuses);
+          for(let k=0;k<skillRanks[j].bonuses.length;k++){
+            if(skillRanks[j].bonuses[k].type === 'ranks'){
+              //console.log('we have a rank in');
+              //console.log(name);
+              let bonusSkill = createBonus({ 
+                name:"classSkillBonus", 
+                source:"classSkillBonus", 
+                stat:skillRanks[j].name, 
+                type:"classSkillBonus", 
+                duration:-1, 
+                amount:3 });
+              this.props.dispatch(addBonus(bonusSkill));
+              this.props.dispatch(sumBonus(bonusSkill));              
+            }
+          }
+        }
+      }
+    }  
+  }
 
 	render(){
 		const startingGold = this.props.gold;
@@ -493,7 +594,9 @@ function groupBy2(xs, prop) {
 const mapStateToProps = state => ({
 	gold:state.characterReducer.newCharacter.gold,
 	availableGold:state.characterReducer.newCharacter.availableGold,
-	purchasedGear:state.characterReducer.newCharacter.gear,
+  purchasedGear:state.characterReducer.newCharacter.gear,  
+  characterToUpdate:state.characterReducer.newCharacter,
+
 })
 
 export default connect(mapStateToProps)(Equipment_Selection);

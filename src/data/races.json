@@ -144,5 +144,16 @@
       {"name":"Low-Light Vision", "description":"Half-giants have low-light vision allowing them to see twice as far as humans in dim light."}
     ],
     "selections":null
+  }},
+  {"id":11,"thum":"img","name":"Lizardfolk","expand":false, "standardRacialTraits":{
+    "blurb":"Lizardfolk are proud and powerful reptilian predators that make their communal homes in scattered villages high in the hills and caverns of the wastelands. Uninterested in colonization of the lands and content with the simple weapons and rituals that have served them well for millennia, lizardfolk are viewed by many other races as backwater savages, but within their isolated communities lizardfolk are actually a vibrant people filled with tradition and an oral history stretching back to before humans walked upright.",
+    "base":{"abilityScoreRacialBonuses": "+2 Strength, +2 Constitution", "abilityScoreRacialBonusArray":[{"stat":"strength", "value":2},{"stat":"constitution", "value":2}], 
+        "skillRacialBonusArray":[{"stat":"climb", "value":8}], 
+        "age":"normal", "size":"medium", "type":"Humanoid [Reptilian]", "speed":"Lizardfolk have a base speed of 30 feet. They have a climb speed of 15 feet", "Languages":{"start":["Liazrdfolk"], "learn":["Common", "Giant", "Gnoll", "Ignan", "Dwarven", "Elven"]}},
+    "racial":[{"name":"Natural Armor", "description":"Lizardfolk have tough scaly skin, granting them a +1 natural armor bonus."},
+      {"name":"Natural Attack - Bite", "description":"Lizardfolk gain a natural bite attack, dealing damage equivalent to that of a creature two size categories lower than normal for their size (1d2 for Small races, 1d3 for Medium, etc.). The bite is a primary attack, or a secondary attack if the creature is wielding manufactured weapons."},
+      {"name":"Natural Attack - Claws 2", "description":"Lizardfolk receive two claw attacks. These are primary natural attacks. The damage is based on the creature’s size (1d4 for Medium creatures.)"}
+    ],
+    "selections":null
   }}
 ]
