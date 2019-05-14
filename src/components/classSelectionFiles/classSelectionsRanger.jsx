@@ -79,7 +79,7 @@ export class ClassSelectionsRanger extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	classesArray:require('../../data/classes'),
+	classesArray:state.protectedData.data, //require('../../data/classes'),
 });
 
 ClassSelectionsRanger = reduxForm({

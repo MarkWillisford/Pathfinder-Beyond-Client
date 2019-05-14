@@ -2,11 +2,14 @@ import {
     FETCH_PROTECTED_DATA_SUCCESS,
     FETCH_PROTECTED_DATA_ERROR,
     SET_LOADING,
-    FETCH_BOARD_SUCCESS
+    FETCH_PROTECTED_SUB_DATA_SUCCESS,
+    FETCH_PROTECTED_SECONDARY_DATA_SUCCESS
 } from '../actions/protectedData';
 
 const initialState = {
     data: [],
+    subData: [],
+    secondaryData:[],
     error: null
 };
 
@@ -17,6 +20,20 @@ export default function reducer(state = initialState, action) {
         error: null,
         loading: null
       });
+  } else if (action.type === FETCH_PROTECTED_SUB_DATA_SUCCESS) {
+    return Object.assign({}, state, {
+      ...state,
+      subData:action.data,
+      error: null,
+      loading: null
+    });
+  } else if (action.type === FETCH_PROTECTED_SECONDARY_DATA_SUCCESS) {
+    return Object.assign({}, state, {
+      ...state,
+      secondaryData:action.data,
+      error: null,
+      loading: null
+    });
   } else if (action.type === FETCH_PROTECTED_DATA_ERROR) {
       return Object.assign({}, state, {
         error: action.error

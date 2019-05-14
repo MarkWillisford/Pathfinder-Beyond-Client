@@ -19,7 +19,7 @@ const validate = values => {
 export class FeatSelectionsForm extends React.Component{
 	getFeatDetails(name){
 		// this will be an API call, but for now it searches the list and retreaves feat details
-		const featsList = require('../data/feats');
+		const featsList = this.props.featsList;  //require('../data/feats');
 		let featToReturn = featsList.find( feat => feat.name === name);
 		return featToReturn;
 	}
@@ -90,6 +90,7 @@ export class FeatSelectionsForm extends React.Component{
 
 const mapStateToProps = state => ({
 	feats:state.characterReducer.newCharacter.featSlots,	
+  featsList:state.protectedData.data,
 });
 
 FeatSelectionsForm = reduxForm({

@@ -2,8 +2,8 @@ import { loadRaces } from '../actions/index';
 import { loadClasses } from '../actions/index';
 
 export default function LoadOptions(props, dispatch){
-    let classes = require('../data/classes');
-    let races = require('../data/races');
+    //let classes = require('../data/classes');
+    //let races = require('../data/races');
     //let traits = require('../data/traits');
 	switch(props){
     case 1:

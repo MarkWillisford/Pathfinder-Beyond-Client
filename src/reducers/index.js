@@ -395,7 +395,11 @@ export const characterReducer = (state=initialState, action) => {
         }           
       }
     case actions.TOGGLE_CLASS_EXPAND:
-      charClass = state.classesArray.find(r => r.id === action.index);
+
+
+
+
+      /* charClass = state.classesArray.find(r => r.id === action.index);
       expand = charClass.expand;
       // THIS WORKS TO ENABLE THE CLICKED RACE 
       return { ...state, 
@@ -403,7 +407,10 @@ export const characterReducer = (state=initialState, action) => {
           { ...charClass, expand:!expand }, 
           ...state.classesArray.filter(r => r.id > charClass.id) 
         ] 
-      };
+      }; */
+
+
+
     case actions.LOAD_CLASSES:
       return {
         ...state,

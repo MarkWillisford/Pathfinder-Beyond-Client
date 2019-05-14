@@ -5,11 +5,16 @@ import {reduxForm, Field, focus } from 'redux-form';
 import { toggleDetailsExpand } from '../actions/index';
 import { submitDetailsToState } from '../actions/index';
 import { capitalizeFirstLetter } from '../utility/helperFunctions';
+import { fetchProtectedData } from '../actions/protectedData';
 
 import './newCharacterDetails.css';
 import CardTraitCategory from './cardTraitCategory';
 
 export class NewCharacterDetails extends React.Component{
+  componentDidMount(){
+    this.props.dispatch(fetchProtectedData("deities"));
+  }
+
 	submitHandler(values) {
 		const details = this.props.charDetails;
 		const traitsCompleted = details ? (details.traitsCompleted ? (details.traitsCompleted === true ? true : false) : false) : false;
@@ -41,7 +46,8 @@ export class NewCharacterDetails extends React.Component{
 			details.alignmentRestrictions ? details.alignmentRestrictions : null
 			) : null;
 		const traitsCompleted = details ? (details.traitsCompleted ? (details.traitsCompleted === true ? true : false) : false) : false;
-
+    const deities = this.props.deities;
+    
 		// if help is true, that screen is displayed
 		if(help){
 			return ( 
@@ -68,7 +74,7 @@ export class NewCharacterDetails extends React.Component{
 
 				        <div><h2>Belief Details</h2><p>Alignment and faith</p>
 				        <button onClick={this.handleToggle.bind(this, "1")}>Expand</button></div>
-				        {expand[1].expand && <DisplayCharacterDetails deity={deity} alignmentRestrictions={alignmentRestrictions}/>}
+				        {expand[1].expand && <DisplayCharacterDetails deities={deities} deity={deity} alignmentRestrictions={alignmentRestrictions}/>}
 
 				        <div><h2>Physical Characteristics</h2><p>Hair, skin, eyes, height, weight, age, and gender</p>
 				        <button onClick={this.handleToggle.bind(this, "2")}>Expand</button></div>
@@ -159,7 +165,7 @@ class RadioGroup extends React.Component {
 }
 
 function DisplayCharacterDetails(props){
-	const deities = require('../data/deities');
+	const deities = props.deities; //require('../data/deities');
 	const defaultAlignments = ["Chaotic evil", "Chaotic good", "Chaotic neutral",
 		"Lawful evil", "Lawful good", "Lawful neutral",
 		"Neutral", "Neutral evil", "Neutral good"];
@@ -248,6 +254,7 @@ const mapStateToProps = state => ({
 	expand:state.characterReducer.detailsExpand,
 	charClass:state.characterReducer.creationSteps[2].complete,
 	charDetails:state.characterReducer.newCharacter.details,
+  deities:state.protectedData.data,
 });
 
 NewCharacterDetails = reduxForm({

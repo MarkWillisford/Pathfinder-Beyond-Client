@@ -12,7 +12,7 @@ import { setStepToComplete } from '../actions/index';
 export class CardFeat extends React.Component{
 	getFeatDetails(name){
 		// this will be an API call, but for now it searches the list and retreaves feat details
-		const featsList = require('../data/feats');
+		const featsList = this.props.featsList //require('../data/feats');
 		let featToReturn = featsList.find( feat => feat.name === name);
 		return featToReturn;
 	}
@@ -220,6 +220,7 @@ const mapStateToProps = state => ({
 	showSelections:state.characterReducer.selections,
 	characterClass:state.characterReducer.newCharacter.charClass.name,
 	race:state.characterReducer.newCharacter.race.name,
+  featsList:state.protectedData.data,
 });
 
 export default connect(mapStateToProps)(CardFeat);

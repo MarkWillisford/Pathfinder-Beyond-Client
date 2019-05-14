@@ -10,14 +10,14 @@ import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
 import { setSelections } from '../actions/index';
 import { setExpandedRace } from '../actions/index';
-import { fetchProtectedRaceData } from '../actions/protectedData';
+import { fetchProtectedData } from '../actions/protectedData';
 import { createBonus } from '../utility/statObjectFactories'
 
 import './newCharacterRace.css';
 
 export class NewCharacterRace extends React.Component{  
   componentDidMount(){
-    this.props.dispatch(fetchProtectedRaceData());
+    this.props.dispatch(fetchProtectedData("races"));
   }
 
 	showExpandedRace(id){		

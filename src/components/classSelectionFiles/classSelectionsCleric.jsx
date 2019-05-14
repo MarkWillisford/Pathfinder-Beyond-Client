@@ -15,13 +15,20 @@ import { submitDeity } from '../../actions/index';
 import { submitAlignmentRestrictions } from '../../actions/index';
 import { createBonus } from '../../utility/statObjectFactories';
 import { capitalizeFirstLetter } from '../../utility/helperFunctions';
+import { fetchProtectedSubData } from '../../actions/protectedData';
+import { fetchProtectedSecondaryData } from '../../actions/protectedData';
 
 import './classSelectionsCleric.css';
 
 export class ClassSelectionsCleric extends React.Component{
+  componentDidMount(){
+    this.props.dispatch(fetchProtectedSubData("deities"));
+    this.props.dispatch(fetchProtectedSecondaryData("domains"));
+  }
+
     getDomains(availableDomainsList){
         if(availableDomainsList){
-            const domains = require('../../data/domains');
+            const domains = this.props.domains;//require('../../data/domains');
             let array = [];
             for(let i = 0; i<domains.length; i++){
                 if(availableDomainsList.includes(capitalizeFirstLetter(domains[i].name))){
@@ -33,7 +40,7 @@ export class ClassSelectionsCleric extends React.Component{
     }
 
 	render(){
-        const deities = require('../../data/deities');
+        const deities = this.props.deities;//require('../../data/deities');
         const availableDomainsList = this.props.availableDomainsList;   // this is currently just an array of domain names . . .   
         const availableDomains = this.getDomains(availableDomainsList);
         const expand = this.props.expand;
@@ -153,10 +160,13 @@ export class ClassSelectionsCleric extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	classesArray:require('../../data/classes'),
-    availableDomainsList:state.characterReducer.availableDomains,
-    expand:state.characterReducer.expand,
-    clericDetails:state.characterReducer.clericDetails,
+	//classesArray:require('../../data/classes'),
+  classesArray:state.protectedData.data,
+  availableDomainsList:state.characterReducer.availableDomains,
+  expand:state.characterReducer.expand,
+  clericDetails:state.characterReducer.clericDetails,
+  deities:state.protectedData.subData,
+  domains:state.protectedData.secondaryData,
 });
 
 export default connect(mapStateToProps)(ClassSelectionsCleric);

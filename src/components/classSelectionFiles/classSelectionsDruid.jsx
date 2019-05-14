@@ -9,14 +9,30 @@ import { addBonus } from '../../actions/index';
 import { sumBonus } from '../../actions/index';
 import { createBonus } from '../../utility/statObjectFactories'; 
 import { capitalizeFirstLetter } from '../../utility/helperFunctions';
+import { fetchProtectedSubData } from '../../actions/protectedData';
 
 import './classSelectionsDruid.css';
 
 export class ClassSelectionsDruid extends React.Component{
-	render(){
-        const druidNatureBond = this.groupBy(require('../../data/druidNatureBond'), "type");
-        const expand = this.props.expand;
+  componentDidMount(){
+    console.log("mounting Druid Selections");
+    this.props.dispatch(fetchProtectedSubData("druidsNatureBonds"));
+  }
 
+
+	render(){
+    let druidNatureBond = {};
+    druidNatureBond.domain = [];
+    druidNatureBond["animal companion"] = [];
+    console.log(druidNatureBond);
+    if(this.props.druidNatureBond.domain){
+      if((this.props.druidNatureBond.domain.length > 0) && (this.props.druidNatureBond["animal companion"].length > 0)){
+        druidNatureBond = this.props.druidNatureBond; 
+        console.log(druidNatureBond);
+      }
+    }
+    const expand = this.props.expand;
+    console.log(druidNatureBond); 
         return (
             <div>
                 <p>At 1st level, a druid forms a bond with nature. This bond can take one of two forms. The first is a close tie to the natural world, granting the druid a cleric domain. The second option is to form a close bond with an animal companion. This animal is a loyal companion that accompanies the druid on her adventures.</p>
@@ -163,8 +179,10 @@ class CardAnimalCompanion extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	classesArray:require('../../data/classes'),
-    expand:state.characterReducer.expand,
+	//classesArray:require('../../data/classes'),
+  classesArray:state.protectedData.data,
+  expand:state.characterReducer.expand,
+  druidNatureBond:state.protectedData.subData,
 });
 
 export default connect(mapStateToProps)(ClassSelectionsDruid);

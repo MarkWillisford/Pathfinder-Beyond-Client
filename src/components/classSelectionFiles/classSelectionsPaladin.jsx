@@ -11,14 +11,25 @@ import { submitDeity } from '../../actions/index';
 import { submitAlignmentRestrictions } from '../../actions/index';
 import { createBonus } from '../../utility/statObjectFactories';
 import { capitalizeFirstLetter } from '../../utility/helperFunctions';
+import { fetchProtectedSubData } from '../../actions/protectedData';
 
 import './classSelectionsCleric.css';
 
 export class ClassSelectionsPaladin extends React.Component{
+  componentDidMount(){
+    this.props.dispatch(fetchProtectedSubData("deities"));
+  }
+
 	render(){
-        const deities = require('../../data/deities').filter(deity => (
+        /* const deities = require('../../data/deities').filter(deity => (
             deity.overview.alignment === "Neutral good" || deity.overview.alignment === "Lawful good"
-        ))
+        )) */
+        let deities = [];
+        if(this.props.deities){
+          deities = /* require('../../data/deities') */this.props.deities.filter(deity => (
+            deity.overview.alignment === "Neutral good" || deity.overview.alignment === "Lawful good"
+          ))
+        }
 
         console.log(deities);
         return (
@@ -80,8 +91,10 @@ export class ClassSelectionsPaladin extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	classesArray:require('../../data/classes'),
-    expand:state.characterReducer.expand,
+	//classesArray:require('../../data/classes'),
+  classesArray:state.protectedData.data,
+  expand:state.characterReducer.expand,
+  deities:state.protectedData.subData,
 });
 
 export default connect(mapStateToProps)(ClassSelectionsPaladin);
