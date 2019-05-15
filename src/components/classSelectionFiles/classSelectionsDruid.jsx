@@ -7,15 +7,32 @@ import { submitNatureBond } from '../../actions/index';
 import { submitClassToState } from '../../actions/index';
 import { addBonus } from '../../actions/index';
 import { sumBonus } from '../../actions/index';
-import { createBonus } from '../../utility/statObjectFactories';
+import { createBonus } from '../../utility/statObjectFactories'; 
+import { capitalizeFirstLetter } from '../../utility/helperFunctions';
+import { fetchProtectedSubData } from '../../actions/protectedData';
 
 import './classSelectionsDruid.css';
 
 export class ClassSelectionsDruid extends React.Component{
-	render(){
-        const druidNatureBond = this.groupBy(require('../../data/druidNatureBond'), "type");
-        const expand = this.props.expand;
+  componentDidMount(){
+    console.log("mounting Druid Selections");
+    this.props.dispatch(fetchProtectedSubData("druidsNatureBonds"));
+  }
 
+
+	render(){
+    let druidNatureBond = {};
+    druidNatureBond.domain = [];
+    druidNatureBond["animal companion"] = [];
+    console.log(druidNatureBond);
+    if(this.props.druidNatureBond.domain){
+      if((this.props.druidNatureBond.domain.length > 0) && (this.props.druidNatureBond["animal companion"].length > 0)){
+        druidNatureBond = this.props.druidNatureBond; 
+        console.log(druidNatureBond);
+      }
+    }
+    const expand = this.props.expand;
+    console.log(druidNatureBond); 
         return (
             <div>
                 <p>At 1st level, a druid forms a bond with nature. This bond can take one of two forms. The first is a close tie to the natural world, granting the druid a cleric domain. The second option is to form a close bond with an animal companion. This animal is a loyal companion that accompanies the druid on her adventures.</p>
@@ -41,15 +58,18 @@ export class ClassSelectionsDruid extends React.Component{
         for(let i=0; i<this.props.classesArray.length;i++){
 			// if this is the clicked element toggle it 
 			if( this.props.classesArray[i].name==="druid" ){
-				let bonus = createBonus({ 
-					name:"classBAB", 
-					source:"class", 
-					stat:"bab", 
-					type:"untyped", 
-					duration:-1, 
-					amount:this.props.classesArray[i].classFeatures.table[1][1] });
-				this.props.dispatch(addBonus(bonus));
-				this.props.dispatch(sumBonus(bonus));
+				
+        for(let j=1;j<5;j++){
+          let bonus = createBonus({ 
+            name:"class"+ capitalizeFirstLetter(this.props.classesArray[i].classFeatures.table[0][j]), 
+            source:"class", 
+            stat:this.props.classesArray[i].classFeatures.table[0][j], 
+            type:"untyped", 
+            duration:-1, 
+            amount:this.props.classesArray[i].classFeatures.table[1][j] });
+          this.props.dispatch(addBonus(bonus));
+          this.props.dispatch(sumBonus(bonus));
+        }
                 this.props.dispatch(setGenericExpand(""));
                 this.props.dispatch(submitClassToState(this.props.classesArray[i]));
                 this.props.dispatch(submitNatureBond(natureBond));
@@ -159,8 +179,10 @@ class CardAnimalCompanion extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	classesArray:require('../../data/classes'),
-    expand:state.characterReducer.expand,
+	//classesArray:require('../../data/classes'),
+  classesArray:state.protectedData.data,
+  expand:state.characterReducer.expand,
+  druidNatureBond:state.protectedData.subData,
 });
 
 export default connect(mapStateToProps)(ClassSelectionsDruid);

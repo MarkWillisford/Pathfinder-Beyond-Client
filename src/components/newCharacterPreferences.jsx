@@ -13,7 +13,10 @@ const validate = values => {
 	}
 	if(!values.hpSelecter){
 		errors.hpSelecter = "Required"
-	}
+  }
+  if(!values.characterName){
+		errors.characterName = "Required"
+  }
 	/*if(!values.encumberence){
 		errors.encumberence = "Required"
 	}
@@ -50,7 +53,10 @@ export class NewCharacterPreferencesForm extends React.Component{
 			<select { ... input}>
 			{children}
 			</select>			
-		)
+    )
+    const RenderTextarea = createRenderer((input, label, value) =>
+      <input type="textarea" { ... input}/>
+    )
 /* 		const RenderRadio = createRenderer((input, label, value) => 
 			<input type="radio" value={value} { ... input}/>
 		) */
@@ -92,6 +98,7 @@ export class NewCharacterPreferencesForm extends React.Component{
 				<form onSubmit={this.props.handleSubmit(onSubmitForm) }>
 					<h1>Character Basics</h1>
 					<div>
+            <Field component={RenderTextarea} name={"characterName"} label={"Character name"} key={0} />
 						<Field name="advancementSelecter" label="How will this character advance?" component={RenderSelect}>
 							<option />
 			        		<option value="slow">Slow</option>

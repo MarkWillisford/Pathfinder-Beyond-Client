@@ -171,12 +171,10 @@ function setSum(stat){
         if(arrayOfHighestBonuses[j].type == typeToFind){
           // if so, compare and keep only the largest
           if(stat.bonuses[i].amount > arrayOfHighestBonuses[j].amount){
-             console.log('new bonus is larger')
             found = true;
             replace = true;
             foundAt = j;
           } else {
-            console.log("we found one, but it is already larger") ;
             found = true;
             replace = false;
           };
@@ -206,7 +204,7 @@ function setSum(stat){
       };
 
       if(!found){
-        arrayOfHighestBonuses.push({bonuses: [stat.bonuses[i]]});
+        arrayOfHighestBonuses.push(stat.bonuses[i]);
         total = total + parseInt(stat.bonuses[i].amount, 10);
       };
     }; 
@@ -311,6 +309,7 @@ export const characterReducer = (state=initialState, action) => {
         ], newCharacter:{ ...state.newCharacter,
           // add the values to the state
           preferences:{
+            characterName:action.values.characterName,
             advancement:action.values.advancementSelecter,
             hpProcess:action.values.hpSelecter,
             encumberence:action.values.encumberence,
@@ -395,7 +394,11 @@ export const characterReducer = (state=initialState, action) => {
         }           
       }
     case actions.TOGGLE_CLASS_EXPAND:
-      charClass = state.classesArray.find(r => r.id === action.index);
+
+
+
+
+      /* charClass = state.classesArray.find(r => r.id === action.index);
       expand = charClass.expand;
       // THIS WORKS TO ENABLE THE CLICKED RACE 
       return { ...state, 
@@ -403,7 +406,10 @@ export const characterReducer = (state=initialState, action) => {
           { ...charClass, expand:!expand }, 
           ...state.classesArray.filter(r => r.id > charClass.id) 
         ] 
-      };
+      }; */
+
+
+
     case actions.LOAD_CLASSES:
       return {
         ...state,
@@ -617,18 +623,27 @@ export const characterReducer = (state=initialState, action) => {
         }
       }
     case actions.SUM_BONUS:
+    console.log("in reducer");
+    console.log(action);
       // flags
       statToAddBonusTo = action.bonus.stat;
+      console.log("adding:");
+      console.log(statToAddBonusTo);
       found = false;
       foundAt = null;
       // look through the bonus array for the bonus stat
       for(let i=0;i<state.newCharacter.characterStats.length;i++){
+        console.log("checking: ");
+        console.log(state.newCharacter.characterStats[i]);
         if(state.newCharacter.characterStats[i].name === statToAddBonusTo){
+          console.log("found it");
           found = true;
           foundAt = i;
         }
       }
       if(found){
+        console.log("returning");
+        console.log(state.newCharacter.characterStats);
         return{
           ...state,
           newCharacter:{

@@ -7,6 +7,7 @@ import { addBonus } from '../../actions/index';
 import { sumBonus } from '../../actions/index';
 import { submitFavoredEnemy } from '../../actions/index';
 import { createBonus } from '../../utility/statObjectFactories';
+import { capitalizeFirstLetter } from '../../utility/helperFunctions';
 
 import './classSelectionsRanger.css';
 
@@ -25,15 +26,18 @@ export class ClassSelectionsRanger extends React.Component{
 		for(let i=0; i<this.props.classesArray.length;i++){
 			// if this is the clicked element toggle it 
 			if( this.props.classesArray[i].name==="ranger" ){
-				let bonus = createBonus({ 
-					name:"classBAB", 
-					source:"class", 
-					stat:"bab", 
-					type:"untyped", 
-					duration:-1, 
-					amount:this.props.classesArray[i].classFeatures.table[1][1] });
-				this.props.dispatch(addBonus(bonus));
-				this.props.dispatch(sumBonus(bonus));
+				
+        for(let j=1;j<5;j++){
+          let bonus = createBonus({ 
+            name:"class"+ capitalizeFirstLetter(this.props.classesArray[i].classFeatures.table[0][j]), 
+            source:"class", 
+            stat:this.props.classesArray[i].classFeatures.table[0][j], 
+            type:"untyped", 
+            duration:-1, 
+            amount:this.props.classesArray[i].classFeatures.table[1][j] });
+          this.props.dispatch(addBonus(bonus));
+          this.props.dispatch(sumBonus(bonus));
+        }
                 this.props.dispatch(submitClassToState(this.props.classesArray[i]));
                 this.props.dispatch(submitFavoredEnemy(favoredEnemy));
 			}
@@ -75,7 +79,7 @@ export class ClassSelectionsRanger extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	classesArray:require('../../data/classes'),
+	classesArray:state.protectedData.data, //require('../../data/classes'),
 });
 
 ClassSelectionsRanger = reduxForm({

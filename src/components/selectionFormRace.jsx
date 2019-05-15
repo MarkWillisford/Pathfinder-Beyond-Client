@@ -12,18 +12,18 @@ import { createBonus } from '../utility/statObjectFactories';
 import { submitFeatToState } from '../actions/index';
 import { submitFavoredClassToState } from '../actions/index';
 import { addFeatSlot } from '../actions/index';
+import { fetchProtectedSubData } from '../actions/protectedData';
 
 // validation
 const required = value => value ? undefined : "Required";
 const isCraftOrProfession = value => 
 	(value && (/craft\s\(.+\)/i.test(value) || /profession\s\(.+\)/i.test(value) )) ? undefined : "this must be in the following pattern; craft or profession (detail)";
-/*const validate = values => {
-	const errors = {}
-
-	return errors
-}*/
 
 export class SelectionFormRace extends React.Component{
+  componentDidMount(){
+    this.props.dispatch(fetchProtectedSubData("aasimarHeritages"));
+  }
+
 	hideSelections(){
 		this.props.dispatch(setSelections(""));
 	}
@@ -43,7 +43,7 @@ export class SelectionFormRace extends React.Component{
 			const selectionsHeritage = capitalizeFirstLetter(values.selectionsHeritage);
 			// #TODO
 			this.props.dispatch(setSelections(""));
-			const listOfHeritages = require('../data/aasimarHeritages');
+			const listOfHeritages = this.props.listOfHeritages; //require('../data/aasimarHeritages');
 			let heritage = {};
 			for(let i=0;i<listOfHeritages.length;i++){
 				if(listOfHeritages[i].name.includes(selectionsHeritage)){
@@ -211,7 +211,7 @@ export class SelectionFormRace extends React.Component{
 						<h4>Select the one of the following options:</h4>
 					{/* I would love to be able to have cards here and make it work with the form*/}
 						<Field name="selectionsHeritage" ref="selectionsHeritage" component={RadioGroup} label="Aasimar Heritage: " options={[
-							    { title: 'Traditional (wis and cha)', value: 'traditional' },
+							  { title: 'Traditional (wis and cha)', value: 'traditional' },
 								{ title: 'Agathion-Blooded (con and cha)', value: 'agathion' },
 								{ title: 'Angel-Blooded (str and cha)', value: 'angel' },
 								{ title: 'Archon-Blooded (con and wis)', value: 'archon' },
@@ -336,7 +336,8 @@ export class SelectionFormRace extends React.Component{
 
 const mapStateToProps = state => ({
 	//racesArray:state.characterReducer.racesArray,
-	selections:state.characterReducer.selections,
+  selections:state.characterReducer.selections,
+  listOfHeritages:state.protectedData.subData,
 });
 
 SelectionFormRace = reduxForm({
