@@ -161,13 +161,13 @@ export const setGold = (value) => ({
 export const ADD_ITEM_TO_CHARACTER = 'ADD_ITEM_TO_CHARACTER';
 export const addItemToCharacter = (item) => ({
 	type: ADD_ITEM_TO_CHARACTER,
-	item, 
+	item,
 });
 
 export const REMOVE_ITEM_FROM_CHARACTER = 'REMOVE_ITEM_FROM_CHARACTER';
 export const removeItemFromCharacter = (item) => ({
 	type: REMOVE_ITEM_FROM_CHARACTER,
-	item, 
+	item,
 });
 
 export const SPEND_GOLD = 'SPEND_GOLD';

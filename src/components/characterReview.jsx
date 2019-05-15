@@ -5,6 +5,7 @@ import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories'
 import { capitalizeFirstLetter } from '../utility/helperFunctions';
+import { saveAndSubmit } from '../actions/protectedData';
 
 import './characterReview.css';
 
@@ -19,6 +20,11 @@ export class CharacterReview extends React.Component{
 
   viewDetails(stat){
     console.log(stat);
+  }
+
+  save(){
+    console.log("saving");
+    this.props.dispatch(saveAndSubmit());
   }
 
 	render(){
@@ -201,6 +207,8 @@ export class CharacterReview extends React.Component{
           )}
         </div>
         <div className="characterFeatsAbilitiesNotes"></div>
+
+        <button onClick={ () => this.save() }>Submit and Save</button>
       </div>
     )
 	}

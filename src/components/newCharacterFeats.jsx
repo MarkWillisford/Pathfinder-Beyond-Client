@@ -14,8 +14,6 @@ export class NewCharacterFeats extends React.Component{
 	getCategoryList(){
 		// this will be an api call, for now it just loops through the list of feats and
     // returns an array of categories on its own
-    console.log('in category list');
-    console.log(this.props.featsList);
     let featsList = this.props.featsList ? this.props.featsList : []; //require('../data/feats');
 		let featsCategory = [];		// list of categories
     let foundCategory = false;		// flag

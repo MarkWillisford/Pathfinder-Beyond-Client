@@ -87,6 +87,7 @@ export class NewCharacterClass extends React.Component{
           this.props.dispatch(addBonus(bonus));
           this.props.dispatch(sumBonus(bonus));
         }
+
 			}
 		}		
 	}

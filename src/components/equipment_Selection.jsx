@@ -9,19 +9,31 @@ import { setStepToComplete } from '../actions/index';
 import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories'
+import { fetchProtectedData } from '../actions/protectedData';
+import { fetchProtectedSubData } from '../actions/protectedData';
+import { fetchProtectedSecondaryData } from '../actions/protectedData';
+import { fetchProtectedExtraData } from '../actions/protectedData';
 
 import './equipment_Selection.css';
 
 export class Equipment_Selection extends React.Component {
+  componentDidMount(){
+    this.props.dispatch(fetchProtectedData("armors"));
+    this.props.dispatch(fetchProtectedSubData("goodsAndServices"));
+    this.props.dispatch(fetchProtectedSecondaryData("tradeGoods"));
+    this.props.dispatch(fetchProtectedExtraData("weapons"));
+  }
+
 	reset(){
 		console.log("resetting");
 	}
 
-	addItem(name){
-		const tradeGoodsList = require('../data/tradeGoods');
-		const weaponsList = require('../data/weapons');
-		const armorList = require('../data/armor');
-		const goodsAndServicesList = require('../data/goodsAndServices');
+  addItem(name){
+		const tradeGoodsList = this.props.tradeGoodsList;  //require('../data/tradeGoods');
+		const weaponsList = this.props.weaponsList;    //require('../data/weapons');
+		const armorList = this.props.armorsList;    //require('../data/armor');
+    const goodsAndServicesList = this.props.goodsAndServicesList;   //require('../data/goodsAndServices');
+    
 		let item = null;
 		for(let i=0;i<tradeGoodsList.length;i++){
 			if(tradeGoodsList[i].name === name){
@@ -52,7 +64,7 @@ export class Equipment_Selection extends React.Component {
           for(let k=0; k<acpSkills.length;k++){   
             let bonus = createBonus({ 
               name:"armorCheckPenalty", 
-              source:item, 
+              source:item.name, 
               stat:acpSkills[k], 
               type:"armorCheckPenalty", 
               duration:-1, 
@@ -77,10 +89,10 @@ export class Equipment_Selection extends React.Component {
 	}
 
 	removeItem(name){
-		const tradeGoodsList = require('../data/tradeGoods');
-		const weaponsList = require('../data/weapons');
-		const armorList = require('../data/armor');
-		const goodsAndServicesList = require('../data/goodsAndServices');
+		const tradeGoodsList = this.props.tradeGoodsList;  //require('../data/tradeGoods');
+		const weaponsList = this.props.weaponsList;    //require('../data/weapons');
+		const armorList = this.props.armorList;    //require('../data/armor');
+		const goodsAndServicesList = this.props.goodsAndServicesList;   //require('../data/goodsAndServices');
 		let item = null;
 		for(let i=0;i<tradeGoodsList.length;i++){
 			if(tradeGoodsList[i].name == name){
@@ -202,25 +214,55 @@ export class Equipment_Selection extends React.Component {
 		const startingGold = this.props.gold;
 		let availableGold = this.props.availableGold;
 		const purchasedGear = this.props.purchasedGear;
-
+    
 		// inport data
-		const tradeGoodsList = require('../data/tradeGoods');
-		const weaponsList = require('../data/weapons');
-		const armorList = require('../data/armor');
-		const goodsAndServicesList = require('../data/goodsAndServices');
+		const tradeGoodsList = this.props.tradeGoodsList;  //require('../data/tradeGoods');
+		const weaponsList = this.props.weaponsList;    //require('../data/weapons');
+		const armorList = this.props.armorsList;    //require('../data/armor');
+    const goodsAndServicesList = this.props.goodsAndServicesList;   //require('../data/goodsAndServices');
+    
+    let dataLoaded = true;
+    if(!tradeGoodsList ||
+      !weaponsList ||
+      !armorList ||
+      !goodsAndServicesList  
+      ){
+        dataLoaded = false;
+    } /* TODO! add a check to varify that the data is correct
+    else if(!tradeGoodsList[0].hasOwnProperty("item") ||
+      !weaponsList[0].hasOwnProperty("dmgS") ||
+      !armorList[0].hasOwnProperty("maxDexBonus") ||
+      !goodsAndServicesList[0].hasOwnProperty("collection")
+      ){
+        console.log("one of the lists is missing the key");
+        dataLoaded = false;
+    } */
 
-		// Love this, found on https://stackoverflow.com/questions/14696326/break-array-of-objects-into-separate-arrays-based-on-a-property
-		let weaponsListsCategory = groupBy2(weaponsList, "category");
-		let armorListsUse = groupBy2(armorList, "use");
-		let goodsAndServicesListType = groupBy2(goodsAndServicesList, "type");
-		const goodsAndServicesListTypeToDisplay = Object.keys(goodsAndServicesListType).map(key => 
+    let weaponsListsCategory = {
+      "simple":[],
+      "martial":[],
+      "exotic":[],
+    };
+    let armorListsUse = {
+      "light armor":[],
+      "medium armor":[],
+      "heavy armor":[],
+    };
+    let goodsAndServicesListType = {};
+    let goodsAndServicesListTypeToDisplay = [];
 
-			<GoodsAndServices key={key} array={goodsAndServicesListType[key]} 
-				remove={() => this.removeItem()} 
-				add={() => this.addItem()}
-				availableGold={availableGold} purchasedGear={purchasedGear} />
-		);
-
+		if(dataLoaded){
+      // Love this, found on https://stackoverflow.com/questions/14696326/break-array-of-objects-into-separate-arrays-based-on-a-property
+      weaponsListsCategory = groupBy2(weaponsList, "category");
+      armorListsUse = groupBy2(armorList, "use");
+      goodsAndServicesListType = groupBy2(goodsAndServicesList, "type");
+      goodsAndServicesListTypeToDisplay = Object.keys(goodsAndServicesListType).map(key => 
+        <GoodsAndServices key={key} array={goodsAndServicesListType[key]} 
+          remove={() => this.removeItem()} 
+          add={() => this.addItem()}
+          availableGold={availableGold} purchasedGear={purchasedGear} />
+      );
+    }
 
 		if(startingGold){
 			return (
@@ -241,7 +283,7 @@ export class Equipment_Selection extends React.Component {
 								</tr>
 							</thead>
 							<tbody>
-								{ tradeGoodsList.map(({name, cost, item, description}) => 
+								{tradeGoodsList[0].hasOwnProperty("item") && tradeGoodsList.map(({name, cost, item, description}) => 
 									<TradeGood key={name} name={name} description={description} 
 										cost={cost} item={item} expand={false} add={()=> this.addItem(name)} 
 										remove={()=> this.removeItem(name)} availableGold={availableGold}
@@ -436,7 +478,8 @@ function GoodsAndServices(props){
 	const listOfItems = props.array.map(({name, description, cost, weight, collection,}) => 
 		<CardGoodsOrService key={name} name={name} description={description} cost={cost}
 		weight={weight} remove={() => props.remove(name)} add={() => props.add(name)}
-		availableGold={props.availableGold} purchasedGear= {props.purchasedGear} />
+		availableGold={props.availableGold} purchasedGear= {props.purchasedGear} 
+    />
 	);
 
 	return(
@@ -597,6 +640,10 @@ const mapStateToProps = state => ({
   purchasedGear:state.characterReducer.newCharacter.gear,  
   characterToUpdate:state.characterReducer.newCharacter,
 
+  armorsList:state.protectedData.data,
+  goodsAndServicesList:state.protectedData.subData,
+  tradeGoodsList:state.protectedData.secondaryData,
+  weaponsList:state.protectedData.extraData,
 })
 
 export default connect(mapStateToProps)(Equipment_Selection);

@@ -3,14 +3,13 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import requiresLogin from './requiresLogin';
 
-// import {fetchProtectedData} from '../actions/protectedData';
-import {fetchProtectedCharactersData} from '../actions/protectedData';
+import {fetchProtectedData} from '../actions/protectedData';
 
 import CardCharacters from './cardCharacters';
 
 export class Dashboard extends React.Component {
     componentDidMount() {
-      this.props.dispatch(fetchProtectedCharactersData());
+      this.props.dispatch(fetchProtectedData("users/characters"));
     }
 
     getCharacters(){
@@ -63,7 +62,7 @@ export class Dashboard extends React.Component {
     }
 
     render() {
-      const characters = this.getCharacters();
+      const characters = this.props.characters;//this.getCharacters();
 
       return (
         <div className="dashboard">
@@ -74,7 +73,7 @@ export class Dashboard extends React.Component {
           <div className="dashboard-character-data">
             <h2>Characters</h2>
               {characters.map((character) => 
-                <CardCharacters key={character.characterStats.name} name={character.characterStats.name} character={character}/>
+                <CardCharacters key={character.preferences.name} name={character.preferences.name} character={character}/>
               )}
           </div>
           <div>
@@ -93,6 +92,7 @@ const mapStateToProps = state => {
     return {
         username: state.auth.currentUser.username,
         name: `${currentUser.firstName} ${currentUser.lastName}`,
+        characters:state.protectedData.data,
     };
 };
 

@@ -234,8 +234,7 @@ function DisplayExtras(){
 
 const validate = values => {
 	const errors = {}
-
-	if(!values.alignments){
+	/* if(!values.alignments){
 		errors.alignments = "Required"
 	}
 	if(!values.Age){
@@ -243,7 +242,7 @@ const validate = values => {
 	}
 	if(!values.gender){
 		errors.gender = "Required"
-	}
+	} */
 	return errors
 }
 

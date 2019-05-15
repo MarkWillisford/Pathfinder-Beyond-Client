@@ -143,7 +143,7 @@ export class NewCharacterRace extends React.Component{
 			return (
 		        <div className="newCharacterRace">
 		        	<h1>Character Race - todo</h1>	
-		        	{racesArray.map(({id,thum,name,standardRacialTraits}) => 
+		        	{racesArray && racesArray.map(({id,thum,name,standardRacialTraits}) => 
 						<RaceCard key={id} thum={thum} name={name} expand={ toExpand === name ? true : false } 
 							traits={standardRacialTraits} callback={()=> this.showExpandedRace(id)} 
 							addRaceCallback={()=> this.addRace(id)}/>

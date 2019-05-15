@@ -7,10 +7,10 @@ import { removeItemFromCharacter } from '../actions/index';
 
 export class CardGoodsOrServices extends React.Component{
 	addItem(name){
-		const tradeGoodsList = require('../data/tradeGoods');
-		const weaponsList = require('../data/weapons');
-		const armorList = require('../data/armor');
-		const goodsAndServicesList = require('../data/goodsAndServices');
+		const tradeGoodsList = this.props.tradeGoodsList; //require('../data/tradeGoods');
+		const weaponsList = this.props.weaponsList; //require('../data/weapons');
+		const armorList = this.props.armorsList; //require('../data/armor');
+		const goodsAndServicesList = this.props.goodsAndServicesList; //require('../data/goodsAndServices');
 		let item = null;
 		for(let i=0;i<tradeGoodsList.length;i++){
 			if(tradeGoodsList[i].name == name){
@@ -45,10 +45,10 @@ export class CardGoodsOrServices extends React.Component{
 	}
 
 	removeItem(name){
-		const tradeGoodsList = require('../data/tradeGoods');
-		const weaponsList = require('../data/weapons');
-		const armorList = require('../data/armor');
-		const goodsAndServicesList = require('../data/goodsAndServices');
+		const tradeGoodsList = this.props.tradeGoodsList; //require('../data/tradeGoods');
+		const weaponsList = this.props.weaponsList; //require('../data/weapons');
+		const armorList = this.props.armorList; //require('../data/armor');
+		const goodsAndServicesList = this.props.goodsAndServicesList; //require('../data/goodsAndServices');
 		let item = null;
 
 		for(let i=0;i<tradeGoodsList.length;i++){
@@ -132,6 +132,11 @@ function GoodsExpanded(props){
 const mapStateToProps = state => ({
 	gold:state.characterReducer.newCharacter.gold,
 	availableGold:state.characterReducer.newCharacter.availableGold,
-	purchasedGear:state.characterReducer.newCharacter.gear,
+  purchasedGear:state.characterReducer.newCharacter.gear,
+  
+  armorsList:state.protectedData.data,
+  goodsAndServicesList:state.protectedData.subData,
+  tradeGoodsList:state.protectedData.secondaryData,
+  weaponsList:state.protectedData.extraData,
 })
 export default connect(mapStateToProps)(CardGoodsOrServices);

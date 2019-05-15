@@ -13,7 +13,6 @@ class CardTraitCategory extends React.Component{
   }
 
 	getTraitList(category, base){
-		// this will be an API call, but for now it loops through the list of traits on its own
 		const traitsList = this.props.traitsList; //require('../data/traits');
 
 		let traitsToDisplay=[];
@@ -62,7 +61,7 @@ class CardTraitCategory extends React.Component{
 				<button onClick={() => this.show(this.props.name)} disabled={thisExpanded}>Show</button>
 				<button onClick={() => this.hide(this.props.name)} disabled={!thisExpanded}>Hide</button>
 				{thisExpanded && traitsList.map((trait) => 
-					<CardTrait key={trait.Name} name={trait.Name} prerequisitesString={trait.prerequisitesString}
+					<CardTrait key={trait.Name} id={trait.id} name={trait.Name} prerequisitesString={trait.prerequisitesString}
 					description={trait.Description} prerequisites={trait.prerequisites}/>
 				)}
 			</div>
