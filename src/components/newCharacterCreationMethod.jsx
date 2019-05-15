@@ -7,7 +7,7 @@ import './newCharacterCreationMethod.css';
 
 export class NewCharacterCreationMethod extends React.Component{
     loadCreationSteps(){ 
-		this.props.dispatch(loadCreationSteps());
+		this.props.dispatch(loadCreationSteps()); 
 		
     }
     

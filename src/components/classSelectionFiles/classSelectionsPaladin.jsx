@@ -11,16 +11,26 @@ import { submitDeity } from '../../actions/index';
 import { submitAlignmentRestrictions } from '../../actions/index';
 import { createBonus } from '../../utility/statObjectFactories';
 import { capitalizeFirstLetter } from '../../utility/helperFunctions';
+import { fetchProtectedSubData } from '../../actions/protectedData';
 
 import './classSelectionsCleric.css';
 
 export class ClassSelectionsPaladin extends React.Component{
-	render(){
-        const deities = require('../../data/deities').filter(deity => (
-            deity.overview.alignment === "Neutral good" || deity.overview.alignment === "Lawful good"
-        ))
+  componentDidMount(){
+    this.props.dispatch(fetchProtectedSubData("deities"));
+  }
 
-        console.log(deities);
+	render(){
+        /* const deities = require('../../data/deities').filter(deity => (
+            deity.overview.alignment === "Neutral good" || deity.overview.alignment === "Lawful good"
+        )) */
+        let deities = [];
+        if(this.props.deities){
+          deities = /* require('../../data/deities') */this.props.deities.filter(deity => (
+            deity.overview.alignment === "Neutral good" || deity.overview.alignment === "Lawful good"
+          ))
+        }
+
         return (
             <div>
                 <p>Through a select, worthy few shines the power of the divine. Called paladins, these noble souls dedicate their swords and lives to the battle against evil. Knights, crusaders, and law-bringers, paladins seek not just to spread divine justice but to embody the teachings of the virtuous deities they serve. In pursuit of their lofty goals, they adhere to ironclad laws of morality and discipline. </p>
@@ -38,32 +48,31 @@ export class ClassSelectionsPaladin extends React.Component{
         )
     }
     
-    onSubmitClick(deity){
-        console.log("submitting");
-        
-        for(let i=0; i<this.props.classesArray.length;i++){
-			// if this is the clicked element toggle it 
-			if( this.props.classesArray[i].name==="cleric" ){
-				let bonus = createBonus({ 
-					name:"classBAB", 
-					source:"class", 
-					stat:"bab", 
-					type:"untyped", 
-					duration:-1, 
-					amount:this.props.classesArray[i].classFeatures.table[1][1] });
-				this.props.dispatch(addBonus(bonus));
-				this.props.dispatch(sumBonus(bonus));
-                this.props.dispatch(setGenericExpand(""));
-                this.props.dispatch(submitClassToState(this.props.classesArray[i]));
-                this.props.dispatch(submitDeity(deity));
-                let alignmentRestrictions = ["Lawful good"];
-                if(deity.overview.alignment === "Neutral good"){
-                    alignmentRestrictions.push("Neutral good");
-                }
-                this.props.dispatch(submitAlignmentRestrictions(alignmentRestrictions));
-			}
-		}
-
+    onSubmitClick(deity){   
+      for(let i=0; i<this.props.classesArray.length;i++){
+        // if this is the clicked element toggle it 
+        if( this.props.classesArray[i].name==="paladin" ){     
+          for(let j=1;j<5;j++){
+            let bonus = createBonus({ 
+              name:"class"+ capitalizeFirstLetter(this.props.classesArray[i].classFeatures.table[0][j]), 
+              source:"class", 
+              stat:this.props.classesArray[i].classFeatures.table[0][j], 
+              type:"untyped", 
+              duration:-1, 
+              amount:this.props.classesArray[i].classFeatures.table[1][j] });
+            this.props.dispatch(addBonus(bonus));
+            this.props.dispatch(sumBonus(bonus));
+          }
+          this.props.dispatch(setGenericExpand(""));
+          this.props.dispatch(submitClassToState(this.props.classesArray[i]));
+          this.props.dispatch(submitDeity(deity));
+          let alignmentRestrictions = ["Lawful good"];
+          if(deity.overview.alignment === "Neutral good"){
+            alignmentRestrictions.push("Neutral good");
+          }
+          this.props.dispatch(submitAlignmentRestrictions(alignmentRestrictions));
+        }
+      }
     }
 
     onExpandClick(name){
@@ -77,8 +86,10 @@ export class ClassSelectionsPaladin extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	classesArray:require('../../data/classes'),
-    expand:state.characterReducer.expand,
+	//classesArray:require('../../data/classes'),
+  classesArray:state.protectedData.data,
+  expand:state.characterReducer.expand,
+  deities:state.protectedData.subData,
 });
 
 export default connect(mapStateToProps)(ClassSelectionsPaladin);

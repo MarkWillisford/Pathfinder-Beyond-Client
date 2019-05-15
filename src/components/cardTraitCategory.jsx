@@ -1,21 +1,25 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import CardTrait from './cardTrait';
+import { fetchProtectedSubData } from '../actions/protectedData';
 
 import { setExpandedTraitCategory } from '../actions/index'; 
 
 import './cardTraitCategory.css';
 
 class CardTraitCategory extends React.Component{
+  componentDidMount(){
+    this.props.dispatch(fetchProtectedSubData("traits"));
+  }
+
 	getTraitList(category, base){
-		// this will be an API call, but for now it loops through the list of traits on its own
-		const traitsList = require('../data/traits');
+		const traitsList = this.props.traitsList; //require('../data/traits');
 
 		let traitsToDisplay=[];
 		let count = 0;
 		let index = 0 + base;
 
-		while(count < 5){
+		while(count < 1){
 			if(traitsList[index].Type === category || traitsList[index].Category === category){
 				traitsToDisplay.push(traitsList[index]);
 				count++;
@@ -57,7 +61,7 @@ class CardTraitCategory extends React.Component{
 				<button onClick={() => this.show(this.props.name)} disabled={thisExpanded}>Show</button>
 				<button onClick={() => this.hide(this.props.name)} disabled={!thisExpanded}>Hide</button>
 				{thisExpanded && traitsList.map((trait) => 
-					<CardTrait key={trait.Name} name={trait.Name} prerequisitesString={trait.prerequisitesString}
+					<CardTrait key={trait.Name} id={trait.id} name={trait.Name} prerequisitesString={trait.prerequisitesString}
 					description={trait.Description} prerequisites={trait.prerequisites}/>
 				)}
 			</div>
@@ -67,7 +71,7 @@ class CardTraitCategory extends React.Component{
 
 const mapStateToProps = state => ({
 	categoryToExpand:state.characterReducer.expanded,
-
+  traitsList:state.protectedData.subData,
 });
 
 export default connect(mapStateToProps)(CardTraitCategory);

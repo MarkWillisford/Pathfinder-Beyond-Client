@@ -40,7 +40,6 @@ export class NewCharacterSkills extends React.Component{
 	onSubmit(props){		
 		let skillsObject = props.skills
 		Object.keys(skillsObject).forEach(function (item){
-			console.log(skillsObject[item]);
 			if(skillsObject[item].ranks){
 				let bonus = createBonus({ 
 					name:"skills", 

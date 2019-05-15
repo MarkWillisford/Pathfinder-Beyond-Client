@@ -10,14 +10,19 @@ import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
 import { setSelections } from '../actions/index';
 import { setExpandedRace } from '../actions/index';
+import { fetchProtectedData } from '../actions/protectedData';
 import { createBonus } from '../utility/statObjectFactories'
 
 import './newCharacterRace.css';
 
-export class NewCharacterRace extends React.Component{
+export class NewCharacterRace extends React.Component{  
+  componentDidMount(){
+    this.props.dispatch(fetchProtectedData("races"));
+  }
+
 	showExpandedRace(id){		
-		const racesArray = require('../data/races');
-		let name = "";
+		const racesArray = this.props.racesArray;
+    let name = "";
 		for(let i=0; i<racesArray.length;i++){
 			/* // if this is the clicked element toggle it **OR**
 			// if this is not the clicked element and it is expanded, toggle it
@@ -29,7 +34,7 @@ export class NewCharacterRace extends React.Component{
 				// and set its child component button to display off. 
 				// TODO! by ref or by state?
 			} */
-			if( i === id){
+			if( racesArray[i].id === id){
 				name = racesArray[i].name
 			}
 		}
@@ -39,11 +44,15 @@ export class NewCharacterRace extends React.Component{
 		this.props.dispatch(setExpandedRace(name));
 	}
 
+  getRaceData(){
+    // return require('../data/races');
+  }
+
 	addRace(id){
-		const racesArray = require('../data/races');
-		for(let i=0; i<racesArray.length;i++){
+    const racesArray = this.props.racesArray;   // this.getRaceData();
+    for(let i=0; i<racesArray.length;i++){
 			// if this is the clicked element toggle it 
-			if( i===id ){
+			if(  racesArray[i].id===id ){
 				// if the class doesn't have selections . . .    
 				if(!racesArray[i].standardRacialTraits.selections){
 					this.props.dispatch(submitRaceToState(racesArray[i]));
@@ -89,8 +98,8 @@ export class NewCharacterRace extends React.Component{
 
 	render(){
 		const complete = this.props.complete;
-		const help = this.props.help;
-		const racesArray = require('../data/races');
+    const help = this.props.help;
+    const loading = this.props.loading;
 		let toExpand = "";
 		if(this.props.toExpand){
 			if(this.props.toExpand.race){
@@ -122,26 +131,33 @@ export class NewCharacterRace extends React.Component{
 					<p>The languages section gives you the languages that your race can learn to read, write and speak.</p>
 				</div>
 			);
-		} 
-		else if(!complete){
+    } 
+    else if(loading){
+      return (
+        <div>Loading . . .    </div>
+      )
+    } else {
+      if(!complete){
+      const racesArray = this.props.racesArray; // require('../data/races');
 			// Not complete, get choices and display
 			return (
 		        <div className="newCharacterRace">
 		        	<h1>Character Race - todo</h1>	
-		        	{racesArray.map(({id,thum,name,standardRacialTraits}) => 
+		        	{racesArray && racesArray.map(({id,thum,name,standardRacialTraits}) => 
 						<RaceCard key={id} thum={thum} name={name} expand={ toExpand === name ? true : false } 
 							traits={standardRacialTraits} callback={()=> this.showExpandedRace(id)} 
 							addRaceCallback={()=> this.addRace(id)}/>
 		        	)}
 		        </div>
 		    );
-		} else {
-			return(
-		        <div className="newCharacterRace">
-		        	<h1>Character Race - done</h1>	
-		        </div>			
-			);
-		}		
+      } else {
+        return(
+              <div className="newCharacterRace">
+                <h1>Character Race - done</h1>	
+              </div>			
+        );
+      };
+    }	
 	}
 }
 
@@ -149,7 +165,9 @@ const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[1].complete,
 	//racesArray:state.characterReducer.racesArray,
 	help:state.characterReducer.help,
-	toExpand:state.characterReducer.expanded, 
+  toExpand:state.characterReducer.expanded, 
+  racesArray:state.protectedData.data,
+  loading:state.protectedData.loading,
 });
 
 export default connect(mapStateToProps)(NewCharacterRace);

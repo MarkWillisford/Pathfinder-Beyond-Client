@@ -9,7 +9,7 @@ import './cardFeatCategory.css';
 class CardFeatCategory extends React.Component{
 	getFeatList(category){
 		// this will be an API call, but for now it loops through the list of feats on its own
-		const featsList = require('../data/feats');
+		const featsList = this.props.featsList      //require('../data/feats');
 		let featsListToReturn = [];
 		for(let i=0; i<featsList.length; i++){
 			if(featsList[i].type.includes(category)){
@@ -105,7 +105,7 @@ class CardFeatCategory extends React.Component{
 
 const mapStateToProps = state => ({
 	categoryToExpand:state.characterReducer.expanded, 
-
+  featsList:state.protectedData.data,
 });
 
 export default connect(mapStateToProps)(CardFeatCategory);

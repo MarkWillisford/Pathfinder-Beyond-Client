@@ -9,36 +9,44 @@ import { sumBonus } from '../actions/index';
 import { setClassSelectionsView } from '../actions/index';
 import { setExpandedClass } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories';
+import { capitalizeFirstLetter } from '../utility/helperFunctions';
 import * as ClassSelections from './classSelectionFiles/';
+import { fetchProtectedData } from '../actions/protectedData';
 
 import './newCharacterClass.css';
 
 export class NewCharacterClass extends React.Component{
-	handleClick(id){
-/* 		for(let i=0; i<this.props.classesArray.length;i++){
-			// if this is the clicked element toggle it **OR**
-			// if this is not the clicked element and it is expanded, toggle it
-			if( (i===id) || (i!==id && this.props.classesArray[i].expand === true) ){
-				this.props.dispatch(toggleClassExpand(i));
-			}
-		} */
-		let name = "";
+  componentDidMount(){
+    this.props.dispatch(fetchProtectedData("charClasses"));
+  }
+
+	handleClick(_id){
+    let nameOfCurrentExpanded = this.props.toExpand ? (this.props.toExpand.charClass ? this.props.toExpand.charClass : null) 
+      : null;
+    let name = "";
+
 		for(let i=0; i<this.props.classesArray.length;i++){
-			if( i === id){
+			// if this is the clicked element toggle it **OR**
+      // if this is not the clicked element and it is expanded, toggle it
+      if(this.props.classesArray[i]._id ===_id && this.props.classesArray[i].name === nameOfCurrentExpanded){
+        name = null;
+      }
+      if(this.props.classesArray[i]._id === _id && this.props.classesArray[i].name !== nameOfCurrentExpanded){
 				name = this.props.classesArray[i].name
-			}
-		}
+      }
+    }
 		if(name === ""){
 			console.log("Error! Couldn't find class")
 		}
 		this.props.dispatch(setExpandedClass(name));
 	}
 
-	checkForSelections(id){
+	checkForSelections(_id){
 		for(let i=0; i<this.props.classesArray.length;i++){
+      let classToCheck = this.props.classesArray[i];
 			// find the class object
-			if( i===id ){
-				let name = this.props.classesArray[i].name;
+			if( classToCheck._id===_id ){
+        let name = classToCheck.name;
 				switch(name){
 					case "cleric":
 						this.props.dispatch(setClassSelectionsView("cleric"));
@@ -56,26 +64,30 @@ export class NewCharacterClass extends React.Component{
 						this.props.dispatch(setClassSelectionsView("sorcerer"));
 						break;
 					default:
-						this.addClass(id);
+						this.addClass(_id);
 				}
 			}
 		}
 	}
 
-	addClass(id){
+	addClass(_id){
 		for(let i=0; i<this.props.classesArray.length;i++){
 			// if this is the clicked element toggle it 
-			if( i===id ){
+			if( this.props.classesArray[i]===_id ){
 				this.props.dispatch(submitClassToState(this.props.classesArray[i]));
-				let bonus = createBonus({ 
-					name:"classBAB", 
-					source:"class", 
-					stat:"bab", 
-					type:"untyped", 
-					duration:-1, 
-					amount:this.props.classesArray[i].classFeatures.table[1][1] });
-				this.props.dispatch(addBonus(bonus));
-				this.props.dispatch(sumBonus(bonus));				
+				
+        for(let j=1;j<5;j++){
+          let bonus = createBonus({ 
+            name:"class"+ capitalizeFirstLetter(this.props.classesArray[i].classFeatures.table[0][j]), 
+            source:"class", 
+            stat:this.props.classesArray[i].classFeatures.table[0][j], 
+            type:"untyped", 
+            duration:-1, 
+            amount:this.props.classesArray[i].classFeatures.table[1][j] });
+          this.props.dispatch(addBonus(bonus));
+          this.props.dispatch(sumBonus(bonus));
+        }
+
 			}
 		}		
 	}
@@ -153,10 +165,10 @@ export class NewCharacterClass extends React.Component{
 				return (
 					<div className="newCharacterClass">
 						<h1>Character Class - todo</h1>	
-						{classesArray.map(({id,thum,name,classFeatures}) => 
-							<CardClass key={id} thum={thum} name={name} expand={ toExpand === name ? true : false } 
-								features={classFeatures} callback={()=> this.handleClick(id)} 
-								addClassCallback={()=> this.checkForSelections(id)}/>
+						{classesArray.map(({_id,thum,name,classFeatures}) => 
+							<CardClass key={_id} thum={thum} name={name} expand={ toExpand === name ? true : false } 
+								features={classFeatures} callback={()=> this.handleClick(_id)} 
+								addClassCallback={()=> this.checkForSelections(_id)}/>
 						)}
 					</div>
 				)
@@ -173,7 +185,8 @@ export class NewCharacterClass extends React.Component{
 
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[2].complete,
-	classesArray:require('../data/classes'),
+  //classesArray:require('../data/classes'),
+  classesArray:state.protectedData.data,
 	help:state.characterReducer.help,
 	classSelections:state.characterReducer.classSelectionsView,
 	toExpand:state.characterReducer.expanded, 
