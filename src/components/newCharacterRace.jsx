@@ -163,7 +163,6 @@ export class NewCharacterRace extends React.Component{
 
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[1].complete,
-	//racesArray:state.characterReducer.racesArray,
 	help:state.characterReducer.help,
   toExpand:state.characterReducer.expanded, 
   racesArray:state.protectedData.data,

@@ -39,7 +39,7 @@ export class NewCharacterFeats extends React.Component{
 	render(){ 
 		const complete = this.props.complete;
     const help = this.props.help;
-    let featsList = (this.props.featsList[0].repeatable) ? this.props.featsList : [];
+    let featsList = this.props.featsList;
 		let featCategories = (this.props.featsList[0].repeatable) ? this.getCategoryList() : []; 
 
 		// first here we must check to ensure that race, class, and ability scores are complete. 

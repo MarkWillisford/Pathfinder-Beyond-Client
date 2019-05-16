@@ -73,6 +73,7 @@ class CardFeatCategory extends React.Component{
 	}
 
 	render(){
+    let availableFeatsList = this.props.featsList;
 		let categoryToExpand ="";
 		let feats = this.props.feats; // An array of feat slot objects { type: "category", selection: "feat name"}
 
