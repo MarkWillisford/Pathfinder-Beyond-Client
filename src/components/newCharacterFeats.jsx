@@ -40,7 +40,7 @@ export class NewCharacterFeats extends React.Component{
 		const complete = this.props.complete;
     const help = this.props.help;
     let featsList = this.props.featsList;
-		let featCategories = (this.props.featsList[0].repeatable) ? this.getCategoryList() : []; 
+		let featCategories = (featsList[0] && featsList[0].repeatable) ? this.getCategoryList() : []; 
 
 		// first here we must check to ensure that race, class, and ability scores are complete. 
 		// If not, we display an error message directing the user to complete those pages before 
@@ -63,7 +63,7 @@ export class NewCharacterFeats extends React.Component{
 			return (
 		        <div className="newCharacterFeats">
 		        	<h1>Character Feats</h1>
-		        	{featCategories.map((category) => 
+		        	{featCategories && featCategories.map((category) => 
 		        		<CardFeatCategory key={category} name={category} />
 		        	)}
 			    </div>
