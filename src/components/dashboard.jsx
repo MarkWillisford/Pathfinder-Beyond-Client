@@ -3,12 +3,13 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import requiresLogin from './requiresLogin';
 
-import {fetchProtectedData} from '../actions/protectedData';
+import {fetchProtectedData, clearData} from '../actions/protectedData';
 
 import CardCharacters from './cardCharacters';
 
 export class Dashboard extends React.Component {
     componentDidMount() {
+      this.props.dispatch(clearData());
       this.props.dispatch(fetchProtectedData("users/characters"));
     }
 

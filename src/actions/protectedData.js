@@ -37,6 +37,11 @@ export const setLoading = () => ({
     type: SET_LOADING
 });
 
+export const CLEAR_DATA = 'CLEAR_DATA';
+export const clearData = () => ({
+    type: CLEAR_DATA
+});
+
 /* export const fetchProtectedData = () => (dispatch, getState) => {
     const authToken = getState().auth.authToken;
     return fetch(`${API_BASE_URL}/protected`, {

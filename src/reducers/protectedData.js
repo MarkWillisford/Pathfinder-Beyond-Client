@@ -50,6 +50,8 @@ export default function reducer(state = initialState, action) {
       return Object.assign({}, state, {
         loading: "loading"
       });
+  } else if (action.type === CLEAR_DATA) {
+      return Object.assign({}, state, initialState);
   }
     return state;
 }
