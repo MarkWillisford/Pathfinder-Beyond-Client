@@ -9,8 +9,7 @@ import CardCharacters from './cardCharacters';
 
 export class Dashboard extends React.Component {
     componentDidMount() {
-      this.props.dispatch(clearData());
-      this.props.dispatch(fetchProtectedData("users/characters"));
+      this.props.dispatch(fetchProtectedData("users/characters", "usersCharacters"));
     }
 
     getCharacters(){
@@ -88,13 +87,12 @@ export class Dashboard extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
-    const {currentUser} = state.auth;
-    return {
+//const {currentUser} = state.auth;
+const mapStateToProps = state => ({
         username: state.auth.currentUser.username,
-        name: `${currentUser.firstName} ${currentUser.lastName}`,
-        characters:state.protectedData.data,
-    };
-};
+        //name: `${currentUser.firstName} ${currentUser.lastName}`,
+        name: state.auth.currentUser.firstName + state.auth.currentUser.lastName,
+        characters:state.protectedData.usersCharacters,
+});
 
 export default requiresLogin()(connect(mapStateToProps)(Dashboard));

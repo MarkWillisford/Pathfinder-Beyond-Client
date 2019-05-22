@@ -15,7 +15,6 @@ import './classSelectionsDruid.css';
 
 export class ClassSelectionsDruid extends React.Component{
   componentDidMount(){
-    console.log("mounting Druid Selections");
     this.props.dispatch(fetchProtectedSubData("druidsNatureBonds"));
   }
 

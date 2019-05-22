@@ -11,7 +11,7 @@ import './newCharacterEquipment.css';
 export class NewCharacterEquipment extends React.Component{
 	handleClick(value){
 		// set the state.equipmentGenerationMethod to value
-    this.props.dispatch(equipmentGenerationMethod(value));		
+    this.props.dispatch(equipmentGenerationMethod(value));
 	}
 
 	render(){

@@ -8,6 +8,15 @@ export const fetchProtectedDataSuccess = data => ({
     data
 });
 
+/******************************
+ * Slowly converting the sub / secondary / extra into named calls
+**************************** */
+export const FETCH_PROTECTED_DATA_USERSCHARACTERS_SUCCESS = 'FETCH_PROTECTED_DATA_USERSCHARACTERS_SUCCESS';
+export const fetchProtectedData_usersCharacters_Success = data => ({
+    type: FETCH_PROTECTED_DATA_USERSCHARACTERS_SUCCESS,
+    data
+});
+
 export const FETCH_PROTECTED_SUB_DATA_SUCCESS = 'FETCH_PROTECTED_SUB_DATA_SUCCESS';
 export const fetchProtectedSubDataSuccess = data => ({
     type: FETCH_PROTECTED_SUB_DATA_SUCCESS,
@@ -78,7 +87,7 @@ export const clearData = () => ({
   });
 } */
 
-export const fetchProtectedData = (api) => (dispatch, getState) => {
+export const fetchProtectedData = (api, call="") => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   dispatch(setLoading());
   
@@ -92,7 +101,16 @@ export const fetchProtectedData = (api) => (dispatch, getState) => {
   ).then(res => {
     return res.json();
   }).then(data => {
-      dispatch(fetchProtectedDataSuccess(data));
+    switch(call){
+      case "usersCharacters": 
+        console.log(call);
+        console.log("dispatching usersCharacters");
+        dispatch(fetchProtectedData_usersCharacters_Success(data));
+      default: 
+        console.log(call);
+        console.log("dispatching default");
+        dispatch(fetchProtectedDataSuccess(data));
+    }
   }).catch(err => {
       dispatch(fetchProtectedDataError(err));
   });

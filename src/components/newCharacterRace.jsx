@@ -10,14 +10,15 @@ import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
 import { setSelections } from '../actions/index';
 import { setExpandedRace } from '../actions/index';
-import { fetchProtectedData } from '../actions/protectedData';
+import { fetchProtectedData, clearData } from '../actions/protectedData';
 import { createBonus } from '../utility/statObjectFactories'
 import { fetchProtectedSubData } from '../actions/protectedData';
 
 import './newCharacterRace.css';
 
-export class NewCharacterRace extends React.Component{  
+export class NewCharacterRace extends React.Component{   
   componentDidMount(){
+    this.props.dispatch(clearData());
     this.props.dispatch(fetchProtectedData("races"));
     this.props.dispatch(fetchProtectedSubData("aasimarHeritages"));
   }

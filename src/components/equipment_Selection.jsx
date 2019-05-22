@@ -9,7 +9,7 @@ import { setStepToComplete } from '../actions/index';
 import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories'
-import { fetchProtectedData } from '../actions/protectedData';
+import { fetchProtectedData, clearData } from '../actions/protectedData';
 import { fetchProtectedSubData } from '../actions/protectedData';
 import { fetchProtectedSecondaryData } from '../actions/protectedData';
 import { fetchProtectedExtraData } from '../actions/protectedData';
@@ -18,6 +18,7 @@ import './equipment_Selection.css';
 
 export class Equipment_Selection extends React.Component {
   componentDidMount(){
+    this.props.dispatch(clearData());
     this.props.dispatch(fetchProtectedData("armors"));
     this.props.dispatch(fetchProtectedSubData("goodsAndServices"));
     this.props.dispatch(fetchProtectedSecondaryData("tradeGoods"));

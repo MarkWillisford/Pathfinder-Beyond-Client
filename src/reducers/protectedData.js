@@ -1,5 +1,6 @@
 import {
     FETCH_PROTECTED_DATA_SUCCESS,
+    FETCH_PROTECTED_DATA_USERSCHARACTERS_SUCCESS,
     FETCH_PROTECTED_DATA_ERROR,
     SET_LOADING,
     FETCH_PROTECTED_SUB_DATA_SUCCESS,
@@ -9,10 +10,11 @@ import {
 } from '../actions/protectedData';
 
 const initialState = {
-    data: [],
-    subData: [],
-    secondaryData:[],
-    error: null
+  usersCharacters:[],
+  data: [],
+  subData: [],
+  secondaryData:[],
+  error: null
 };
 
 export default function reducer(state = initialState, action) {
@@ -22,6 +24,13 @@ export default function reducer(state = initialState, action) {
         error: null,
         loading: null
       });
+  } else if (action.type === FETCH_PROTECTED_DATA_USERSCHARACTERS_SUCCESS) {
+    return Object.assign({}, state, {
+      ...state,
+      usersCharacters:action.data,
+      error: null,
+      loading: null
+    });
   } else if (action.type === FETCH_PROTECTED_SUB_DATA_SUCCESS) {
     return Object.assign({}, state, {
       ...state,

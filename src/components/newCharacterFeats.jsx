@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { fetchProtectedData } from '../actions/protectedData';
+import { fetchProtectedData, clearData } from '../actions/protectedData';
 
 import CardFeatCategory from './cardFeatCategory';
 
@@ -8,6 +8,7 @@ import './newCharacterFeats.css';
 
 export class NewCharacterFeats extends React.Component{	
   componentDidMount(){
+    this.props.dispatch(clearData());
     this.props.dispatch(fetchProtectedData("feats"));
   }
 

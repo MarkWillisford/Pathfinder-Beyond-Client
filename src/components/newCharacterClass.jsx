@@ -11,12 +11,14 @@ import { setExpandedClass } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories';
 import { capitalizeFirstLetter } from '../utility/helperFunctions';
 import * as ClassSelections from './classSelectionFiles/';
-import { fetchProtectedData } from '../actions/protectedData';
+import { fetchProtectedData, clearData } from '../actions/protectedData';
 
 import './newCharacterClass.css';
 
 export class NewCharacterClass extends React.Component{
   componentDidMount(){
+/*     console.log("triggering clear");
+    this.props.dispatch(clearData()); */
     this.props.dispatch(fetchProtectedData("charClasses"));
   }
 
