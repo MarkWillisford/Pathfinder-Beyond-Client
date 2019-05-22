@@ -12,7 +12,6 @@ import { createBonus } from '../utility/statObjectFactories';
 import { submitFeatToState } from '../actions/index';
 import { submitFavoredClassToState } from '../actions/index';
 import { addFeatSlot } from '../actions/index';
-import { fetchProtectedSubData } from '../actions/protectedData';
 
 // validation
 const required = value => value ? undefined : "Required";
@@ -20,12 +19,12 @@ const isCraftOrProfession = value =>
 	(value && (/craft\s\(.+\)/i.test(value) || /profession\s\(.+\)/i.test(value) )) ? undefined : "this must be in the following pattern; craft or profession (detail)";
 
 export class SelectionFormRace extends React.Component{
-  componentDidMount(){
-    this.props.dispatch(fetchProtectedSubData("aasimarHeritages"));
-  }
+  /* componentDidMount(){
+    console.log("getting heritages");
+  } */
 
 	hideSelections(){
-		this.props.dispatch(setSelections(""));
+		this.props.dispatch(setSelections("")); 
 	}
 	submitRace(race){
 		this.props.dispatch(submitRaceToState(race));
@@ -38,18 +37,32 @@ export class SelectionFormRace extends React.Component{
 	} */
 
 	render(){
+    const racesArray = this.props.racesArray;
+    let aasimar = {};
+    for(let i=0;i<racesArray.length;i++){
+      if(racesArray[i].name === "Aasimar"){
+        aasimar = racesArray[i];
+      }
+    }
 		const submitting = this.props.submitting;
+    const listOfHeritages = this.props.listOfHeritages; //require('../data/aasimarHeritages');
 		const onSubmitFormAasimar = (values) => {
 			const selectionsHeritage = capitalizeFirstLetter(values.selectionsHeritage);
 			// #TODO
 			this.props.dispatch(setSelections(""));
-			const listOfHeritages = this.props.listOfHeritages; //require('../data/aasimarHeritages');
-			let heritage = {};
+      let heritage = {};
+      console.log(listOfHeritages);
+      console.log(selectionsHeritage);
+      let found = false;
 			for(let i=0;i<listOfHeritages.length;i++){
 				if(listOfHeritages[i].name.includes(selectionsHeritage)){
-					heritage = listOfHeritages[i];
+          heritage = listOfHeritages[i];
+          found = true;
 				}
-			}	// Now I have the heritage data in 'heritage'
+      }	// Now I have the heritage data in 'heritage'
+      if(!found){
+        heritage = aasimar;
+      }
 			// create bonuses foreach in 
 			heritage.standardRacialTraits.base.abilityScoreRacialBonusArray.map(ability => {
 				let bonus = createBonus({ 
@@ -204,6 +217,7 @@ export class SelectionFormRace extends React.Component{
 		// This could be abstracted, but is hardcoded for now
 		switch(this.props.name){
 			case "Aasimar":
+        console.log("in aasimar render");
 				return(
 					<form onSubmit={this.props.handleSubmit(onSubmitFormAasimar) }>
 						<button type="button" onClick={() => this.hideSelections()}>Cancel</button>
@@ -335,7 +349,7 @@ export class SelectionFormRace extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	//racesArray:state.characterReducer.racesArray,
+	racesArray:state.protectedData.data,
   selections:state.characterReducer.selections,
   listOfHeritages:state.protectedData.subData,
 });

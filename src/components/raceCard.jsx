@@ -6,12 +6,13 @@ export class RaceCard extends React.Component{
 	render(){
 		let showSelections = "";
 		if(this.props.showSelections){
-			showSelections = this.props.showSelections
+      showSelections = this.props.showSelections
 		} else {
 			showSelections = false;
 		};
 
 		let showTheseSelections = ((showSelections.name === this.props.name) ? true : false);
+    console.log(showTheseSelections);
 		
 		return(
 			<div className="raceCard">

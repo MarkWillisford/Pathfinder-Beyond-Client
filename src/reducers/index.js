@@ -623,27 +623,18 @@ export const characterReducer = (state=initialState, action) => {
         }
       }
     case actions.SUM_BONUS:
-    console.log("in reducer");
-    console.log(action);
       // flags
       statToAddBonusTo = action.bonus.stat;
-      console.log("adding:");
-      console.log(statToAddBonusTo);
       found = false;
       foundAt = null;
       // look through the bonus array for the bonus stat
       for(let i=0;i<state.newCharacter.characterStats.length;i++){
-        console.log("checking: ");
-        console.log(state.newCharacter.characterStats[i]);
         if(state.newCharacter.characterStats[i].name === statToAddBonusTo){
-          console.log("found it");
           found = true;
           foundAt = i;
         }
       }
       if(found){
-        console.log("returning");
-        console.log(state.newCharacter.characterStats);
         return{
           ...state,
           newCharacter:{

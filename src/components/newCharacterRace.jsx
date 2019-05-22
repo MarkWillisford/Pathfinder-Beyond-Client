@@ -12,12 +12,14 @@ import { setSelections } from '../actions/index';
 import { setExpandedRace } from '../actions/index';
 import { fetchProtectedData } from '../actions/protectedData';
 import { createBonus } from '../utility/statObjectFactories'
+import { fetchProtectedSubData } from '../actions/protectedData';
 
 import './newCharacterRace.css';
 
 export class NewCharacterRace extends React.Component{  
   componentDidMount(){
     this.props.dispatch(fetchProtectedData("races"));
+    this.props.dispatch(fetchProtectedSubData("aasimarHeritages"));
   }
 
 	showExpandedRace(id){		
@@ -89,7 +91,9 @@ export class NewCharacterRace extends React.Component{
 						}
 					}
 				} else {
-					// this means that the feat does have selections
+          // this means that the feat does have selections
+          console.log("setting selections: ");
+          console.log(racesArray[i]);
 					this.props.dispatch(setSelections(racesArray[i]));
 				}
 			}
