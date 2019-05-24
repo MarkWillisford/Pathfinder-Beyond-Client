@@ -10,16 +10,8 @@ import './App.css';
 export default function App(props) {
   return (
   <Router>
-    {/* <div className="app">
-      <main>
-        <Switch>
-          <Redirect exact push from='/' to="/playerDemo/newCharacter/"  />
-          <Route path="/playerDemo/newCharacter/" component={NewCharacterContainer} />                     
-        </Switch>
-      </main>
-    </div> */}
     <div className="app">
-      <main>
+      <main className="main">
         <NavBar />
         <Switch>
           <Route exact path="/" component={LandingPage} />

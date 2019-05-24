@@ -154,6 +154,7 @@ const initialState = {
     {id:3, name:"detailsPersonalityExpand", expand:false},
     {id:4, name:"detailsExtrasExpand", expand:false},
   ],
+  menuActive:false,
 };
 function setSum(stat){
   let total = 0;
@@ -886,7 +887,11 @@ export const characterReducer = (state=initialState, action) => {
           }}
         }    
       }
-
+    case actions.TOGGLE_MENU_ACTIVE:
+      return {
+        ...state,
+        menuActive:!state.menuActive
+      }
 
 
 

@@ -1,0 +1,9 @@
+html { 
+  background: url("images/backgroundPaper.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-color: #1a100500;
+  background-blend-mode: screen;
+}

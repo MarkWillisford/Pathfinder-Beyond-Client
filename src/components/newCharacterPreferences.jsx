@@ -17,18 +17,6 @@ const validate = values => {
   if(!values.characterName){
 		errors.characterName = "Required"
   }
-	/*if(!values.encumberence){
-		errors.encumberence = "Required"
-	}
-	if(!values.coinWeight){
-		errors.coinWeight = "Required"
-	}
-	if(!values.monsterRacesAllowed){
-		errors.monsterRacesAllowed = "Required"
-	}
-	if(!values.templateRuleSelecter){
-		errors.templateRuleSelecter = "Required"
-	}*/
 
 	return errors
 }
@@ -57,29 +45,8 @@ export class NewCharacterPreferencesForm extends React.Component{
     const RenderTextarea = createRenderer((input, label, value) =>
       <input type="textarea" { ... input}/>
     )
-/* 		const RenderRadio = createRenderer((input, label, value) => 
-			<input type="radio" value={value} { ... input}/>
-		) */
-/*		const RadioGroup = createRenderer((input, label, options) => 	
-			{options.map(o => <label key={o.value}><input type="radio" {...input} value={o.value} checked={o.value === input.value} /> {o.title}</label>)}
-		)*/
-/* 		class RadioGroup extends React.Component {
-		    render() {
-		        const { input, meta, options, label } = this.props
-		        const hasError = meta.touched && meta.error;
-
-		        return (
-		            <div>
-						<label>{label}</label>
-	                    {options.map(o => <label key={o.value}><input type="radio" {...input} value={o.value} checked={o.value === input.value} /> {o.title}</label>)}
-	                    {hasError && <span className="error">{meta.error}</span>}
-		            </div>
-		        );
-		    }
-		} */			
-
-
-		// if help is true, that screen is displayed
+    
+    // if help is true, that screen is displayed
 		if(help){
 			return ( 
 				<div className="preferencesHelp">
@@ -114,25 +81,6 @@ export class NewCharacterPreferencesForm extends React.Component{
 			        		<option value="manual">Manual</option>
 			        		<option value="optional">Optional</option>		
 						</Field>
-{/*						<Field name="encumberence" component={RadioGroup} label="Will this character use the optional encumberence rules?" options={[
-						    { title: 'Yes', value: 'yes' },	// Why do I have to click this twice???
-						    { title: 'No', value: 'no' }
-						]} />
-						<Field name="coinWeight" component={RadioGroup} label="Should we track coin weight?" options={[
-						    { title: 'Yes', value: 'yes' },
-						    { title: 'No', value: 'no' }
-						]} />
-						<Field name="monsterRacesAllowed" component={RadioGroup} label="Are Monster races allowed?" options={[
-						    { title: 'Yes', value: 'yes' },
-						    { title: 'No', value: 'no' }
-						]} />
-						<label></label>
-						<Field name="templateRuleSelecter" label="What rules govern the use of templates?" component={RenderSelect}>
-							<option />
-			        		<option value="none">None</option>
-			        		<option value="level">Level</option>
-			        		<option value="crRefunds">CR Refunds</option>	
-						</Field>*/}
 					</div>
 					<button type="submit" disabled={submitting}>Submit</button>
 				</form>

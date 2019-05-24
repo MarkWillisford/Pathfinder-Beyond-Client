@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 export default function Next(props) {
   const show = props.disabled;
   if(!show){
-  	return (<Link to={props.url} onClick={props.toggle}>Next</Link>);
+  	return (<Link className="nextButton" to={props.url} onClick={props.toggle}>Next</Link>);
   }
   return (
-    <span>Next</span>
+    <span className="nextButton">Next</span>
   );
 }

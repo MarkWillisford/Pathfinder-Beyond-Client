@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {setStep} from '../actions/index';
 import LoadOptions from './loadNewCharacterOptions';
 import {toggleHelp} from '../actions/index';
+import {toggleMenuActive} from '../actions/index';
 
 import './newCharacterNavLinks.css';
 
@@ -32,25 +33,41 @@ export class NewCharacterNavLinks extends React.Component{
 		this.props.dispatch(toggleHelp());		
 	}
 
+  toggleClass(){
+    this.props.dispatch(toggleMenuActive());
+  }
+
 	render(){
+    let className = "toggleView";
+    if(this.props.isActive){
+      className += ' active';
+    }
 		return (
-	        <div className="newCharacterNavLinks">
-	        	Nav Links
-	        	<p><button onClick={this.toggleHelp.bind(this)}>Help</button></p>
-	        	<ul>
-		        	{this.props.creationSteps.map(({name, id}) => (
-		        		<li key={id}>
-		        			<Link to={`/newCharacter/${name}`} onClick={this.setStep.bind(this,id)}>{name}</Link>
-		        		</li>
-		        	))}
-		        </ul>
-	        </div>
-	    );
+      <div className="newCharacterNavLinks">
+        {/* Nav Links */}
+        <div className="toggle">
+          <i className="fas fa-bars" onClick={this.toggleClass.bind(this)}></i>
+        </div>
+        <div className={className}>
+          <ul className="newCharacterNavUL">
+            <li className="newCharacterNavLI">
+              <button className="helpButton" onClick={this.toggleHelp.bind(this)}>Help</button>
+            </li>
+            {this.props.creationSteps.map(({name, id}) => (
+              <li key={id} className="newCharacterNavLI">
+                <Link to={`/newCharacter/${name}`} onClick={this.setStep.bind(this,id)}>{name}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+	  );
 	}
 }
 
 const mapStateToProps = state => ({
     creationSteps: state.characterReducer.creationSteps,
+    isActive:state.characterReducer.menuActive,
 });
 
 export default connect(mapStateToProps)(NewCharacterNavLinks);

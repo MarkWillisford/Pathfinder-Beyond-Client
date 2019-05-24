@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {clearAuth} from '../actions/auth';
 import {clearAuthToken} from '../localStorage';
+import {login} from '../actions/auth';
 
 import './navBar.css';
 
@@ -10,6 +11,9 @@ export class NavBar extends React.Component{
 /*    constructor(props){
         super(props);
     }*/
+  loginDemo(){
+    this.props.dispatch(login("demo@test.com", "demopassword"));
+  }
 
   logOut(){
     this.props.dispatch(clearAuth());
@@ -25,34 +29,37 @@ export class NavBar extends React.Component{
     if (this.props.currentUser) {
       /* user is logged in, display the full nav bar */
       return (
+        <div className="header" role="header" >
           <div className="navBar">
-              <div className="title">
-                  <h2>Pathfinder Beyond</h2>
-                  Username: {this.props.username}
-              </div>
-              <div className="nav">
-                  <Link to="/dashboard">Home</Link> | <button onClick={() => this.logOut()}>Log Out</button>{/* <Link to="/">Log Out</Link> */}
-              </div>
+            <Link to="/" className="title">TTRPG Char Gen</Link>
+            <div className="nav">
+              <Link to="/dashboard">Home</Link> | <button onClick={() => this.logOut()}>Log Out</button>{/* <Link to="/">Log Out</Link> */}
+            </div>
           </div>
+        </div>
       );
-  } else {
-      /* user is not logged in, display the login / signup / demo */
+    } else {
+        /* user is not logged in, display the login / signup / demo */
       return (
+        <div className="header" role="header" >
           <div className="navBar">
-              {/* <div className="title">
-                  <h2>Pathfinder Beyond</h2>
-              </div>
-              <div className="nav">
-                  Login | Signup | <Link to="/playerDemo">Demo</Link>
-              </div> */}
+            <div className="title">
+              <Link to="/" className="title">TTRPG Char Gen</Link>
+            </div>
+            <div className="nav">
+              <button onClick={() => this.loginDemo() }>
+                Demo 
+              </button>
+            </div>           
           </div>
+        </div>
       );
-  }    
+    }    
   }
 }
 
 const mapStateToProps = state => ({
-    currentUser: state.auth,
+    currentUser: state.auth.currentUser,
 });
 
 export default connect(mapStateToProps)(NavBar);

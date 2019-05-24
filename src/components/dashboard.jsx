@@ -4,8 +4,9 @@ import {withRouter} from 'react-router-dom';
 import requiresLogin from './requiresLogin';
 
 import {fetchProtectedData, clearData} from '../actions/protectedData';
-
 import CardCharacters from './cardCharacters';
+
+import './dashboard.css';
 
 export class Dashboard extends React.Component {
     componentDidMount() {
@@ -54,7 +55,7 @@ export class Dashboard extends React.Component {
     }
 
     nextPath(path) {
-      this.props.history.push(path);
+      this.props.history.push(path); 
     }
 
     newCharacter(){

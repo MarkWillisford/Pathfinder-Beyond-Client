@@ -324,12 +324,11 @@ export const setExpandedClass = (name) => ({
 	type: SET_EXPANDED_CLASS, 
 	name,
 });
-// Prep for future release
-/*export const TOGGLE_FEATURE_EXPAND = 'TOGGLE_FEATURE_EXPAND';
-export const toggleFeatureExpand = (charClass, feature) => ({
-	type: TOGGLE_FEATURE_EXPAND,
-	charClass, feature, 
-}); I doubt I need this */
+
+export const TOGGLE_MENU_ACTIVE = 'TOGGLE_MENU_ACTIVE';
+export const toggleMenuActive = () => ({
+  type: TOGGLE_MENU_ACTIVE,
+})
 
 export const setStepToCompleteCheckCharacter = (step, dispatch) => {
   dispatch(setStepToComplete(step));
