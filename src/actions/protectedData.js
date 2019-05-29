@@ -1,5 +1,6 @@
 import {API_BASE_URL} from '../config/main.config';
 import {normalizeResponseErrors} from '../utility/normalizeResponseErrors';
+import React from 'react';
 import {Redirect} from 'react-router-dom';
 
 export const FETCH_PROTECTED_DATA_SUCCESS = 'FETCH_PROTECTED_DATA_SUCCESS';
@@ -51,6 +52,11 @@ export const clearData = () => ({
     type: CLEAR_DATA
 });
 
+export const SET_SAVED = 'SET_SAVED';
+export const setSaved = (toggle) => ({
+  type: SET_SAVED,
+  saved: toggle
+})
 /* export const fetchProtectedData = () => (dispatch, getState) => {
     const authToken = getState().auth.authToken;
     return fetch(`${API_BASE_URL}/protected`, {
@@ -306,9 +312,11 @@ export const saveAndSubmit = () => (dispatch, getState) => {
     return res.json();
   }).then(data => {
     console.log("success");
-    console.log(data);
-    //return <Redirect to="/dashboard" />;
-      //dispatch(fetchProtectedExtraDataSuccess(data));
+    console.log(data);    
+    //history.push("/dashboard/");
+    // return <Redirect to="/dashboard" />;
+    dispatch(setSaved(true));
+    //dispatch(fetchProtectedExtraDataSuccess(data));
   }).catch(err => {
       dispatch(fetchProtectedDataError(err));
   });

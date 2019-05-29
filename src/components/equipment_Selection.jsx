@@ -229,15 +229,7 @@ export class Equipment_Selection extends React.Component {
       !goodsAndServicesList  
       ){
         dataLoaded = false;
-    } /* TODO! add a check to varify that the data is correct
-    else if(!tradeGoodsList[0].hasOwnProperty("item") ||
-      !weaponsList[0].hasOwnProperty("dmgS") ||
-      !armorList[0].hasOwnProperty("maxDexBonus") ||
-      !goodsAndServicesList[0].hasOwnProperty("collection")
-      ){
-        console.log("one of the lists is missing the key");
-        dataLoaded = false;
-    } */
+    } 
 
     let weaponsListsCategory = {
       "simple":[],

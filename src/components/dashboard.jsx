@@ -3,14 +3,16 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import requiresLogin from './requiresLogin';
 
-import {fetchProtectedData, clearData} from '../actions/protectedData';
+import {fetchProtectedData, setSaved} from '../actions/protectedData';
 import CardCharacters from './cardCharacters';
 
 import './dashboard.css';
 
 export class Dashboard extends React.Component {
     componentDidMount() {
+      console.log("fetching");
       this.props.dispatch(fetchProtectedData("users/characters", "usersCharacters"));
+      this.props.dispatch(setSaved(false));
     }
 
     getCharacters(){
@@ -55,7 +57,7 @@ export class Dashboard extends React.Component {
     }
 
     nextPath(path) {
-      this.props.history.push(path); 
+      this.props.history.push(path);
     }
 
     newCharacter(){
@@ -64,7 +66,7 @@ export class Dashboard extends React.Component {
 
     render() {
       const characters = this.props.characters;//this.getCharacters();
-
+      console.log("in dashboard render");
       return (
         <div className="dashboard">
           <div className="dashboard-username">
@@ -90,10 +92,10 @@ export class Dashboard extends React.Component {
 
 //const {currentUser} = state.auth;
 const mapStateToProps = state => ({
-        username: state.auth.currentUser.username,
-        //name: `${currentUser.firstName} ${currentUser.lastName}`,
-        name: state.auth.currentUser.firstName + state.auth.currentUser.lastName,
-        characters:state.protectedData.usersCharacters,
+  username: state.auth.currentUser.username,
+  //name: `${currentUser.firstName} ${currentUser.lastName}`,
+  name: state.auth.currentUser.firstName + state.auth.currentUser.lastName,
+  characters:state.protectedData.usersCharacters,
 });
 
 export default requiresLogin()(connect(mapStateToProps)(Dashboard));

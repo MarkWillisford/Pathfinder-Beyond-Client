@@ -95,8 +95,8 @@ export class NewCharacterContainer extends React.Component{
 const mapStateToProps = state => ({
 	creationSteps:state.characterReducer.creationSteps,
 	currentStep:state.characterReducer.currentStep,
-    disabledNext:state.characterReducer.disabledNext,
-    disabledPrev:state.characterReducer.disabledPrev,
+  disabledNext:state.characterReducer.disabledNext,
+  disabledPrev:state.characterReducer.disabledPrev,
 });
 
 export default requiresLogin()(connect(mapStateToProps)(NewCharacterContainer));

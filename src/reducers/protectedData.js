@@ -6,7 +6,8 @@ import {
     FETCH_PROTECTED_SUB_DATA_SUCCESS,
     FETCH_PROTECTED_SECONDARY_DATA_SUCCESS,
     FETCH_PROTECTED_EXTRA_DATA_SUCCESS,
-    CLEAR_DATA
+    CLEAR_DATA,
+    SET_SAVED
 } from '../actions/protectedData';
 
 const initialState = {
@@ -62,6 +63,11 @@ export default function reducer(state = initialState, action) {
       });
   } else if (action.type === CLEAR_DATA) {
       return Object.assign({}, state, initialState);
-  }
+  } else if (action.type === SET_SAVED) {
+    console.log("saving");
+    return Object.assign({}, state, {
+      saved: action.saved
+    });
+}
     return state;
 }
