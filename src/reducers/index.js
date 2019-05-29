@@ -230,26 +230,6 @@ export const characterReducer = (state=initialState, action) => {
         ...state,
         char:action.char
       }
-    /* case actions.LOAD_CREATION_STEPS:
-      return { 
-        ...state,
-        creationSteps:creationSteps,
-        help:false,
-        currentStep:0,
-        disabledNext: false,
-        disabledPrev: true,
-        // the actual character object that will be converted and saved in memory
-        newCharacter:newCharacter,
-        abilityScoreGenerationMethod:"",
-        statArrayToAssign:[],
-        detailsExpand:[
-          {id:0, name:"detailsTraitsExpand", expand:false},
-          {id:1, name:"detailsCharacterDetailsExpand", expand:false},
-          {id:2, name:"detailsPhysicalExpand", expand:false},
-          {id:3, name:"detailsPersonalityExpand", expand:false},
-          {id:4, name:"detailsExtrasExpand", expand:false},
-        ],
-      }; */
     case actions.TOGGLE_STEP:
       return {
         ...state,
@@ -892,7 +872,8 @@ export const characterReducer = (state=initialState, action) => {
         ...state,
         menuActive:!state.menuActive
       }
-
+    case actions.RESET_CHARACTER_REDUCER_STATE:
+        return { ...initialState }
 
 
     default:

@@ -59,7 +59,7 @@ export class NewCharacterContainer extends React.Component{
 		}
 
 		return ( /* refactoring nested routers */
-	        <Router>
+	       
 		        <div className="newCharacterContainer">
 		        	<NewCharacterNavLinks />
               <div className="flexContianer">
@@ -87,7 +87,7 @@ export class NewCharacterContainer extends React.Component{
                 </div>
               </div>
 		        </div>
-	        </Router>
+	        
 	    );
 	}
 }
