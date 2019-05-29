@@ -330,6 +330,11 @@ export const toggleMenuActive = () => ({
   type: TOGGLE_MENU_ACTIVE,
 })
 
+export const RESET_CHARACTER_REDUCER_STATE = 'RESET_CHARACTER_REDUCER_STATE';
+export const resetCharacterReducerState = () => ({
+  type: RESET_CHARACTER_REDUCER_STATE,
+})
+
 export const setStepToCompleteCheckCharacter = (step, dispatch) => {
   dispatch(setStepToComplete(step));
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import NewCharacterContainer from './newCharacterContainer';
 import LandingPage from './landingPage';
 import Dashboard from './dashboard';
@@ -13,12 +13,12 @@ export default function App(props) {
     <div className="app">
       <main className="main">
         <NavBar />
-        <Switch>
+        {/* <Switch> */}
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/register" component={RegistrationPage} />
           <Route path="/newCharacter/" component={NewCharacterContainer} />
-        </Switch>
+        {/* </Switch> */}
       </main>
     </div>
   </Router>        

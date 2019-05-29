@@ -7,6 +7,7 @@ import { sumBonus } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories'
 import { capitalizeFirstLetter } from '../utility/helperFunctions';
 import { saveAndSubmit } from '../actions/protectedData';
+import { resetCharacterReducerState } from '../actions/index';
 
 import './characterReview.css';
 
@@ -206,6 +207,7 @@ export class CharacterReview extends React.Component{
         </div>
       )
     } else {   
+      this.props.dispatch(resetCharacterReducerState());
       return <Redirect to="/dashboard/" />;
     }
 	}

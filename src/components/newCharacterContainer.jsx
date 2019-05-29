@@ -58,8 +58,8 @@ export class NewCharacterContainer extends React.Component{
 			nextUrl = `/newCharacter/${stepsArray[currentStep].name}`;
 		}
 
-		return (
-	        <Router>
+		return ( /* refactoring nested routers */
+	       
 		        <div className="newCharacterContainer">
 		        	<NewCharacterNavLinks />
               <div className="flexContianer">
@@ -87,7 +87,7 @@ export class NewCharacterContainer extends React.Component{
                 </div>
               </div>
 		        </div>
-	        </Router>
+	        
 	    );
 	}
 }

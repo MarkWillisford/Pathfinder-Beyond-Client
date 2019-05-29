@@ -2,6 +2,8 @@ import {API_BASE_URL} from '../config/main.config';
 import {normalizeResponseErrors} from '../utility/normalizeResponseErrors';
 import React from 'react';
 import {Redirect} from 'react-router-dom';
+import { resetCharacterReducerState } from '../actions/index';
+
 
 export const FETCH_PROTECTED_DATA_SUCCESS = 'FETCH_PROTECTED_DATA_SUCCESS';
 export const fetchProtectedDataSuccess = data => ({
@@ -217,7 +219,7 @@ export const saveAndSubmit = () => (dispatch, getState) => {
   }
   console.log(getState());
   console.log(user);
-  let characterToSave = {
+  /* let characterToSave = {
     user_id: user,
     characterStats: charState.newCharacter.characterStats,
     charClass: charState.newCharacter.charClass._id,
@@ -257,7 +259,7 @@ export const saveAndSubmit = () => (dispatch, getState) => {
       goodsAndServices:goodsAndServicesList,
     },
     abilityScoreGenerationMethod: charState.abilityScoreGenerationMethod,
-  }
+  } */
 
   fetch(`${API_BASE_URL}/users/characters`, {
     method: 'POST',
@@ -313,9 +315,10 @@ export const saveAndSubmit = () => (dispatch, getState) => {
   }).then(data => {
     console.log("success");
     console.log(data);    
-    //history.push("/dashboard/");
+    // history.push("/dashboard/");
     // return <Redirect to="/dashboard" />;
     dispatch(setSaved(true));
+    // dispatch(resetCharacterReducerState());
     //dispatch(fetchProtectedExtraDataSuccess(data));
   }).catch(err => {
       dispatch(fetchProtectedDataError(err));
