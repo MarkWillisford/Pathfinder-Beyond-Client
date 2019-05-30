@@ -25,18 +25,18 @@ export class NewCharacterContainer extends React.Component{
     	let index = this.props.currentStep-1;
     	let disabledPrev = (index === 0);
 
-    	// call disable action
-		LoadOptions(index, this.props.dispatch);
-    	this.props.dispatch(toggleStep(index, false, disabledPrev));
+      // call disable action
+      LoadOptions(index, this.props.dispatch);
+        this.props.dispatch(toggleStep(index, false, disabledPrev));
     }
 
     toggleNext(e){
     	let index = this.props.currentStep+1;
     	let disabledNext = (index === this.props.creationSteps.length-1);
 
-    	// call disable action
-		LoadOptions(index, this.props.dispatch);
-    	this.props.dispatch(toggleStep(index, disabledNext, false ));
+      // call disable action
+      LoadOptions(index, this.props.dispatch);
+        this.props.dispatch(toggleStep(index, disabledNext, false ));
     }
 
 	render(){
@@ -58,37 +58,35 @@ export class NewCharacterContainer extends React.Component{
 			nextUrl = `/newCharacter/${stepsArray[currentStep].name}`;
 		}
 
-		return ( /* refactoring nested routers */
-	       
-		        <div className="newCharacterContainer">
-		        	<NewCharacterNavLinks />
-              <div className="flexContianer">
-                <div className="navButtonWrapper col-2">
-                  <Prev toggle={(e) => this.togglePrev(e)} disabled={disabledPrev} url={prevUrl}/>
-                </div>
-                <div className="newCharacterDataContainer col-8">
-                  {/* 8 sections, each of which has a completed property
-                    which controls which component is displayed */}
-                  <Route exact path="/newCharacter/" render={() => <Redirect to="/newCharacter/home" />} />
-                  <Route  path="/newCharacter/Character Basics" render={() => <Redirect to="/newCharacter/home" />} />
-                  <Route  path="/newCharacter/home" component={NewCharacterPreferences} />
-                  <Route  path="/newCharacter/Race" component={NewCharacterRace} />
-                  <Route  path="/newCharacter/Class" component={NewCharacterClass} />
-                  <Route  path="/newCharacter/Ability Scores" render={() => <Redirect to="/newCharacter/AbilityScores" />} />
-                  <Route  path="/newCharacter/AbilityScores" component={NewCharacterAbilityScores} />
-                  <Route  path="/newCharacter/Details" component={NewCharacterDetails} />
-                  <Route  path="/newCharacter/Skills" component={NewCharacterSkills} />
-                  <Route  path="/newCharacter/Feats" component={NewCharacterFeats} />
-                  <Route  path="/newCharacter/Equipment" component={NewCharacterEquipment} />
-                  <Route  path="/newCharacter/review" component={CharacterReview} />
-                </div>
-                <div className="navButtonWrapper col-2">
-                  <Next toggle={(e) => this.toggleNext(e)} disabled={disabledNext} url={nextUrl}/>
-                </div>
-              </div>
-		        </div>
-	        
-	    );
+		return (	       
+      <div className="newCharacterContainer">
+        <NewCharacterNavLinks />
+        <div className="flexContianer">
+          <div className="navButtonWrapper col-2">
+            <Prev toggle={(e) => this.togglePrev(e)} disabled={disabledPrev} url={prevUrl}/>
+          </div>
+          <div className="newCharacterDataContainer col-8">
+            {/* 8 sections, each of which has a completed property
+              which controls which component is displayed */}
+            <Route exact path="/newCharacter/" render={() => <Redirect to="/newCharacter/home" />} />
+            <Route  path="/newCharacter/Character Basics" render={() => <Redirect to="/newCharacter/home" />} />
+            <Route  path="/newCharacter/home" component={NewCharacterPreferences} />
+            <Route  path="/newCharacter/Race" component={NewCharacterRace} />
+            <Route  path="/newCharacter/Class" component={NewCharacterClass} />
+            <Route  path="/newCharacter/Ability Scores" render={() => <Redirect to="/newCharacter/AbilityScores" />} />
+            <Route  path="/newCharacter/AbilityScores" component={NewCharacterAbilityScores} />
+            <Route  path="/newCharacter/Details" component={NewCharacterDetails} />
+            <Route  path="/newCharacter/Skills" component={NewCharacterSkills} />
+            <Route  path="/newCharacter/Feats" component={NewCharacterFeats} />
+            <Route  path="/newCharacter/Equipment" component={NewCharacterEquipment} />
+            <Route  path="/newCharacter/review" component={CharacterReview} />
+          </div>
+          <div className="navButtonWrapper col-2">
+            <Next toggle={(e) => this.toggleNext(e)} disabled={disabledNext} url={nextUrl}/>
+          </div>
+        </div>
+      </div>	        
+	  );
 	}
 }
 

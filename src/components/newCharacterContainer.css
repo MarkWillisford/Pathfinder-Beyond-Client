@@ -31,19 +31,19 @@ li {
 .flexContianer{
   display:flex;
   align-items: center;
+  text-align: center;
 }
 .newCharacterDataContainer{
   border:1px solid black;
-/*   max-width: 60%;
-  margin: 0 auto;*/
+  max-width: 70%;
+  min-width: 50%;
+  margin: 0 auto;
+  padding: 2vh;
   text-align: center; 
-}
+} 
 .navButtonWrapper{
-  border:1px solid black;
-  /* height: 5vh;
-  margin: auto; */
-
-
+  /* border:1px solid black; */
+  margin: 0 auto;
 }
 
 @media (max-width:600px)
@@ -65,6 +65,6 @@ li {
     display:block;
   }
   .newCharacterDataContainer{
-    max-width: 70%;
+    max-width: 60%;
   }
 }

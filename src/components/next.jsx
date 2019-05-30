@@ -1,12 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import './next.css';
+import doubleArrowRight from '../images/doubleArrowRight.png';
+import doubleArrowRightDisabled from '../images/doubleArrowRightDisabled.png';
+
+
 export default function Next(props) {
   const show = props.disabled;
   if(!show){
-  	return (<Link className="nextButton" to={props.url} onClick={props.toggle}>Next</Link>);
+    return (
+      <div className="nextButtonWrapper show">
+        <Link className="nextButton" to={props.url} onClick={props.toggle}>
+          <img src={doubleArrowRight} alt="next" height="35" />
+        </Link>
+      </div>
+    );
   }
   return (
-    <span className="nextButton">Next</span>
+    <div className="nextButtonWrapper disabled">
+      <span className="nextButton">
+        <img src={doubleArrowRightDisabled} alt="next" height="35" />
+      </span>
+    </div>
   );
 }

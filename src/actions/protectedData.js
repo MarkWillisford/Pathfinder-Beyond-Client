@@ -98,6 +98,7 @@ export const setSaved = (toggle) => ({
 export const fetchProtectedData = (api, call="") => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   dispatch(setLoading());
+  console.log('about to fetch');
   
   fetch(`${API_BASE_URL}/${api}`, {
     method: 'GET',
@@ -109,14 +110,13 @@ export const fetchProtectedData = (api, call="") => (dispatch, getState) => {
   ).then(res => {
     return res.json();
   }).then(data => {
+    console.log("about to run switch");
     switch(call){
       case "usersCharacters": 
-        console.log(call);
-        console.log("dispatching usersCharacters");
+        console.log("in userCharacters");
         dispatch(fetchProtectedData_usersCharacters_Success(data));
       default: 
-        console.log(call);
-        console.log("dispatching default");
+        console.log("in default");
         dispatch(fetchProtectedDataSuccess(data));
     }
   }).catch(err => {
@@ -217,49 +217,6 @@ export const saveAndSubmit = () => (dispatch, getState) => {
       tradeGoodsList.push(item.id);
     }
   }
-  console.log(getState());
-  console.log(user);
-  /* let characterToSave = {
-    user_id: user,
-    characterStats: charState.newCharacter.characterStats,
-    charClass: charState.newCharacter.charClass._id,
-    featSlots: arrayOfFeats,
-    traitSlots: arrayOfTraits,
-    preferences: {
-      name: charState.newCharacter.preferences.characterName,
-      advancement: charState.newCharacter.preferences.advancement,
-      hpProcess: charState.newCharacter.preferences.hpProcess,
-    },
-    race: charState.newCharacter.race._id,
-    details:{
-      age: charState.newCharacter.details.age,
-      alignments: charState.newCharacter.details.alignments,
-      allies: charState.newCharacter.details.allies,
-      backstory: charState.newCharacter.details.backstory,
-      deity: charState.newCharacter.details.deity,
-      enemies: charState.newCharacter.details.enemies,
-      eyes: charState.newCharacter.details.eyes,
-      flaws: charState.newCharacter.details.flaws,
-      gender: charState.newCharacter.details.gender,
-      hair: charState.newCharacter.details.hair,
-      ideals: charState.newCharacter.details.ideals,
-      organizations: charState.newCharacter.details.organizations,
-      other: charState.newCharacter.details.other,
-      personalityTraits: charState.newCharacter.details.personalityTraits,
-      skin: charState.newCharacter.details.skin,
-      weight: charState.newCharacter.details.weight,
-    },
-    goldMethod: charState.newCharacter.goldMethod,
-    gold: charState.newCharacter.gold,
-    availableGold: charState.newCharacter.availableGold,
-    gear: {
-      armor:armorsList,
-      weapon:weaponsList,
-      tradeGoods:tradeGoodsList,
-      goodsAndServices:goodsAndServicesList,
-    },
-    abilityScoreGenerationMethod: charState.abilityScoreGenerationMethod,
-  } */
 
   fetch(`${API_BASE_URL}/users/characters`, {
     method: 'POST',
@@ -313,8 +270,6 @@ export const saveAndSubmit = () => (dispatch, getState) => {
   ).then(res => {
     return res.json();
   }).then(data => {
-    console.log("success");
-    console.log(data);    
     // history.push("/dashboard/");
     // return <Redirect to="/dashboard" />;
     dispatch(setSaved(true));

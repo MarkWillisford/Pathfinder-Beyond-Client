@@ -17,8 +17,7 @@ import './newCharacterClass.css';
 
 export class NewCharacterClass extends React.Component{
   componentDidMount(){
-/*     console.log("triggering clear");
-    this.props.dispatch(clearData()); */
+    this.props.dispatch(clearData());
     this.props.dispatch(fetchProtectedData("charClasses"));
   }
 

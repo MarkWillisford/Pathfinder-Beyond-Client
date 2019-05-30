@@ -28,6 +28,9 @@ export class NewCharacterSkills extends React.Component{
 		let value = event.target.value;
 		let skill = event.target.parentElement.parentElement.getAttribute("name");
 
+    console.log("submitting");
+    console.log(skill);
+    console.log(value);
 		this.props.dispatch(submitSkillsToState( skill, "ranks", value ));
 	}
 	statIndex(stats, name){

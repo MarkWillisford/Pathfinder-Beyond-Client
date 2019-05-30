@@ -1,0 +1,21 @@
+.raceCardFlexContianer{  
+  display:flex;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+}
+
+.raceCard{
+  border: 1px solid black;
+  height: 45px;
+}
+
+.raceDiv{
+  width: stretch;
+  height: 100%;  
+}
+.raceMoreButton{
+  width: 45px;
+  height: 100%;
+  align-self: flex-end
+}

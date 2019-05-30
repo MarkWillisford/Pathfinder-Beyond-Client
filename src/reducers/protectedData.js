@@ -64,7 +64,6 @@ export default function reducer(state = initialState, action) {
   } else if (action.type === CLEAR_DATA) {
       return Object.assign({}, state, initialState);
   } else if (action.type === SET_SAVED) {
-    console.log("saving");
     return Object.assign({}, state, {
       saved: action.saved
     });

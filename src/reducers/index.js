@@ -369,7 +369,7 @@ export const characterReducer = (state=initialState, action) => {
           skills:{ 
             ...state.newCharacter.skills,
             [action.skill]:{
-              ...state.newCharacter[action.skill], [action.bonusType]:action.bonus
+              ...state.newCharacter.skills[action.skill], [action.bonusType]:action.bonus
             }
           }
         }           

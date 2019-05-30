@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import SelectionFormRace from './selectionFormRace';
 
+import './raceCard.css';
+
 export class RaceCard extends React.Component{
 	render(){
 		let showSelections = "";
@@ -12,18 +14,19 @@ export class RaceCard extends React.Component{
 		};
 
 		let showTheseSelections = ((showSelections.name === this.props.name) ? true : false);
-    console.log(showTheseSelections);
 		
 		return(
-			<div className="raceCard">
-				<div className="raceDiv" >
-					{this.props.thum}
-					{this.props.name}
-				</div>
-				{ !this.props.expand && <button ref={this.props.name + "button"} onClick={this.props.callback}>More</button> }
-				{ this.props.expand && <RaceExpanded thum={this.props.thum} name={this.props.name} 
-					expand={this.props.expand} traits={this.props.traits} callback={this.props.callback} 
-					addRaceCallback={this.props.addRaceCallback} showTheseSelections={showTheseSelections}/> }
+			<div className="raceCard">        
+        <div className="raceCardFlexContianer">
+          <div className="raceDiv" >
+            {this.props.thum}
+            {this.props.name}
+          </div>
+          { !this.props.expand && <button className ="raceMoreButton" ref={this.props.name + "button"} onClick={this.props.callback}>More</button> }
+          { this.props.expand && <RaceExpanded thum={this.props.thum} name={this.props.name} 
+            expand={this.props.expand} traits={this.props.traits} callback={this.props.callback} 
+            addRaceCallback={this.props.addRaceCallback} showTheseSelections={showTheseSelections}/> }
+        </div>
 			</div>
 		)	
 	}	

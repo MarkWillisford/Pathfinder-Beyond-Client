@@ -10,7 +10,7 @@ import './dashboard.css';
 
 export class Dashboard extends React.Component {
     componentDidMount() {
-      console.log("fetching");
+      console.log("in mounting");
       this.props.dispatch(fetchProtectedData("users/characters", "usersCharacters"));
       this.props.dispatch(setSaved(false));
     }
@@ -66,7 +66,6 @@ export class Dashboard extends React.Component {
 
     render() {
       const characters = this.props.characters;//this.getCharacters();
-      console.log("in dashboard render");
       return (
         <div className="dashboard">
           <div className="dashboard-username">
