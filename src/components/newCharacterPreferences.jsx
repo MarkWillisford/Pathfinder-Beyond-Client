@@ -29,22 +29,6 @@ export class NewCharacterPreferencesForm extends React.Component{
 		const onSubmitForm = (values) => {
 			this.props.dispatch(submitPreferencesToState(values));
 		}
-
-		const createRenderer = render => ({ input, meta, label, options, ...rest }) => 
-			<div>
-				<label>{label}</label>
-				{render(input, label, rest, options)}
-				{meta.touched && meta.error && <span>{meta.error}</span>}
-			</div>
-
-		const RenderSelect = createRenderer((input, label, { children }) => 
-			<select { ... input}>
-			{children}
-			</select>			
-    )
-    const RenderTextarea = createRenderer((input, label, value) =>
-      <input type="textarea" { ... input}/>
-    )
     
     // if help is true, that screen is displayed
 		if(help){
@@ -64,8 +48,8 @@ export class NewCharacterPreferencesForm extends React.Component{
 			return (
 				<form onSubmit={this.props.handleSubmit(onSubmitForm) }>
 					<h1>Character Basics</h1>
-					<div>
-            <Field component={RenderTextarea} name={"characterName"} label={"Character name"} key={0} />
+					<div className={"characterBasicsInputDiv"}>
+            <Field component={RenderTextarea} name={"characterName"} label={"Character name"} key={0}/>
 						<Field name="advancementSelecter" label="How will this character advance?" component={RenderSelect}>
 							<option />
 			        		<option value="slow">Slow</option>
@@ -94,6 +78,23 @@ export class NewCharacterPreferencesForm extends React.Component{
 		}		
 	}
 }
+
+
+const createRenderer = render => ({ input, meta, label, options, ...rest }) => 
+<div>
+  <label>{label}</label>
+  {render(input, label, rest, options)}
+  {meta.touched && meta.error && <span>{meta.error}</span>}
+</div>
+
+const RenderSelect = createRenderer((input, label, { children }) => 
+<select { ... input}>
+{children}
+</select>			
+)
+const RenderTextarea = createRenderer((input, label, value) =>
+<input type="textarea" { ... input} className="characterInputBox"/>
+)
 
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[0].complete,

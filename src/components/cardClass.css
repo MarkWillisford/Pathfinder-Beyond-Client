@@ -1,0 +1,38 @@
+.classCardFlexContianer{  
+  display:flex;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+}
+
+.cardClass.expanded{
+  border: 1px solid black;
+  height: auto;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.10);
+}
+.cardClass{
+  border: 1px solid black;
+  height: 45px;
+  background: rgba(0, 0, 0, 0.20);
+}
+.classCardFlexContianer.expanded{
+  flex-direction: column;
+}
+.classCardFlexContianer{
+  flex-direction: row;
+}
+
+.classDiv.expanded{
+  width: 100%;
+  height: 35px;
+}
+.classDiv{
+  width: stretch;
+  height: 100%;  
+}
+.classMoreButton{
+  width: 45px;
+  height: 100%;
+  align-self: flex-end
+}

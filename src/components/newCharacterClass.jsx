@@ -165,7 +165,7 @@ export class NewCharacterClass extends React.Component{
 				// Not complete, with no class needing selections, therefore get choices and display
 				return (
 					<div className="newCharacterClass">
-						<h1>Character Class - todo</h1>	
+						<h1>Class</h1>	
 						{classesArray.map(({_id,thum,name,classFeatures}) => 
 							<CardClass key={_id} thum={thum} name={name} expand={ toExpand === name ? true : false } 
 								features={classFeatures} callback={()=> this.handleClick(_id)} 

@@ -23,33 +23,25 @@ export class NewCharacterRace extends React.Component{
     this.props.dispatch(fetchProtectedSubData("aasimarHeritages"));
   }
 
-	showExpandedRace(id){		
+	showExpandedRace(id){
+    let toExpand = "";
+    if(this.props.toExpand){
+      if(this.props.toExpand.race){
+        toExpand = this.props.toExpand.race;
+      }
+    }	
+
 		const racesArray = this.props.racesArray;
     let name = "";
 		for(let i=0; i<racesArray.length;i++){
-			/* // if this is the clicked element toggle it **OR**
-			// if this is not the clicked element and it is expanded, toggle it
-			if( (i===id) || (i!==id && racesArray[i].expand === true) ){
-				this.props.dispatch(toggleRaceExpand(i));				// <--- This requires that the races are already in store
-			}															// !TODO refactor to use state.characterReducer.expanded
-			// again we have to find the element that called this function
-			if( i===id ){
-				// and set its child component button to display off. 
-				// TODO! by ref or by state?
-			} */
-			if( racesArray[i].id === id){
-				name = racesArray[i].name
-			}
+			if( racesArray[i].id === id && racesArray[i].name === toExpand){
+        name = "";
+			} else if (racesArray[i].id === id){
+        name = racesArray[i].name;
+      }
 		}
-		if(name === ""){
-			console.log("Error! Couldn't find race")
-		}
-		this.props.dispatch(setExpandedRace(name));
+    this.props.dispatch(setExpandedRace(name));    
 	}
-
-  getRaceData(){
-    // return require('../data/races');
-  }
 
 	addRace(id){
     const racesArray = this.props.racesArray;   // this.getRaceData();
@@ -143,7 +135,7 @@ export class NewCharacterRace extends React.Component{
       )
     } else {
       if(!complete){
-      const racesArray = this.props.racesArray; // require('../data/races');
+      const racesArray = this.props.racesArray;
 			// Not complete, get choices and display
 			return (
 		        <div className="newCharacterRace">

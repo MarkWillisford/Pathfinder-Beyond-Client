@@ -1,18 +1,31 @@
 import React from 'react';
 import { capitalizeFirstLetter, arrayToSentence } from '../utility/helperFunctions';
 
+import './cardClass.css';
+
 export default class CardClass extends React.Component{
 	render(){
+    let classCardClassName = "cardClass";
+    let classDivClassName = "classDiv";
+    let classFlexContainerName = "classCardFlexContianer";
+    if(this.props.expand){
+      classCardClassName += " expanded";
+      classDivClassName += " expanded";
+      classFlexContainerName += " expanded";
+    }
+
 		return(
-			<div className="cardClass">
-				<div className="classDiv" >
-					{this.props.thum}
-					<h2>{capitalizeFirstLetter(this.props.name)}</h2>
-				</div>
-				{ !this.props.expand && <button ref={this.props.name + "button"} onClick={this.props.callback}>More</button> }
-				{ this.props.expand && <ClassExpanded thum={this.props.thum} name={this.props.name} 
-					expand={this.props.expand} features={this.props.features} callback={this.props.callback} 
-					addClassCallback={this.props.addClassCallback}/> }
+			<div className={classCardClassName}>
+        <div className={classFlexContainerName}>
+          <div className={classDivClassName} >
+            {this.props.thum}
+            {capitalizeFirstLetter(this.props.name)}
+          </div>
+          { !this.props.expand && <button className= "classMoreButton" ref={this.props.name + "button"} onClick={this.props.callback}>More</button> }
+          { this.props.expand && <ClassExpanded thum={this.props.thum} name={this.props.name} 
+            expand={this.props.expand} features={this.props.features} callback={this.props.callback} 
+            addClassCallback={this.props.addClassCallback}/> }
+        </div>				
 			</div>
 		)	
 	}	

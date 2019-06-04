@@ -60,7 +60,7 @@ export class NewCharacterNavLinks extends React.Component{
             ))}
           </ul>
         </div>
-      </div>
+      </div> 
 	  );
 	}
 }

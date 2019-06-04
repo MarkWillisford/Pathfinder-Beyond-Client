@@ -5,11 +5,28 @@
   height: 100%;
 }
 
+.raceCard.expanded{
+  border: 1px solid black;
+  height: auto;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.10);
+}
 .raceCard{
   border: 1px solid black;
   height: 45px;
+  background: rgba(0, 0, 0, 0.20);
+}
+.raceCardFlexContianer.expanded{
+  flex-direction: column;
+}
+.raceCardFlexContianer{
+  flex-direction: row;
 }
 
+.raceDiv.expanded{
+  width: 100%;
+  height: 35px;
+}
 .raceDiv{
   width: stretch;
   height: 100%;  
@@ -18,4 +35,9 @@
   width: 45px;
   height: 100%;
   align-self: flex-end
+}
+.raceExpanded{
+  max-height: 95vh;
+  flex: 1;
+  overflow-y: auto;
 }

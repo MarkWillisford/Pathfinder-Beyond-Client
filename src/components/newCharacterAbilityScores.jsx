@@ -108,7 +108,7 @@ export class NewCharacterAbilityScores extends React.Component{
 		} else if(!complete){
 			return (
 		        <div className="newCharacterAbilityScores">
-		        	<h1>Character Ability Scores</h1>	
+		        	<h1>Ability Scores</h1>	
 		        	<p>How would you like to generate ability scores?
 		        	<select ref="abilityScoreGenerationMethod" onChange={()=> this.handleClick(this.refs.abilityScoreGenerationMethod.value)}>
 		        		<option value="0">Select how to generate scores</option>

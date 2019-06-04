@@ -13,12 +13,20 @@ export class RaceCard extends React.Component{
 			showSelections = false;
 		};
 
-		let showTheseSelections = ((showSelections.name === this.props.name) ? true : false);
-		
+    let showTheseSelections = ((showSelections.name === this.props.name) ? true : false);
+    let raceCardClassName = "raceCard";
+    let raceDivClassName = "raceDiv";
+    let raceFlexContainerName = "raceCardFlexContianer";
+    if(this.props.expand){
+      raceCardClassName += " expanded";
+      raceDivClassName += " expanded";
+      raceFlexContainerName += " expanded";
+    }
+    
 		return(
-			<div className="raceCard">        
-        <div className="raceCardFlexContianer">
-          <div className="raceDiv" >
+			<div className={ raceCardClassName }>
+        <div className={ raceFlexContainerName }>
+          <div className={ raceDivClassName } >
             {this.props.thum}
             {this.props.name}
           </div>

@@ -43,7 +43,12 @@ export class NewCharacterContainer extends React.Component{
 		const stepsArray = this.props.creationSteps;
 		const currentStep = this.props.currentStep;
 		const disabledPrev = this.props.disabledPrev;
-		const disabledNext = this.props.disabledNext;
+    const disabledNext = this.props.disabledNext;
+    console.log("stepsArray is: ");
+    console.log(stepsArray);
+    console.log("current step is: ");
+    console.log(currentStep);
+
 		let prevUrl = "";
 		if(currentStep !== 0){
 			prevUrl = `/newCharacter/${stepsArray[currentStep-1].name}`;
@@ -51,12 +56,18 @@ export class NewCharacterContainer extends React.Component{
 			prevUrl = `/newCharacter/${stepsArray[currentStep].name}`;
 		}
 
+    console.log("prevUrl is: ");
+    console.log(prevUrl);
+
 		let nextUrl = "";
 		if(currentStep !== 7){
 			nextUrl = `/newCharacter/${stepsArray[currentStep+1].name}`;
 		} else {
 			nextUrl = `/newCharacter/${stepsArray[currentStep].name}`;
 		}
+
+    console.log("nexyUrl is: ");
+    console.log(nextUrl);
 
 		return (	       
       <div className="newCharacterContainer">
@@ -83,6 +94,9 @@ export class NewCharacterContainer extends React.Component{
           </div>
           <div className="navButtonWrapper col-2">
             <Next toggle={(e) => this.toggleNext(e)} disabled={disabledNext} url={nextUrl}/>
+          </div>
+          <div className="mobileNavFooter">
+            <p>Say Hi from the Bottom</p>
           </div>
         </div>
       </div>	        
