@@ -122,83 +122,216 @@ export class NewCharacterAbilityScores extends React.Component{
 			        </div>
 			        <div className="abilityScoreTable">
 			        	<p>Ability Score table below shows all the calculations based on your input thus far</p>
-			        	<table>
-			        		<thead>
-				        		<tr>
-				        			<th></th>
-				        			<th>Total Score</th>
-				        			<th>Modifier</th>
-				        			<th>Base Score</th>
-				        			<th>Racial Bonus</th>
-				        			<th>Enhancement Bonus</th>
-				        			<th>Inherent Bonus</th>
-				        			<th>Template Bonus</th>
-				        		</tr>
-				        	</thead>
-				        	<tbody>
-				        		<tr>
-				        			<td>Strength</td>
-				        			<td id="strTotal">{strengthTotal}</td>
-				        			<td id="strMod">{ strengthBase ? strengthMod : "--" }</td>
-				        			<td id="strBase">{ strengthBase ? strengthBase : "--" }</td>
-				        			<td id="strRacial">{ strengthRacial ? strengthRacial : "0" }</td>
-				        			<td id="strEnhance">+0</td>
-				        			<td id="strInherent">+0</td>
-				        			<td id="strTemplate">+0</td>
-				        		</tr>
-				        		<tr>
-				        			<td>Dexterity</td>
-				        			<td id="dexTotal">{dexterityTotal}</td>
-				        			<td id="dexMod">{ dexterityBase ? dexterityMod : "--" }</td>
-				        			<td id="dexBase">{ dexterityBase ? dexterityBase : "--"}</td>
-				        			<td id="dexRacial">{ dexterityRacial ? dexterityRacial : "0" }</td>
-				        			<td id="dexEnhance">+0</td>
-				        			<td id="dexInherent">+0</td>
-				        			<td id="dexTemplate">+0</td>
-				        		</tr>
-				        		<tr>
-				        			<td>Constitution</td>
-				        			<td id="conTotal">{constitutionTotal}</td>
-				        			<td id="conMod">{ constitutionBase ? constitutionMod : "--" }</td>
-				        			<td id="conBase">{ constitutionBase ? constitutionBase : "--" }</td>
-				        			<td id="conRacial">{ constitutionRacial ? constitutionRacial : "0" }</td>
-				        			<td id="conEnhance">+0</td>
-				        			<td id="conInherent">+0</td>
-				        			<td id="conTemplate">+0</td>
-				        		</tr>
-				        		<tr>
-				        			<td>Intelligence</td>
-				        			<td id="intTotal">{intelligenceTotal}</td>
-				        			<td id="intMod">{ intelligenceBase ? intelligenceMod : "--" }</td>
-				        			<td id="intBase">{ intelligenceBase ? intelligenceBase : "--" }</td>
-				        			<td id="intRacial">{ intelligenceRacial ? intelligenceRacial : "0" }</td>
-				        			<td id="intEnhance">+0</td>
-				        			<td id="intInherent">+0</td>
-				        			<td id="intTemplate">+0</td>
-				        		</tr>
-				        		<tr>
-				        			<td>Wisdom</td>
-				        			<td id="wisTotal">{wisdomTotal}</td>
-				        			<td id="wisMod">{ wisdomBase ? wisdomMod : "--" }</td>
-				        			<td id="wisBase">{ wisdomBase ? wisdomBase : "--"}</td>
-				        			<td id="wisRacial">{ wisdomRacial ? wisdomRacial : "0" }</td>
-				        			<td id="wisEnhance">+0</td>
-				        			<td id="wisInherent">+0</td>
-				        			<td id="wisTemplate">+0</td>
-				        		</tr>
-				        		<tr>
-				        			<td>Charisma</td>
-				        			<td id="chaTotal">{charismaTotal}</td>
-				        			<td id="chaMod">{ charismaBase ? charismaMod : "--" }</td>
-				        			<td id="chaBase">{ charismaBase ? charismaBase : "--" }</td>
-				        			<td id="chaRacial">{ charismaRacial ? charismaRacial : "0" }</td>
-				        			<td id="chaEnhance">+0</td>
-				        			<td id="chaInherent">+0</td>
-				        			<td id="chaTemplate">+0</td>
-				        		</tr>
-				        	</tbody>
-			        	</table>
-			        	<br />
+                <table className="statTable" id="strTable">
+                  <caption class="abilityHeader">
+                    Strength
+                  </caption>
+                  <tbody>
+                    <tr>
+                      <td className="statTableDataLabel">Modifier</td>
+                      <td className="statTableData" id="strMod">{ strengthBase ? strengthMod : "--" }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Total Score</td>
+                      <td className="statTableData"  id="strTotal">{ strengthTotal }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Base Score</td>
+                      <td className="statTableData"  id="strBase">{ strengthBase ? strengthBase : "--" }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Racial Bonus</td>
+                      <td className="statTableData"  id="strRacial">{ strengthRacial ? "+" + strengthRacial : "+0" }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Enhancement Bonus</td>
+                      <td className="statTableData"  id="strEnhance">+0</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Inherent Bonus</td>
+				        			<td className="statTableData"  id="strInherent">+0</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Template Bonus</td>
+				        			<td className="statTableData"  id="strTemplate">+0</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table className="statTable" id="dexTable">
+                  <caption class="abilityHeader">
+                    Dexterity
+                  </caption>
+                  <tbody>
+                    <tr>
+                      <td className="statTableDataLabel">Modifier</td>
+                      <td className="statTableData" id="dexMod">{ dexterityBase ? dexterityMod : "--" }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Total Score</td>
+                      <td className="statTableData"  id="dexTotal">{ dexterityTotal }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Base Score</td>
+                      <td className="statTableData"  id="dexBase">{ dexterityBase ? dexterityMod : "--" }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Racial Bonus</td>
+                      <td className="statTableData"  id="dexRacial">{ dexterityRacial ? "+" + dexterityRacial : "+0" }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Enhancement Bonus</td>
+                      <td className="statTableData"  id="dexEnhance">+0</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Inherent Bonus</td>
+				        			<td className="statTableData"  id="dexInherent">+0</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Template Bonus</td>
+				        			<td className="statTableData"  id="dexTemplate">+0</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table className="statTable" id="conTable">
+                  <caption class="abilityHeader">
+                    Constitution
+                  </caption>
+                  <tbody>
+                    <tr>
+                      <td className="statTableDataLabel">Modifier</td>
+                      <td className="statTableData" id="conMod">{ constitutionBase ? constitutionMod : "--" }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Total Score</td>
+                      <td className="statTableData"  id="conTotal">{ constitutionTotal }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Base Score</td>
+                      <td className="statTableData"  id="conBase">{ constitutionBase ? constitutionBase : "--" }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Racial Bonus</td>
+                      <td className="statTableData"  id="conRacial">{ constitutionRacial ? "+" + constitutionRacial : "+0" }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Enhancement Bonus</td>
+                      <td className="statTableData"  id="conEnhance">+0</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Inherent Bonus</td>
+				        			<td className="statTableData"  id="conInherent">+0</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Template Bonus</td>
+				        			<td className="statTableData"  id="conTemplate">+0</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table className="statTable" id="intTable">
+                  <caption class="abilityHeader">
+                    Intelligence
+                  </caption>
+                  <tbody>
+                    <tr>
+                      <td className="statTableDataLabel">Modifier</td>
+                      <td className="statTableData" id="intMod">{ intelligenceBase ? intelligenceMod : "--" }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Total Score</td>
+                      <td className="statTableData"  id="intTotal">{ intelligenceTotal }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Base Score</td>
+                      <td className="statTableData"  id="intBase">{ intelligenceBase ? intelligenceBase : "--" }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Racial Bonus</td>
+                      <td className="statTableData"  id="intRacial">{ intelligenceRacial ? "+" + intelligenceRacial : "+0" }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Enhancement Bonus</td>
+                      <td className="statTableData"  id="intEnhance">+0</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Inherent Bonus</td>
+				        			<td className="statTableData"  id="intInherent">+0</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Template Bonus</td>
+				        			<td className="statTableData"  id="intTemplate">+0</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table className="statTable" id="wisTable">
+                  <caption class="abilityHeader">
+                    Wisdom
+                  </caption>
+                  <tbody>
+                    <tr>
+                      <td className="statTableDataLabel">Modifier</td>
+                      <td className="statTableData" id="wisMod">{ wisdomBase ? wisdomMod : "--" }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Total Score</td>
+                      <td className="statTableData"  id="wisTotal">{ wisdomTotal }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Base Score</td>
+                      <td className="statTableData"  id="wisBase">{ wisdomBase ? wisdomBase : "--"}</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Racial Bonus</td>
+                      <td className="statTableData"  id="wisRacial">{ wisdomRacial ? "+" + wisdomRacial : "+0" }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Enhancement Bonus</td>
+                      <td className="statTableData"  id="wisEnhance">+0</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Inherent Bonus</td>
+				        			<td className="statTableData"  id="wisInherent">+0</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Template Bonus</td>
+				        			<td className="statTableData"  id="wisTemplate">+0</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table className="statTable" id="chaTable">
+                  <caption class="abilityHeader">
+                    Charisma
+                  </caption>
+                  <tbody>
+                    <tr>
+                      <td className="statTableDataLabel">Modifier</td>
+                      <td className="statTableData" id="chaMod">{ charismaBase ? charismaMod : "--" }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Total Score</td>
+                      <td className="statTableData"  id="chaTotal">{ charismaTotal }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Base Score</td>
+                      <td className="statTableData"  id="chaBase">{ charismaBase ? charismaBase : "--" }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Racial Bonus</td>
+                      <td className="statTableData"  id="chaRacial">{ charismaRacial ? "+" + charismaRacial : "+0" }</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Enhancement Bonus</td>
+                      <td className="statTableData"  id="chaEnhance">+0</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Inherent Bonus</td>
+				        			<td className="statTableData"  id="chaInherent">+0</td>
+                    </tr>
+                    <tr>
+                      <td className="statTableDataLabel">Template Bonus</td>
+				        			<td className="statTableData"  id="chaTemplate">+0</td>
+                    </tr>
+                  </tbody>
+                </table>
 			        </div>	
 		        </div>
 		    );

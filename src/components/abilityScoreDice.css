@@ -1,0 +1,8 @@
+ .selecterWrappers{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.selecterWrappers div{
+  flex: 1 1 0;
+}

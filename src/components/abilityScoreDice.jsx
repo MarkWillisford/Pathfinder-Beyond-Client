@@ -10,6 +10,8 @@ import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories'
 
+import './abilityScoreDice.css';
+
 /*onChange={()=> this.handleClick(this.refs.abilityScoreGenerationMethod.value)}*/
 export class AbilityScoreDice extends React.Component {
 	constructor(props){
@@ -110,61 +112,64 @@ export class AbilityScoreDice extends React.Component {
 					)}
 				</Field>
 				<button onClick={this.rollDice.bind(this)} disabled={!this.props.diceOptions}>Roll</button>			
-				<Field 
-					name="strengthSelecter" 
-					id="strengthSelecter" 
-					label="strength" 
-					options={this.state.allOptions}
-					unavaliableOptions={this.props.unavaliableOptions}
-					component={DynamicSelect}
-					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
-				</Field>
-				<Field 
-					name="dexteritySelecter" 
-					id="dexteritySelecter" 
-					label="dexterity" 
-					options={this.state.allOptions}
-					unavaliableOptions={this.props.unavaliableOptions}
-					component={DynamicSelect}
-					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
-				</Field>
-				<Field 
-					name="constitutionSelecter" 
-					id="constitutionSelecter" 
-					label="constitution" 
-					options={this.state.allOptions}
-					unavaliableOptions={this.props.unavaliableOptions}
-					component={DynamicSelect}
-					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
-				</Field>
-				<Field 
-					name="intelligenceSelecter" 
-					id="intelligenceSelecter" 
-					label="intelligence"
-					options={this.state.allOptions}
-					unavaliableOptions={this.props.unavaliableOptions}
-					component={DynamicSelect}
-					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
-				</Field>
-				<Field 
-					name="wisdomSelecter" 
-					id="wisdomSelecter" 
-					label="wisdom"
-					options={this.state.allOptions}
-					unavaliableOptions={this.props.unavaliableOptions}
-					component={DynamicSelect}
-					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
-				</Field>
-				<Field 
-					name="charismaSelecter" 
-					id="charismaSelecter" 
-					label="charisma"
-					options={this.state.allOptions}
-					unavaliableOptions={this.props.unavaliableOptions}
-					component={DynamicSelect}
-					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
-				</Field>
-
+				<div className="selecterWrappers">
+          <Field 
+            name="strengthSelecter" 
+            id="strengthSelecter" 
+            label="strength" 
+            options={this.state.allOptions}
+            unavaliableOptions={this.props.unavaliableOptions}
+            component={DynamicSelect}
+            onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
+          </Field>
+          <Field 
+            name="dexteritySelecter" 
+            id="dexteritySelecter" 
+            label="dexterity" 
+            options={this.state.allOptions}
+            unavaliableOptions={this.props.unavaliableOptions}
+            component={DynamicSelect}
+            onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
+          </Field>
+          <Field 
+            name="constitutionSelecter" 
+            id="constitutionSelecter" 
+            label="constitution" 
+            options={this.state.allOptions}
+            unavaliableOptions={this.props.unavaliableOptions}
+            component={DynamicSelect}
+            onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
+          </Field>
+        </div>
+        <div className="selecterWrappers">
+          <Field 
+            name="intelligenceSelecter" 
+            id="intelligenceSelecter" 
+            label="intelligence"
+            options={this.state.allOptions}
+            unavaliableOptions={this.props.unavaliableOptions}
+            component={DynamicSelect}
+            onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
+          </Field>
+          <Field 
+            name="wisdomSelecter" 
+            id="wisdomSelecter" 
+            label="wisdom"
+            options={this.state.allOptions}
+            unavaliableOptions={this.props.unavaliableOptions}
+            component={DynamicSelect}
+            onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
+          </Field>
+          <Field 
+            name="charismaSelecter" 
+            id="charismaSelecter" 
+            label="charisma"
+            options={this.state.allOptions}
+            unavaliableOptions={this.props.unavaliableOptions}
+            component={DynamicSelect}
+            onChange={this.AbilityScoreSelectedCallBack.bind(this)}>
+          </Field>
+        </div>
 				<button type="submit" disabled={this.props.pristine || this.props.submitting}>Submit</button>
 			</form>
 		)

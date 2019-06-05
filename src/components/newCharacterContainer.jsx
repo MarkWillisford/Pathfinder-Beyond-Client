@@ -12,8 +12,8 @@ import NewCharacterFeats from './newCharacterFeats';
 import NewCharacterEquipment from './newCharacterEquipment';
 import LoadOptions from './loadNewCharacterOptions';
 import CharacterReview from './characterReview';
-import Next from './next';
-import Prev from './prev';
+import {Next, MobileNext} from './next';
+import {Prev, MobilePrev} from './prev';
 import requiresLogin from './requiresLogin';
 
 import {toggleStep} from '../actions/index';
@@ -96,7 +96,8 @@ export class NewCharacterContainer extends React.Component{
             <Next toggle={(e) => this.toggleNext(e)} disabled={disabledNext} url={nextUrl}/>
           </div>
           <div className="mobileNavFooter">
-            <p>Say Hi from the Bottom</p>
+            <MobilePrev toggle={(e) => this.togglePrev(e)} disabled={disabledPrev} url={prevUrl}/>
+            <MobileNext toggle={(e) => this.toggleNext(e)} disabled={disabledNext} url={nextUrl}/>
           </div>
         </div>
       </div>	        
