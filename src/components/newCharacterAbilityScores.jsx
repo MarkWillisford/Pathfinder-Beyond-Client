@@ -123,7 +123,7 @@ export class NewCharacterAbilityScores extends React.Component{
 			        <div className="abilityScoreTable">
 			        	<p>Ability Score table below shows all the calculations based on your input thus far</p>
                 <table className="statTable" id="strTable">
-                  <caption class="abilityHeader">
+                  <caption className="abilityHeader">
                     Strength
                   </caption>
                   <tbody>
@@ -158,7 +158,7 @@ export class NewCharacterAbilityScores extends React.Component{
                   </tbody>
                 </table>
                 <table className="statTable" id="dexTable">
-                  <caption class="abilityHeader">
+                  <caption className="abilityHeader">
                     Dexterity
                   </caption>
                   <tbody>
@@ -193,7 +193,7 @@ export class NewCharacterAbilityScores extends React.Component{
                   </tbody>
                 </table>
                 <table className="statTable" id="conTable">
-                  <caption class="abilityHeader">
+                  <caption className="abilityHeader">
                     Constitution
                   </caption>
                   <tbody>
@@ -228,7 +228,7 @@ export class NewCharacterAbilityScores extends React.Component{
                   </tbody>
                 </table>
                 <table className="statTable" id="intTable">
-                  <caption class="abilityHeader">
+                  <caption className="abilityHeader">
                     Intelligence
                   </caption>
                   <tbody>
@@ -263,7 +263,7 @@ export class NewCharacterAbilityScores extends React.Component{
                   </tbody>
                 </table>
                 <table className="statTable" id="wisTable">
-                  <caption class="abilityHeader">
+                  <caption className="abilityHeader">
                     Wisdom
                   </caption>
                   <tbody>
@@ -298,7 +298,7 @@ export class NewCharacterAbilityScores extends React.Component{
                   </tbody>
                 </table>
                 <table className="statTable" id="chaTable">
-                  <caption class="abilityHeader">
+                  <caption className="abilityHeader">
                     Charisma
                   </caption>
                   <tbody>

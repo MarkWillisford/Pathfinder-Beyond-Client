@@ -335,6 +335,12 @@ export const resetCharacterReducerState = () => ({
   type: RESET_CHARACTER_REDUCER_STATE,
 })
 
+export const TOGGLE_CHARACTER_REVIEW_VIEW = 'TOGGLE_CHARACTER_REVIEW_VIEW';
+export const toggleCharacterReviewView = (string) => ({
+  type: TOGGLE_CHARACTER_REVIEW_VIEW,
+  string: string,
+})
+
 export const setStepToCompleteCheckCharacter = (step, dispatch) => {
   dispatch(setStepToComplete(step));
 }

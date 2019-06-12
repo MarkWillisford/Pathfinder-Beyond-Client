@@ -155,6 +155,7 @@ const initialState = {
     {id:4, name:"detailsExtrasExpand", expand:false},
   ],
   menuActive:false,
+  reviewExpanded:"",
 };
 function setSum(stat){
   let total = 0;
@@ -231,6 +232,7 @@ export const characterReducer = (state=initialState, action) => {
         char:action.char
       }
     case actions.TOGGLE_STEP:
+      localStorage.setItem('currentStep', action.index);
       return {
         ...state,
         currentStep:action.index,
@@ -243,6 +245,7 @@ export const characterReducer = (state=initialState, action) => {
         racesArray:action.races,
       };
     case actions.SET_STEP:
+      localStorage.setItem('currentStep', action.index);
       return {
         ...state,
         currentStep:action.index,
@@ -519,7 +522,7 @@ export const characterReducer = (state=initialState, action) => {
       return {
         ...state,
         expanded:{...state.expanded, traitCategory:action.name}
-      }
+      } 
     case actions.SET_EXPANDED_FEAT:
       return {
         ...state,
@@ -871,6 +874,11 @@ export const characterReducer = (state=initialState, action) => {
       return {
         ...state,
         menuActive:!state.menuActive
+      }
+    case actions.TOGGLE_CHARACTER_REVIEW_VIEW:
+      return {
+        ...state,
+        reviewExpanded:action.string
       }
     case actions.RESET_CHARACTER_REDUCER_STATE:
         return { ...initialState }

@@ -1,6 +1,5 @@
 .newCharacterContainer{
   margin:3vw;
-  border: 2px dotted black;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -31,21 +30,7 @@ li {
 .toggleView{
   padding: 10px 20px;
 }
-.flexContianer{
-  /* display:flex;
-  align-items: center;
-  text-align: center; */
-}
-/* .newCharacterDataContainer{
-  border:1px solid black;
-  max-width: 70%;
-  min-width: 50%;
-  margin: 0 auto;
-  padding: 2vh;
-  text-align: center; 
-}  */
 .navButtonWrapper{
-  /* border:1px solid black; */
   margin: 0 auto;
 }
 .mobileNavFooter{

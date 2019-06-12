@@ -33,8 +33,9 @@ export class CharacterReview extends React.Component{
     const saved = this.props.saved;
     const skillList = require('../data/skills');
     let characterToReview = this.props.characterToReview;
-    let sizeMod = this.props.characterToReview.race.standardRacialTraits.base.size === "small" ? 1 : 0;
-    //console.log(characterToReview);
+    console.log(this.props);
+    let sizeMod = characterToReview.race.standardRacialTraits.base.size === "small" ? 1 : 0;
+    
 
     if(!saved){
       return(

@@ -5,8 +5,9 @@ import thunk from 'redux-thunk';
 import {characterReducer} from './reducers/index';
 import authReducer from './reducers/auth';
 import protectedDataReducer from './reducers/protectedData';
-import {loadAuthToken} from './localStorage';
+import {loadAuthToken, loadCurrentStep} from './localStorage';
 import {setAuthToken, refreshAuthToken} from './actions/auth';
+import {setStep} from './actions/index';
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const enhancer = composeEnhancer(
@@ -18,7 +19,7 @@ const store = createStore(
 	combineReducers({
 		characterReducer: characterReducer,
     form: formReducer,
-    auth: authReducer,    
+    auth: authReducer,
     protectedData: protectedDataReducer
   }),
   //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),  
@@ -32,5 +33,11 @@ if (authToken) {
     store.dispatch(setAuthToken(token));
     store.dispatch(refreshAuthToken());
 } 
+
+// Hydrate the currentStep from localStorage if it exist
+const currentStep = Number(loadCurrentStep());
+if(currentStep){
+  store.dispatch(setStep(currentStep));
+}
 
 export default store;

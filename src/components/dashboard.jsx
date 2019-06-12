@@ -10,7 +10,6 @@ import './dashboard.css';
 
 export class Dashboard extends React.Component {
     componentDidMount() {
-      console.log("in mounting");
       this.props.dispatch(fetchProtectedData("users/characters", "usersCharacters"));
       this.props.dispatch(setSaved(false));
     }
@@ -61,6 +60,15 @@ export class Dashboard extends React.Component {
     }
 
     newCharacter(){
+      // We need to start by checking if the creation steps are in local storage
+      // if not we add them
+      let myStorage = window.localStorage;
+      if(!myStorage.hasOwnProperty('creationSteps')){
+        localStorage.setItem('creationSteps', creationSteps);
+      }
+      if(!myStorage.hasOwnProperty('currentStep')){
+        localStorage.setItem('currentStep', 0);
+      }
       this.props.history.push("/newCharacter/");
     }
 
@@ -98,3 +106,36 @@ const mapStateToProps = state => ({
 });
 
 export default requiresLogin()(connect(mapStateToProps)(Dashboard));
+
+const creationSteps = JSON.stringify([
+  {name:"Character Basics",
+  id:0,
+  complete:false},
+  {name:"Race",
+  id:1,
+  complete:false},          
+  {name:"Class",
+  id:2,
+  complete:false},
+  {name:"Ability Scores",
+  id:3,
+  complete:false},
+  {name:"Details",
+  id:4,
+  complete:false},
+  {name:"Skills",
+  id:5,
+  url:"",
+  completedUrl:"",
+  complete:false},
+  {name:"Feats",
+  id:6,
+  url:"",
+  completedUrl:"",
+  complete:false},
+  {name:"Equipment",
+  id:7,
+  url:"",
+  completedUrl:"",
+  complete:false},
+]);

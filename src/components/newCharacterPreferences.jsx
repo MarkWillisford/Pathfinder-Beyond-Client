@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, Field } from 'redux-form';
 import {submitPreferencesToState} from '../actions/index';
+/* import { CharacterReview } from './characterReview2'; */
+import CharacterReview from './characterReview2';
 
 import './newCharacterPreferences.css';
 
@@ -72,7 +74,9 @@ export class NewCharacterPreferencesForm extends React.Component{
 		} else {
 			return(
 		        <div className="newCharacterPerferances">
-		        	<h1>Character Basics - done</h1>	
+              {/* <CharacterReview characterToReview = {this.props.characterToReview} user = {this.props.user}
+              reviewExpanded = {this.props.reviewExpanded} dispatch = {this.props.dispatch}/> */}
+              <CharacterReview />
 		        </div>			
 			);
 		}		
@@ -98,7 +102,11 @@ const RenderTextarea = createRenderer((input, label, value) =>
 
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[0].complete,
-	help:state.characterReducer.help,
+  help:state.characterReducer.help,
+
+  /* characterToReview:state.characterReducer.newCharacter,
+  user:state.auth.currentUser.username,
+  reviewExpanded:state.characterReducer.reviewExpanded, */
 });
 
 NewCharacterPreferencesForm = reduxForm({

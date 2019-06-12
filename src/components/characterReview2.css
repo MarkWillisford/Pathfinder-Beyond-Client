@@ -1,0 +1,111 @@
+.characterReviewFlexContainer{
+
+}
+
+.playerInformationLabel,
+.characterDetailsLabel,
+.characterAbilityScoresLabel,
+.characterVitalsLabel,
+.characterCombatStatsLabel,
+.characterInitiativeLabel,
+.characterSkillsLabel,
+.characterFeatsAbilitiesNotesLabel{
+  text-align: start;
+}
+
+.playerInformation,
+.characterDetails,
+.characterVitals,
+.characterCombatStats,
+.characterInitiative,
+.characterSkills,
+.characterFeatsAbilitiesNotes{
+  border:1px solid black;
+  display: none;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.characterAbilityScores{
+  border:1px solid black;
+  display: none;
+  flex-direction: column;
+  /* align-items: stretch; */
+}
+  .strength, 
+  .dexterity,
+  .constitution,
+  .intelligence,
+  .wisdom,
+  .charisma{
+    display: flex;
+  }
+  .strengthOverview,
+  .dexterityOverview,
+  .constitutionOverview,
+  .intelligenceOverview,
+  .wisdomOverview,
+  .charismaOverview{
+    flex: 1; 
+    border: 1px solid blue;
+    display: flex;
+    align-items: stretch;
+  }
+    .strengthLabel,
+    .dexterityLabel,
+    .constitutionLabel,
+    .intelligenceLabel,
+    .wisdomLabel,
+    .charismaLabel{
+
+    }
+    .strengthTotal, 
+    .dexterityTotal,
+    .constitutionTotal,
+    .intelligenceTotal,
+    .wisdomTotal,
+    .charismaTotal{
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+    }
+    .strengthMod, 
+    .dexterityMod,
+    .constitutionMod,
+    .intelligenceMod,
+    .wisdomMod,
+    .charismaMod{
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+    }
+  .strengthDetails, 
+  .dexterityDetails,
+  .constitutionDetails,
+  .intelligenceDetails,
+  .wisdomDetails,
+  .charismaDetails{
+    min-width:5vw;
+    border: 1px solid red;
+  }
+
+.expand{
+  display: flex;
+}
+.characterReviewLabelsCol{
+
+}
+.characterReviewOutputsCol{
+  flex: 1; 
+}
+
+.characterReviewLabel{
+  border: 1px solid red;
+  text-align: start;
+}
+.characterReviewOutput{
+  border: 1px solid blue;
+}
+

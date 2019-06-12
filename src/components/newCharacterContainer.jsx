@@ -10,7 +10,6 @@ import NewCharacterDetails from './newCharacterDetails';
 import NewCharacterSkills from './newCharacterSkills';
 import NewCharacterFeats from './newCharacterFeats';
 import NewCharacterEquipment from './newCharacterEquipment';
-import LoadOptions from './loadNewCharacterOptions';
 import CharacterReview from './characterReview';
 import {Next, MobileNext} from './next';
 import {Prev, MobilePrev} from './prev';
@@ -26,8 +25,7 @@ export class NewCharacterContainer extends React.Component{
     	let disabledPrev = (index === 0);
 
       // call disable action
-      LoadOptions(index, this.props.dispatch);
-        this.props.dispatch(toggleStep(index, false, disabledPrev));
+      this.props.dispatch(toggleStep(index, false, disabledPrev));
     }
 
     toggleNext(e){
@@ -35,8 +33,7 @@ export class NewCharacterContainer extends React.Component{
     	let disabledNext = (index === this.props.creationSteps.length-1);
 
       // call disable action
-      LoadOptions(index, this.props.dispatch);
-        this.props.dispatch(toggleStep(index, disabledNext, false ));
+      this.props.dispatch(toggleStep(index, disabledNext, false ));
     }
 
 	render(){
@@ -44,10 +41,6 @@ export class NewCharacterContainer extends React.Component{
 		const currentStep = this.props.currentStep;
 		const disabledPrev = this.props.disabledPrev;
     const disabledNext = this.props.disabledNext;
-    console.log("stepsArray is: ");
-    console.log(stepsArray);
-    console.log("current step is: ");
-    console.log(currentStep);
 
 		let prevUrl = "";
 		if(currentStep !== 0){
@@ -56,18 +49,12 @@ export class NewCharacterContainer extends React.Component{
 			prevUrl = `/newCharacter/${stepsArray[currentStep].name}`;
 		}
 
-    console.log("prevUrl is: ");
-    console.log(prevUrl);
-
-		let nextUrl = "";
+    let nextUrl = "";
 		if(currentStep !== 7){
 			nextUrl = `/newCharacter/${stepsArray[currentStep+1].name}`;
 		} else {
 			nextUrl = `/newCharacter/${stepsArray[currentStep].name}`;
 		}
-
-    console.log("nexyUrl is: ");
-    console.log(nextUrl);
 
 		return (	       
       <div className="newCharacterContainer">

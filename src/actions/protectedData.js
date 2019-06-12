@@ -98,7 +98,6 @@ export const setSaved = (toggle) => ({
 export const fetchProtectedData = (api, call="") => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   dispatch(setLoading());
-  console.log('about to fetch');
   
   fetch(`${API_BASE_URL}/${api}`, {
     method: 'GET',
@@ -110,13 +109,10 @@ export const fetchProtectedData = (api, call="") => (dispatch, getState) => {
   ).then(res => {
     return res.json();
   }).then(data => {
-    console.log("about to run switch");
     switch(call){
       case "usersCharacters": 
-        console.log("in userCharacters");
         dispatch(fetchProtectedData_usersCharacters_Success(data));
       default: 
-        console.log("in default");
         dispatch(fetchProtectedDataSuccess(data));
     }
   }).catch(err => {
@@ -270,11 +266,7 @@ export const saveAndSubmit = () => (dispatch, getState) => {
   ).then(res => {
     return res.json();
   }).then(data => {
-    // history.push("/dashboard/");
-    // return <Redirect to="/dashboard" />;
     dispatch(setSaved(true));
-    // dispatch(resetCharacterReducerState());
-    //dispatch(fetchProtectedExtraDataSuccess(data));
   }).catch(err => {
       dispatch(fetchProtectedDataError(err));
   });

@@ -103,7 +103,7 @@ export class AbilityScoreDice extends React.Component {
 
 		return (
 			<form onSubmit={ this.props.handleSubmit(values=>this.onSubmit(values) )}> 
-				<Field name="diceSelecter" id="diceSelecter" label="How many dice do you get to roll?" component={RenderSelect}>
+				<Field name="diceSelecter" id="diceSelecter" label="How many dice do you get to roll? " component={RenderSelect}>
 					<option />
 					{diceOptions.map(option => 
 						<option key={option} value={option}>

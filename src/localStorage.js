@@ -14,3 +14,20 @@ export const clearAuthToken = () => {
       localStorage.removeItem('authToken');
   } catch (e) {}
 };
+
+export const loadCurrentStep = () => {
+  return localStorage.getItem('currentStep');
+}
+
+export const saveCurrentStep = currentStep => {
+  try {
+      localStorage.setItem('currentStep', currentStep);
+  } catch (e) {
+  }
+};
+
+export const clearCurrentStep = () => {
+  try {
+      localStorage.removeItem('currentStep');
+  } catch (e) {}
+};

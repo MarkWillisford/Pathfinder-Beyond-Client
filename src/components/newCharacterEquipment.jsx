@@ -76,13 +76,6 @@ export class NewCharacterEquipment extends React.Component{
 		}
 	}
 }
-
-      // this.props.history.push("/review"); 
-			/* return(
-		        <div className="newCharacterEquipment">
-		        	<h1>Character Equipment - done</h1>	
-		        </div>			
-      ); */
       
 function EquipmentMethod(props){
 	switch(props.method){
