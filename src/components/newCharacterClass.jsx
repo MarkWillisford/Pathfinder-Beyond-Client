@@ -12,6 +12,7 @@ import { createBonus } from '../utility/statObjectFactories';
 import { capitalizeFirstLetter } from '../utility/helperFunctions';
 import * as ClassSelections from './classSelectionFiles/';
 import { fetchProtectedData, clearData } from '../actions/protectedData';
+import CharacterReview from './characterReview2';
 
 import './newCharacterClass.css';
 
@@ -177,7 +178,7 @@ export class NewCharacterClass extends React.Component{
 		} else {
 			return(
 		        <div className="newCharacterClass">
-		        	<h1>Character Class - done</h1>	
+              <CharacterReview />
 		        </div>			
 			);
 		}		

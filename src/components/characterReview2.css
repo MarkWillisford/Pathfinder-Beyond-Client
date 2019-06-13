@@ -1,7 +1,3 @@
-.characterReviewFlexContainer{
-
-}
-
 .playerInformationLabel,
 .characterDetailsLabel,
 .characterAbilityScoresLabel,
@@ -15,8 +11,8 @@
 
 .playerInformation,
 .characterDetails,
+.characterAbilityScores,
 .characterVitals,
-.characterCombatStats,
 .characterInitiative,
 .characterSkills,
 .characterFeatsAbilitiesNotes{
@@ -26,61 +22,65 @@
   align-items: stretch;
 }
 
-.characterAbilityScores{
-  border:1px solid black;
-  display: none;
-  flex-direction: column;
-  /* align-items: stretch; */
-}
-  .strength, 
-  .dexterity,
-  .constitution,
-  .intelligence,
-  .wisdom,
-  .charisma{
+/*************************/
+/*  Ability Score Rules  */
+/*************************/
+  .strengthLabel,
+  .dexterityLabel,
+  .constitutionLabel,
+  .intelligenceLabel,
+  .wisdomLabel,
+  .charismaLabel{
+    flex: 1;
     display: flex;
   }
-  .strengthOverview,
-  .dexterityOverview,
-  .constitutionOverview,
-  .intelligenceOverview,
-  .wisdomOverview,
-  .charismaOverview{
-    flex: 1; 
-    border: 1px solid blue;
+    .strengthAbbreviation,
+    .dexterityAbbreviation,
+    .constitutionAbbreviation,
+    .intelligenceAbbreviation,
+    .wisdomAbbreviation,
+    .charismaAbbreviation{
+      display: none;
+    }
+    .strengthComplete,
+    .dexterityComplete,
+    .constitutionComplete,
+    .intelligenceComplete,
+    .wisdomComplete,
+    .charismaComplete{
+      display: flex;
+      align-items: center;
+    }
+  .strengthOutput, 
+  .dexterityOutput,
+  .constitutionOutput,
+  .intelligenceOutput,
+  .wisdomOutput,
+  .charismaOutput{
     display: flex;
-    align-items: stretch;
   }
-    .strengthLabel,
-    .dexterityLabel,
-    .constitutionLabel,
-    .intelligenceLabel,
-    .wisdomLabel,
-    .charismaLabel{
-
-    }
-    .strengthTotal, 
-    .dexterityTotal,
-    .constitutionTotal,
-    .intelligenceTotal,
-    .wisdomTotal,
-    .charismaTotal{
-      display: flex;
-      flex: 1;
-      align-items: center;
-      justify-content: center;
-    }
-    .strengthMod, 
-    .dexterityMod,
-    .constitutionMod,
-    .intelligenceMod,
-    .wisdomMod,
-    .charismaMod{
-      display: flex;
-      flex: 1;
-      align-items: center;
-      justify-content: center;
-    }
+  .strengthTotal, 
+  .dexterityTotal,
+  .constitutionTotal,
+  .intelligenceTotal,
+  .wisdomTotal,
+  .charismaTotal{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+  }
+  .strengthMod, 
+  .dexterityMod,
+  .constitutionMod,
+  .intelligenceMod,
+  .wisdomMod,
+  .charismaMod{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+  }
   .strengthDetails, 
   .dexterityDetails,
   .constitutionDetails,
@@ -88,17 +88,94 @@
   .wisdomDetails,
   .charismaDetails{
     min-width:5vw;
-    border: 1px solid red;
   }
+
+.characterHPs{
+  display: flex;
+  flex: 1;
+}
+
+/*************************/
+/*   Combat Stat Rules   */
+/*************************/
+.characterCombatStats{
+  border:1px solid black;
+  display: none;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.characterAttackModifiers,
+.characterArmorClassAndDefense,
+.characterSavingThrows{
+  border: 1px solid red;
+  display: flex;
+}
+  .meleeComplete,
+  .rangedComplete,
+  .combatManeuverBonusComplete,
+  .armorClassComplete,
+  .flatFootedArmorClassComplete,
+  .touchArmorClassComplete,
+  .combatManeuverDefenseComplete,
+  .fortitudeSaveComplete,
+  .reflexSaveComplete,
+  .willSaveComplete,
+  .initiativeComplete,
+  .speedComplete{
+    display: none;
+  }
+  .meleeAbbreviation,
+  .rangedAbbreviation,
+  .combatManeuverBonusAbbreviation,
+  .armorClassAbbreviation,
+  .flatFootedArmorClassAbbreviation,
+  .touchArmorClassAbbreviation,
+  .combatManeuverDefenseAbbreviation,
+  .fortitudeSaveAbbreviation,
+  .reflexSaveAbbreviation,
+  .willSaveAbbreviation,
+  .characterReviewAbbreviation{
+    min-width: 20vw;
+  }
+  .characterReviewOutput{
+    display: flex;
+  }
+    .meleeTotal,
+    .rangedTotal,
+    .combatManeuverBonusTotal,
+    .armorClassTotal,
+    .flatFootedArmorClassTotal,
+    .touchArmorClassTotal,
+    .combatManeuverDefenseTotal,
+    .fortitudeSaveTotal,
+    .reflexSaveTotal,
+    .willSaveTotal,
+    .initiativeTotal,
+    .speedTotal,
+    .characterReviewTotal{
+      flex: 1;
+    }
+    .combatDetailsButton{
+      align-self: right;
+    }
+
+.characterWeaponsSpecialAttacks{
+  border: 1px solid blue;
+}
 
 .expand{
   display: flex;
 }
 .characterReviewLabelsCol{
-
+  display: flex;
+  flex-direction: column;
+  border: 1px solid red;
+  justify-content: space-evenly;
 }
 .characterReviewOutputsCol{
   flex: 1; 
+  border: 1px solid blue;
 }
 
 .characterReviewLabel{
@@ -108,4 +185,3 @@
 .characterReviewOutput{
   border: 1px solid blue;
 }
-

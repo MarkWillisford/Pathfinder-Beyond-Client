@@ -73,11 +73,11 @@ export class NewCharacterPreferencesForm extends React.Component{
 		    );
 		} else {
 			return(
-		        <div className="newCharacterPerferances">
-              {/* <CharacterReview characterToReview = {this.props.characterToReview} user = {this.props.user}
-              reviewExpanded = {this.props.reviewExpanded} dispatch = {this.props.dispatch}/> */}
-              <CharacterReview />
-		        </div>			
+        <div className="newCharacterPerferances">
+          {/* <CharacterReview characterToReview = {this.props.characterToReview} user = {this.props.user}
+          reviewExpanded = {this.props.reviewExpanded} dispatch = {this.props.dispatch}/> */}
+          <CharacterReview />
+        </div>			
 			);
 		}		
 	}
@@ -103,10 +103,6 @@ const RenderTextarea = createRenderer((input, label, value) =>
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[0].complete,
   help:state.characterReducer.help,
-
-  /* characterToReview:state.characterReducer.newCharacter,
-  user:state.auth.currentUser.username,
-  reviewExpanded:state.characterReducer.reviewExpanded, */
 });
 
 NewCharacterPreferencesForm = reduxForm({

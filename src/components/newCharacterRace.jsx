@@ -4,7 +4,6 @@ import RaceCard from './raceCard';
 
 import { toggleRaceExpand } from '../actions/index';
 import { submitRaceToState } from '../actions/index';
-//import { submitAbilityScoreToState } from '../actions/index';
 import { submitSkillsToState } from '../actions/index';
 import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
@@ -13,6 +12,7 @@ import { setExpandedRace } from '../actions/index';
 import { fetchProtectedData, clearData } from '../actions/protectedData';
 import { createBonus } from '../utility/statObjectFactories'
 import { fetchProtectedSubData } from '../actions/protectedData';
+import CharacterReview from './characterReview2';
 
 import './newCharacterRace.css';
 
@@ -149,9 +149,9 @@ export class NewCharacterRace extends React.Component{
 		    );
       } else {
         return(
-              <div className="newCharacterRace">
-                <h1>Character Race - done</h1>	
-              </div>			
+          <div className="newCharacterRace">
+            <CharacterReview />
+          </div>			
         );
       };
     }	
