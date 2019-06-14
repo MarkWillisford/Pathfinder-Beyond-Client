@@ -5,7 +5,8 @@ import { capitalizeFirstLetter } from '../utility/helperFunctions';
 import {toggleCharacterReviewView} from '../actions/index';
 
 import './characterReview2.css';
-import displayArrow from '../images/rightArrowTrans.png';
+import rightDisplayArrow from '../images/rightArrowTrans.png';
+import downDisplayArrow from '../images/downArrowTrans.png';
 
 export class CharacterReview extends React.Component{
   componentDidUpdate() {
@@ -13,9 +14,10 @@ export class CharacterReview extends React.Component{
     if(!element){
       element = document.getElementsByClassName("title")[0];
     } else {
-      element = element.previousSibling;
+      element = element.parentElement;
     }
     
+    console.log(element);
     element.scrollIntoView({behavior: 'smooth'});
   }
 
@@ -52,39 +54,71 @@ export class CharacterReview extends React.Component{
       0;
     
     let playerInformationClassName = "playerInformation";
+    let playerInformationRightArrowClassName = "rightArrowImg";
+    let playerInformationDownArrowClassName = "downArrowImg";
     let characterDetailsClassName = "characterDetails";
+    let characterDetailsRightArrowClassName = "rightArrowImg";
+    let characterDetailsDownArrowClassName = "downArrowImg";
     let characterAbilityScoresClassName = "characterAbilityScores";
+    let characterAbilityScoresRightArrowClassName = "rightArrowImg";
+    let characterAbilityScoresDownArrowClassName = "downArrowImg";
     let characterVitalsClassName = "characterVitals";
+    let characterVitalsRightArrowClassName = "rightArrowImg";
+    let characterVitalsDownArrowClassName = "downArrowImg";
     let characterCombatStatsClassName = "characterCombatStats";
+    let characterCombatStatsRightArrowClassName = "rightArrowImg";
+    let characterCombatStatsDownArrowClassName = "downArrowImg";
     let characterInitiativeClassName = "characterInitiative";
+    let characterInitiativeRightArrowClassName = "rightArrowImg";
+    let characterInitiativeDownArrowClassName = "downArrowImg";
     let characterSkillsClassName = "characterSkills";
+    let characterSkillsRightArrowClassName = "rightArrowImg";
+    let characterSkillsDownArrowClassName = "downArrowImg";
     let characterFeatsAbilitiesNotesClassName = "characterFeatsAbilitiesNotes";
+    let characterFeatsAbilitiesNotesRightArrowClassName = "rightArrowImg";
+    let characterFeatsAbilitiesNotesDownArrowClassName = "downArrowImg";
 
     // set expanded section
     switch(reviewExpanded){
       case "playerInformation":
         playerInformationClassName += " expand";
+        playerInformationRightArrowClassName += " hide";
+        playerInformationDownArrowClassName += " expand";
       break;
       case "characterDetails":
         characterDetailsClassName += " expand";
+        characterDetailsRightArrowClassName += " hide";
+        characterDetailsDownArrowClassName += " expand";
       break;
       case "characterAbilityScores":
         characterAbilityScoresClassName += " expand";
+        characterAbilityScoresRightArrowClassName += " hide";
+        characterAbilityScoresDownArrowClassName += " expand";
       break;
       case "characterVitals":
         characterVitalsClassName+= " expand";
+        characterVitalsRightArrowClassName += " hide";
+        characterVitalsDownArrowClassName += " expand";
       break;
       case "characterCombatStats":
         characterCombatStatsClassName += " expand";  
+        characterCombatStatsRightArrowClassName += " hide";
+        characterCombatStatsDownArrowClassName += " expand";
       break;
       case "characterInitiative":
         characterInitiativeClassName += " expand";  
+        characterInitiativeRightArrowClassName += " hide";
+        characterInitiativeDownArrowClassName += " expand";
       break;
       case "characterSkills":
         characterSkillsClassName += " expand";  
+        characterSkillsRightArrowClassName += " hide";
+        characterSkillsDownArrowClassName += " expand";
       break;
       case "characterFeatsAbilitiesNotes":
         characterFeatsAbilitiesNotesClassName += " expand";
+        characterFeatsAbilitiesNotesRightArrowClassName += " hide";
+        characterFeatsAbilitiesNotesDownArrowClassName += " expand";
       break;
     }
 
@@ -92,7 +126,9 @@ export class CharacterReview extends React.Component{
       <div className="characterReviewFlexContainer">
         <h1>{characterToReview.preferences ? (characterToReview.preferences.characterName) : "Unnamed Character"}</h1>
         <div className="playerInformationLabel" onClick={() => this.toggleView("playerInformation")}>
-          Player / Character Information{/* <img src={displayArrow} alt="show" height="35" /> */}</div> 
+          <img className={playerInformationRightArrowClassName} src={rightDisplayArrow} alt="show" />
+          <img className={playerInformationDownArrowClassName} src={downDisplayArrow} alt="hide" />          
+          Player / Character Information</div> 
         <div className={playerInformationClassName}>
           <div className="characterReviewLabelsCol">
             <div className="characterReviewLabel">Player: </div>
@@ -113,7 +149,10 @@ export class CharacterReview extends React.Component{
               ? (capitalizeFirstLetter(characterToReview.charClass.name)): "--"}</div>
           </div>
         </div>
-        <div className="characterDetailsLabel" onClick={() => this.toggleView("characterDetails")}>Character Details</div>
+        <div className="characterDetailsLabel" onClick={() => this.toggleView("characterDetails")}>
+          <img className={characterDetailsRightArrowClassName} src={rightDisplayArrow} alt="show" />
+          <img className={characterDetailsDownArrowClassName} src={downDisplayArrow} alt="hide" />    
+          Character Details</div> 
         <div className={characterDetailsClassName}>
           <div className="characterReviewLabelsCol">
             <div className="characterReviewLabel">Title / Nickname: </div>
@@ -158,7 +197,10 @@ export class CharacterReview extends React.Component{
             <div className="characterReviewOutputCentered"> -- </div>
           </div>
         </div>
-        <div className="characterAbilityScoresLabel" onClick={() => this.toggleView("characterAbilityScores")}>Ability Scores</div>
+        <div className="characterAbilityScoresLabel" onClick={() => this.toggleView("characterAbilityScores")}>
+          <img className={characterAbilityScoresRightArrowClassName} src={rightDisplayArrow} alt="show" />
+          <img className={characterAbilityScoresDownArrowClassName} src={downDisplayArrow} alt="hide" />  
+          Ability Scores</div>   
         <div className={characterAbilityScoresClassName}>
           <div className="characterReviewLabelsCol">
             <AbilityScoreLabelDisplay ability={this.findStatisticByName("strength", characterToReview) ? 
@@ -202,7 +244,10 @@ export class CharacterReview extends React.Component{
           </div>
 
         </div>
-        <div className="characterVitalsLabel" onClick={() => this.toggleView("characterVitals")}>Hit Points</div>
+        <div className="characterVitalsLabel" onClick={() => this.toggleView("characterVitals")}>
+          <img className={characterVitalsRightArrowClassName} src={rightDisplayArrow} alt="show" />
+          <img className={characterVitalsDownArrowClassName} src={downDisplayArrow} alt="hide" />     
+          Hit Points</div>
         <div className={characterVitalsClassName}>
           <div className="characterHPs">
             <div className="characterReviewLabelsCol">
@@ -237,7 +282,10 @@ export class CharacterReview extends React.Component{
             <div className="favoredClass"></div>
           </div>
         </div>
-        <div className="characterCombatStatsLabel" onClick={() => this.toggleView("characterCombatStats")}>Combat</div>
+        <div className="characterCombatStatsLabel" onClick={() => this.toggleView("characterCombatStats")}>
+          <img className={characterCombatStatsRightArrowClassName} src={rightDisplayArrow} alt="show" />
+          <img className={characterCombatStatsDownArrowClassName} src={downDisplayArrow} alt="hide" />     
+          Combat</div>
         <div className={characterCombatStatsClassName}>
           <div className="characterAttackModifiers">
             <div className="characterReviewLabelsCol">
@@ -423,7 +471,10 @@ export class CharacterReview extends React.Component{
           </div>         
           <div className="characterWeaponsSpecialAttacks"></div>
         </div>
-        <div className="characterInitiativeLabel" onClick={() => this.toggleView("characterInitiative")}>Initiative</div>
+        <div className="characterInitiativeLabel" onClick={() => this.toggleView("characterInitiative")}>
+          <img className={characterInitiativeRightArrowClassName} src={rightDisplayArrow} alt="show" />
+          <img className={characterInitiativeDownArrowClassName} src={downDisplayArrow} alt="hide" />     
+          Initiative</div>
         <div className={characterInitiativeClassName}>
           <div className="characterReviewLabelsCol">
             <div className="initiativeLabel">
@@ -457,7 +508,10 @@ export class CharacterReview extends React.Component{
             </div>
           </div>
         </div>
-        <div className="characterSkillsLabel" onClick={() => this.toggleView("characterSkills")}>Skills</div>
+        <div className="characterSkillsLabel" onClick={() => this.toggleView("characterSkills")}>
+          <img className={characterSkillsRightArrowClassName} src={rightDisplayArrow} alt="show" />
+          <img className={characterSkillsDownArrowClassName} src={downDisplayArrow} alt="hide" />   
+          Skills</div>  
         <div className={characterSkillsClassName}>
           <div className="characterReviewLabelsCol">
             {skillList.map(({name}) => 
@@ -472,8 +526,10 @@ export class CharacterReview extends React.Component{
             )}
           </div>          
         </div>
-        <div className="characterFeatsAbilitiesNotesLabel" onClick={() => this.toggleView("characterFeatsAbilitiesNotes")}>Feats and Abilities</div>
-        
+        <div className="characterFeatsAbilitiesNotesLabel" onClick={() => this.toggleView("characterFeatsAbilitiesNotes")}>
+          <img className={characterFeatsAbilitiesNotesRightArrowClassName} src={rightDisplayArrow} alt="show" />
+          <img className={characterFeatsAbilitiesNotesDownArrowClassName} src={downDisplayArrow} alt="hide" />     
+          Feats and Abilities</div>
         <FeatsDisplay characterToReview = {this.props.characterToReview} characterFeatsAbilitiesNotesClassName={characterFeatsAbilitiesNotesClassName}/>
         {/* <Link to="/dashboard" onClick={ () => this.save() }>Submit and Save</Link> */}
         {/* <button onClick={ () => this.save() }>Submit and Save</button> */}

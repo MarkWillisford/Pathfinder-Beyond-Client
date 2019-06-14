@@ -6,9 +6,25 @@
 .characterInitiativeLabel,
 .characterSkillsLabel,
 .characterFeatsAbilitiesNotesLabel{
+  display: flex;
   text-align: start;
-  min-height: 5vh;
+  height: 5vh;
   font-weight: bold;
+  border: 1px solid red;
+}
+
+.arrowContainer{
+  max-height: 100%;
+  border: 1px solid black;
+}
+.rightArrowImg {
+  max-height: 65%;
+  padding-right: 2vw;
+}
+.downArrowImg {
+  max-height: 65%;
+  padding-right: 2vw;
+  display: none;
 }
 
 .playerInformation,
@@ -162,6 +178,9 @@
 .characterWeaponsSpecialAttacks{
 }
 
+.hide{
+  display: none;
+}
 .expand{
   display: flex;
 }
