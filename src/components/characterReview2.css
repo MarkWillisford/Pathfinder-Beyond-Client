@@ -7,6 +7,8 @@
 .characterSkillsLabel,
 .characterFeatsAbilitiesNotesLabel{
   text-align: start;
+  min-height: 5vh;
+  font-weight: bold;
 }
 
 .playerInformation,
@@ -15,7 +17,6 @@
 .characterVitals,
 .characterInitiative,
 .characterSkills{
-  border:1px solid black;
   display: none;
   flex-direction: row;
   align-items: stretch;
@@ -99,7 +100,6 @@
 /*************************/
 .characterCombatStats,
 .characterFeatsAbilitiesNotes{
-  border:1px solid black;
   display: none;
   flex-direction: column;
   align-items: stretch;
@@ -108,7 +108,6 @@
 .characterAttackModifiers,
 .characterArmorClassAndDefense,
 .characterSavingThrows{
-  border: 1px solid red;
   display: flex;
 }
   .meleeComplete,
@@ -161,7 +160,6 @@
     }
 
 .characterWeaponsSpecialAttacks{
-  border: 1px solid blue;
 }
 
 .expand{
@@ -170,23 +168,19 @@
 .characterReviewLabelsCol{
   display: flex;
   flex-direction: column;
-  border: 1px solid red;
   justify-content: space-evenly;
 }
 .characterReviewOutputsCol{
   flex: 1; 
-  border: 1px solid blue;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
 }
 
 .characterReviewLabel{
-  border: 1px solid red;
   text-align: start;
 }
 .characterReviewOutput{
-  border: 1px solid blue;
 }
 
 .featsAndAbilitesLabel{

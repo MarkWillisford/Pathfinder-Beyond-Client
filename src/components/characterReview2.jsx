@@ -5,8 +5,20 @@ import { capitalizeFirstLetter } from '../utility/helperFunctions';
 import {toggleCharacterReviewView} from '../actions/index';
 
 import './characterReview2.css';
+import displayArrow from '../images/rightArrowTrans.png';
 
 export class CharacterReview extends React.Component{
+  componentDidUpdate() {
+    let element = document.getElementsByClassName("expand")[0];
+    if(!element){
+      element = document.getElementsByClassName("title")[0];
+    } else {
+      element = element.previousSibling;
+    }
+    
+    element.scrollIntoView({behavior: 'smooth'});
+  }
+
   findStatisticByName(name, characterToReview){
     for(let i=0;i<characterToReview.characterStats.length;i++){
       if(characterToReview.characterStats[i].name === name){
@@ -79,7 +91,8 @@ export class CharacterReview extends React.Component{
     return(
       <div className="characterReviewFlexContainer">
         <h1>{characterToReview.preferences ? (characterToReview.preferences.characterName) : "Unnamed Character"}</h1>
-        <div className="playerInformationLabel" onClick={() => this.toggleView("playerInformation")}>Player / Character Information</div>
+        <div className="playerInformationLabel" onClick={() => this.toggleView("playerInformation")}>
+          Player / Character Information{/* <img src={displayArrow} alt="show" height="35" /> */}</div> 
         <div className={playerInformationClassName}>
           <div className="characterReviewLabelsCol">
             <div className="characterReviewLabel">Player: </div>
