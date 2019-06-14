@@ -9,6 +9,8 @@ import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
 import { setSelections } from '../actions/index';
 import { setExpandedRace } from '../actions/index';
+import { resetCompletedStep } from '../actions/index';
+import { capitalizeFirstLetter} from '../utility/helperFunctions';
 import { fetchProtectedData, clearData } from '../actions/protectedData';
 import { createBonus } from '../utility/statObjectFactories'
 import { fetchProtectedSubData } from '../actions/protectedData';
@@ -93,6 +95,10 @@ export class NewCharacterRace extends React.Component{
 		}		
 	}
 
+  dispatchResetCompletedStep(){
+    this.props.dispatch(resetCompletedStep(1));
+  }
+
 	render(){
 		const complete = this.props.complete;
     const help = this.props.help;
@@ -150,6 +156,8 @@ export class NewCharacterRace extends React.Component{
       } else {
         return(
           <div className="newCharacterRace">
+            <h3>Race: {this.props.race ? capitalizeFirstLetter(this.props.race) : ""}</h3> 
+            <button onClick={() => this.dispatchResetCompletedStep()}>Edit</button>
             <CharacterReview />
           </div>			
         );
@@ -164,6 +172,7 @@ const mapStateToProps = state => ({
   toExpand:state.characterReducer.expanded, 
   racesArray:state.protectedData.data,
   loading:state.protectedData.loading,
+  race:state.characterReducer.newCharacter.race ? state.characterReducer.newCharacter.race.name : null,
 });
 
 export default connect(mapStateToProps)(NewCharacterRace);

@@ -13,6 +13,7 @@ import { capitalizeFirstLetter } from '../utility/helperFunctions';
 import * as ClassSelections from './classSelectionFiles/';
 import { fetchProtectedData, clearData } from '../actions/protectedData';
 import CharacterReview from './characterReview2';
+import { resetCompletedStep } from '../actions/index';
 
 import './newCharacterClass.css';
 
@@ -20,6 +21,11 @@ export class NewCharacterClass extends React.Component{
   componentDidMount(){
     this.props.dispatch(clearData());
     this.props.dispatch(fetchProtectedData("charClasses"));
+  }
+
+  dispatchResetCompletedStep(){
+    this.props.dispatch(setClassSelectionsView(""));
+    this.props.dispatch(resetCompletedStep(2));
   }
 
 	handleClick(_id){
@@ -97,7 +103,7 @@ export class NewCharacterClass extends React.Component{
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
-		const classSelections = this.props.classSelections;
+		const classSelections = this.props.classSelections ? this.props.classSelections : "";
 		const classesArray = this.props.classesArray;
 		let toExpand = "";
 		if(this.props.toExpand){
@@ -121,9 +127,9 @@ export class NewCharacterClass extends React.Component{
 			);
 		} 
 		else if(!complete){
-			if(classSelections){
+			if(classSelections.length > 0){
 				// If classSelections has been toggled, then get options and display
-				switch(classSelections[0]){
+				switch(classSelections){
 					case "cleric":
 						return(
 							<div>
@@ -160,6 +166,7 @@ export class NewCharacterClass extends React.Component{
 							</div>
 						)
 					default:
+            console.log("here");
 				}
 
 			} else {
@@ -177,9 +184,12 @@ export class NewCharacterClass extends React.Component{
 			}
 		} else {
 			return(
-		        <div className="newCharacterClass">
-              <CharacterReview />
-		        </div>			
+        <div className="newCharacterClass">
+          <h3>Class: {this.props.charClass ? capitalizeFirstLetter(this.props.charClass) : ""} </h3>
+          <button onClick={() => this.dispatchResetCompletedStep()}>Edit</button>
+          
+          <CharacterReview />
+        </div>			
 			);
 		}		
 	}
@@ -192,6 +202,7 @@ const mapStateToProps = state => ({
 	help:state.characterReducer.help,
 	classSelections:state.characterReducer.classSelectionsView,
 	toExpand:state.characterReducer.expanded, 
+  charClass:state.characterReducer.newCharacter.charClass.name ? state.characterReducer.newCharacter.charClass.name : null,
 });
 
 export default connect(mapStateToProps)(NewCharacterClass);

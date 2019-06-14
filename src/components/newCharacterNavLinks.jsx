@@ -24,12 +24,12 @@ export class NewCharacterNavLinks extends React.Component{
 		} else if(step === 7){
 			disabledNext = true;
 		}
-		// Will need to be async . . .     
-		// LoadOptions(step, this.props.dispatch);					// <---!!!  This may be causing a lot of issues. 
+    this.props.dispatch(toggleMenuActive());    
 		this.props.dispatch(setStep(step, disabledNext, disabledPrev));
 	}
 
 	toggleHelp(){
+    this.props.dispatch(toggleMenuActive());    
 		this.props.dispatch(toggleHelp());		
 	}
 

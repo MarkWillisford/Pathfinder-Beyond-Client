@@ -3,6 +3,7 @@ import {normalizeResponseErrors} from '../utility/normalizeResponseErrors';
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 import { resetCharacterReducerState } from '../actions/index';
+import {clearCurrentStep} from '../localStorage';
 
 
 export const FETCH_PROTECTED_DATA_SUCCESS = 'FETCH_PROTECTED_DATA_SUCCESS';
@@ -266,6 +267,7 @@ export const saveAndSubmit = () => (dispatch, getState) => {
   ).then(res => {
     return res.json();
   }).then(data => {
+    clearCurrentStep();
     dispatch(setSaved(true));
   }).catch(err => {
       dispatch(fetchProtectedDataError(err));

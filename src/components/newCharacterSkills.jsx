@@ -7,6 +7,8 @@ import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
 import { setStepToComplete } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories'
+import CharacterReview from './characterReview2';
+import { resetCompletedStep } from '../actions/index';
 
 import './newCharacterSkills.css';
 
@@ -20,6 +22,9 @@ export class NewCharacterSkills extends React.Component{
 		}
 		return sum;
 	}
+  dispatchResetCompletedStep(){
+    this.props.dispatch(resetCompletedStep(5));
+  }
 	getModifier(abilityScore){
 		let mod = Math.floor((abilityScore-10)/2);
 		return mod;
@@ -146,6 +151,7 @@ export class NewCharacterSkills extends React.Component{
 		        	<h1>Character Skills</h1>
 		        	<p>Skills are based on your class and your intelligence modifier.</p>
 		        	<p>Remaining skill ranks: {remainingSkillRanks}</p>
+			        <button onClick={() => this.onSubmit(this.props)} disabled={disabled}>Submit</button>
 		        	<table>
 		        		<thead>
 			        		<tr>
@@ -186,7 +192,9 @@ export class NewCharacterSkills extends React.Component{
 		} else {
 			return(
 		        <div className="newCharacterSkills">
-		        	<h1>Character Skills - done</h1>	
+              <h3>Skills</h3>
+              <button onClick={() => this.dispatchResetCompletedStep()}>Edit</button>
+              <CharacterReview />
 		        </div>			
 			);
 		}

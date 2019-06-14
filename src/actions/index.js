@@ -344,3 +344,9 @@ export const toggleCharacterReviewView = (string) => ({
 export const setStepToCompleteCheckCharacter = (step, dispatch) => {
   dispatch(setStepToComplete(step));
 }
+
+export const RESET_COMPLETED_STEP = 'RESET_COMPLETED_STEP';
+export const resetCompletedStep = (step) => ({
+  type: RESET_COMPLETED_STEP,
+  step: step,
+})

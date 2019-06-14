@@ -4,6 +4,7 @@ import {reduxForm, Field } from 'redux-form';
 import {submitPreferencesToState} from '../actions/index';
 /* import { CharacterReview } from './characterReview2'; */
 import CharacterReview from './characterReview2';
+import { resetCompletedStep } from '../actions/index';
 
 import './newCharacterPreferences.css';
 
@@ -24,6 +25,10 @@ const validate = values => {
 }
 
 export class NewCharacterPreferencesForm extends React.Component{
+  dispatchResetCompletedStep(){
+    this.props.dispatch(resetCompletedStep(0));
+  }
+
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
@@ -76,6 +81,8 @@ export class NewCharacterPreferencesForm extends React.Component{
         <div className="newCharacterPerferances">
           {/* <CharacterReview characterToReview = {this.props.characterToReview} user = {this.props.user}
           reviewExpanded = {this.props.reviewExpanded} dispatch = {this.props.dispatch}/> */}
+          <h3>Basics</h3>
+          <button onClick={() => this.dispatchResetCompletedStep()}>Edit</button>
           <CharacterReview />
         </div>			
 			);

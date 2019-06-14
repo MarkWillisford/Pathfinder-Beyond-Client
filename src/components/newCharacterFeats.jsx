@@ -1,8 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { fetchProtectedData, clearData } from '../actions/protectedData';
+import { resetCompletedStep } from '../actions/index';
 
 import CardFeatCategory from './cardFeatCategory';
+import CharacterReview from './characterReview2';
 
 import './newCharacterFeats.css';
 
@@ -38,6 +40,10 @@ export class NewCharacterFeats extends React.Component{
 		return featsCategory;
 	}
  
+  dispatchResetCompletedStep(){
+    this.props.dispatch(resetCompletedStep(6));
+  }
+
 	render(){ 
 		const complete = this.props.complete;
     const help = this.props.help;
@@ -73,7 +79,9 @@ export class NewCharacterFeats extends React.Component{
 		} else {
 			return(
 		        <div className="newCharacterFeats">
-		        	<h1>Character Feats - done</h1>	
+              <h3>Feats</h3>
+              <button onClick={() => this.dispatchResetCompletedStep()}>Edit</button>
+              <CharacterReview />
 		        </div>			
 			);
 		}	

@@ -649,17 +649,17 @@ export const characterReducer = (state=initialState, action) => {
         }    
       }
     case actions.SET_CLASS_SELECTIONS_VIEW:
-      if(!state.classSelectionsView){
+      /* if(!state.classSelectionsView){ */
         return {
           ...state,
-          classSelectionsView:[action.charClass]
+          classSelectionsView:action.charClass
         }
-      } else {
+      /* } else {
         return {
           ...state,
           classSelectionsView:[...state.classSelectionsView, action.charClass]
         }    
-      }
+      } */
     case actions.SUBMIT_FAVORED_ENEMY:
       let tableLevel = state.newCharacter.charClass.classFeatures.table[1];
       let levelSpecial = state.newCharacter.charClass.classFeatures.table[1][5];
@@ -882,7 +882,16 @@ export const characterReducer = (state=initialState, action) => {
       }
     case actions.RESET_CHARACTER_REDUCER_STATE:
         return { ...initialState }
-
+    case actions.RESET_COMPLETED_STEP:
+      indexOfStep = action.step;
+      step = state.creationSteps[indexOfStep];
+      return {
+        ...state,
+        creationSteps:[...state.creationSteps.filter(c => c.id < indexOfStep),
+          { ...step, complete:false},
+          ...state.creationSteps.filter(c => c.id > indexOfStep)
+        ]
+      }
 
     default:
       console.warn(`unhandled action: ${action.type}`);

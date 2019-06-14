@@ -14,8 +14,7 @@
 .characterAbilityScores,
 .characterVitals,
 .characterInitiative,
-.characterSkills,
-.characterFeatsAbilitiesNotes{
+.characterSkills{
   border:1px solid black;
   display: none;
   flex-direction: row;
@@ -98,7 +97,8 @@
 /*************************/
 /*   Combat Stat Rules   */
 /*************************/
-.characterCombatStats{
+.characterCombatStats,
+.characterFeatsAbilitiesNotes{
   border:1px solid black;
   display: none;
   flex-direction: column;
@@ -176,6 +176,9 @@
 .characterReviewOutputsCol{
   flex: 1; 
   border: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .characterReviewLabel{
@@ -184,4 +187,9 @@
 }
 .characterReviewOutput{
   border: 1px solid blue;
+}
+
+.featsAndAbilitesLabel{
+  font-weight: bold;
+  text-align: start;
 }

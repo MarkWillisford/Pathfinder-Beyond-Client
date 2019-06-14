@@ -28,6 +28,13 @@ export class NewCharacterEquipment extends React.Component{
       this.props.skills &&
       this.props.feats 
     );
+    let stepsLeft = [];
+    for(let i=0;i<this.props.creationSteps.length;i++){
+      if(!this.props.creationSteps[i].complete){
+        stepsLeft.push(this.props.creationSteps[i].name)
+      }
+    }
+    const string = stepsLeft.join(", ");
 
 		// first here we must check to ensure that race, class, and ability scores are complete. 
 		// If not, we display an error message directing the user to complete those pages before 
@@ -45,7 +52,7 @@ export class NewCharacterEquipment extends React.Component{
 		} else if( !ready ){
 			return (
 				<div>
-          <h3>Please finish the rest of your character before buying equipment.</h3>
+          <h3>Please finish the {string} steps of your character before buying equipment.</h3>
 					{/* <h3>Please finish your race, class and ability score selections before choosing your equipment.</h3> */} 
 				</div>
 			)
@@ -100,7 +107,8 @@ const mapStateToProps = state => ({
 	feats:state.characterReducer.creationSteps[6].complete,
 	wealth:state.characterReducer.newCharacter.charClass.classFeatures.wealth,
 	equipmentGenerationMethod:state.characterReducer.equipmentGenerationMethod,
-	defaultGear:state.characterReducer.newCharacter.charClass.classFeatures.gear,
+  defaultGear:state.characterReducer.newCharacter.charClass.classFeatures.gear,
+  creationSteps:state.characterReducer.creationSteps,
 });
 
 export default connect(mapStateToProps)(NewCharacterEquipment);

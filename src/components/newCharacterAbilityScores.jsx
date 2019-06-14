@@ -3,9 +3,11 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 import AbilityScoreDice from './abilityScoreDice';
 import AbilityScoreManual from './abilityScoreManual';
+import CharacterReview from './characterReview2';
 
 import { abilityScoreGenerationMethod } from '../actions/index';
 import { capitalizeFirstLetter, statIndex } from '../utility/helperFunctions';
+import { resetCompletedStep } from '../actions/index';
 
 import './newCharacterAbilityScores.css';
 
@@ -14,6 +16,10 @@ export class NewCharacterAbilityScores extends React.Component{
 		// set the state.abilityScoreGenerationMethod to text
 		this.props.dispatch(abilityScoreGenerationMethod(text));
 	}
+
+  dispatchResetCompletedStep(){
+    this.props.dispatch(resetCompletedStep(3));
+  }
 
 	abilitySum(ability, statArrayToAssign){
 		let capAbility = capitalizeFirstLetter(ability);
@@ -337,9 +343,11 @@ export class NewCharacterAbilityScores extends React.Component{
 		    );
 		} else {
 			return(
-		        <div className="newCharacterAbilityScores">
-		        	<h1>Character Ability Scores - done</h1>
-		        </div>			
+        <div className="newCharacterAbilityScores">
+          <h3>Ability Scores</h3>
+          <button onClick={() => this.dispatchResetCompletedStep()}>Edit</button>
+          <CharacterReview />
+        </div>			
 			);
 		}		
 	}
@@ -388,22 +396,8 @@ const mapStateToProps = state => ({
 	help:state.characterReducer.help,
 	abilityScoreGenerationMethod:state.characterReducer.abilityScoreGenerationMethod,
 	statArrayToAssign:state.characterReducer.statArrayToAssign,
-	
-/*	baseStrength: state.characterReducer.newCharacter.strength.base,//selector(state, "strengthSelecter"),
-	baseDexterity: state.characterReducer.newCharacter.dexterity.base,//selector(state, "dexteritySelecter"),
-	baseConstitution: state.characterReducer.newCharacter.constitution.base,//selector(state, "constitutionSelecter"),
-	baseIntelligence: state.characterReducer.newCharacter.intelligence.base,//selector(state, "intelligenceSelecter"),
-	baseWisdom: state.characterReducer.newCharacter.wisdom.base,//selector(state, "wisdomSelecter"),
-	baseCharisma: state.characterReducer.newCharacter.charisma.base,//selector(state, "charismaSelecter"),
-	*/
 	charStats:state.characterReducer.newCharacter.characterStats,
 	abilityScoreOptions: state.characterReducer.abilityScoreOptions,
-/*	racialStrength: state.characterReducer.newCharacter.strength.racial,
-	racialDexterity: state.characterReducer.newCharacter.dexterity.racial,
-	racialConstitution: state.characterReducer.newCharacter.constitution.racial,
-	racialIntelligence: state.characterReducer.newCharacter.intelligence.racial,
-	racialWisdom: state.characterReducer.newCharacter.wisdom.racial,
-	racialCharisma: state.characterReducer.newCharacter.charisma.racial,*/
 });
 
 export default connect(mapStateToProps)(NewCharacterAbilityScores);

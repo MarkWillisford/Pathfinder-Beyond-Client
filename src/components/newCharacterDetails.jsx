@@ -6,6 +6,8 @@ import { toggleDetailsExpand } from '../actions/index';
 import { submitDetailsToState } from '../actions/index';
 import { capitalizeFirstLetter } from '../utility/helperFunctions';
 import { fetchProtectedData } from '../actions/protectedData';
+import CharacterReview from './characterReview2';
+import { resetCompletedStep } from '../actions/index';
 
 import './newCharacterDetails.css';
 import CardTraitCategory from './cardTraitCategory';
@@ -13,6 +15,10 @@ import CardTraitCategory from './cardTraitCategory';
 export class NewCharacterDetails extends React.Component{
   componentDidMount(){
     this.props.dispatch(fetchProtectedData("deities"));
+  }
+
+  dispatchResetCompletedStep(){
+    this.props.dispatch(resetCompletedStep(4));
   }
 
 	submitHandler(values) {
@@ -94,7 +100,9 @@ export class NewCharacterDetails extends React.Component{
 		} else {
 			return(
 		        <div className="newCharacterDetails">
-		        	<h1>Character Details - done</h1>	
+              <h3>Character Details</h3>
+              <button onClick={() => this.dispatchResetCompletedStep()}>Edit</button>
+              <CharacterReview />
 		        </div>			
 			);
 		}	
