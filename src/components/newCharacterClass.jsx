@@ -17,7 +17,19 @@ import { resetCompletedStep } from '../actions/index';
 
 import './newCharacterClass.css';
 
-export class NewCharacterClass extends React.Component{
+export class NewCharacterClass extends React.Component{ 
+  componentDidUpdate() {
+    let element = document.getElementsByClassName("expanded")[0];
+    if(!element){
+      element = document.getElementsByClassName("title")[0];
+    } else {
+      element = element.previousSibling;
+    }
+    
+    console.log(element);
+    element.scrollIntoView({behavior: 'smooth'});
+  }
+  
   componentDidMount(){
     this.props.dispatch(clearData());
     this.props.dispatch(fetchProtectedData("charClasses"));

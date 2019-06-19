@@ -28,7 +28,15 @@ export class SelectionFormRace extends React.Component{
 	}
 	submitRace(race){
 		this.props.dispatch(submitRaceToState(race));
-	}
+  }
+  getRaceObject(name, options){
+    for(let i=0;i<options.length;i++){
+      if(options[i].name === name){
+        return options[i];
+      }
+    }
+    return null;
+  }
 /* 	getFeatDetails(name){
 		// this will be an API call, but for now it searches the list and retreaves feat details
 		const featsList = require('../data/feats');
@@ -45,14 +53,12 @@ export class SelectionFormRace extends React.Component{
       }
     }
 		const submitting = this.props.submitting;
-    const listOfHeritages = this.props.listOfHeritages; //require('../data/aasimarHeritages');
+    const listOfHeritages = this.props.listOfHeritages;
 		const onSubmitFormAasimar = (values) => {
 			const selectionsHeritage = capitalizeFirstLetter(values.selectionsHeritage);
 			// #TODO
 			this.props.dispatch(setSelections(""));
       let heritage = {};
-      console.log(listOfHeritages);
-      console.log(selectionsHeritage);
       let found = false;
 			for(let i=0;i<listOfHeritages.length;i++){
 				if(listOfHeritages[i].name.includes(selectionsHeritage)){
@@ -160,7 +166,7 @@ export class SelectionFormRace extends React.Component{
 			// add extra favored class
 			this.props.dispatch(submitFavoredClassToState(values.selectionsMultitalented));		
 
-			this.submitRace("Half Elf");
+			this.submitRace(this.getRaceObject("Half Elf", racesArray));
 		};
 		const onSubmitFormHalfOrc = (values) => {
 			this.props.dispatch(setSelections(""));
@@ -173,9 +179,9 @@ export class SelectionFormRace extends React.Component{
 				amount:2 });
 			this.props.dispatch(addBonus(bonus));
 			this.props.dispatch(sumBonus(bonus));
-			this.submitRace("Half Orc");
+			this.submitRace(this.getRaceObject("Half Orc", racesArray));
 		};
-		const onSubmitFormHuman = (values) => {
+		const onSubmitFormHuman = (values) => {      
 			this.props.dispatch(setSelections(""));
 			let bonus = createBonus({ 
 				name:"race", 
@@ -186,8 +192,8 @@ export class SelectionFormRace extends React.Component{
 				amount:2 });
 			this.props.dispatch(addBonus(bonus));
 			this.props.dispatch(sumBonus(bonus));
-			this.props.dispatch(addFeatSlot("any"));
-			this.submitRace("Human");
+      this.props.dispatch(addFeatSlot("any"));
+			this.submitRace(this.getRaceObject("Human", racesArray));
 		};
 
 		const createRenderer = render => ({ input, meta, label, options, ...rest }) => 

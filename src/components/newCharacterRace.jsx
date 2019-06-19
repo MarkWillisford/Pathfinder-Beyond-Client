@@ -19,6 +19,17 @@ import CharacterReview from './characterReview2';
 import './newCharacterRace.css';
 
 export class NewCharacterRace extends React.Component{   
+  componentDidUpdate() {
+    let element = document.getElementsByClassName("expanded")[0];
+    if(!element){
+      element = document.getElementsByClassName("title")[0];
+    } else {
+      element = element.previousSibling;
+    }
+    
+    element.scrollIntoView({behavior: 'smooth'});
+  }
+
   componentDidMount(){
     this.props.dispatch(clearData());
     this.props.dispatch(fetchProtectedData("races"));
@@ -86,9 +97,7 @@ export class NewCharacterRace extends React.Component{
 						}
 					}
 				} else {
-          // this means that the feat does have selections
-          console.log("setting selections: ");
-          console.log(racesArray[i]);
+          // this means that the race does have selections
 					this.props.dispatch(setSelections(racesArray[i]));
 				}
 			}

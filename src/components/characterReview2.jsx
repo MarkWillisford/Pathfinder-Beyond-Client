@@ -17,7 +17,6 @@ export class CharacterReview extends React.Component{
       element = element.parentElement;
     }
     
-    console.log(element);
     element.scrollIntoView({behavior: 'smooth'});
   }
 

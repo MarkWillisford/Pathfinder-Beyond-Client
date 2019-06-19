@@ -20,21 +20,28 @@ import {toggleStep} from '../actions/index';
 import './newCharacterContainer.css';
 
 export class NewCharacterContainer extends React.Component{
-    togglePrev(e){
-    	let index = this.props.currentStep-1;
-    	let disabledPrev = (index === 0);
+  togglePrev(e){
+    let index = this.props.currentStep-1;
+    let disabledPrev = (index === 0);
 
-      // call disable action
-      this.props.dispatch(toggleStep(index, false, disabledPrev));
-    }
+    // call disable action
+    this.props.dispatch(toggleStep(index, false, disabledPrev));
+  }
 
-    toggleNext(e){
-    	let index = this.props.currentStep+1;
-    	let disabledNext = (index === this.props.creationSteps.length-1);
+  toggleNext(e){
+    let index = this.props.currentStep+1;
+    let disabledNext = (index === this.props.creationSteps.length-1);
 
-      // call disable action
-      this.props.dispatch(toggleStep(index, disabledNext, false ));
-    }
+    // call disable action
+    this.props.dispatch(toggleStep(index, disabledNext, false ));
+  }
+
+  customRedirect(redirectTo){
+    this.props.dispatch(toggleStep(0, false, true));
+    console.log("in custom redirect");
+    //localStorage.setItem('currentStep', 0);
+    return (<Redirect to={redirectTo} />)
+  }
 
 	render(){
 		const stepsArray = this.props.creationSteps;
@@ -66,7 +73,7 @@ export class NewCharacterContainer extends React.Component{
           <div className="newCharacterDataContainer col-8">
             {/* 8 sections, each of which has a completed property
               which controls which component is displayed */}
-            <Route exact path="/newCharacter/" render={() => <Redirect to="/newCharacter/home" />} />
+            <Route exact path="/newCharacter/" render= {() => this.customRedirect("/newCharacter/home")} />         {/* {() => <Redirect to="/newCharacter/home" />} /> */}
             <Route  path="/newCharacter/Character Basics" render={() => <Redirect to="/newCharacter/home" />} />
             <Route  path="/newCharacter/home" component={NewCharacterPreferences} />
             <Route  path="/newCharacter/Race" component={NewCharacterRace} />
