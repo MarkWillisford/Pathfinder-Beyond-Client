@@ -377,6 +377,19 @@ export const characterReducer = (state=initialState, action) => {
           }
         }           
       }
+    case actions.REMOVE_SKILLS_FROM_STATE:
+      let skill = state.newCharacter.skills[action.skill]; 
+      let { [action.bonusType]: _, ...newSkill } = skill;
+      
+      return{
+        ...state,
+        newCharacter:{
+          ...state.newCharacter,
+          skills: { ...state.newCharacter.skills,
+            [action.skill]:newSkill
+          }
+        }           
+      }
     case actions.TOGGLE_CLASS_EXPAND:
 
 
@@ -605,6 +618,33 @@ export const characterReducer = (state=initialState, action) => {
             )
           },
         }
+      }
+    case actions.REMOVE_BONUS:
+      let foundStatAt = null;
+      let foundBonusAt = null;
+      let nameOfStat = null;
+
+      // look through the stats array for all bonus objects with source === action.bonus.source
+      for(let i=0; i<state.newCharacter.characterStats.length;i++){
+        for(let j=0;j<state.newCharacter.characterStats[i].bonuses.length;j++){
+          if(state.newCharacter.characterStats[i].bonuses[j] === action.bonus){
+            foundStatAt = i;  
+            foundBonusAt = j;
+            nameOfStat = state.newCharacter.characterStats[i].name;
+          }
+        }
+      }
+      let stat = state.newCharacter.characterStats[foundStatAt];
+      //let bonus = stat.bonuses[foundBonusAt];
+      return{
+        ...state,
+        newCharacter:{...state.newCharacter, characterStats:[
+          ...state.newCharacter.characterStats.filter(r => r.name !== nameOfStat),{
+            ...stat, bonuses:[
+              ...stat.bonuses.filter(r => r !== action.bonus)
+            ]
+          }
+        ]}
       }
     case actions.SUM_BONUS:
       // flags

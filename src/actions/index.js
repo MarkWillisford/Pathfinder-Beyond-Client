@@ -98,6 +98,12 @@ export const submitSkillsToState = (skill, bonusType, bonus) => ({
 	skill, bonusType, bonus, 
 });
 
+export const REMOVE_SKILLS_FROM_STATE = 'REMOVE_SKILLS_FROM_STATE';
+export const removeSkillsFromState = (skill, bonusType, bonus) => ({
+	type: REMOVE_SKILLS_FROM_STATE, 
+	skill, bonusType, bonus, 
+});
+
 export const SUBMIT_CLASS_TO_STATE = 'SUBMIT_CLASS_TO_STATE';
 export const submitClassToState = (index) => ({
 	type: SUBMIT_CLASS_TO_STATE,
@@ -203,6 +209,12 @@ export const sumbmitTraitToState = (trait) => ({
 export const ADD_BONUS = 'ADD_BONUS';
 export const addBonus = (bonus) => ({
 	type: ADD_BONUS,
+	bonus,
+})
+
+export const REMOVE_BONUS = 'REMOVE_BONUS';
+export const removeBonus = (bonus) => ({
+	type: REMOVE_BONUS,
 	bonus,
 })
 

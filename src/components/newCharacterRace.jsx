@@ -10,6 +10,8 @@ import { sumBonus } from '../actions/index';
 import { setSelections } from '../actions/index';
 import { setExpandedRace } from '../actions/index';
 import { resetCompletedStep } from '../actions/index';
+import { removeSkillsFromState } from '../actions/index';
+import { removeBonus } from '../actions/index';
 import { capitalizeFirstLetter} from '../utility/helperFunctions';
 import { fetchProtectedData, clearData } from '../actions/protectedData';
 import { createBonus } from '../utility/statObjectFactories'
@@ -105,6 +107,33 @@ export class NewCharacterRace extends React.Component{
 	}
 
   dispatchResetCompletedStep(){
+    const stats = this.props.stats;
+    const skills = this.props.skills;
+    let arrayOfBonusesToRemove = [];
+    
+    // look through the stats array for all bonus objects with source === action.bonus.source
+    for(let i=0; i<stats.length;i++){
+      for(let j=0;j<stats[i].bonuses.length;j++){
+        if(stats[i].bonuses[j].source === "race"){
+          arrayOfBonusesToRemove.push(stats[i].bonuses[j]);
+        }
+      }
+    }
+
+    for(let i=0;i<arrayOfBonusesToRemove.length;i++){
+      this.props.dispatch(removeBonus(arrayOfBonusesToRemove[i]));
+      this.props.dispatch(sumBonus(arrayOfBonusesToRemove[i]));
+    }
+
+    // reset and check skills
+    arrayOfBonusesToRemove = [];
+    for(let key in skills){
+      let skill = skills[key];
+      if(skill.hasOwnProperty("racial")){
+        this.props.dispatch(removeSkillsFromState(key, "racial", skill.racial));
+      }
+    }
+
     this.props.dispatch(resetCompletedStep(1));
   }
 
@@ -182,6 +211,8 @@ const mapStateToProps = state => ({
   racesArray:state.protectedData.data,
   loading:state.protectedData.loading,
   race:state.characterReducer.newCharacter.race ? state.characterReducer.newCharacter.race.name : null,
+  stats:state.characterReducer.newCharacter.characterStats,
+	skills:state.characterReducer.newCharacter.skills,
 });
 
 export default connect(mapStateToProps)(NewCharacterRace);
