@@ -6,8 +6,10 @@ import { toggleClassExpand } from '../actions/index';
 import { submitClassToState } from '../actions/index';
 import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
-import { setClassSelectionsView } from '../actions/index';
+import { setClassSelectionsView, removeClassSelectionsView } from '../actions/index';
 import { setExpandedClass } from '../actions/index';
+import { resetCharClass } from '../actions/index';
+import { removeBonus } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories';
 import { capitalizeFirstLetter } from '../utility/helperFunctions';
 import * as ClassSelections from './classSelectionFiles/';
@@ -19,14 +21,18 @@ import './newCharacterClass.css';
 
 export class NewCharacterClass extends React.Component{ 
   componentDidUpdate() {
-    let element = document.getElementsByClassName("expanded")[0];
-    if(!element){
-      element = document.getElementsByClassName("title")[0];
-    } else {
+    let element;
+    element = document.getElementsByClassName("expanded")[0];
+    if(element){
       element = element.previousSibling;
+    } else {
+      element = document.getElementsByClassName("top")[0];
+      if(element){
+      } else {
+        element = document.getElementsByClassName("title")[0];
+      }
     }
     
-    console.log(element);
     element.scrollIntoView({behavior: 'smooth'});
   }
   
@@ -36,6 +42,28 @@ export class NewCharacterClass extends React.Component{
   }
 
   dispatchResetCompletedStep(){
+    const stats = this.props.stats;
+    let arrayOfBonusesToRemove = [];
+
+    // reset charClass to initial state
+    this.props.dispatch(resetCharClass());
+
+    // look through the stats array for all bonus objects with source === action.bonus.source
+    for(let i=0; i<stats.length;i++){
+      for(let j=0;j<stats[i].bonuses.length;j++){
+        if(stats[i].bonuses[j].source === "class"){
+          arrayOfBonusesToRemove.push(stats[i].bonuses[j]);
+        }
+      }
+    }
+
+    for(let i=0;i<arrayOfBonusesToRemove.length;i++){
+      this.props.dispatch(removeBonus(arrayOfBonusesToRemove[i]));
+      this.props.dispatch(sumBonus(arrayOfBonusesToRemove[i]));
+    }
+
+    this.props.dispatch(clearData());
+    this.props.dispatch(fetchProtectedData("charClasses"));
     this.props.dispatch(setClassSelectionsView(""));
     this.props.dispatch(resetCompletedStep(2));
   }
@@ -112,6 +140,10 @@ export class NewCharacterClass extends React.Component{
 		}		
 	}
 
+  removeClass(){
+    this.props.dispatch(removeClassSelectionsView());
+  }
+
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
@@ -145,35 +177,40 @@ export class NewCharacterClass extends React.Component{
 					case "cleric":
 						return(
 							<div>
-								<h1>Cleric customization</h1>
+								<h1 className="top">Cleric customization</h1>
+                <button onClick={() => this.removeClass()}>Go Back</button>
 								{<ClassSelections.ClassSelectionsCleric />}
 							</div>
 						)
 					case "druid":
 						return (
 							<div>
-								<h1>Druid customization</h1>
+								<h1 className="top">Druid customization</h1>
+                <button onClick={() => this.removeClass()}>Go Back</button>
 								{<ClassSelections.ClassSelectionsDruid />}
 							</div>
 						)
 					case "ranger":
 						return (
 							<div>
-								<h1>Ranger customization</h1>
+								<h1 className="top">Ranger customization</h1>
+                <button onClick={() => this.removeClass()}>Go Back</button>
 								{<ClassSelections.ClassSelectionsRanger />}
 							</div>
 						)
 					case "paladin":
 						return (
 							<div>
-								<h1>Paladin customization</h1>
+								<h1 className="top">Paladin customization</h1>
+                <button onClick={() => this.removeClass()}>Go Back</button>
 								{<ClassSelections.ClassSelectionsPaladin />}
 							</div>
 						)
 					case "sorcerer":
 						return (
 							<div>
-								<h1>Sorcerer customization</h1>
+								<h1 className="top">Sorcerer customization</h1>
+                <button onClick={() => this.removeClass()}>Go Back</button>
 								{<ClassSelections.ClassSelectionsSorcerer />}
 							</div>
 						)
@@ -215,6 +252,7 @@ const mapStateToProps = state => ({
 	classSelections:state.characterReducer.classSelectionsView,
 	toExpand:state.characterReducer.expanded, 
   charClass:state.characterReducer.newCharacter.charClass.name ? state.characterReducer.newCharacter.charClass.name : null,
+  stats:state.characterReducer.newCharacter.characterStats,
 });
 
 export default connect(mapStateToProps)(NewCharacterClass);

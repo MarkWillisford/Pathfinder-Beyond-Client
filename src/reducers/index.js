@@ -1,5 +1,7 @@
 import * as actions from '../actions';
-import { createStat } from '../utility/statObjectFactories'
+import { createStat } from '../utility/statObjectFactories';
+import isEqual from 'lodash/isEqual';
+import omit from 'lodash/omit';
 
 
 const creationSteps = [
@@ -146,6 +148,7 @@ const initialState = {
   // the actual character object that will be converted and saved in memory
   newCharacter:newCharacter,
   abilityScoreGenerationMethod:"",
+  abilityScoreTemp:{},
   statArrayToAssign:[],
   detailsExpand:[
     {id:0, name:"detailsTraitsExpand", expand:false},
@@ -156,6 +159,7 @@ const initialState = {
   ],
   menuActive:false,
   reviewExpanded:"",
+  clericDetails:{},
 };
 function setSum(stat){
   let total = 0;
@@ -267,10 +271,27 @@ export const characterReducer = (state=initialState, action) => {
         ...state,
         abilityScoreGenerationMethod:action.name,
       }
+    case actions.RESET_ABILITY_SCORE_GENERATION_METHOD:
+      return {
+        ...state,
+        abilityScoreGenerationMethod:"",
+      }
     case actions.SET_AVAILABLE_STATS:
       return {
         ...state,
         statArrayToAssign:action.statArray,
+      }
+    case actions.SAVE_TEMP_SCORE:
+      return {
+        ...state,
+        abilityScoreTemp:{
+          ...state.abilityScoreTemp, [action.ability]:action.score,
+        }
+      }
+    case actions.RESET_TEMP_SCORE:
+      return {
+        ...state,
+        abilityScoreTemp:{}
       }
     case actions.ASSIGN_SCORE:
       const index = state.statArrayToAssign.findIndex(function(element){
@@ -352,6 +373,16 @@ export const characterReducer = (state=initialState, action) => {
         ], newCharacter:{ ...state.newCharacter,
           // add the values to the state
           charClass:charClass,
+        }
+      }
+    case actions.RESET_CHAR_CLASS:
+      return {
+        ...state, newCharacter:{
+          ...state.newCharacter, charClass:{
+            classFeatures:{
+              skills:0,
+            }
+          }
         }
       }
     case actions.SUBMIT_ABILITY_SCORES_TO_STATE:
@@ -689,17 +720,16 @@ export const characterReducer = (state=initialState, action) => {
         }    
       }
     case actions.SET_CLASS_SELECTIONS_VIEW:
-      /* if(!state.classSelectionsView){ */
-        return {
-          ...state,
-          classSelectionsView:action.charClass
-        }
-      /* } else {
-        return {
-          ...state,
-          classSelectionsView:[...state.classSelectionsView, action.charClass]
-        }    
-      } */
+      return {
+        ...state,
+        classSelectionsView:action.charClass
+      }
+    case actions.REMOVE_CLASS_SELECTIONS_VIEW:
+      return {
+        ...state,
+        classSelectionsView:null,
+        expanded:{ ...state.expanded, charClass: null },
+      }
     case actions.SUBMIT_FAVORED_ENEMY:
       let tableLevel = state.newCharacter.charClass.classFeatures.table[1];
       let levelSpecial = state.newCharacter.charClass.classFeatures.table[1][5];
@@ -720,15 +750,11 @@ export const characterReducer = (state=initialState, action) => {
         }}
       }
     case actions.SUBMIT_NATURE_BOND:
-    console.log(action.bond);
       tableLevel = state.newCharacter.charClass.classFeatures.table[1];
       levelSpecial = state.newCharacter.charClass.classFeatures.table[1][5];
       foundAt = null;
       for(let i=0;i<levelSpecial.length;i++){
         if(levelSpecial[i].name === "nature bond"){
-          console.log("found it at ");
-          console.log(i);
-          console.log("should be 3");
           foundAt = i;
         }
       }
@@ -782,6 +808,12 @@ export const characterReducer = (state=initialState, action) => {
         ...state,
         clericDetails:{deity:action.deity}
       }
+    case actions.REMOVE_DEITY:
+      return{
+        ...state,
+        clericDetails:{},
+        availableDomains:[],
+      }
     case actions.SET_DOMAIN:
       if(!state.clericDetails.domains){
         return {
@@ -795,6 +827,33 @@ export const characterReducer = (state=initialState, action) => {
             domains:[...state.clericDetails.domains, action.domain]}
         }
       }
+    case actions.REMOVE_DOMAIN:
+      let indexOfDomain = null;
+      let newDetailsObj;
+      for(let i=0;i<state.clericDetails.domains.length;i++){
+        if(isEqual(state.clericDetails.domains[i], action.domain)){
+          indexOfDomain = i;
+        }
+      }
+      if(indexOfDomain != undefined || indexOfDomain != null){
+        // build the new clericDetails object
+        let tempNewDetailsObj = { ...state.clericDetails, 
+          domains: [...state.clericDetails.domains.slice(0,indexOfDomain),
+            ...state.clericDetails.domains.slice(indexOfDomain+1)]
+        }
+        if(tempNewDetailsObj.domains.length === 0){
+          let { domains: _, ...newDomains } = tempNewDetailsObj;
+          newDetailsObj = newDomains;
+        } else {
+          newDetailsObj = tempNewDetailsObj;
+        }
+        
+        return {
+          ...state,
+          clericDetails: newDetailsObj
+        }
+      }
+      break;
     case actions.SET_BLOODLINE:
       return {
         ...state,

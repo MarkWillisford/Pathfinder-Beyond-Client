@@ -10,12 +10,10 @@
   text-align: start;
   height: 5vh;
   font-weight: bold;
-  border: 1px solid red;
 }
 
 .arrowContainer{
   max-height: 100%;
-  border: 1px solid black;
 }
 .rightArrowImg {
   max-height: 65%;

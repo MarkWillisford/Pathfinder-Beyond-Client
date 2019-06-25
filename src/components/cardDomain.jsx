@@ -8,6 +8,7 @@ export class CardDomain extends React.Component{
         const gPower = this.props.grantedPowers;
         const gSpells = this.props.domainSpells;
         const disableSelect = (this.props.disableSelect) ? this.props.disableSelect : false;
+        let expandableClassName = "domainCard";
         function displaySpells(spells){
             let stringSpells;
             spells.map(spell =>
@@ -31,28 +32,32 @@ export class CardDomain extends React.Component{
             return stringSpells;
         }
         if(this.props.expand){
-            return (
-                <div>
-                    <h3>{capitalizeFirstLetter(this.props.name)} Domain</h3>
-                    <button onClick={this.props.onSelectClick} disabled={disableSelect}>Select</button>
-                    <button onClick={this.props.onExpandClick}>Hide</button>
-                    <p>{this.props.description}</p>
-                    <h4>Granted Powers</h4>
-                    <div>{gPower.map(power => 
-                        <p>{power.name} ({power.type}): {power.description}</p>
-                    )}</div>
-                    <h4>Domain Spells</h4>
-                    <div>{displaySpells(gSpells)}</div>
-                    {/* I will want to add subdomains. For now however . . .     */}
-                    <button onClick={this.props.onSelectClick} disabled={disableSelect}>Select</button>
-                    <button onClick={this.props.onExpandClick}>Hide</button>
-                </div>
-            )
+          expandableClassName += " expanded"
+          return (
+            <div className = {expandableClassName}>
+              <h3>{capitalizeFirstLetter(this.props.name)} Domain</h3>
+              <button onClick={this.props.onSelectClick} disabled={disableSelect}>Select</button>
+              <button onClick={this.props.onCancelClick} disabled={!disableSelect}>Remove</button>
+              <button onClick={this.props.onExpandClick}>Hide</button>
+              <p>{this.props.description}</p>
+              <h4>Granted Powers</h4>
+              <div>{gPower.map(power => 
+                <p>{power.name} ({power.type}): {power.description}</p>
+              )}</div>
+              <h4>Domain Spells</h4>
+              <div>{displaySpells(gSpells)}</div>
+              {/* I will want to add subdomains. For now however . . .     */}
+              <button onClick={this.props.onSelectClick} disabled={disableSelect}>Select</button>
+              <button onClick={this.props.onCancelClick} disabled={!disableSelect}>Remove</button>
+              <button onClick={this.props.onExpandClick}>Hide</button>
+            </div>
+          )
         } else {            
             return (
-                <div>
+                <div className = {expandableClassName}>
                     <p>{capitalizeFirstLetter(this.props.name)} Domain</p>
                     <button onClick={this.props.onSelectClick} disabled={disableSelect}>Select</button>
+                    <button onClick={this.props.onCancelClick} disabled={!disableSelect}>Remove</button>
                     <button onClick={this.props.onExpandClick}>Expand</button>
                 </div>
             )

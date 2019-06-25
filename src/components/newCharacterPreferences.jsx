@@ -99,12 +99,13 @@ const createRenderer = render => ({ input, meta, label, options, ...rest }) =>
 </div>
 
 const RenderSelect = createRenderer((input, label, { children }) => 
-<select { ... input}>
-{children}
-</select>			
+  <select { ... input}>
+  {children}
+  </select>			
 )
+
 const RenderTextarea = createRenderer((input, label, value) =>
-<input type="textarea" { ... input} className="characterInputBox"/>
+  <input type="textarea" { ... input} className="characterInputBox"/>
 )
 
 const mapStateToProps = state => ({

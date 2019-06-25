@@ -9,6 +9,7 @@ import { setStepToComplete } from '../actions/index';
 import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories'
+import { saveTempScore, resetTempScore } from '../actions/index';
 
 import './abilityScoreDice.css';
 
@@ -71,7 +72,7 @@ export class AbilityScoreDice extends React.Component {
 		// on capital letters (the S in strength'S'electer) and taking only the first string in the result
 		let ability = event.target.name.split(/(?=[A-Z])/)[0];
 
-		let bonus = createBonus({ 
+		/* let bonus = createBonus({ 
 			name:"character base", 
 			source:"character base", 
 			stat:ability, 
@@ -79,7 +80,8 @@ export class AbilityScoreDice extends React.Component {
 			duration:-1, 
 			amount:value });
 		this.props.dispatch(addBonus(bonus));
-		this.props.dispatch(sumBonus(bonus));
+    this.props.dispatch(sumBonus(bonus)); */
+    this.props.dispatch(saveTempScore(ability, value));
 	}
 
 	SaveAbilityScoreOptions(caller){

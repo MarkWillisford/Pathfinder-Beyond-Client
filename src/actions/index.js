@@ -51,6 +51,11 @@ export const abilityScoreGenerationMethod = (name) => ({
 	name, 
 });
 
+export const RESET_ABILITY_SCORE_GENERATION_METHOD = 'RESET_ABILITY_SCORE_GENERATION_METHOD';
+export const resetAbilityScoreGenerationMethod = () => ({
+	type: RESET_ABILITY_SCORE_GENERATION_METHOD,
+});
+
 export const SET_AVAILABLE_STATS = 'SET_AVAILABLE_STATS';
 export const setAvailableStats = (statArray) => ({
 	type: SET_AVAILABLE_STATS,
@@ -108,6 +113,11 @@ export const SUBMIT_CLASS_TO_STATE = 'SUBMIT_CLASS_TO_STATE';
 export const submitClassToState = (index) => ({
 	type: SUBMIT_CLASS_TO_STATE,
 	index,
+});
+
+export const RESET_CHAR_CLASS = 'RESET_CHAR_CLASS';
+export const resetCharClass = () => ({
+	type: RESET_CHAR_CLASS,
 });
 
 export const SUBMIT_FEAT_TO_STATE = 'SUBMIT_FEAT_TO_STATE';
@@ -206,6 +216,18 @@ export const sumbmitTraitToState = (trait) => ({
 	trait, 
 });
 
+export const SAVE_TEMP_SCORE = 'SAVE_TEMP_SCORE';
+export const saveTempScore = (ability, score) => ({
+  type: SAVE_TEMP_SCORE,
+  ability,
+  score,
+})
+
+export const RESET_TEMP_SCORE = 'RESET_TEMP_SCORE';
+export const resetTempScore = () => ({
+  type: RESET_TEMP_SCORE,
+})
+
 export const ADD_BONUS = 'ADD_BONUS';
 export const addBonus = (bonus) => ({
 	type: ADD_BONUS,
@@ -240,6 +262,11 @@ export const SET_CLASS_SELECTIONS_VIEW = 'SET_CLASS_SELECTIONS_VIEW';
 export const setClassSelectionsView = (charClass) => ({
 	type: SET_CLASS_SELECTIONS_VIEW, 
 	charClass,
+});
+
+export const REMOVE_CLASS_SELECTIONS_VIEW = 'REMOVE_CLASS_SELECTIONS_VIEW';
+export const removeClassSelectionsView = () => ({
+	type: REMOVE_CLASS_SELECTIONS_VIEW, 
 });
 
 export const SUBMIT_FAVORED_ENEMY = 'SUBMIT_FAVORED_ENEMY';
@@ -282,11 +309,22 @@ export const SET_DEITY = 'SET_DEITY';
 export const setDeity = (deity) => ({
 	type: SET_DEITY, 
 	deity,
+}); 
+
+export const REMOVE_DEITY = 'REMOVE_DEITY';
+export const removeDeity = () => ({
+	type: REMOVE_DEITY, 
 });
 
 export const SET_DOMAIN = 'SET_DOMAIN';
 export const setDomain = (domain) => ({
 	type: SET_DOMAIN, 
+	domain,
+});
+
+export const REMOVE_DOMAIN = 'REMOVE_DOMAIN';
+export const removeDomain = (domain) => ({
+	type: REMOVE_DOMAIN, 
 	domain,
 });
 
