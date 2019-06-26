@@ -1,0 +1,30 @@
+.skillMisc{
+  display: none;
+}
+
+.skillTrained,
+.skillRacial,
+.skillTrait{
+  display: table-cell;
+}
+
+.skillInput{
+  display: flex;
+  flex-flow: row;
+}
+.skillInputLabel{
+  padding-left: 1vw;
+  padding-right: 1vw;
+}
+
+@media (max-width:600px){
+  .skillMisc{
+    display: table-cell;
+  }
+  
+  .skillTrained,
+  .skillRacial,
+  .skillTrait{
+    display: none;
+  }
+}

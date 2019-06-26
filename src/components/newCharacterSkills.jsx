@@ -29,15 +29,28 @@ export class NewCharacterSkills extends React.Component{
 		let mod = Math.floor((abilityScore-10)/2);
 		return mod;
 	}
-	onChangeHandler(event){
-		let value = event.target.value;
-		let skill = event.target.parentElement.parentElement.getAttribute("name");
-
-    console.log("submitting");
-    console.log(skill);
+	increase(event){
+		let value = event.target.nextSibling.innerHTML;
+    let skill = event.target.parentElement.parentElement.getAttribute("name");
     console.log(value);
-		this.props.dispatch(submitSkillsToState( skill, "ranks", value ));
-	}
+    if(value < 1){
+      value++;
+      event.target.nextSibling.innerHTML = value;
+      console.log("submitting");
+      console.log(skill);
+      console.log(value);
+      this.props.dispatch(submitSkillsToState( skill, "ranks", value ));
+    }
+  }
+  decrease(event){
+		let value = event.target.previousSibling.innerHTML;
+    let skill = event.target.parentElement.parentElement.getAttribute("name");
+    if(value > 0){
+      value--;
+      event.target.previousSibling.innerHTML = value;
+      this.props.dispatch(submitSkillsToState( skill, "ranks", value ));
+    }
+  }
 	statIndex(stats, name){
 		for(let i=0;i<stats.length;i++){
 			if(stats[i].name === name){
@@ -159,31 +172,44 @@ export class NewCharacterSkills extends React.Component{
 			        			<th>Total</th>
 			        			<th>Ranks</th>
 			        			<th>Ability</th>
-			        			<th>Class</th>
-			        			<th>Racial</th>
-			        			<th>Trait</th>
+                    <th className="skillMisc">Misc</th>
+			        			<th className="skillTrained">Class</th>
+			        			<th className="skillRacial">Racial</th>
+			        			<th className="skillTrait">Trait</th>
 			        		</tr>
 			        	</thead>
 			        	<tbody>
 			        		{listOfSkills.map(item => 
-								<tr key={item.name} name={item.name}>
-									<td>{item.name}</td>
-									<td>{
-										Number(_.get(this, path1+"."+item.name+".ranks", "0")) + 
-										Number(abilityMods.find( (abilityMod) => abilityMod.name === item.ability).value) +
-										Number((_.get(this, "props.classSkills", "error").includes(item.name) && ( _.get(this, path1+"."+item.name+".ranks", "0") > 0 )) ? 3 : 0) +
-										Number(_.get(this, path1+"."+item.name+".racial", "0"))
-									}</td>
-							        <td><input type="number" name={item.name+"Ranks"} min="0" max={hitDie} 
-							        	placeholder={(Number(_.get(this, path1+"."+item.name+".ranks"))) ? Number(_.get(this, path1+"."+item.name+".ranks")) : "0" }
-							        	onChange={this.onChangeHandler.bind(this)} 
-							        	disabled={remainingSkillRanks<1 && (Number(_.get(this, path1+"."+item.name+".ranks"))!=1)}/></td>
-									<td>{abilityMods.find( (abilityMod) => abilityMod.name === item.ability).value}</td>
-							        <td>{(_.get(this, "props.classSkills", "error").includes(item.name) && ( _.get(this, path1+"."+item.name+".ranks", "0") > 0 )) ? 3 : 0}</td>
-									<td>{_.get(this, path1+"."+item.name+".racial", "0")}</td>
-							        <td>Trait</td>
-								</tr>
-							)}
+                    <tr key={item.name} name={item.name}>
+                      <td className="skillName">{item.name}</td>
+                      <td className="skillTotal">{
+                        Number(_.get(this, path1+"."+item.name+".ranks", "0")) + 
+                        Number(abilityMods.find( (abilityMod) => abilityMod.name === item.ability).value) +
+                        Number((_.get(this, "props.classSkills", "error").includes(item.name) && ( _.get(this, path1+"."+item.name+".ranks", "0") > 0 )) ? 3 : 0) +
+                        Number(_.get(this, path1+"."+item.name+".racial", "0"))
+                      }</td>
+                      {/* <td className="skillInput"><input type="number" name={item.name+"Ranks"} min="0" max={hitDie} 
+                        placeholder={(Number(_.get(this, path1+"."+item.name+".ranks"))) ? Number(_.get(this, path1+"."+item.name+".ranks")) : "0" }
+                        onChange={this.onChangeHandler.bind(this)} 
+                        disabled={remainingSkillRanks<1 && (Number(_.get(this, path1+"."+item.name+".ranks"))!=1)}/></td> */}
+                      <td className="skillInput">
+                        <button className="plus" onClick={this.increase.bind(this)}
+                          disabled={(remainingSkillRanks<1 && (Number(_.get(this, path1+"."+item.name+".ranks"))!=1)) || Number(_.get(this, path1+"."+item.name+".ranks"))===1}> + </button>
+                        <div className="skillInputLabel"> 0 </div>
+                        <button className="minus" onClick={this.decrease.bind(this)}
+                          disabled={/* (remainingSkillRanks<1 && (Number(_.get(this, path1+"."+item.name+".ranks"))!=1)) ||  */
+                          Number(_.get(this, path1+"."+item.name+".ranks"))===0 ||
+                          !Number(_.get(this, path1+"."+item.name+".ranks"))}> - </button></td>
+                      <td className="skillAbility">{abilityMods.find( (abilityMod) => abilityMod.name === item.ability).value}</td>
+                      <td className="skillMisc">{
+                        ((_.get(this, "props.classSkills", "error").includes(item.name) && ( _.get(this, path1+"."+item.name+".ranks", "0") > 0 )) ? 3 : 0)
+                        + Number(_.get(this, path1+"."+item.name+".racial", "0"))
+                      }</td>
+                      <td className="skillTrained">{(_.get(this, "props.classSkills", "error").includes(item.name) && ( _.get(this, path1+"."+item.name+".ranks", "0") > 0 )) ? 3 : 0}</td>
+                      <td className="skillRacial">{_.get(this, path1+"."+item.name+".racial", "0")}</td>
+                      <td className="skillTrait">Trait</td>
+                    </tr>
+							    )}
 			        	</tbody>
 			        </table>
 			        <button onClick={() => this.onSubmit(this.props)} disabled={disabled}>Submit</button>
@@ -199,6 +225,10 @@ export class NewCharacterSkills extends React.Component{
 			);
 		}
 	}
+}
+
+function skillInput(){
+  
 }
 
 const mapStateToProps = state => ({
