@@ -3,16 +3,18 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 import { statIndex } from '../utility/helperFunctions';
 import FeatSelectionsForm from './featSelectionsForm';
+import { capitalizeFirstLetter} from '../utility/helperFunctions';
 
 import { setExpandedFeat } from '../actions/index';
 import { submitFeatToState } from '../actions/index';
 import { setSelections } from '../actions/index';
 import { setStepToComplete } from '../actions/index';
 
+import './cardFeat.css';
+
 export class CardFeat extends React.Component{
 	getFeatDetails(name){
-		// this will be an API call, but for now it searches the list and retreaves feat details
-		const featsList = this.props.featsList //require('../data/feats');
+		const featsList = this.props.featsList 
 		let featToReturn = featsList.find( feat => feat.name === name);
 		return featToReturn;
 	}
@@ -78,8 +80,7 @@ export class CardFeat extends React.Component{
 			featDetails = this.getFeatDetails(this.props.name);
 		}
 
-		// I only want to make the feat selection button if the feat prereqs are done and
-		// if the user doesn't already have the feat (if it isn't repeatable)
+    // check if the user has the feat and if so, is it repeatable?
 		let selectable = true;
 		let errorMessage = "";
 		// do I already have the feat?
@@ -91,81 +92,138 @@ export class CardFeat extends React.Component{
 				}
 			}
 		}
-		if(found && !this.props.repeatable){	// I already have it AND it isn't repeatable
+    if(found && !this.props.repeatable){	// I already have it AND it isn't repeatable
 			selectable = false;
 			errorMessage = "Feat is already selected";
-			console.log(errorMessage);
 		};
-		// Are prereques complete?
-		if(this.props.prerequisitesString){
-			let obj = this.props.prerequisites;
-			for(let i=0;i<obj.length;i++){
-				let key = obj[i].type;
-				// do something with obj[key] which is an array
-				switch(key){
-					case "race":
-						if(this.props.race.localeCompare( obj[i].data , undefined, { sensitivity: 'accent' }) !== 0){							
-							selectable = false;
-							if(errorMessage != ""){
-								errorMessage += ", " + obj[i].type + " must be " + obj[i].data
-							} else { errorMessage = obj[i].type + " must be " + obj[i].data};
-							//console.log(errorMessage);
-						}
-					break;
-					case "class":
-						if(this.props.characterClass.localeCompare( obj[i].data , undefined, { sensitivity: 'accent' }) !== 0){							
-							selectable = false;
-							if(errorMessage != ""){
-								errorMessage += ", " + obj[i].type + " must be " + obj[i].data
-							} else { errorMessage = obj[i].type + " must be " + obj[i].data};
-							//console.log(errorMessage);
-						}
-					break;
-					case "classFeature":
-					break;
-					case "level":
-					break;
-					case "stat":
-						if(charStats[statIndex(charStats, obj[i].data.stat)].sum.total < obj[i].data.value){
-							selectable = false;
-							if(errorMessage != ""){
-								errorMessage += ", " + obj[i].data.stat + " must be at least " + obj[i].data.value
-							} else { errorMessage = obj[i].data.stat + " must be at least " + obj[i].data.value};
-							console.log(errorMessage);
-						}
-					break;
-					case "feat":
-					break;
-					case "options":
-					break;
-					default:
-				};
-			}
-		}
 
+    // Are prereques complete?
+    if(this.props.prerequisites){
+      if(this.props.prerequisites.length > 0){
+        let obj = this.props.prerequisites;
+        for(let i=0;i<obj.length;i++){
+          let key = obj[i].type;
+          // do something with obj[key] which is an array
+          switch(key){
+            case "race":
+              if(this.props.race){
+                if(this.props.race.localeCompare( obj[i].data , undefined, { sensitivity: 'accent' }) !== 0){							
+                  selectable = false;
+                  if(errorMessage != ""){
+                    errorMessage += ", " + capitalizeFirstLetter(obj[i].type) + " must be " + obj[i].data
+                  } else { errorMessage = capitalizeFirstLetter(obj[i].type) + " must be " + obj[i].data}
+                }
+              } else {
+                selectable = false;
+                if(errorMessage != ""){
+                  errorMessage += ", " + capitalizeFirstLetter(obj[i].type) + " must be " + obj[i].data
+                } else { errorMessage = capitalizeFirstLetter(obj[i].type) + " must be " + obj[i].data}
+              }
+            break;
+            case "class":
+              if(this.props.characterClass){
+                if(this.props.characterClass.localeCompare( obj[i].data , undefined, { sensitivity: 'accent' }) !== 0){							
+                  selectable = false;
+                  if(errorMessage != ""){
+                    errorMessage += ", " + capitalizeFirstLetter(obj[i].type) + " must be " + obj[i].data
+                  } else { errorMessage = capitalizeFirstLetter(obj[i].type) + " must be " + obj[i].data};
+                }
+              } else { 
+                selectable = false;
+                if(errorMessage != ""){
+                  errorMessage += ", " + capitalizeFirstLetter(obj[i].type) + " must be " + obj[i].data
+                } else { errorMessage = capitalizeFirstLetter(obj[i].type) + " must be " + obj[i].data}; 
+              }
+            break;
+            case "classFeature":
+            break;
+            case "level":
+            break;
+            case "stat":
+              if(charStats[statIndex(charStats, obj[i].data.stat)]){
+                if(charStats[statIndex(charStats, obj[i].data.stat)].sum.total < obj[i].data.value){
+                  selectable = false;
+                  if(errorMessage != ""){
+                    errorMessage += ", " + capitalizeFirstLetter(obj[i].data.stat) + " must be at least " + obj[i].data.value
+                  } else { errorMessage = capitalizeFirstLetter(obj[i].data.stat) + " must be at least " + obj[i].data.value};
+                }
+              } else {
+                selectable = false;
+                if(errorMessage != ""){
+                  errorMessage += ", " + capitalizeFirstLetter(obj[i].data.stat) + " must be at least " + obj[i].data.value
+                } else { errorMessage = capitalizeFirstLetter(obj[i].data.stat) + " must be at least " + obj[i].data.value};
+              }
+            break;
+            case "feat":
+            break;
+            case "options":
+            break;
+            default:
+          };
+        } 
+      }
+    }
+
+    let featCardClassName = "featCard";
+    let featDivClassName = "featDiv";
+    let featFlexContainerName = "featCardFlexContianer";
+    if(this.props.expand){
+      featCardClassName += " expanded";
+      featDivClassName += " expanded";
+      featFlexContainerName += " expanded";
+    }
 
 		return(
-			<div className="cardFeat">
-				{!thisExpanded && <CardFeatSummery name={this.props.name}
-					prerequisitesString={this.props.prerequisitesString} description={this.props.description}
-					hide={() => this.hide(this.props.name)} show={() => this.show(this.props.name)} 
-					thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}
-					selectable={selectable} showTheseSelections={showTheseSelections}/> }
-				{thisExpanded && <CardFeatExpanded feat={featDetails} prerequisitesString={this.props.prerequisitesString}
-					hide={() => this.hide(this.props.name)} show={() => this.show(this.props.name)} 
-					thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}
-					selectable={selectable} showTheseSelections={showTheseSelections}/>}
+			<div className={featCardClassName}>
+        <div className={featFlexContainerName}>
+          <div className={featDivClassName}>
+            <div className="featName">{capitalizeFirstLetter(this.props.name)}</div>
+            <div className="errorMessage">{errorMessage}</div>
+          </div>
+          <div className="featDescriptionAndButtons">
+            <div className="featDescription">{this.props.description}</div>
+            <div className="featButtons">
+              {!this.props.expand && <button onClick={this.props.callback} disabled={this.props.thisExpanded}>Show Details</button>}
+              <button onClick={() => this.submitFeatToState(this.props.name)} disabled={!selectable}>Select</button>
+            </div>
+          </div>
+          {thisExpanded && <CardFeatExpanded feat={featDetails} prerequisites={this.props.prerequisites}
+            /* hide={() => this.hide(this.props.name)} show={() => this.show(this.props.name)} */ 
+            thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}
+            selectable={selectable} showTheseSelections={showTheseSelections} errorMessage={errorMessage}/>}  
+        </div>				
 			</div>
+
+
+
+
+
+
+
+
 		)	
+    {/* <div className="cardFeat">
+      {!thisExpanded && <CardFeatSummery name={this.props.name}
+        prerequisites={this.props.prerequisites} description={this.props.description}
+        hide={() => this.hide(this.props.name)} show={() => this.show(this.props.name)} 
+        thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}
+        selectable={selectable} showTheseSelections={showTheseSelections} errorMessage={errorMessage}/> }
+      {thisExpanded && <CardFeatExpanded feat={featDetails} prerequisites={this.props.prerequisites}
+        hide={() => this.hide(this.props.name)} show={() => this.show(this.props.name)} 
+        thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}
+        selectable={selectable} showTheseSelections={showTheseSelections} errorMessage={errorMessage}/>}
+    </div> */}
 	}	
 }
 
-function CardFeatSummery(props){
+/* function CardFeatSummery(props){
+  let prereq = props.prerequisites ? props.prerequisites.toString() : null;
 	if(!props.showTheseSelections){
 		return(
-			<div>
+			<div className="featExpandedFalse">
 				<h3 className="featName">{props.name}</h3>
-				<div className="featPrerequisites">{props.prerequisitesString}</div>
+				<div className="featPrerequisites"></div>
+        <div className="errorMessage">{props.errorMessage}</div>
 				<div className="featDescription">{props.description}</div>
 				<button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
 				<button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
@@ -180,11 +238,12 @@ function CardFeatSummery(props){
 			</div>
 		)
 	}
-}
+} */
 
 function CardFeatExpanded(props){
 	let special = (props.feat.special == "" || props.feat.special == null) ? false : true;
 	let normal = (props.feat.normal == "" || props.feat.normal == null) ? false : true;
+  let prereq = props.prerequisites ? props.prerequisites.toString() : null;
 	
 	if(!props.showTheseSelections){
 		return(
@@ -194,13 +253,14 @@ function CardFeatExpanded(props){
 				<button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
 				<button onClick={() => props.submit()} disabled={!props.selectable}>Select</button>
 				<div className="featDescription">{props.feat.description}</div>
-				<div className="featPrerequisites"><strong>Prerequisite(s): </strong>{props.prerequisitesString}</div>
+				<div className="featPrerequisites"><strong>Prerequisite(s): </strong></div>
+        <div className="errorMessage">{props.errorMessage}</div>
 				<div className="featBenefit"><strong>Benefit: </strong>{props.feat.benefit}</div>
 				{normal && <div><strong>Normal: </strong>{props.feat.normal}</div>}
 				{special && <div><strong>Special: </strong>{props.feat.special}</div>}
-				<button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
+				{/* <button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
 				<button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
-				<button onClick={() => props.submit()} disabled={!props.selectable}>Select</button>
+				 */}<button onClick={() => props.submit()} disabled={!props.selectable}>Select</button>
 			</div>
 		)
 	} else {
@@ -219,7 +279,7 @@ const mapStateToProps = state => ({
 	charStats:state.characterReducer.newCharacter.characterStats,
 	showSelections:state.characterReducer.selections,
 	characterClass:state.characterReducer.newCharacter.charClass.name,
-	race:state.characterReducer.newCharacter.race.name,
+	race: state.characterReducer.newCharacter.race ? state.characterReducer.newCharacter.race.name : null,
   featsList:state.protectedData.data,
 });
 

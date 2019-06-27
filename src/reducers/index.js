@@ -611,7 +611,26 @@ export const characterReducer = (state=initialState, action) => {
         newCharacter:{...state.newCharacter, featSlots:
           newFeat.map((content, i) => i === foundAt ? {...content, selection:action.feat } : content )
         }
-      }    
+      }
+
+    case actions.SET_FEAT_FILTER:
+      return{
+        ...state,
+        featFilter: action.category,
+      }
+    case actions.CLEAR_FEAT_FILTER:
+      return{
+        ...state,
+        featFilter: null,
+      }
+
+
+
+
+
+
+
+
     case actions.ADD_BONUS:
       // flags
       let statToAddBonusTo = action.bonus.stat;

@@ -126,6 +126,18 @@ export const submitFeatToState = (feat) => ({
 	feat,
 });
 
+export const SET_FEAT_FILTER = 'SET_FEAT_FILTER';
+export const setFeatFilter = (category) => ({
+	type: SET_FEAT_FILTER,
+	category,
+});
+
+export const CLEAR_FEAT_FILTER = 'CLEAR_FEAT_FILTER';
+export const clearFeatFilter = () => ({
+	type: CLEAR_FEAT_FILTER,
+});
+
+
 export const SUBMIT_DETAILS_TO_STATE = 'SUBMIT_DETAILS_TO_STATE';
 export const submitDetailsToState = (values) => ({
 	type: SUBMIT_DETAILS_TO_STATE,

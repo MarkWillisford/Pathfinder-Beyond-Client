@@ -110,6 +110,7 @@ export const fetchProtectedData = (api, call="") => (dispatch, getState) => {
   ).then(res => {
     return res.json();
   }).then(data => {
+    let str = JSON.stringify(data);
     switch(call){
       case "usersCharacters": 
         dispatch(fetchProtectedData_usersCharacters_Success(data));

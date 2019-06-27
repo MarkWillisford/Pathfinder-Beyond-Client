@@ -1,0 +1,57 @@
+.errorMessage{
+  color:red;
+  font-weight: bold;
+  text-align: left;
+}
+.featName{
+  text-align: left;
+}
+
+.featDescription{
+  text-align: left;
+  text-indent:3vw;
+}
+
+.featCardFlexContianer{  
+  display:flex;  
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+}
+
+.featCard.expanded{
+  border: 1px solid black;
+  height: auto;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.10);
+}
+.featCard{
+  border: 1px solid black;
+  background: rgba(0, 0, 0, 0.20);
+}
+
+.featDiv.expanded{
+  width: 100%;
+  height: 35px;
+}
+.featDiv{
+  width: stretch;
+  height: 100%;  
+}
+.featDescriptionAndButtons{
+  display: flex;
+  flex-direction: row;  
+  justify-content: stretch;
+}
+.featButtons{
+  border: 1px solid black;
+  align-self: flex-end;
+  justify-content: end;
+  max-width: 20vw;
+}
+.featExpanded{
+  max-height: 95vh;
+  flex: 1;
+  overflow-y: auto;
+}
