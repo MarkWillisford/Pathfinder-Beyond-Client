@@ -3,24 +3,36 @@ import {connect} from 'react-redux';
 import { fetchProtectedData, clearData } from '../actions/protectedData';
 import { resetCompletedStep, setExpandedFeat } from '../actions/index';
 import { setFeatFilter, clearFeatFilter } from '../actions/index';
+import { clearFeats } from '../actions/index';
 import { capitalizeFirstLetter} from '../utility/helperFunctions';
 
-import CardFeatCategory from './cardFeatCategory';
 import CharacterReview from './characterReview2';
 import CardFeat from './cardFeat'; 
 
 import './newCharacterFeats.css';
 
-export class NewCharacterFeats extends React.Component{	
+export class NewCharacterFeats extends React.Component{	   
+  componentDidUpdate() {
+    let element = document.getElementsByClassName("expanded")[0];
+    if(!element){
+      element = document.getElementsByClassName("title")[0];
+    } else {
+      element = element.previousSibling;
+    }
+    
+    element.scrollIntoView({behavior: 'smooth'});
+  }
+
   componentDidMount(){
     this.props.dispatch(clearData());
     this.props.dispatch(fetchProtectedData("feats"));
   }
 
 	getCategoryList(){
-    let featsList = this.props.featsList.type ? this.props.featsList : []; 
+    let featsList = this.props.featsList ? this.props.featsList : []; 
 		let featsCategory = [];		// list of categories
     let foundCategory = false;		// flag
+
 		if(featsList.length > 0){
       for(let i = 0; i<featsList.length;i++){				// for each feat
         let categoryArray = featsList[i].type;			// get the array of category
@@ -42,6 +54,7 @@ export class NewCharacterFeats extends React.Component{
  
   dispatchResetCompletedStep(){
     this.props.dispatch(resetCompletedStep(6));
+    this.props.dispatch(clearFeats(this.props.featSlots.length));
   }
 
   filterFeats(category){
@@ -53,9 +66,6 @@ export class NewCharacterFeats extends React.Component{
   }
 
   showExpandedFeat(name){
-    console.log("expanding feat: ");
-    console.log(name);
-
     let toExpand = "";
     if(this.props.toExpand){
       if(this.props.toExpand.feat){
@@ -74,7 +84,7 @@ export class NewCharacterFeats extends React.Component{
     const help = this.props.help;
     const featFilter = this.props.featFilter ? this.props.featFilter : null;
     const featsList = this.props.featsList;
-    let featCategories = (featsList[0] && featsList[0].hasOwnProperty("repeatable")) ? this.getCategoryList() : []; 
+    let featCategories = (featsList[0] && featsList[0].hasOwnProperty("repeatable")) ? this.getCategoryList() : []; // this.getCategoryList() // 
     let filteredFeatsList = [];
 
 		let toExpand = "";
@@ -85,12 +95,14 @@ export class NewCharacterFeats extends React.Component{
     }	
     
     // filter the feats list based on the filter selected by the user
-    if(!featFilter){
-      filteredFeatsList = featsList;
-    } else {
-      for(let i=0;i<featsList.length;i++){
-        if(featsList[i].type.includes(featFilter)){
-          filteredFeatsList.push(featsList[i]);
+    if(featsList[0] && featsList[0].hasOwnProperty("repeatable")){
+      if(!featFilter){
+        filteredFeatsList = featsList;
+      } else {
+        for(let i=0;i<featsList.length;i++){
+          if(featsList[i].type.includes(featFilter)){
+            filteredFeatsList.push(featsList[i]);
+          }
         }
       }
     }
@@ -126,15 +138,13 @@ export class NewCharacterFeats extends React.Component{
             )}
           </select>
           <div className="featDisplay">
+            <div className="placeholderForScrolling"></div>
             {filteredFeatsList.map((feat) => 
               <CardFeat key={feat.name} name={feat.name} description={feat.description} 
               repeatable={feat.repeatable} prerequisites={feat.prerequisites}
               callback={()=> this.showExpandedFeat(feat.name)} expand={ toExpand === feat.name ? true : false }/>  
             )}
           </div>
-          {/* featCategories && featCategories.map((category) => 
-            <CardFeatCategory key={category} name={category} />
-          ) */}
         </div>
       );
 		} else {
@@ -158,6 +168,7 @@ const mapStateToProps = state => ({
   featsList:state.protectedData.data,
   featFilter:state.characterReducer.featFilter,
   toExpand:state.characterReducer.expanded, 
+  featSlots:state.characterReducer.newCharacter.featSlots,
 });
 
 export default connect(mapStateToProps)(NewCharacterFeats);

@@ -20,21 +20,21 @@
   height: 100%;
 }
 
-.featCard.expanded{
+/* .featCard.expanded{
   border: 1px solid black;
   height: auto;
   padding: 10px;
   background: rgba(0, 0, 0, 0.10);
-}
+} */
 .featCard{
   border: 1px solid black;
   background: rgba(0, 0, 0, 0.20);
 }
 
-.featDiv.expanded{
+/* .featDiv.expanded{
   width: 100%;
   height: 35px;
-}
+} */
 .featDiv{
   width: stretch;
   height: 100%;  
@@ -50,8 +50,11 @@
   justify-content: end;
   max-width: 20vw;
 }
-.featExpanded{
+.featButtonsClassname.expanded{
+  display: none;
+}
+/* .featExpanded{
   max-height: 95vh;
   flex: 1;
   overflow-y: auto;
-}
+} */

@@ -126,6 +126,12 @@ export const submitFeatToState = (feat) => ({
 	feat,
 });
 
+export const CLEAR_FEATS = 'CLEAR_FEATS';
+export const clearFeats = (slots) => ({
+  type: CLEAR_FEATS,
+  slots,
+});
+
 export const SET_FEAT_FILTER = 'SET_FEAT_FILTER';
 export const setFeatFilter = (category) => ({
 	type: SET_FEAT_FILTER,

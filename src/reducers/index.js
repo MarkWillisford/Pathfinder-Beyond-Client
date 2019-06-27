@@ -612,6 +612,17 @@ export const characterReducer = (state=initialState, action) => {
           newFeat.map((content, i) => i === foundAt ? {...content, selection:action.feat } : content )
         }
       }
+    case actions.CLEAR_FEATS:
+      let newSlots = [];
+      for(let i=0;i<action.slots;i++){
+        newSlots.push({ "type":"any",
+        "selection":null
+      })}
+      return {
+        ...state, newCharacter:{
+          ...state.newCharacter, featSlots:newSlots,
+        }
+      }
 
     case actions.SET_FEAT_FILTER:
       return{

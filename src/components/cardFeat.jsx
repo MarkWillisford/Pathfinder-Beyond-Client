@@ -19,17 +19,6 @@ export class CardFeat extends React.Component{
 		return featToReturn;
 	}
 
-	show(name){
-		// set the name of the expanded feat in state
-		this.props.dispatch(setExpandedFeat(name));
-	}
-
-	hide(name){
-		name = "";
-		// remove the name of the expanded category in state
-		this.props.dispatch(setExpandedFeat(name));
-	}
-
 	submitFeatToState(name){
 		let feat = this.getFeatDetails(name);
 		// We now have the feat the user selected;
@@ -167,10 +156,12 @@ export class CardFeat extends React.Component{
     let featCardClassName = "featCard";
     let featDivClassName = "featDiv";
     let featFlexContainerName = "featCardFlexContianer";
-    if(this.props.expand){
+    let featButtonsClassname = "featButtons";
+    if(thisExpanded){
       featCardClassName += " expanded";
       featDivClassName += " expanded";
       featFlexContainerName += " expanded";
+      featButtonsClassname += " expanded";
     }
 
 		return(
@@ -182,95 +173,40 @@ export class CardFeat extends React.Component{
           </div>
           <div className="featDescriptionAndButtons">
             <div className="featDescription">{this.props.description}</div>
-            <div className="featButtons">
-              {!this.props.expand && <button onClick={this.props.callback} disabled={this.props.thisExpanded}>Show Details</button>}
-              <button onClick={() => this.submitFeatToState(this.props.name)} disabled={!selectable}>Select</button>
+            <div className={featButtonsClassname}>
+              {!thisExpanded && <button onClick={this.props.callback}>Show Details</button>}
+              {thisExpanded && <button onClick={this.props.callback}>Hide Details</button>}
+              <button onClick={() => this.submitFeatToState(this.props.name)} disabled={!selectable || showTheseSelections}>Select</button>
             </div>
           </div>
           {thisExpanded && <CardFeatExpanded feat={featDetails} prerequisites={this.props.prerequisites}
             /* hide={() => this.hide(this.props.name)} show={() => this.show(this.props.name)} */ 
             thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}
-            selectable={selectable} showTheseSelections={showTheseSelections} errorMessage={errorMessage}/>}  
+            hide={() => this.hide()} selectable={selectable} showTheseSelections={showTheseSelections} 
+            errorMessage={errorMessage}/>}
+          {showTheseSelections && <FeatSelectionsForm name={this.props.name}/>}
         </div>				
 			</div>
-
-
-
-
-
-
-
-
-		)	
-    {/* <div className="cardFeat">
-      {!thisExpanded && <CardFeatSummery name={this.props.name}
-        prerequisites={this.props.prerequisites} description={this.props.description}
-        hide={() => this.hide(this.props.name)} show={() => this.show(this.props.name)} 
-        thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}
-        selectable={selectable} showTheseSelections={showTheseSelections} errorMessage={errorMessage}/> }
-      {thisExpanded && <CardFeatExpanded feat={featDetails} prerequisites={this.props.prerequisites}
-        hide={() => this.hide(this.props.name)} show={() => this.show(this.props.name)} 
-        thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}
-        selectable={selectable} showTheseSelections={showTheseSelections} errorMessage={errorMessage}/>}
-    </div> */}
+		)
 	}	
 }
-
-/* function CardFeatSummery(props){
-  let prereq = props.prerequisites ? props.prerequisites.toString() : null;
-	if(!props.showTheseSelections){
-		return(
-			<div className="featExpandedFalse">
-				<h3 className="featName">{props.name}</h3>
-				<div className="featPrerequisites"></div>
-        <div className="errorMessage">{props.errorMessage}</div>
-				<div className="featDescription">{props.description}</div>
-				<button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
-				<button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
-				<button onClick={() => props.submit()} disabled={!props.selectable}>Select</button>
-			</div>
-		)
-	} else {
-		return(
-			<div>
-				<h3 className="featName">{props.name}</h3>
-				<FeatSelectionsForm name={props.name}/>
-			</div>
-		)
-	}
-} */
 
 function CardFeatExpanded(props){
 	let special = (props.feat.special == "" || props.feat.special == null) ? false : true;
 	let normal = (props.feat.normal == "" || props.feat.normal == null) ? false : true;
   let prereq = props.prerequisites ? props.prerequisites.toString() : null;
-	
-	if(!props.showTheseSelections){
-		return(
-			<div className="featExpandedTrue">
-				<h3 className="featName">{props.feat.name}</h3>
-				<button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
-				<button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
-				<button onClick={() => props.submit()} disabled={!props.selectable}>Select</button>
-				<div className="featDescription">{props.feat.description}</div>
-				<div className="featPrerequisites"><strong>Prerequisite(s): </strong></div>
-        <div className="errorMessage">{props.errorMessage}</div>
-				<div className="featBenefit"><strong>Benefit: </strong>{props.feat.benefit}</div>
-				{normal && <div><strong>Normal: </strong>{props.feat.normal}</div>}
-				{special && <div><strong>Special: </strong>{props.feat.special}</div>}
-				{/* <button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
-				<button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
-				 */}<button onClick={() => props.submit()} disabled={!props.selectable}>Select</button>
-			</div>
-		)
-	} else {
-		return(
-			<div>
-				<h3 className="featName">{props.feat.name}</h3>
-				<FeatSelectionsForm name={props.feat.name}/>
-			</div>
-		)		
-	}
+
+  return(
+    <div className="featExpanded">
+      <div className="featPrerequisites"><strong>Prerequisite(s): </strong></div>
+      <div className="featBenefit"><strong>Benefit: </strong>{props.feat.benefit}</div>
+      {normal && <div><strong>Normal: </strong>{props.feat.normal}</div>}
+      {special && <div><strong>Special: </strong>{props.feat.special}</div>}
+      {/* <button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
+      <button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
+        */}<button onClick={() => props.submit()} disabled={!props.selectable}>Select</button>
+    </div>
+  )
 }
 
 const mapStateToProps = state => ({
