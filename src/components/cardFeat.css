@@ -10,15 +10,16 @@
 .featDescription{
   text-align: left;
   text-indent:3vw;
+  flex: 1;
 }
 
-.featCardFlexContianer{  
+/* .featCardFlexContianer{  
   display:flex;  
   flex-direction: column;
   align-items: center;
   text-align: center;
   height: 100%;
-}
+} */
 
 /* .featCard.expanded{
   border: 1px solid black;

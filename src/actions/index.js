@@ -143,6 +143,16 @@ export const clearFeatFilter = () => ({
 	type: CLEAR_FEAT_FILTER,
 });
 
+export const SET_TRAIT_FILTER = 'SET_TRAIT_FILTER';
+export const setTraitFilter = (category) => ({
+	type: SET_TRAIT_FILTER,
+	category,
+});
+
+export const CLEAR_TRAIT_FILTER = 'CLEAR_TRAIT_FILTER';
+export const clearTraitFilter = () => ({
+	type: CLEAR_TRAIT_FILTER,
+});
 
 export const SUBMIT_DETAILS_TO_STATE = 'SUBMIT_DETAILS_TO_STATE';
 export const submitDetailsToState = (values) => ({
@@ -192,6 +202,77 @@ export const setGold = (value) => ({
 	value, 
 });
 
+export const SET_INITIAL_EQUIPMENT_SLOTS = 'SET_INITIAL_EQUIPMENT_SLOTS';
+export const setInitialEquipmentSlots = () => ({
+	type: SET_INITIAL_EQUIPMENT_SLOTS,
+});
+
+export const SET_EQUIPMENT_SLOT_STATUS = 'SET_EQUIPMENT_SLOT_STATUS';
+export const setEquipmentSlotStatus = (slot) => ({
+  type: SET_EQUIPMENT_SLOT_STATUS,
+  slot,
+});
+
+export const SET_EQUIPMENT_SLOT_ITEM = 'SET_EQUIPMENT_SLOT_ITEM';
+export const setEquipmentSlotItem = (slotItem) => ({
+  type: SET_EQUIPMENT_SLOT_ITEM,
+  slotItem,
+});
+
+export const SET_TEMP_WEAPON_CATEGORY = 'SET_TEMP_WEAPON_CATEGORY';
+export const setTempWeaponCategory = (category) => ({
+	type: SET_TEMP_WEAPON_CATEGORY,
+	category,
+});
+
+export const SET_TEMP_WEAPON = 'SET_TEMP_WEAPON';
+export const setTempWeapon = (weapon) => ({
+	type: SET_TEMP_WEAPON,
+	weapon,
+});
+
+export const SET_TEMP_WEAPON_ATTACK_MODIFIER = 'SET_TEMP_WEAPON_ATTACK_MODIFIER';
+export const setTempWeaponAttackModifier = (string) => ({
+	type: SET_TEMP_WEAPON_ATTACK_MODIFIER,
+	string,
+});
+
+export const SET_TEMP_WEAPON_DAMAGE_MODIFIER = 'SET_TEMP_WEAPON_DAMAGE_MODIFIER';
+export const setTempWeaponDamageModifier = (string) => ({
+	type: SET_TEMP_WEAPON_DAMAGE_MODIFIER,
+	string,
+});
+
+export const SET_TEMP_ARMOR_CATEGORY = 'SET_TEMP_ARMOR_CATEGORY';
+export const setTempArmorCategory = (category) => ({
+	type: SET_TEMP_ARMOR_CATEGORY,
+	category,
+});
+
+export const SET_TEMP_ARMOR = 'SET_TEMP_ARMOR';
+export const setTempArmor = (armor) => ({
+	type: SET_TEMP_ARMOR,
+	armor,
+});
+
+export const SET_TEMP_ITEM_CATEGORY = 'SET_TEMP_ITEM_CATEGORY';
+export const setTempItemCategory = (category) => ({
+	type: SET_TEMP_ITEM_CATEGORY,
+	category,
+});
+
+export const SET_TEMP_ITEM = 'SET_TEMP_ITEM';
+export const setTempItem = (item) => ({
+	type: SET_TEMP_ITEM,
+	item,
+});
+
+export const ADD_ITEM_SLOT = 'ADD_ITEM_SLOT';
+export const addItemSlot = (newSlot) => ({
+	type: ADD_ITEM_SLOT,
+	newSlot,
+});
+
 export const ADD_ITEM_TO_CHARACTER = 'ADD_ITEM_TO_CHARACTER';
 export const addItemToCharacter = (item) => ({
 	type: ADD_ITEM_TO_CHARACTER,
@@ -229,8 +310,14 @@ export const setExpandedTraitCategory = (name) => ({
 });
 
 export const SUBMIT_TRAIT_TO_STATE = 'SUBMIT_TRAIT_TO_STATE';
-export const sumbmitTraitToState = (trait) => ({
+export const submitTraitToState = (trait) => ({
 	type: SUBMIT_TRAIT_TO_STATE,
+	trait, 
+});
+
+export const REMOVE_TRAIT_FROM_STATE = 'REMOVE_TRAIT_FROM_STATE';
+export const removeTraitFromState = (trait) => ({
+	type: REMOVE_TRAIT_FROM_STATE,
 	trait, 
 });
 
@@ -379,6 +466,11 @@ export const addFeatSlot = (category) => ({
 export const SET_TRAITS_TO_COMPLETE = 'SET_TRAITS_TO_COMPLETE';
 export const setTraitsToComplete = () => ({
 	type: SET_TRAITS_TO_COMPLETE, 
+});
+
+export const RESET_TRAITS_TO_COMPLETE = 'RESET_TRAITS_TO_COMPLETE';
+export const resetTraitsToComplete = () => ({
+	type: RESET_TRAITS_TO_COMPLETE, 
 });
 
 export const SET_EXPANDED_RACE = 'SET_EXPANDED_RACE';

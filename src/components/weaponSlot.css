@@ -1,0 +1,31 @@
+.weaponSlotDiv{
+  background-color: white;
+  border-style: inset;
+  display: flex;
+  flex-direction: column;
+}
+
+.weaponSlotEmpty{
+  flex: 1;
+  /* border: 1px solid red; */
+  text-align: left;
+}
+.weaponSlotSelection{
+  flex: 1;
+  display: flex;
+}
+  .weaponSelectionLabelCol{
+    flex: 1;
+    border: 1px solid black;
+    text-align: left;
+  }
+  .weaponSelectionLabelData{
+    flex: 1;
+    border: 1px solid black;
+    text-align: left;
+  }
+.weaponSlotSaved{
+  flex: 1;
+  /* border: 1px solid blue; */
+  text-align: left;
+}

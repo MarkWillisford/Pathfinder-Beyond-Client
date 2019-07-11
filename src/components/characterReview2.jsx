@@ -154,7 +154,7 @@ export class CharacterReview extends React.Component{
           Character Details</div> 
         <div className={characterDetailsClassName}>
           <div className="characterReviewLabelsCol">
-            <div className="characterReviewLabel">Title / Nickname: </div>
+            {/* <div className="characterReviewLabel">Title / Nickname: </div> */}
             <div className="characterReviewLabel">Race: </div>
             <div className="characterReviewLabel">Type / (sub-type): </div>
             <div className="characterReviewLabel">Gender: </div>
@@ -166,34 +166,50 @@ export class CharacterReview extends React.Component{
             <div className="characterReviewLabel">Hair: </div>
             <div className="characterReviewLabel">Skin: </div>
             <div className="characterReviewLabel">Deity: </div>
-            <div className="characterReviewLabel">Homeland: </div>
-            <div className="characterReviewLabel">Occupation: </div>
+            {/* <div className="characterReviewLabel">Homeland: </div>
+            <div className="characterReviewLabel">Occupation: </div> */}
             {/* <div className="characterReviewLabel">Vision / Senses: </div> */}
             <div className="characterReviewLabel">Languages: </div>
-            <div className="characterReviewLabel">Description: </div>
+            {/* <div className="characterReviewLabel">Description: </div> */}
           </div>
           <div className="characterReviewOutputsCol">
-            <div className="characterReviewOutputCentered"> -- </div>
+            {/* <div className="characterReviewOutputCentered"> -- </div> */}
             <div className="characterReviewOutputCentered">{characterToReview.race ?
               characterToReview.race.name: "--" }</div>
             <div className="characterReviewOutputCentered">{characterToReview.race ?
               characterToReview.race.standardRacialTraits.base.type: "--" }</div>
-            <div className="characterReviewOutputCentered"> -- </div>
+            <div className="characterReviewOutputCentered">{characterToReview.details 
+              ? ( characterToReview.details.gender ? characterToReview.details.gender : "--") 
+              : "--"}</div>
             <div className="characterReviewOutputCentered">{characterToReview.race ?
               characterToReview.race.standardRacialTraits.base.size: "--" }</div>
-            <div className="characterReviewOutputCentered"> -- </div>
-            <div className="characterReviewOutputCentered"> -- </div>
-            <div className="characterReviewOutputCentered"> -- </div>
-            <div className="characterReviewOutputCentered"> -- </div>
-            <div className="characterReviewOutputCentered"> -- </div>
-            <div className="characterReviewOutputCentered"> -- </div>
-            <div className="characterReviewOutputCentered"> -- </div>
-            <div className="characterReviewOutputCentered"> -- </div>
-            <div className="characterReviewOutputCentered"> -- </div>
+            <div className="characterReviewOutputCentered">{characterToReview.details 
+              ? ( characterToReview.details.age ? characterToReview.details.age : "--") 
+              : "--"}</div>
+            <div className="characterReviewOutputCentered">{characterToReview.details 
+              ? ( characterToReview.details.height ? characterToReview.details.height : "--") 
+              : "--"}</div>
+            <div className="characterReviewOutputCentered">{characterToReview.details 
+              ? ( characterToReview.details.weight ? characterToReview.details.weight : "--") 
+              : "--"}</div>
+            <div className="characterReviewOutputCentered">{characterToReview.details 
+              ? ( characterToReview.details.eyes ? characterToReview.details.eyes : "--") 
+              : "--"}</div>
+            <div className="characterReviewOutputCentered">{characterToReview.details 
+              ? ( characterToReview.details.hair ? characterToReview.details.hair : "--") 
+              : "--"}</div>
+            <div className="characterReviewOutputCentered">{characterToReview.details 
+              ? ( characterToReview.details.skin ? characterToReview.details.skin : "--") 
+              : "--"}</div>
+            <div className="characterReviewOutputCentered">{characterToReview.details 
+              ? ( characterToReview.details.deity ? characterToReview.details.deity.name : "--") 
+              : "--"}</div>
+            {/* <div className="characterReviewOutputCentered"> -- </div>
+            <div className="characterReviewOutputCentered"> -- </div> */}
             {/* <div className="characterReviewOutputCentered"> -- </div> */}
             <div className="characterReviewOutputCentered">{characterToReview.race ?
               characterToReview.race.standardRacialTraits.base.Languages.start.toString(): "--" }</div>
-            <div className="characterReviewOutputCentered"> -- </div>
+            {/* <div className="characterReviewOutputCentered"> -- </div> */}
           </div>
         </div>
         <div className="characterAbilityScoresLabel" onClick={() => this.toggleView("characterAbilityScores")}>

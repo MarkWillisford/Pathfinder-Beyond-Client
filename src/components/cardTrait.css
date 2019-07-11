@@ -1,0 +1,49 @@
+.errorMessage{
+  color:red;
+  font-weight: bold;
+  text-align: left;
+}
+.traitName{
+  text-align: left;
+}
+
+.traitDescription{
+  text-align: left;
+  text-indent:3vw;
+  flex: 1;
+}
+
+/* .traitCardFlexContianer{  
+  display:flex;  
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+} */
+
+.traitCard{
+  border: 1px solid black;
+  background: rgba(0, 0, 0, 0.20);
+}
+
+.traitDiv{
+  width: stretch;
+  height: 100%;  
+}
+.traitDescriptionAndButtons{
+  display: flex;
+  flex-direction: row;  
+  justify-content: stretch;
+}
+.traitButtons{
+  border: 1px solid black;
+  align-self: flex-end;
+  justify-content: end;
+  max-width: 20vw;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.traitButtonsClassname.expanded{
+  display: none;
+}

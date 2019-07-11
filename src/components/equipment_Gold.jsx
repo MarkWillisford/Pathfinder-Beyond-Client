@@ -15,8 +15,8 @@ export class EquipmentGold extends React.Component {
 	};
 
 	render(){
-		const className = this.props.className;
-		const wealth = this.props.wealth;
+		const className = this.props.className ? this.props.className : "cool default class";
+		const wealth = this.props.wealth ? this.props.wealth : { "number":4, "type":6 } ;
 		const goldMethod = this.props.goldMethod;
 		const gold = this.props.gold;
 

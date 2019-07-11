@@ -10,10 +10,11 @@ import { createBonus } from '../utility/statObjectFactories'
 
 export class AbilityScoreManual extends React.Component {
     onSubmit(values) {
-      const arrayOfValues = Object.keys(values);
+      let tempAbilityScores = this.props.tempAbilityScores;
+      const arrayOfValues = Object.keys(tempAbilityScores);
       for(let i=0;i<arrayOfValues.length;i++){
         let ability = arrayOfValues[i].split(/(?=[A-Z])/)[0];
-        let value = values[arrayOfValues[i]];
+        let value = tempAbilityScores[arrayOfValues[i]];
 
         let bonus = createBonus({ 
           name:"character base", 
@@ -45,122 +46,122 @@ export class AbilityScoreManual extends React.Component {
         <Field name="strengthSelecter" label="strength" component={RenderSelect}
 					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>>
           <option />
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>			
-            <option value="7">7</option>	
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
             <option value="18">18</option>
+            <option value="17">17</option>
+            <option value="16">16</option>
+            <option value="15">15</option>			
+            <option value="14">14</option>	
+            <option value="13">13</option>
+            <option value="12">12</option>
+            <option value="11">11</option>
+            <option value="10">10</option>
+            <option value="9">9</option>
+            <option value="8">8</option>
+            <option value="7">7</option>
+            <option value="6">6</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
         </Field>
         <Field name="dexteritySelecter" label="dexterity" component={RenderSelect}
 					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>>
           <option />
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>			
-            <option value="7">7</option>	
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
             <option value="18">18</option>
+            <option value="17">17</option>
+            <option value="16">16</option>
+            <option value="15">15</option>			
+            <option value="14">14</option>	
+            <option value="13">13</option>
+            <option value="12">12</option>
+            <option value="11">11</option>
+            <option value="10">10</option>
+            <option value="9">9</option>
+            <option value="8">8</option>
+            <option value="7">7</option>
+            <option value="6">6</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
         </Field>
         <Field name="constitutionSelecter" label="constitution" component={RenderSelect}
 					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>>
           <option />
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>			
-            <option value="7">7</option>	
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
             <option value="18">18</option>
+            <option value="17">17</option>
+            <option value="16">16</option>
+            <option value="15">15</option>			
+            <option value="14">14</option>	
+            <option value="13">13</option>
+            <option value="12">12</option>
+            <option value="11">11</option>
+            <option value="10">10</option>
+            <option value="9">9</option>
+            <option value="8">8</option>
+            <option value="7">7</option>
+            <option value="6">6</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
         </Field>
         <Field name="intelligenceSelecter" label="intelligence" component={RenderSelect}
 					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>>
           <option />
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>			
-            <option value="7">7</option>	
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
             <option value="18">18</option>
+            <option value="17">17</option>
+            <option value="16">16</option>
+            <option value="15">15</option>			
+            <option value="14">14</option>	
+            <option value="13">13</option>
+            <option value="12">12</option>
+            <option value="11">11</option>
+            <option value="10">10</option>
+            <option value="9">9</option>
+            <option value="8">8</option>
+            <option value="7">7</option>
+            <option value="6">6</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
         </Field>
         <Field name="wisdomSelecter" label="wisdom" component={RenderSelect}
 					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>>
           <option />
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>			
-            <option value="7">7</option>	
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
             <option value="18">18</option>
+            <option value="17">17</option>
+            <option value="16">16</option>
+            <option value="15">15</option>			
+            <option value="14">14</option>	
+            <option value="13">13</option>
+            <option value="12">12</option>
+            <option value="11">11</option>
+            <option value="10">10</option>
+            <option value="9">9</option>
+            <option value="8">8</option>
+            <option value="7">7</option>
+            <option value="6">6</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
         </Field>
         <Field name="charismaSelecter" label="charisma" component={RenderSelect}
 					onChange={this.AbilityScoreSelectedCallBack.bind(this)}>>
           <option />
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>			
-            <option value="7">7</option>	
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
             <option value="18">18</option>
+            <option value="17">17</option>
+            <option value="16">16</option>
+            <option value="15">15</option>			
+            <option value="14">14</option>	
+            <option value="13">13</option>
+            <option value="12">12</option>
+            <option value="11">11</option>
+            <option value="10">10</option>
+            <option value="9">9</option>
+            <option value="8">8</option>
+            <option value="7">7</option>
+            <option value="6">6</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
         </Field>
 				<button type="submit" disabled={this.props.pristine || this.props.submitting}>Submit</button>
 			</form>

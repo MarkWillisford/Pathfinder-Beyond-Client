@@ -89,8 +89,8 @@ export class NewCharacterFeats extends React.Component{
 
 		let toExpand = "";
 		if(this.props.toExpand){
-			if(this.props.toExpand.race){
-				toExpand = this.props.toExpand.race;
+			if(this.props.toExpand.feat){
+				toExpand = this.props.toExpand.feat;
 			}
     }	
     
@@ -130,13 +130,15 @@ export class NewCharacterFeats extends React.Component{
 		}  */else if(!complete){
 			return (
         <div className="newCharacterFeats">
-          <h1>Character Feats</h1>
-          <select ref="featCategorySelection" onChange={() => this.filterFeats(this.refs.featCategorySelection.value)}>
-            <option value="All">All</option>
-            {featCategories && featCategories.map((category) =>
-              <option key={category} value={category}>{capitalizeFirstLetter(category)}</option>
-            )}
-          </select>
+          <div className="featHeader">
+            <h1>Character Feats</h1>
+            <select ref="featCategorySelection" onChange={() => this.filterFeats(this.refs.featCategorySelection.value)}>
+              <option value="All">All</option>
+              {featCategories && featCategories.map((category) =>
+                <option key={category} value={category}>{capitalizeFirstLetter(category)}</option>
+              )}
+            </select>
+          </div>
           <div className="featDisplay">
             <div className="placeholderForScrolling"></div>
             {filteredFeatsList.map((feat) => 

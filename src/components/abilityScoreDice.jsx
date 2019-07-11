@@ -20,10 +20,27 @@ export class AbilityScoreDice extends React.Component {
 		this.state = { allOptions:[] };
 	}
 
-    onSubmit(values) {
-    	// at this point, the ability scores are already saved in the store. We just need to toggle the 
-		// step.complete to rerender.
-    	this.props.dispatch(setStepToComplete(3));
+    onSubmit(values) {    
+      let tempAbilityScores = this.props.tempAbilityScores;
+
+      const arrayOfValues = Object.keys(tempAbilityScores);
+      for(let i=0;i<arrayOfValues.length;i++){
+        let ability = arrayOfValues[i];
+        let value = tempAbilityScores[arrayOfValues[i]];
+        if(ability !== "dice"){
+          let bonus = createBonus({ 
+            name:"character base", 
+            source:"character base", 
+            stat:ability, 
+            type:"base", 
+            duration:-1, 
+            amount:Number(value) });
+          this.props.dispatch(addBonus(bonus));
+          this.props.dispatch(sumBonus(bonus));
+        }
+      }
+      this.props.dispatch(setStepToComplete(3));
+      this.props.dispatch(resetTempScore());
     }
 
     rollDice(event){
@@ -208,9 +225,9 @@ const selector = formValueSelector('diceForm');
 
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[3].complete,
-	unavaliableOptions: dynamicFields.map(f => selector(state, f)).filter(Boolean), //?????
-	//baseStrength: selector(state, "strengthSelecter"),
-	diceOptions: selector(state, "diceSelecter")
+	unavaliableOptions: dynamicFields.map(f => selector(state, f)).filter(Boolean),
+  diceOptions: selector(state, "diceSelecter"),  
+  tempAbilityScores: state.characterReducer.abilityScoreTemp,
 })
 
 AbilityScoreDice = reduxForm({

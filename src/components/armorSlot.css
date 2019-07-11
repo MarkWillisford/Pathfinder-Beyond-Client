@@ -1,0 +1,31 @@
+.armorSlotDiv{
+  background-color: white;
+  border-style: inset;
+  display: flex;
+  flex-direction: column;
+}
+
+.armorSlotEmpty{
+  flex: 1;
+  /* border: 1px solid red; */
+  text-align: left;
+}
+.armorSlotSelection{
+  flex: 1;
+  display: flex;
+}
+  .armorSelectionLabelCol{
+    flex: 1;
+    border: 1px solid black;
+    text-align: left;
+  }
+  .armorSelectionLabelData{
+    flex: 1;
+    border: 1px solid black;
+    text-align: left;
+  }
+.armorSlotSaved{
+  flex: 1;
+  /* border: 1px solid blue; */
+  text-align: left;
+}

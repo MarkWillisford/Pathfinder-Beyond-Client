@@ -2,6 +2,7 @@ import * as actions from '../actions';
 import { createStat } from '../utility/statObjectFactories';
 import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
+import { any } from 'prop-types';
 
 
 const creationSteps = [
@@ -159,7 +160,7 @@ const initialState = {
   ],
   menuActive:false,
   reviewExpanded:"",
-  clericDetails:{},
+  clericDetails:{},  
 };
 function setSum(stat){
   let total = 0;
@@ -465,6 +466,7 @@ export const characterReducer = (state=initialState, action) => {
     case actions.SUBMIT_DETAILS_TO_STATE:
       indexOfStep = 4;
       step = state.creationSteps[indexOfStep];
+      let deityData = action.values.faith ? action.values.faith : state.newCharacter.details.deity;
       return {
         ...state,
         // first set the completed tag for step 0 to true
@@ -474,13 +476,14 @@ export const characterReducer = (state=initialState, action) => {
         ], newCharacter:{ ...state.newCharacter,
           // add the values to the state
           details:{
+            ...state.newCharacter.details,
             age:action.values.age,
             alignments:action.values.alignments,
             allies:action.values.allies,
             backstory:action.values.backstory,
             enemies:action.values.enemies,
             eyes:action.values.eyes,
-            deity:action.values.faith,
+            deity:deityData,
             flaws:action.values.flaws,
             gender:action.values.gender,
             hair:action.values.hair,
@@ -489,6 +492,7 @@ export const characterReducer = (state=initialState, action) => {
             other:action.values.other,
             personalityTraits:action.values.personalityTraits,
             skin:action.values.skin,
+            height:action.values.height,
             weight:action.values.weight,
           }
         }
@@ -521,6 +525,230 @@ export const characterReducer = (state=initialState, action) => {
         newCharacter:{...state.newCharacter, gold:action.value, availableGold:action.value,
         }
       }
+    case actions.SET_INITIAL_EQUIPMENT_SLOTS:
+      if(state.tempEquipment){
+        return {
+          ...state,
+          tempEquipment:{...state.tempEquipment,
+            weaponSlots:[
+              {"id":0,"currentState":"empty"},
+              {"id":1,"currentState":"empty"},
+              {"id":2,"currentState":"empty"},
+              {"id":3,"currentState":"empty"},
+              {"id":4,"currentState":"empty"},
+            ],
+            armorSlots:[
+              {"id":0,"currentState":"empty"},
+              {"id":1,"currentState":"empty"},
+              {"id":2,"currentState":"empty"},
+              {"id":3,"currentState":"empty"},
+              {"id":4,"currentState":"empty"},
+            ],
+            itemSlots:[
+              {"id":0,"currentState":"empty"},
+            ]
+          }
+        }
+      } else {
+        return {
+          ...state,
+          tempEquipment:{
+            weaponSlots:[
+              {"id":0,"currentState":"empty"},
+              {"id":1,"currentState":"empty"},
+              {"id":2,"currentState":"empty"},
+              {"id":3,"currentState":"empty"},
+              {"id":4,"currentState":"empty"},
+            ],
+            armorSlots:[
+              {"id":0,"currentState":"empty"},
+              {"id":1,"currentState":"empty"},
+              {"id":2,"currentState":"empty"},
+              {"id":3,"currentState":"empty"},
+              {"id":4,"currentState":"empty"},
+            ],
+            itemSlots:[
+              {"id":0,"currentState":"empty"},  // This is so interesting!! something is injecting data here but I can't find it.
+            ]
+          }
+        }
+      }
+    case actions.SET_EQUIPMENT_SLOT_STATUS:
+      let menu = action.slot.menu;
+      let slot = action.slot.id;
+      let status = action.slot.currentState;
+      foundAt = null;
+      let menuInMemory = menu + "Slots";
+      let newMenu = state.tempEquipment[menuInMemory];
+      return {
+        ...state,
+        tempEquipment:{
+          ...state.tempEquipment, [menuInMemory]:
+          newMenu.map((content, i) => i === slot ? {...content, currentState:status } : content)
+        }
+      }
+    case actions.SET_EQUIPMENT_SLOT_ITEM:
+      menu = action.slotItem.menu;
+      slot = action.slotItem.id;
+      let item = action.slotItem.item;
+      foundAt = null;
+      menuInMemory = menu + "Slots";
+      newMenu = state.tempEquipment[menuInMemory];
+      return {
+        ...state,
+        tempEquipment:{
+          ...state.tempEquipment, [menuInMemory]:
+          newMenu.map((content, i) => i === slot ? {...content, item:item } : content)
+        }
+      }
+    case actions.SET_TEMP_ARMOR_CATEGORY:
+      if(state.tempEquipment){
+        return {
+          ...state,
+          tempEquipment:{
+            ...state.tempEquipment, armorCategory:action.category,
+          }
+        }
+      } else {
+        return {
+          ...state,
+          tempEquipment:{
+            armorCategory:action.category,
+          }
+        }
+      }
+    case actions.SET_TEMP_ITEM_CATEGORY:
+      if(state.tempEquipment){
+        return {
+          ...state,
+          tempEquipment:{
+            ...state.tempEquipment, itemCategory:action.category,
+          }
+        }
+      } else {
+        return {
+          ...state,
+          tempEquipment:{
+            itemCategory:action.category,
+          }
+        }
+      }
+    case actions.SET_TEMP_ARMOR:
+      if(state.tempEquipment){
+        return {
+          ...state,
+          tempEquipment:{
+            ...state.tempEquipment, armor:action.armor,
+          }
+        }
+      } else {
+        return {
+          ...state,
+          tempEquipment:{
+            armor:action.armor,
+          }
+        }
+      }
+    case actions.SET_TEMP_ITEM:
+      if(state.tempEquipment){
+        return {
+          ...state,
+          tempEquipment:{
+            ...state.tempEquipment, item:action.item,
+          }
+        }
+      } else {
+        return {
+          ...state,
+          tempEquipment:{
+            item:action.item,
+          }
+        }
+      }
+    case actions.ADD_ITEM_SLOT:
+      return {...state, tempEquipment:{
+        ...state.tempEquipment, itemSlots:[
+          ...state.tempEquipment.itemSlots, action.newSlot
+        ]
+      }}
+    case actions.SET_TEMP_WEAPON_CATEGORY:
+      if(state.tempEquipment){
+        return {
+          ...state,
+          tempEquipment:{
+            ...state.tempEquipment, weaponCategory:action.category,
+          }
+        }
+      } else {
+        return {
+          ...state,
+          tempEquipment:{
+            weaponCategory:action.category,
+          }
+        }
+      }
+    case actions.SET_TEMP_WEAPON:
+      if(state.tempEquipment){
+        return {
+          ...state,
+          tempEquipment:{
+            ...state.tempEquipment, weapon:action.weapon,
+          }
+        }
+      } else {
+        return {
+          ...state,
+          tempEquipment:{
+            weapon:action.weapon,
+          }
+        }
+      }
+    case actions.SET_TEMP_WEAPON_ATTACK_MODIFIER:
+      if(state.tempEquipment){
+        return {
+          ...state,
+          tempEquipment:{
+            ...state.tempEquipment, weaponAttackModifier:action.string,
+          }
+        }
+      } else {
+        return {
+          ...state,
+          tempEquipment:{
+            weaponAttackModifier:action.string,
+          }
+        }
+      }
+    case actions.SET_TEMP_WEAPON_DAMAGE_MODIFIER:
+      if(state.tempEquipment){
+        return {
+          ...state,
+          tempEquipment:{
+            ...state.tempEquipment, weaponDamageModifier:action.string,
+          }
+        }
+      } else {
+        return {
+          ...state,
+          tempEquipment:{
+            weaponDamageModifier:action.string,
+          }
+        }
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     case actions.ADD_ITEM_TO_CHARACTER:
       if(!state.newCharacter.gear){
           return {
@@ -596,7 +824,26 @@ export const characterReducer = (state=initialState, action) => {
         newCharacter:{...state.newCharacter, traitSlots:
           newTrait.map((content, i) => i === foundAt ? {...content, selection:action.trait } : content )
         }
-      }  
+      }
+    case actions.REMOVE_TRAIT_FROM_STATE:
+      foundAt= null;
+      for(let i = 0;i<state.newCharacter.traitSlots.length; i++){
+        if(state.newCharacter.traitSlots[i].selection){
+          // there is a trait selected in this slot
+          if(state.newCharacter.traitSlots[i].selection.name === action.trait.name){
+            foundAt = i;
+            break;
+          }
+        }
+      }
+      newTrait = state.newCharacter.traitSlots;
+      return {
+        ...state,
+        newCharacter:{...state.newCharacter, traitSlots:
+          newTrait.map((content, i) => i === foundAt ? {...content, selection:null } : content )
+        }
+      }
+
     case actions.SUBMIT_FEAT_TO_STATE:
       foundAt = null;
       for(let i = 0;i<state.newCharacter.featSlots.length; i++){
@@ -623,7 +870,6 @@ export const characterReducer = (state=initialState, action) => {
           ...state.newCharacter, featSlots:newSlots,
         }
       }
-
     case actions.SET_FEAT_FILTER:
       return{
         ...state,
@@ -634,13 +880,16 @@ export const characterReducer = (state=initialState, action) => {
         ...state,
         featFilter: null,
       }
-
-
-
-
-
-
-
+    case actions.SET_TRAIT_FILTER:
+      return{
+        ...state,
+        traitFilter: action.category,
+      }
+    case actions.CLEAR_TRAIT_FILTER:
+      return{
+        ...state,
+        traitFilter: null,
+      }
 
     case actions.ADD_BONUS:
       // flags
@@ -999,6 +1248,22 @@ export const characterReducer = (state=initialState, action) => {
           }}
         }    
       }
+    case actions.RESET_TRAITS_TO_COMPLETE:
+      if(state.newCharacter.details){
+        return {
+          ...state,
+          newCharacter:{...state.newCharacter, details:{
+            ...state.newCharacter.details, traitsCompleted:false
+          }}
+        }          
+      } else {
+        return {
+          ...state,
+          newCharacter:{...state.newCharacter, details:{
+            traitsCompleted:false
+          }}
+        }    
+      }      
     case actions.TOGGLE_MENU_ACTIVE:
       return {
         ...state,

@@ -13,16 +13,38 @@ import { fetchProtectedData, clearData } from '../actions/protectedData';
 import { fetchProtectedSubData } from '../actions/protectedData';
 import { fetchProtectedSecondaryData } from '../actions/protectedData';
 import { fetchProtectedExtraData } from '../actions/protectedData';
+import { setInitialEquipmentSlots } from '../actions/index';
+
+import WeaponSlot from './weaponSlot'; 
+import ArmorSlot from './armorSlot'; 
+import ItemSlot from './itemSlot'; 
 
 import './equipment_Selection.css';
 
 export class Equipment_Selection extends React.Component {
+  componentDidUpdate() {
+    let element;
+    element = document.getElementsByClassName("editing")[0];
+    if(element){
+      element = element.previousSibling;
+    } else {
+      element = document.getElementsByClassName("top")[0];
+      if(element){
+      } else {
+        element = document.getElementsByClassName("title")[0];
+      }
+    }
+    
+    element.scrollIntoView({behavior: 'smooth'});
+  }
+
   componentDidMount(){
     this.props.dispatch(clearData());
     this.props.dispatch(fetchProtectedData("armors"));
     this.props.dispatch(fetchProtectedSubData("goodsAndServices"));
     this.props.dispatch(fetchProtectedSecondaryData("tradeGoods"));
     this.props.dispatch(fetchProtectedExtraData("weapons"));
+    this.props.dispatch(setInitialEquipmentSlots());
   }
 
 	reset(){
@@ -214,258 +236,45 @@ export class Equipment_Selection extends React.Component {
 	render(){
 		const startingGold = this.props.gold;
 		let availableGold = this.props.availableGold;
-		const purchasedGear = this.props.purchasedGear;
-    
+    const purchasedGear = this.props.purchasedGear;
+    const expandedSlot = this.props.expandedSlot;
+
 		// inport data
-		const tradeGoodsList = this.props.tradeGoodsList;  //require('../data/tradeGoods');
-		const weaponsList = this.props.weaponsList;    //require('../data/weapons');
-		const armorList = this.props.armorsList;    //require('../data/armor');
-    const goodsAndServicesList = this.props.goodsAndServicesList;   //require('../data/goodsAndServices');
-    
-    let dataLoaded = true;
-    if(!tradeGoodsList ||
-      !weaponsList ||
-      !armorList ||
-      !goodsAndServicesList  
-      ){
-        dataLoaded = false;
-    } 
+		const tradeGoodsList = this.props.tradeGoodsList;
+		const weaponsList = this.props.weaponsList;
+		const armorList = this.props.armorsList;
+    const goodsAndServicesList = this.props.goodsAndServicesList;
 
-    let weaponsListsCategory = {
-      "simple":[],
-      "martial":[],
-      "exotic":[],
-    };
-    let armorListsUse = {
-      "light armor":[],
-      "medium armor":[],
-      "heavy armor":[],
-    };
-    let goodsAndServicesListType = {};
-    let goodsAndServicesListTypeToDisplay = [];
-
-		if(dataLoaded){
-      // Love this, found on https://stackoverflow.com/questions/14696326/break-array-of-objects-into-separate-arrays-based-on-a-property
-      weaponsListsCategory = groupBy2(weaponsList, "category");
-      armorListsUse = groupBy2(armorList, "use");
-      goodsAndServicesListType = groupBy2(goodsAndServicesList, "type");
-      goodsAndServicesListTypeToDisplay = Object.keys(goodsAndServicesListType).map(key => 
-        <GoodsAndServices key={key} array={goodsAndServicesListType[key]} 
-          remove={() => this.removeItem()} 
-          add={() => this.addItem()}
-          availableGold={availableGold} purchasedGear={purchasedGear} />
-      );
-    }
-
-		if(startingGold){
+    let weaponSlots = this.props.tempEquipment ? this.props.tempEquipment.weaponSlots : [];
+    let armorSlots = this.props.tempEquipment ? this.props.tempEquipment.armorSlots : [];
+    let itemSlots = this.props.tempEquipment ? this.props.tempEquipment.itemSlots : 
+      [{"id":0, "currentState":"empty"}];
+    let itemsList = [goodsAndServicesList, tradeGoodsList]
+/*     for(let i=0;i<itemSlots.length;i++){
+      itemSlots[i].items = [goodsAndServicesList, tradeGoodsList];      // HOW DOES THIS MODIFY THE STORE?  
+    } */
+    if(startingGold){
 			return (
-				<div>
-					<p>Available Gold: { availableGold }</p><button onClick={ () => this.reset() }>Reset</button>
-					<div className="purchasedGear">
-					</div>
-
-					<div className="tradeGoods">
-						<h3>Trade Goods</h3>
-						<table className="tradeGoodsTable">
-							<caption></caption>
-							<thead>
-								<tr>
-									<th>Quantity</th>
-									<th>Cost</th>
-									<th>Item</th>
-								</tr>
-							</thead>
-							<tbody>
-								{tradeGoodsList[0].hasOwnProperty("item") && tradeGoodsList.map(({name, cost, item, description}) => 
-									<TradeGood key={name} name={name} description={description} 
-										cost={cost} item={item} expand={false} add={()=> this.addItem(name)} 
-										remove={()=> this.removeItem(name)} availableGold={availableGold}
-										purchasedGear= {purchasedGear}/>
-									) }
-							</tbody>
-						</table>
-					</div>
-					<div className="weapons">
-						<h3>Weapons</h3>
-						{/* For each category in weaponCategory we need a table - just hard code the three . . .   */}
-						<h4>Simple</h4>
-						<table className="weaponsTableSimple">
-							<caption></caption>
-							<thead>
-								<tr>
-									<th>Quantity</th>
-									<th>Name</th>
-									<th>Cost</th>
-									<th>Damage (S)</th>
-									<th>Damage (M)</th>
-									<th>Critical</th>
-									<th>Range</th>
-									<th>Weight</th>
-									<th>Type</th>
-									<th>Special</th>
-								</tr>
-							</thead>
-							<tbody>
-								{ weaponsListsCategory.simple.map(({name, description, cost, dmgS, dmgM, critical, range, weight, type, special}) => 
-									<Weapons key={name} name={name} description={description} 
-										cost={cost} dmgS={dmgS} dmgM={dmgM} critical={critical} range={range} 
-										weight={weight} type={type} special={special} expand={false}
-										add={()=> this.addItem(name)} remove={()=> this.removeItem(name)}
-										availableGold={availableGold} purchasedGear= {purchasedGear}/>
-									)}
-							</tbody>
-						</table>
-						<h4>Martial</h4>
-						<table className="weaponsTableMartial">
-							<caption></caption>
-							<thead>
-								<tr>
-									<th>Quantity</th>
-									<th>Name</th>
-									<th>Cost</th>
-									<th>Damage (S)</th>
-									<th>Damage (M)</th>
-									<th>Critical</th>
-									<th>Range</th>
-									<th>Weight</th>
-									<th>Type</th>
-									<th>Special</th>
-								</tr>
-							</thead>
-							<tbody>
-								{ weaponsListsCategory.martial.map(({name, description, cost, dmgS, dmgM, critical, range, weight, type, special}) => 
-									<Weapons key={name} name={name} description={description} 
-										cost={cost} dmgS={dmgS} dmgM={dmgM} critical={critical} range={range} 
-										weight={weight} type={type} special={special} expand={false}
-										add={()=> this.addItem(name)} remove={()=> this.removeItem(name)}
-										availableGold={availableGold} purchasedGear= {purchasedGear}/>
-									)}
-							</tbody>
-						</table>
-						<h4>Exotic</h4>
-						<table className="weaponsTableExotic">
-							<caption></caption>
-							<thead>
-								<tr>
-									<th>Quantity</th>
-									<th>Name</th>
-									<th>Cost</th>
-									<th>Damage (S)</th>
-									<th>Damage (M)</th>
-									<th>Critical</th>
-									<th>Range</th>
-									<th>Weight</th>
-									<th>Type</th>
-									<th>Special</th>
-								</tr>
-							</thead>
-							<tbody>
-								{ weaponsListsCategory.exotic.map(({name, description, cost, dmgS, dmgM, critical, range, weight, type, special}) => 
-									<Weapons key={name} name={name} description={description} 
-										cost={cost} dmgS={dmgS} dmgM={dmgM} critical={critical} range={range} 
-										weight={weight} type={type} special={special} expand={false}
-										add={()=> this.addItem(name)} remove={()=> this.removeItem(name)}
-										availableGold={availableGold} purchasedGear= {purchasedGear}/>
-									)}
-							</tbody>
-						</table>
-					</div>
-					<div className="armor">
-						<h3>Armor</h3>
-						<h4>Light Armor</h4>
-						<table className="armorTableLight">
-							<caption></caption>
-							<thead>
-								<tr>
-									<th>Quantity</th>
-									<th>Name</th>
-									<th>Cost</th>
-									<th>Armor / Shield Bonus</th>
-									<th>Maximum Dex Bonus</th>
-									<th>Armor Check Penalty</th>
-									<th>Arcane Spell Failure Chance</th>
-									<th>Speed 20 ft. / 30 ft.</th>
-									<th>Weight</th>
-								</tr>
-							</thead>
-							<tbody>
-								{ armorListsUse["light armor"].map(({name, description, cost, bonus, maxDexBonus, armorCheckPenalty, arcaneSpellFailureChance, speed, weight}) => 
-									<Armor key={name} name={name} description={description} 
-										cost={cost} bonus={bonus} maxDexBonus={maxDexBonus} 
-										armorCheckPenalty={armorCheckPenalty} arcaneSpellFailureChance={arcaneSpellFailureChance}
-										speed={speed} weight={weight} expand={false} add={()=> this.addItem(name)}
-										remove={()=> this.removeItem(name)} availableGold={availableGold}
-										purchasedGear= {purchasedGear}/>
-									)}
-							</tbody>
-						</table>
-						<h4>Medium Armor</h4>
-						<table className="armorTableLight">
-							<caption></caption>
-							<thead>
-								<tr>
-									<th>Quantity</th>
-									<th>Name</th>
-									<th>Cost</th>
-									<th>Armor / Shield Bonus</th>
-									<th>Maximum Dex Bonus</th>
-									<th>Armor Check Penalty</th>
-									<th>Arcane Spell Failure Chance</th>
-									<th>Speed 20 ft. / 30 ft.</th>
-									<th>Weight</th>
-								</tr>
-							</thead>
-							<tbody>
-								{ armorListsUse["medium armor"].map(({name, description, cost, bonus, maxDexBonus, armorCheckPenalty, arcaneSpellFailureChance, speed, weight}) => 
-									<Armor key={name} name={name} description={description} 
-										cost={cost} bonus={bonus} maxDexBonus={maxDexBonus} 
-										armorCheckPenalty={armorCheckPenalty} arcaneSpellFailureChance={arcaneSpellFailureChance}
-										speed={speed} weight={weight} expand={false} add={()=> this.addItem(name)}
-										remove={()=> this.removeItem(name)} availableGold={availableGold}
-										purchasedGear= {purchasedGear}/>
-									)}
-							</tbody>
-						</table>
-						<h4>Heavy Armor</h4>
-						<table className="armorTableLight">
-							<caption></caption>
-							<thead>
-								<tr>
-									<th>Quantity</th>
-									<th>Name</th>
-									<th>Cost</th>
-									<th>Armor / Shield Bonus</th>
-									<th>Maximum Dex Bonus</th>
-									<th>Armor Check Penalty</th>
-									<th>Arcane Spell Failure Chance</th>
-									<th>Speed 20 ft. / 30 ft.</th>
-									<th>Weight</th>
-								</tr>
-							</thead>
-							<tbody>
-								{ armorListsUse["heavy armor"].map(({name, description, cost, bonus, maxDexBonus, armorCheckPenalty, arcaneSpellFailureChance, speed, weight}) => 
-									<Armor key={name} name={name} description={description} 
-										cost={cost} bonus={bonus} maxDexBonus={maxDexBonus} 
-										armorCheckPenalty={armorCheckPenalty} arcaneSpellFailureChance={arcaneSpellFailureChance}
-										speed={speed} weight={weight} expand={false} add={()=> this.addItem(name)}
-										remove={()=> this.removeItem(name)} availableGold={availableGold}
-										purchasedGear= {purchasedGear}/>
-									)}
-							</tbody>
-						</table>
-					</div>
-					<div className="goodsAndServices">
-						<h3>Goods and Services</h3>
-						{ goodsAndServicesListTypeToDisplay }
-					</div>
-					<button onClick={() => this.done()}>Submit and Review</button>
-		    	</div>
-			)
+        <div className="equipment">
+          <div className="weaponsDiv">
+            <h3>Weapons</h3>
+            {weaponSlots.map((s) => <WeaponSlot key={s.id} id={s.id} currentState={s.currentState} weapons={weaponsList}/>)}
+          </div>
+          <div className="ArmorDiv">  
+            <h3>Armor</h3>
+            {armorSlots.map((s) => <ArmorSlot key={s.id} id={s.id} currentState={s.currentState} armor={armorList}/>)}
+          </div>
+          <div className="ItemsDiv">
+            <h3>Items</h3>
+            {itemSlots.map((i) => <ItemSlot key={i.id} id={i.id} currentState={i.currentState} items={itemsList}/>)}
+          </div>
+        </div>
+      )
 		} else { return null }
 	}
 }
 
-function GoodsAndServices(props){
+/* function GoodsAndServices(props){
 	const type = props.array[0].type;
 
 	const listOfItems = props.array.map(({name, description, cost, weight, collection,}) => 
@@ -494,9 +303,9 @@ function GoodsAndServices(props){
 		</table>
 		</div>
 	)
-}
+} */
 
-function TradeGood(props){
+/* function TradeGood(props){
 	const name = props.name;
 	const cost = props.cost;
 	const item = props.item;	
@@ -526,9 +335,9 @@ function TradeGood(props){
 			<td>{item}</td>
 		</tr>
 	)
-}
+} */
 
-function Weapons(props){
+/* function Weapons(props){
 	const name=props.name;
 	const cost=props.cost;
 	const dmgS=props.dmgS;
@@ -571,9 +380,9 @@ function Weapons(props){
 			<td>{special}</td>
 		</tr>
 	)
-}
+} */
 
-function Armor(props){
+/* function Armor(props){
 	const name=props.name;
 	const cost=props.cost	
 	const bonus=props.bonus[Object.keys(props.bonus)[0]];
@@ -615,8 +424,9 @@ function Armor(props){
 			<td>{speed20} / {speed30}</td>
 		</tr>
 	)
-}
+} */
 
+// Love this, found on https://stackoverflow.com/questions/14696326/break-array-of-objects-into-separate-arrays-based-on-a-property 
 function groupBy2(xs, prop) {
   var grouped = {};
   for (var i=0; i<xs.length; i++) {
@@ -632,6 +442,8 @@ const mapStateToProps = state => ({
 	availableGold:state.characterReducer.newCharacter.availableGold,
   purchasedGear:state.characterReducer.newCharacter.gear,  
   characterToUpdate:state.characterReducer.newCharacter,
+  expandedSlot:state.characterReducer.expanded,
+  tempEquipment:state.characterReducer.tempEquipment,
 
   armorsList:state.protectedData.data,
   goodsAndServicesList:state.protectedData.subData,

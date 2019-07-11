@@ -1,0 +1,31 @@
+.itemSlotDiv{
+  background-color: white;
+  border-style: inset;
+  display: flex;
+  flex-direction: column;
+}
+
+.itemSlotEmpty{
+  flex: 1;
+  /* border: 1px solid red; */
+  text-align: left;
+}
+.itemSlotSelection{
+  flex: 1;
+  display: flex;
+}
+  .itemSelectionLabelCol{
+    flex: 1;
+    border: 1px solid black;
+    text-align: left;
+  }
+  .itemSelectionLabelData{
+    flex: 1;
+    border: 1px solid black;
+    text-align: left;
+  }
+.itemSlotSaved{
+  flex: 1;
+  /* border: 1px solid blue; */
+  text-align: left;
+}
