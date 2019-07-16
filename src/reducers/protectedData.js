@@ -1,6 +1,7 @@
 import {
     FETCH_PROTECTED_DATA_SUCCESS,
     FETCH_PROTECTED_DATA_USERSCHARACTERS_SUCCESS,
+    FETCH_PROTECTED_DATA_CHARCLASSES_SUCCESS,
     FETCH_PROTECTED_DATA_ERROR,
     SET_LOADING,
     FETCH_PROTECTED_SUB_DATA_SUCCESS,
@@ -29,6 +30,13 @@ export default function reducer(state = initialState, action) {
     return Object.assign({}, state, {
       ...state,
       usersCharacters:action.data,
+      error: null,
+      loading: null
+    });
+  } else if (action.type === FETCH_PROTECTED_DATA_CHARCLASSES_SUCCESS) {
+    return Object.assign({}, state, {
+      ...state,
+      charClasses:action.data,
       error: null,
       loading: null
     });

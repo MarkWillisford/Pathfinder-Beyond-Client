@@ -79,7 +79,7 @@ export class Dashboard extends React.Component {
           <div className="dashboard-username">
             Username: {this.props.username}
           </div>
-          <div className="dashboard-name">Name: {this.props.name}</div>
+          {/* <div className="dashboard-name">Name: {this.props.name}</div> */}
           <div className="dashboard-character-data">
             <h2>Characters</h2>
               {characters.map((character) => 
@@ -101,7 +101,7 @@ export class Dashboard extends React.Component {
 const mapStateToProps = state => ({
   username: state.auth.currentUser.username,
   //name: `${currentUser.firstName} ${currentUser.lastName}`,
-  name: state.auth.currentUser.firstName + state.auth.currentUser.lastName,
+  // name: state.auth.currentUser.firstName + state.auth.currentUser.lastName,
   characters:state.protectedData.usersCharacters,
 });
 

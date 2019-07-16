@@ -20,6 +20,11 @@ export const fetchProtectedData_usersCharacters_Success = data => ({
     type: FETCH_PROTECTED_DATA_USERSCHARACTERS_SUCCESS,
     data
 });
+export const FETCH_PROTECTED_DATA_CHARCLASSES_SUCCESS = 'FETCH_PROTECTED_DATA_CHARCLASSES_SUCCESS';
+export const fetchProtectedData_charClasses_Success = data => ({
+    type: FETCH_PROTECTED_DATA_CHARCLASSES_SUCCESS,
+    data
+});
 
 export const FETCH_PROTECTED_SUB_DATA_SUCCESS = 'FETCH_PROTECTED_SUB_DATA_SUCCESS';
 export const fetchProtectedSubDataSuccess = data => ({
@@ -114,6 +119,10 @@ export const fetchProtectedData = (api, call="") => (dispatch, getState) => {
     switch(call){
       case "usersCharacters": 
         dispatch(fetchProtectedData_usersCharacters_Success(data));
+        break;
+      case "charClasses":
+        dispatch(fetchProtectedData_charClasses_Success(data));
+        break;
       default: 
         dispatch(fetchProtectedDataSuccess(data));
     }
@@ -136,9 +145,9 @@ export const fetchProtectedSubData = (api) => (dispatch, getState) => {
   ).then(res => {
     return res.json();
   }).then(data => {
-      dispatch(fetchProtectedSubDataSuccess(data));
+    dispatch(fetchProtectedSubDataSuccess(data));
   }).catch(err => {
-      dispatch(fetchProtectedDataError(err));
+    dispatch(fetchProtectedDataError(err));
   });
 };
 

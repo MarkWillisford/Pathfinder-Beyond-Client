@@ -38,7 +38,7 @@ export class NewCharacterClass extends React.Component{
   
   componentDidMount(){
     this.props.dispatch(clearData());
-    this.props.dispatch(fetchProtectedData("charClasses"));
+    this.props.dispatch(fetchProtectedData("charClasses", "charClasses"));
   }
 
   dispatchResetCompletedStep(){
@@ -148,7 +148,7 @@ export class NewCharacterClass extends React.Component{
 		const complete = this.props.complete;
 		const help = this.props.help;
 		const classSelections = this.props.classSelections ? this.props.classSelections : "";
-		const classesArray = this.props.classesArray;
+		const classesArray = this.props.classesArray ? this.props.classesArray : [];
 		let toExpand = "";
 		if(this.props.toExpand){
 			if(this.props.toExpand.charClass){
@@ -247,7 +247,7 @@ export class NewCharacterClass extends React.Component{
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[2].complete,
   //classesArray:require('../data/classes'),
-  classesArray:state.protectedData.data,
+  classesArray:state.protectedData.charClasses,
 	help:state.characterReducer.help,
 	classSelections:state.characterReducer.classSelectionsView,
 	toExpand:state.characterReducer.expanded, 

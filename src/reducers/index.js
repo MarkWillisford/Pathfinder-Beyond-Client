@@ -568,7 +568,7 @@ export const characterReducer = (state=initialState, action) => {
               {"id":4,"currentState":"empty"},
             ],
             itemSlots:[
-              {"id":0,"currentState":"empty"},  // This is so interesting!! something is injecting data here but I can't find it.
+              {"id":0,"currentState":"empty"}, 
             ]
           }
         }

@@ -10,7 +10,7 @@ class CardCharacters extends React.Component{
   
 	render(){
 		return(
-			<div>
+			<div className="cardCharacter div">
 				<h3>{this.props.name}</h3>
 				<button onClick={() => this.show(this.props.character)}>Console.log</button>
 			</div>

@@ -5,6 +5,7 @@ import EquipmentSelection from './equipment_Selection';
 
 import { goldGenerationMethod } from '../actions/index';
 import { setGold } from '../actions/index';
+import { spendGold } from '../actions/index';
 
 import './equipment_Gold.css';
 
@@ -14,6 +15,32 @@ export class EquipmentGold extends React.Component {
 		this.props.dispatch(goldGenerationMethod(text));		
 	};
 
+  resetGold(){
+    this.props.dispatch(setGold(null));
+    this.props.dispatch(goldGenerationMethod(null));
+  }
+
+  checkForGearCallBack(){    
+    const tempEquipment = this.props.tempEquipment;
+    if(tempEquipment){
+      for(let i=0;i<tempEquipment.weaponSlots.length;i++){
+        if(tempEquipment.weaponSlots[i].item){
+          this.props.dispatch(spendGold(tempEquipment.weaponSlots[i].item.cost));
+        }
+      }
+      for(let i=0;i<tempEquipment.armorSlots.length;i++){
+        if(tempEquipment.armorSlots[i].item){
+          this.props.dispatch(spendGold(tempEquipment.armorSlots[i].item.cost));
+        }
+      }
+      for(let i=0;i<tempEquipment.itemSlots.length;i++){
+        if(tempEquipment.itemSlots[i].item){
+          this.props.dispatch(spendGold(tempEquipment.itemSlots[i].item.cost));
+        }
+      }
+    }
+  }
+
 	render(){
 		const className = this.props.className ? this.props.className : "cool default class";
 		const wealth = this.props.wealth ? this.props.wealth : { "number":4, "type":6 } ;
@@ -22,22 +49,29 @@ export class EquipmentGold extends React.Component {
 
 		return (
 			<div>
-				<p>As a {className} you have {wealth.number}d{wealth.type} gold to spend.</p>
-				<p>How are should we determine starting gold?</p>
-				<select ref="goldGenerationMethod" onChange={()=> this.handleGold(this.refs.goldGenerationMethod.value)}>
-	        		<option value="0">Select how to generate scores</option>
-	        		<option value="roll">Roll</option>
-	        		<option value="average">Average</option>
-	        		<option value="manual">Manual</option>
-	        	</select>
-	        	<div className="goldGeneration">
-	        		<GoldGeneration method={ goldMethod } wealth={ wealth } dispatch={this.props.dispatch} gold={ gold }/>
-	        	</div>
-	        	<div className="equipmentSelection">
-	        		<EquipmentSelection />
-	        	</div>
+				{!gold && <div>
+          <p>As a {className} you have {wealth.number}d{wealth.type} * 10 gold to spend.</p>
+          <p>How are should we determine starting gold?</p>
+          <select ref="goldGenerationMethod" onChange={()=> this.handleGold(this.refs.goldGenerationMethod.value)}>
+            <option value="0">Select how to generate scores</option>
+            <option value="roll">Roll</option>
+            <option value="average">Average</option>
+            <option value="manual">Manual</option>
+          </select>
+        </div>}
+        {gold && <div>
+          <button onClick={() => this.resetGold()}>Reset</button>
+          Available Gold: { this.props.availableGold }gp
+        </div>}
+        <div className="goldGeneration">
+          <GoldGeneration method={ goldMethod } wealth={ wealth } dispatch={this.props.dispatch} gold={ gold } 
+            checkForGearCallBack={()=> this.checkForGearCallBack()}/>
+        </div>
+        <div className="equipmentSelection">
+          <EquipmentSelection />
+        </div>
 
-        	</div>
+      </div>
 		)
 	}
 }
@@ -48,11 +82,11 @@ function GoldGeneration(props){
 	if(!gold){
 		switch(goldMethod){
 			case "roll": 
-				return (<RollGold wealth={props.wealth} dispatch={props.dispatch}/>);
+				return (<RollGold wealth={props.wealth} dispatch={props.dispatch} checkForGearCallBack={props.checkForGearCallBack}/>);
 			case "average": 
-				return (<AverageGold wealth={props.wealth} dispatch={props.dispatch}/>);
+				return (<AverageGold wealth={props.wealth} dispatch={props.dispatch} checkForGearCallBack={props.checkForGearCallBack}/>);
 			case "manual": 
-				return (<ManualGold dispatch={props.dispatch}/>);
+				return (<ManualGold dispatch={props.dispatch} checkForGearCallBack={props.checkForGearCallBack}/>);
 			default:
 				return null;
 		}
@@ -69,7 +103,8 @@ class RollGold extends React.Component{
 			gold += num;
 		}
 		gold = gold*10;
-		this.props.dispatch(setGold(gold));
+    this.props.dispatch(setGold(gold));
+    this.props.checkForGearCallBack();
 	}
 
 	render(){
@@ -82,6 +117,7 @@ class RollGold extends React.Component{
 class AverageGold extends React.Component{
 	handleClick(avg){
 		this.props.dispatch(setGold(avg));
+    this.props.checkForGearCallBack();
 	}
 
 	render(){
@@ -96,20 +132,11 @@ class AverageGold extends React.Component{
 
 class ManualGold extends React.Component{
 	onSubmit(values){
-    	this.props.dispatch(setGold(values.goldInput));
+      this.props.dispatch(setGold(values.goldInput));
+      this.props.checkForGearCallBack();
     }
 
 	render(){
-		const createRenderer = render => ({ input, meta, label, ...rest }) => 
-			<div>
-			<label>{label}</label>
-			{render(input, label, rest)}
-			</div>
-
-		const RenderInput = createRenderer((input, label) => 
-			<input { ... input} placeholder={label}></input>			
-		)
-
 		return(
 			<div>
 				<form onSubmit={ this.props.handleSubmit(values=>this.onSubmit(values)) }> 		
@@ -126,6 +153,16 @@ class ManualGold extends React.Component{
 	}
 }
 
+const createRenderer = render => ({ input, meta, label, ...rest }) => 
+<div>
+<label>{label}</label>
+{render(input, label, rest)}
+</div>
+
+const RenderInput = createRenderer((input, label) => 
+<input { ... input} placeholder={label}></input>			
+)
+
 ManualGold = reduxForm({
     form: 'manualForm',
     onSubmitFail: (errors, dispatch) =>
@@ -136,7 +173,9 @@ const mapStateToProps = state => ({
 	className:state.characterReducer.newCharacter.charClass.name,
 	wealth:state.characterReducer.newCharacter.charClass.classFeatures.wealth,
 	goldMethod:state.characterReducer.newCharacter.goldMethod,
-	gold:state.characterReducer.newCharacter.gold
+	gold:state.characterReducer.newCharacter.gold,
+  availableGold:state.characterReducer.newCharacter.availableGold,
+  tempEquipment:state.characterReducer.tempEquipment
 })
 
 export default connect(mapStateToProps)(EquipmentGold);

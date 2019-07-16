@@ -146,7 +146,6 @@ class CardAnimalCompanion extends React.Component{
         });
         return stringKeys;
       }
-      console.log();
       return (
         <div className={expandableClassName}>
           <h3>{this.props.name}</h3>

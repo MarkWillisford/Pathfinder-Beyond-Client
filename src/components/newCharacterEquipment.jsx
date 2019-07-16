@@ -60,12 +60,12 @@ export class NewCharacterEquipment extends React.Component{
 			if(defaultGear){
 				return (
           <div className="newCharacterEquipment">
-            <h1>Character Equipment</h1>	
+            {/* <h1>Character Equipment</h1>	
             <p>{ wealth.number }D{ wealth.type }</p>
             <p>Choose <button onClick={()=> this.handleClick("equipment")}>Equipment</button> Or <button onClick={()=> this.handleClick("gold")}>Gold</button></p>
             <div className="equipmentSelection">
-              {/* <EquipmentMethod method={this.props.equipmentGenerationMethod} dispatch={this.props.dispatch}/> */}
-            </div>
+              {<EquipmentMethod method={this.props.equipmentGenerationMethod} dispatch={this.props.dispatch}/>}
+            </div> */}
           </div>
 			    );				
 			} else {
