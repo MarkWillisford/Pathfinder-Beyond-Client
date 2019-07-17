@@ -286,3 +286,26 @@ export const saveAndSubmit = () => (dispatch, getState, history) => {
       dispatch(fetchProtectedDataError(err));
   });
 };
+
+export const deleteCharacterById = (id) => (dispatch, getState) => {
+  console.log("deleting id:");
+  console.log(id);
+  const authToken = getState().auth.authToken;
+  // const user = getState().auth.currentUser._id; 
+  fetch(`${API_BASE_URL}/users/characters`, {
+    method: 'DELETE',
+    headers: {
+      // Provide our auth token as credentials
+      Authorization: `Bearer ${authToken}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      _id:id,
+    }),
+  }).then(res => normalizeResponseErrors(res)
+  ).then(res => {
+    return res.json();
+  }).catch(err => {
+      dispatch(fetchProtectedDataError(err));
+  });
+}
