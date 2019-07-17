@@ -175,7 +175,7 @@ export class ClassSelectionsCleric extends React.Component{
 
 const mapStateToProps = state => ({
 	//classesArray:require('../../data/classes'),
-  classesArray:state.protectedData.data,
+  classesArray:state.protectedData.charClasses,
   availableDomainsList:state.characterReducer.availableDomains,
   expand:state.characterReducer.expand,
   clericDetails:state.characterReducer.clericDetails,

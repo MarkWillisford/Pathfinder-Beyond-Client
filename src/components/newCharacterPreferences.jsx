@@ -79,11 +79,7 @@ export class NewCharacterPreferencesForm extends React.Component{
 		} else {
 			return(
         <div className="newCharacterPerferances">
-          {/* <CharacterReview characterToReview = {this.props.characterToReview} user = {this.props.user}
-          reviewExpanded = {this.props.reviewExpanded} dispatch = {this.props.dispatch}/> */}
-          <h3>Basics</h3>
-          <button onClick={() => this.dispatchResetCompletedStep()}>Edit</button>
-          <CharacterReview />
+          <CharacterReview resetCallback={()=>this.dispatchResetCompletedStep()} page={"Basics"}/>
         </div>			
 			);
 		}		

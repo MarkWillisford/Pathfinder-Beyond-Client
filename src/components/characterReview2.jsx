@@ -1,8 +1,10 @@
 import React from 'react';
+import { withRouter } from 'react-router'
 import {connect} from 'react-redux';
 import requiresLogin from './requiresLogin';
 import { capitalizeFirstLetter } from '../utility/helperFunctions';
 import {toggleCharacterReviewView} from '../actions/index';
+import { saveAndSubmit } from '../actions/protectedData';
 
 import './characterReview2.css';
 import rightDisplayArrow from '../images/rightArrowTrans.png';
@@ -43,10 +45,24 @@ export class CharacterReview extends React.Component{
     console.log(stat);
   }
 
+  saveCharacter(){
+    this.props.dispatch(saveAndSubmit());
+    this.props.history.push("/dashboard");
+  }
+
 	render(){
     const skillList = require('../data/skills');
     const characterToReview = this.props.characterToReview;
     const reviewExpanded = this.props.reviewExpanded;
+    const creationSteps = this.props.creationSteps;
+
+    let allStepsComplete = true;
+    for(let i=0; i<creationSteps.length; i++){
+      if(creationSteps[i].complete === false){
+        allStepsComplete = false;
+        break;
+      }
+    }
     
     let sizeMod = characterToReview.race ? 
       (characterToReview.race.standardRacialTraits.base.size === "small" ? 1 : 0) :
@@ -123,7 +139,10 @@ export class CharacterReview extends React.Component{
 
     return(
       <div className="characterReviewFlexContainer">
-        <h1>{characterToReview.preferences ? (characterToReview.preferences.characterName) : "Unnamed Character"}</h1>
+        <h1>{characterToReview.preferences ? (characterToReview.preferences.characterName) : "Unnamed Character"}</h1>        
+        <h3>{this.props.page}</h3><button onClick={this.props.resetCallback}>Edit</button>
+        { allStepsComplete && <button onClick={() => this.saveCharacter()}>Save</button> }
+
         <div className="playerInformationLabel" onClick={() => this.toggleView("playerInformation")}>
           <img className={playerInformationRightArrowClassName} src={rightDisplayArrow} alt="show" />
           <img className={playerInformationDownArrowClassName} src={downDisplayArrow} alt="hide" />          
@@ -554,13 +573,13 @@ export class CharacterReview extends React.Component{
 }
 
 const mapStateToProps = state => ({
+	creationSteps:state.characterReducer.creationSteps,
   characterToReview:state.characterReducer.newCharacter,
   user:state.auth.currentUser.username,
   reviewExpanded:state.characterReducer.reviewExpanded,
-  // saved:state.protectedData.saved
 }); 
 
-export default requiresLogin()(connect(mapStateToProps)(CharacterReview));
+export default requiresLogin()(withRouter(connect(mapStateToProps)(CharacterReview)));
 
 function AbilityScoreLabelDisplay(props){
   const ability = props.ability;

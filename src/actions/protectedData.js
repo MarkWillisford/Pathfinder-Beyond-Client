@@ -191,9 +191,10 @@ export const fetchProtectedExtraData = (api) => (dispatch, getState) => {
   });
 };
 
-export const saveAndSubmit = () => (dispatch, getState) => {
+export const saveAndSubmit = () => (dispatch, getState, history) => {
+  console.log("saving");
   const authToken = getState().auth.authToken;
-  const user = getState().auth.currentUser._id;
+  const user = getState().auth.currentUser._id; 
   dispatch(setLoading());
   
   const charState = getState().characterReducer;
@@ -212,16 +213,18 @@ export const saveAndSubmit = () => (dispatch, getState) => {
   let tradeGoodsList = [];
   let goodsAndServicesList = [];
 
-  for(let i = 0; i < charState.newCharacter.gear.length; i++){
-    let item = charState.newCharacter.gear[i];
-    if(item.hasOwnProperty("dmgS")){
-      weaponsList.push(item.id);
-    } else if (item.hasOwnProperty("collection")){
-      goodsAndServicesList.push(item.id);
-    } else if (item.hasOwnProperty("armorCheckPenalty")){
-      armorsList.push(item.id);
-    } else {
-      tradeGoodsList.push(item.id);
+  if(charState.newCharacter.gear){
+    for(let i = 0; i < charState.newCharacter.gear.length; i++){
+      let item = charState.newCharacter.gear[i];
+      if(item.hasOwnProperty("dmgS")){
+        weaponsList.push(item.id);
+      } else if (item.hasOwnProperty("collection")){
+        goodsAndServicesList.push(item.id);
+      } else if (item.hasOwnProperty("armorCheckPenalty")){
+        armorsList.push(item.id);
+      } else {
+        tradeGoodsList.push(item.id);
+      }
     }
   }
 
@@ -249,7 +252,7 @@ export const saveAndSubmit = () => (dispatch, getState) => {
         alignments: charState.newCharacter.details.alignments,
         allies: charState.newCharacter.details.allies,
         backstory: charState.newCharacter.details.backstory,
-        deity: charState.newCharacter.details.deity,
+        deity: charState.newCharacter.details.deity ? charState.newCharacter.details.deity.name : null,
         enemies: charState.newCharacter.details.enemies,
         eyes: charState.newCharacter.details.eyes,
         flaws: charState.newCharacter.details.flaws,

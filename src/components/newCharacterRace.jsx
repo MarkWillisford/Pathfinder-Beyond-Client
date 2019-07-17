@@ -194,9 +194,7 @@ export class NewCharacterRace extends React.Component{
       } else {
         return(
           <div className="newCharacterRace">
-            <h3>Race: {this.props.race ? capitalizeFirstLetter(this.props.race) : ""}</h3> 
-            <button onClick={() => this.dispatchResetCompletedStep()}>Edit</button>
-            <CharacterReview />
+            <CharacterReview resetCallback={()=>this.dispatchResetCompletedStep()} page={"Race:" + this.props.race ? capitalizeFirstLetter(this.props.race) : ""}/>
           </div>			
         );
       };

@@ -398,9 +398,7 @@ export class NewCharacterAbilityScores extends React.Component{
 		} else {
 			return(
         <div className="newCharacterAbilityScores">
-          <h3>Ability Scores</h3>
-          <button onClick={() => this.dispatchResetCompletedStep()}>Edit</button>
-          <CharacterReview />
+          <CharacterReview resetCallback={()=>this.dispatchResetCompletedStep()} page={"Ability Scores"}/>
         </div>			
 			);
 		}		

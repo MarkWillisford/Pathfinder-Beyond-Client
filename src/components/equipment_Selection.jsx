@@ -39,41 +39,50 @@ export class Equipment_Selection extends React.Component {
   }
 
   componentDidMount(){
+    let editing = false;
+    const tempEquipment = this.props.tempEquipment;
+    if(tempEquipment){
+      for(let i=0;i<tempEquipment.weaponSlots.length;i++){
+        if(tempEquipment.weaponSlots[i].item){
+          editing = true;
+        }
+      }
+      for(let i=0;i<tempEquipment.armorSlots.length;i++){
+        if(tempEquipment.armorSlots[i].item){
+          editing = true;
+        }
+      }
+      for(let i=0;i<tempEquipment.itemSlots.length;i++){
+        if(tempEquipment.itemSlots[i].item){
+          editing = true;
+        }
+      }
+    }
+
     this.props.dispatch(clearData());
     this.props.dispatch(fetchProtectedData("armors"));
     this.props.dispatch(fetchProtectedSubData("goodsAndServices"));
     this.props.dispatch(fetchProtectedSecondaryData("tradeGoods"));
     this.props.dispatch(fetchProtectedExtraData("weapons"));
-    this.props.dispatch(setInitialEquipmentSlots());
+
+    // only do this if there is nothing already in the slots
+    if(!editing){
+      this.props.dispatch(setInitialEquipmentSlots());
+    }
   }
 
-	reset(){
-		console.log("resetting");
-	}
-
-  addItem(name){
-		const tradeGoodsList = this.props.tradeGoodsList;  //require('../data/tradeGoods');
-		const weaponsList = this.props.weaponsList;    //require('../data/weapons');
-		const armorList = this.props.armorsList;    //require('../data/armor');
-    const goodsAndServicesList = this.props.goodsAndServicesList;   //require('../data/goodsAndServices');
-    
-		let item = null;
-		for(let i=0;i<tradeGoodsList.length;i++){
-			if(tradeGoodsList[i].name === name){
-				item = tradeGoodsList[i];
-			}
-		};
-		if(item === null){
-			for(let i=0;i<weaponsList.length;i++){
-				if(weaponsList[i].name === name){
-					item = weaponsList[i];
-				}
-			};
-		} 
-		if(item === null){
-			for(let i=0;i<armorList.length;i++){
-				if(armorList[i].name === name){
-          item = armorList[i];
+  submitEquipment(){
+    console.log("submitting");
+    const tempEquipment = this.props.tempEquipment;
+    if(tempEquipment){
+      for(let i=0;i<tempEquipment.weaponSlots.length;i++){
+        if(tempEquipment.weaponSlots[i].item){
+          this.props.dispatch(addItemToCharacter(tempEquipment.weaponSlots[i].item));
+        }
+      }
+      for(let i=0;i<tempEquipment.armorSlots.length;i++){
+        if(tempEquipment.armorSlots[i].item){
+          let item = tempEquipment.armorSlots[i].item;
 
           // If we are adding armor, add the acp
           const skillList = require('../data/skills');
@@ -95,23 +104,20 @@ export class Equipment_Selection extends React.Component {
             this.props.dispatch(addBonus(bonus));
             this.props.dispatch(sumBonus(bonus));
           }
-				}
-			};			
-		}
-		if(item === null){
-			for(let i=0;i<goodsAndServicesList.length;i++){
-				if(goodsAndServicesList[i].name === name){
-					item = goodsAndServicesList[i];
-				}
-			};			
-		}
 
-		// Now we have the item the user selected stored in item
-		this.props.dispatch(spendGold(item.cost));
-		this.props.dispatch(addItemToCharacter(item));
-	}
+          this.props.dispatch(addItemToCharacter(tempEquipment.armorSlots[i].item));
+        }
+      }
+      for(let i=0;i<tempEquipment.itemSlots.length;i++){
+        if(tempEquipment.itemSlots[i].item){
+          this.props.dispatch(addItemToCharacter(tempEquipment.itemSlots[i].item));
+        }
+      }
+    }
+    this.props.dispatch(setStepToComplete(7));
+  }
 
-	removeItem(name){
+	/* removeItem(name){
 		const tradeGoodsList = this.props.tradeGoodsList;  //require('../data/tradeGoods');
 		const weaponsList = this.props.weaponsList;    //require('../data/weapons');
 		const armorList = this.props.armorList;    //require('../data/armor');
@@ -147,91 +153,7 @@ export class Equipment_Selection extends React.Component {
 		// Now we have the item the user selected stored in item
 		this.props.dispatch(spendGold(-item.cost));
 		this.props.dispatch(removeItemFromCharacter(item));
-	}
-
-	done(){
-    // we set the 7th step to complete
-    this.props.dispatch(setStepToComplete(7));
-    // We know that equipment is the last thing to do there for at this point the character is ready for confirmation
-    //this.props.history.push("/newCharacter/review"); 
-    
-    let bonus = createBonus({ 
-			name:"base", 
-			source:"base", 
-			stat:"armorClass", 
-			type:"base", 
-			duration:-1, 
-			amount:10 });
-		this.props.dispatch(addBonus(bonus));
-    this.props.dispatch(sumBonus(bonus));
-    
-    let bonus2 = createBonus({ 
-			name:"base", 
-			source:"base", 
-			stat:"flatFootedArmorClass", 
-			type:"base", 
-			duration:-1, 
-			amount:10 });
-		this.props.dispatch(addBonus(bonus2));
-    this.props.dispatch(sumBonus(bonus2));
-
-    let bonus3 = createBonus({ 
-			name:"base", 
-			source:"base", 
-			stat:"touchArmorClass", 
-			type:"base", 
-			duration:-1, 
-			amount:10 });
-		this.props.dispatch(addBonus(bonus3));
-    this.props.dispatch(sumBonus(bonus3));
-    
-    let bonus4 = createBonus({ 
-			name:"base", 
-			source:"base", 
-			stat:"combatManeuverDefense", 
-			type:"base", 
-			duration:-1, 
-			amount:10 });
-		this.props.dispatch(addBonus(bonus4));
-    this.props.dispatch(sumBonus(bonus4));
-
-    // update Skills
-    let characterToUpdate = this.props.characterToUpdate;
-    let classSkillList = characterToUpdate.charClass.classFeatures.classSkills;
-    //console.log(classSkillList);
-    //console.log(characterToUpdate);
-    let skillRanks = characterToUpdate.characterStats;
-  
-    for(let i=0; i<classSkillList.length;i++){
-      let name=classSkillList[i];
-      //console.log('searching for ');
-      //console.log(name);
-      for(let j=0;j<skillRanks.length;j++){
-        //console.log("checking skillRanks[j].name");
-        //console.log(skillRanks[j].name);
-        if(skillRanks[j].name === name){
-          //console.log("found it");
-          //console.log("searching through .bonuses");
-          //console.log(skillRanks[j].bonuses);
-          for(let k=0;k<skillRanks[j].bonuses.length;k++){
-            if(skillRanks[j].bonuses[k].type === 'ranks'){
-              //console.log('we have a rank in');
-              //console.log(name);
-              let bonusSkill = createBonus({ 
-                name:"classSkillBonus", 
-                source:"classSkillBonus", 
-                stat:skillRanks[j].name, 
-                type:"classSkillBonus", 
-                duration:-1, 
-                amount:3 });
-              this.props.dispatch(addBonus(bonusSkill));
-              this.props.dispatch(sumBonus(bonusSkill));              
-            }
-          }
-        }
-      }
-    }  
-  }
+	} */
 
 	render(){
 		const startingGold = this.props.gold;
@@ -256,6 +178,7 @@ export class Equipment_Selection extends React.Component {
     if(startingGold){
 			return (
         <div className="equipment">
+          <button onClick={()=>this.submitEquipment()}>Submit</button>
           <div className="weaponsDiv">
             <h3>Weapons</h3>
             {weaponSlots.map((s) => <WeaponSlot key={s.id} id={s.id} currentState={s.currentState} weapons={weaponsList}/>)}
@@ -268,163 +191,12 @@ export class Equipment_Selection extends React.Component {
             <h3>Items</h3>
             {itemSlots.map((i) => <ItemSlot key={i.id} id={i.id} currentState={i.currentState} items={itemsList}/>)}
           </div>
+          <button onClick={()=>this.submitEquipment()}>Submit</button>
         </div>
       )
 		} else { return null }
 	}
 }
-
-/* function GoodsAndServices(props){
-	const type = props.array[0].type;
-
-	const listOfItems = props.array.map(({name, description, cost, weight, collection,}) => 
-		<CardGoodsOrService key={name} name={name} description={description} cost={cost}
-		weight={weight} remove={() => props.remove(name)} add={() => props.add(name)}
-		availableGold={props.availableGold} purchasedGear= {props.purchasedGear} 
-    />
-	);
-
-	return(
-		<div>
-		<h4>{type}</h4>
-		<table className="">
-			<caption></caption>
-			<thead>
-				<tr>
-					<th>Quantity</th>
-					<th>Name</th>
-					<th>Cost</th>
-					<th>Weight</th>
-				</tr>
-			</thead>
-			<tbody>
-				{listOfItems}
-			</tbody>
-		</table>
-		</div>
-	)
-} */
-
-/* function TradeGood(props){
-	const name = props.name;
-	const cost = props.cost;
-	const item = props.item;	
-	const availableGold = props.availableGold;
-	const purchasedGear = props.purchasedGear;
-	const disabledAdd = (availableGold < cost) ? true : false;
-	let quantity = 0;
-
-	// set quantity
-	if(purchasedGear){
-		for(let i=0;i<purchasedGear.length;i++){
-			if(purchasedGear[i].name === name){
-				quantity++;
-			}
-		}
-	}
-	const disabledRemove = (quantity > 0) ? false : true;
-
-	return(
-		<tr>
-			<td>
-				<button className={"add_"+item+"_button"} onClick={props.add} disabled={disabledAdd}>+</button> 
-				{quantity}
-				<button className={"remove_"+item+"_button"} onClick={props.remove} disabled={disabledRemove}>-</button>
-			</td>
-			<td>{cost} gp</td>
-			<td>{item}</td>
-		</tr>
-	)
-} */
-
-/* function Weapons(props){
-	const name=props.name;
-	const cost=props.cost;
-	const dmgS=props.dmgS;
-	const dmgM=props.dmgM;
-	const critical=props.critical;
-	const range=props.range;
-	const weight=props.weight;
-	const type=props.type;
-	const special=props.special;
-	const availableGold = props.availableGold;
-	const disabledAdd = (availableGold < cost) ? true : false;
-	const purchasedGear = props.purchasedGear;
-	let quantity = 0;
-
-	// set quantity
-	if(purchasedGear){
-		for(let i=0;i<purchasedGear.length;i++){
-			if(purchasedGear[i].name === name){
-				quantity++;
-			}
-		}
-	}
-	const disabledRemove = (quantity > 0) ? false : true;
-
-	return(
-		<tr>
-			<td>
-				<button className={"add_"+name+"_button"} onClick={props.add} disabled={disabledAdd}>+</button>
-				{quantity}
-				<button className={"remove_"+name+"_button"} onClick={props.remove} disabled={disabledRemove}>-</button>
-			</td>
-			<td>{name}</td>
-			<td>{cost} gp</td>
-			<td>{dmgS}</td>
-			<td>{dmgM}</td>
-			<td>{critical}</td>
-			<td>{range}</td>
-			<td>{weight}</td>
-			<td>{type}</td>
-			<td>{special}</td>
-		</tr>
-	)
-} */
-
-/* function Armor(props){
-	const name=props.name;
-	const cost=props.cost	
-	const bonus=props.bonus[Object.keys(props.bonus)[0]];
-	const maxDexBonus=props.maxDexBonus;
-	const armorCheckPenalty=props.armorCheckPenalty;
-	const arcaneSpellFailureChance=props.arcaneSpellFailureChance;
-	const weight=props.weight;
-	const speed20=props.speed[Object.keys(props.speed)[0]];
-	const speed30=props.speed[Object.keys(props.speed)[1]];
-	const purchasedGear = props.purchasedGear;
-	const availableGold = props.availableGold;
-	const disabledAdd = (availableGold < cost) ? true : false;
-	let quantity = 0;
-
-	// set quantity
-	if(purchasedGear){
-		for(let i=0;i<purchasedGear.length;i++){
-			if(purchasedGear[i].name === name){
-				quantity++;
-			}
-		}
-	}
-	const disabledRemove = (quantity > 0) ? false : true;
-
-	return(
-		<tr>
-			<td>
-				<button className={"add_"+name+"_button"} onClick={props.add} disabled={disabledAdd}>+</button>
-				{quantity}
-				<button className={"remove_"+name+"_button"} onClick={props.remove} disabled={disabledRemove}>-</button>
-			</td>
-			<td>{name}</td>
-			<td>{cost} gp</td>
-			<td>{bonus}</td>
-			<td>{maxDexBonus}</td>
-			<td>{armorCheckPenalty}</td>
-			<td>{arcaneSpellFailureChance}</td>
-			<td>{weight}</td>
-			<td>{speed20} / {speed30}</td>
-		</tr>
-	)
-} */
 
 // Love this, found on https://stackoverflow.com/questions/14696326/break-array-of-objects-into-separate-arrays-based-on-a-property 
 function groupBy2(xs, prop) {

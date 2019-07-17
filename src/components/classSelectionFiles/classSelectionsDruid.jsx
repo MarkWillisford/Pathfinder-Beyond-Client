@@ -191,7 +191,7 @@ class CardAnimalCompanion extends React.Component{
 
 const mapStateToProps = state => ({
 	//classesArray:require('../../data/classes'),
-  classesArray:state.protectedData.data,
+  classesArray:state.protectedData.charClasses,
   expand:state.characterReducer.expand,
   druidNatureBond:state.protectedData.subData,
 });

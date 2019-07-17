@@ -11,7 +11,6 @@ import './equipment_Gold.css';
 
 export class EquipmentGold extends React.Component {
 	handleGold(text){
-		// set the state.goldGenerationMethod to text
 		this.props.dispatch(goldGenerationMethod(text));		
 	};
 

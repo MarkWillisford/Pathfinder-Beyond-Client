@@ -69,6 +69,7 @@ export class ClassSelectionsRanger extends React.Component{
         return (
             <form onSubmit={this.props.handleSubmit(onSubmitForm) }>
                 <p>At 1st level, a ranger selects a creature type from the ranger favored enemies table. He gains a +2 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks against creatures of his selected type. Likewise, he gets a +2 bonus on weapon attack and damage rolls against them. A ranger may make Knowledge skill checks untrained when attempting to identify these creatures.</p>
+                <button type="submit" disabled={submitting}>Submit</button>
                 <Field name="selections" component={RadioGroup} label="" options=
                     { favoredEnemies.map((option) => ({ title: option, value: option })) }
                 />
@@ -79,7 +80,7 @@ export class ClassSelectionsRanger extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	classesArray:state.protectedData.data, //require('../../data/classes'),
+	classesArray:state.protectedData.charClasses,
 });
 
 ClassSelectionsRanger = reduxForm({

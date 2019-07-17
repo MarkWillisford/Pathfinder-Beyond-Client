@@ -1,8 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Redirect, Link} from 'react-router-dom';
 import EquipmentStartingEquipment from './equipment_StartingEquipment';
 import EquipmentGold from './equipment_Gold';
+import CharacterReview from './characterReview2';
+import { resetCompletedStep } from '../actions/index';
 
 import { equipmentGenerationMethod } from '../actions/index';
 
@@ -13,6 +14,11 @@ export class NewCharacterEquipment extends React.Component{
 		// set the state.equipmentGenerationMethod to value
     this.props.dispatch(equipmentGenerationMethod(value));
 	}
+
+  dispatchResetCompletedStep(){
+    this.props.dispatch(resetCompletedStep(7));
+
+  }
 
 	render(){
 		const complete = this.props.complete;
@@ -57,37 +63,27 @@ export class NewCharacterEquipment extends React.Component{
 				</div>
 			)
 		} else if(!complete){
-			if(defaultGear){
-				return (
-          <div className="newCharacterEquipment">
-            {/* <h1>Character Equipment</h1>	
-            <p>{ wealth.number }D{ wealth.type }</p>
-            <p>Choose <button onClick={()=> this.handleClick("equipment")}>Equipment</button> Or <button onClick={()=> this.handleClick("gold")}>Gold</button></p>
-            <div className="equipmentSelection">
-              {<EquipmentMethod method={this.props.equipmentGenerationMethod} dispatch={this.props.dispatch}/>}
-            </div> */}
+      return (
+        <div className="newCharacterEquipment">
+          <h1>Character Equipment</h1>	
+          <div className="equipmentSelection">
+            <EquipmentMethod method="gold" dispatch={this.props.dispatch}/>
           </div>
-			    );				
-			} else {
-				return (
-			        <div className="newCharacterEquipment">
-			        	<h1>Character Equipment</h1>	
-			        	<div className="equipmentSelection">
-			        		<EquipmentMethod method="gold" dispatch={this.props.dispatch}/>
-			        	</div>
-			        </div>
-			    );
-			}
+        </div>
+      );
 		} else {
-      return <Redirect to="/newCharacter/review" />;
+      return (
+        <div className="newCharacterEquipment">
+          
+          <CharacterReview resetCallback={()=>this.dispatchResetCompletedStep()}/>
+        </div>	
+      )
 		}
 	}
 }
       
 function EquipmentMethod(props){
 	switch(props.method){
-		case "equipment": 
-			return (<EquipmentStartingEquipment />)
 		case "gold": 
 			return (<EquipmentGold />)
 		default:

@@ -49,6 +49,7 @@ export class ClassSelectionsPaladin extends React.Component{
     }
     
     onSubmitClick(deity){   
+      console.log("clicked");
       for(let i=0; i<this.props.classesArray.length;i++){
         // if this is the clicked element toggle it 
         if( this.props.classesArray[i].name==="paladin" ){     
@@ -87,7 +88,7 @@ export class ClassSelectionsPaladin extends React.Component{
 
 const mapStateToProps = state => ({
 	//classesArray:require('../../data/classes'),
-  classesArray:state.protectedData.data,
+  classesArray:state.protectedData.charClasses,
   expand:state.characterReducer.expand,
   deities:state.protectedData.subData,
 });

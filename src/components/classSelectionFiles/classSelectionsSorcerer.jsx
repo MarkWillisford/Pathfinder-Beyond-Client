@@ -22,9 +22,8 @@ export class ClassSelectionsSorcerer extends React.Component{
   }
 
 	render(){
-        const bloodlines = this.props.bloodlines;   //require('../../data/bloodlines');
-        console.log(bloodlines);
-        const spells = this.props.spells;  //require('../../data/spells');
+        const bloodlines = this.props.bloodlines;
+        const spells = this.props.spells;
         const expand = this.props.expand;
         const sorcererDetails = this.props.sorcererDetails; 
         const bloodlineDone = (!sorcererDetails) ? (false) : (
@@ -38,7 +37,9 @@ export class ClassSelectionsSorcerer extends React.Component{
         // okay, spells has an unsorted array of spell objects. I need to find all the spells that have a level object with a class attribute of "sorcerer/wizard"
         // then sort that list by level object's attribute "num"
         // This will be done server side, for now a basic function built in here.
+        console.log(spells);
         let filteredSpellList = this.filterSpells(spells, "sorcerer/wizard", [0,1]); 
+        console.log(filteredSpellList);
 
         return (
             <div>
@@ -88,17 +89,17 @@ export class ClassSelectionsSorcerer extends React.Component{
     }
     
     filterSpells(spells, list, range){
-        let grouped = {};
-        for(let i=0;i<spells.length;i++){
-            for(let j=0;j<spells[i].level.length;j++){
-                if(spells[i].level[j].class === list && range.includes(spells[i].level[j].num)){
-                    let p = spells[i].level[j].num;
-                    if (!grouped[p]) { grouped[p] = []; }
-                    grouped[p].push(spells[i]);
-                }
-            }
+      let grouped = {};
+      for(let i=0;i<spells.length;i++){
+        for(let j=0;j<spells[i].level.length;j++){
+          if(spells[i].level[j].class === list && range.includes(spells[i].level[j].num)){
+            let p = spells[i].level[j].num;
+            if (!grouped[p]) { grouped[p] = []; }
+            grouped[p].push(spells[i]);
+          }
         }
-        return grouped;
+      }
+      return grouped;
     }
     groupBy(xs, prop){
         let grouped = {};
@@ -252,7 +253,6 @@ class CardBloodline extends React.Component{
         const bonusSpells = this.props.bonusSpells;
         const bonusFeats = this.props.bonusFeats;
         const powers = this.props.bloodlinePowers.list;
-        console.log(bonusFeats);
         function displaySpells(spells){
             let stringSpells;
             spells.map(spell =>
@@ -306,7 +306,7 @@ class CardBloodline extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	classesArray:state.protectedData.data, //require('../../data/classes'),
+	classesArray:state.protectedData.charClasses, 
     expand:state.characterReducer.expand,
     sorcererDetails:state.characterReducer.sorcererDetails,
     bloodlines:state.protectedData.subData,

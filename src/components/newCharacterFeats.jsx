@@ -152,9 +152,7 @@ export class NewCharacterFeats extends React.Component{
 		} else {
 			return(
         <div className="newCharacterFeats">
-          <h3>Feats</h3>
-          <button onClick={() => this.dispatchResetCompletedStep()}>Edit</button>
-          <CharacterReview />
+          <CharacterReview resetCallback={()=>this.dispatchResetCompletedStep()} page={"Feats"}/>
         </div>			
 			);
 		}	
