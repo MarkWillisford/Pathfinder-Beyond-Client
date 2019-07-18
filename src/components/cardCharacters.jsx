@@ -1,20 +1,28 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import { withRouter } from 'react-router'
 import { capitalizeFirstLetter } from '../utility/helperFunctions';
 import { deleteCharacterById } from '../actions/protectedData';
 import {fetchProtectedData} from '../actions/protectedData';
+import { editingExistingCharacter } from '../actions/index';
 
 import './cardCharacters.css';
 
 class CardCharacters extends React.Component{  
 
   view(character){
-    console.log("view");
-    console.log(character);
+    console.log(character); 
   }
 
-  edit(character){
-    console.log("edit");
+  getFeatDetails(name){
+    const featsList = this.props.featsList 
+    let featToReturn = featsList.find( feat => feat.name === name);
+    return featToReturn;
+  };
+
+  edit(character){    
+    this.props.dispatch(editingExistingCharacter(character));
+    this.props.history.push("/newCharacter");
   }
   
   delete(id){
@@ -22,11 +30,7 @@ class CardCharacters extends React.Component{
     this.props.dispatch(fetchProtectedData("users/characters", "usersCharacters"));
   }
 
-	render(){/* 
-    let charName = this.props
-    let raceName = this.props.character ? this.props.character.race.name : "";
-    let className = this.props.character ? this.props.character.charClass.name : "";
-    console.log(this.props.character.race.name); */
+	render(){
 		return(
 			<div className="cardCharacter div">
 				<h3>{this.props.name}</h3>
@@ -43,4 +47,4 @@ const mapStateToProps = state => ({
 
 });
 
-export default connect(mapStateToProps)(CardCharacters);
+export default withRouter(connect(mapStateToProps)(CardCharacters));

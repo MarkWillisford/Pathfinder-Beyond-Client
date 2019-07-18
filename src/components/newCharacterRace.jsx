@@ -59,7 +59,7 @@ export class NewCharacterRace extends React.Component{
 	}
 
 	addRace(id){
-    const racesArray = this.props.racesArray;   // this.getRaceData();
+    const racesArray = this.props.racesArray;
     for(let i=0; i<racesArray.length;i++){
 			// if this is the clicked element toggle it 
 			if(  racesArray[i].id===id ){

@@ -35,7 +35,8 @@ export class CardFeat extends React.Component{
 				lastFeatSelected = true;
 			};
 
-			// If the feat doesn't have selections then submit. 
+      // If the feat doesn't have selections then submit. 
+      console.log(feat);
 			this.props.dispatch(submitFeatToState(feat));  
 
 			// Finaly if the last feat has been selected, set the step to complete. 

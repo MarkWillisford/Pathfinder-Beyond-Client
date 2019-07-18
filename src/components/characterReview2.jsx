@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import requiresLogin from './requiresLogin';
 import { capitalizeFirstLetter } from '../utility/helperFunctions';
 import {toggleCharacterReviewView} from '../actions/index';
-import { saveAndSubmit } from '../actions/protectedData';
+import { saveAndSubmit, editAndSubmit } from '../actions/protectedData';
 
 import './characterReview2.css';
 import rightDisplayArrow from '../images/rightArrowTrans.png';
@@ -46,7 +46,11 @@ export class CharacterReview extends React.Component{
   }
 
   saveCharacter(){
-    this.props.dispatch(saveAndSubmit());
+    if(!this.props.editingExistingCharacter){
+      this.props.dispatch(saveAndSubmit());
+    } else {
+      this.props.dispatch(editAndSubmit());
+    }
     this.props.history.push("/dashboard");
   }
 
@@ -577,6 +581,7 @@ const mapStateToProps = state => ({
   characterToReview:state.characterReducer.newCharacter,
   user:state.auth.currentUser.username,
   reviewExpanded:state.characterReducer.reviewExpanded,
+  editingExistingCharacter:state.characterReducer.editingExistingCharacter,
 }); 
 
 export default requiresLogin()(withRouter(connect(mapStateToProps)(CharacterReview)));

@@ -44,6 +44,7 @@ const newCharacter = {
       skills:0,
     }
   },
+  selections:{},
   skills:{
     "acrobatics": {},
     "appraise": {},
@@ -93,7 +94,10 @@ const newCharacter = {
     { "type":"any",
       "selection":null
     }
-  ]
+  ],
+  details:{
+    
+  }
 };
 const initialState = {
   user:"Me",
@@ -968,6 +972,10 @@ export const characterReducer = (state=initialState, action) => {
           foundAt = i;
         }
       }
+      console.log("Bug #3")
+      console.log("Debugging the push of undefined that I get on some char reload")
+      console.log(action.bonus.stat); // Debugging the push of undefined that I get from time to time on char reload 
+
       if(found){
         return{
           ...state,
@@ -1061,7 +1069,30 @@ export const characterReducer = (state=initialState, action) => {
         availableDomains:action.domains
       }
     case actions.SUBMIT_DOMAIN:
-       tableLevel = state.newCharacter.charClass.classFeatures.table[1];
+      if(state.newCharacter.selections.domains){
+        return {
+          ...state,
+          newCharacter:{
+            ...state.newCharacter, selections:{
+              ...state.newCharacter.selections, domains:[
+                ...state.newCharacter.selections.domains, action.domain
+              ]
+            }
+          }
+        }
+      } else {
+        return {
+          ...state,
+          newCharacter:{
+            ...state.newCharacter, selections:{
+              ...state.newCharacter.selections, domains:[
+                action.domain
+              ]
+            }
+          }
+        }
+      }
+/*       tableLevel = state.newCharacter.charClass.classFeatures.table[1];
       levelSpecial = state.newCharacter.charClass.classFeatures.table[1][5];
       foundAt = null;
       for(let i=0;i<levelSpecial.length;i++){
@@ -1069,6 +1100,7 @@ export const characterReducer = (state=initialState, action) => {
           foundAt = i;
         }
       } 
+      console.log(foundAt);
       return {
         ...state,
         newCharacter:{...state.newCharacter, charClass:{
@@ -1081,7 +1113,7 @@ export const characterReducer = (state=initialState, action) => {
             ]
           }
         }}
-      }  
+      }   */
     case actions.SET_DEITY:
       return {
         ...state,
@@ -1286,7 +1318,21 @@ export const characterReducer = (state=initialState, action) => {
           ...state.creationSteps.filter(c => c.id > indexOfStep)
         ]
       }
-
+    case actions.SET_EDITING_EXISTING_CHARACTERS:
+      return {
+        ...state,
+        editingExistingCharacter:action.bool,
+      }
+    case actions.LOAD_SELECTIONS:
+      return {
+        ...state,
+        selections:action.selections,
+      }
+    case actions.LOAD_CHARACTER_ID:
+      return {
+        ...state,
+        id:action.id,
+      }
     default:
       console.warn(`unhandled action: ${action.type}`);
       return state

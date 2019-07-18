@@ -4,6 +4,8 @@ import {withRouter} from 'react-router-dom';
 import requiresLogin from './requiresLogin';
 
 import {fetchProtectedData, setSaved} from '../actions/protectedData';
+import {setEditingExistingCharacter} from '../actions/index';
+import { resetCompletedStep } from '../actions/index';
 import CardCharacters from './cardCharacters';
 
 import './dashboard.css';
@@ -14,7 +16,7 @@ export class Dashboard extends React.Component {
       this.props.dispatch(setSaved(false));
     }
 
-    getCharacters(){
+   /*  getCharacters(){
       return (
         [
           {
@@ -53,7 +55,7 @@ export class Dashboard extends React.Component {
           }
         ]
       );
-    }
+    } */
 
     nextPath(path) {
       this.props.history.push(path);
@@ -69,6 +71,11 @@ export class Dashboard extends React.Component {
       if(!myStorage.hasOwnProperty('currentStep')){
         localStorage.setItem('currentStep', 0);
       }
+
+      for(let i=0; i<creationSteps.length; i++){
+        this.props.dispatch(resetCompletedStep(i));
+      }
+      this.props.dispatch(setEditingExistingCharacter(false));
       this.props.history.push("/newCharacter/");
     }
 

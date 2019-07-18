@@ -22,7 +22,6 @@ export class NavBar extends React.Component{
   }
 
   clearSteps(){
-    console.log("in clearSteps");
     clearCurrentStep();
   }
 

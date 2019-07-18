@@ -129,7 +129,11 @@ export class ClassSelectionsCleric extends React.Component{
           }
           this.props.dispatch(setGenericExpand(""));
           this.props.dispatch(submitClassToState(this.props.classesArray[i]));
-          this.props.dispatch(submitDomain(this.props.clericDetails));
+
+          for(let i=0;i<this.props.clericDetails.domains.length;i++){
+            this.props.dispatch(submitDomain( this.props.clericDetails.domains[i] ));
+          }
+
           this.props.dispatch(submitDeity(this.props.clericDetails.deity));
           this.props.dispatch(submitAlignmentRestrictions(this.props.clericDetails.deity.overview.clericAlignments))
         }

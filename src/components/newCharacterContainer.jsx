@@ -20,6 +20,12 @@ import {toggleStep} from '../actions/index';
 import './newCharacterContainer.css';
 
 export class NewCharacterContainer extends React.Component{
+  componentDidMount(){
+    if(this.props.editingExistingCharacter === true){
+      console.log("editing");
+    }
+  }
+  
   togglePrev(e){
     let index = this.props.currentStep-1;
     let disabledPrev = (index === 0);
@@ -38,7 +44,6 @@ export class NewCharacterContainer extends React.Component{
 
   customRedirect(redirectTo){
     this.props.dispatch(toggleStep(0, false, true));
-    console.log("in custom redirect");
     //localStorage.setItem('currentStep', 0);
     return (<Redirect to={redirectTo} />)
   }
@@ -104,6 +109,7 @@ const mapStateToProps = state => ({
 	currentStep:state.characterReducer.currentStep,
   disabledNext:state.characterReducer.disabledNext,
   disabledPrev:state.characterReducer.disabledPrev,
+  editingExistingCharacter:state.characterReducer.editingExistingCharacter,
 });
 
 export default requiresLogin()(connect(mapStateToProps)(NewCharacterContainer));

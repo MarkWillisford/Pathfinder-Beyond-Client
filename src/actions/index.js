@@ -1,3 +1,5 @@
+import { createBonus } from '../utility/statObjectFactories'
+
 export const LOAD_CHARACTER = 'LOAD_CHARACTER';
 export const loadCharacter = (char) => ({
     type: LOAD_CHARACTER,
@@ -501,12 +503,94 @@ export const toggleCharacterReviewView = (string) => ({
   string: string,
 })
 
-export const setStepToCompleteCheckCharacter = (step, dispatch) => {
+/* export const setStepToCompleteCheckCharacter = (step, dispatch) => {
   dispatch(setStepToComplete(step));
-}
+} */
 
 export const RESET_COMPLETED_STEP = 'RESET_COMPLETED_STEP';
 export const resetCompletedStep = (step) => ({
   type: RESET_COMPLETED_STEP,
   step: step,
 })
+
+export const SET_EDITING_EXISTING_CHARACTERS = 'SET_EDITING_EXISTING_CHARACTERS';
+export const setEditingExistingCharacter = (bool) => ({
+  type: SET_EDITING_EXISTING_CHARACTERS,
+  bool: bool,
+})
+
+export const LOAD_SELECTIONS = 'LOAD_SELECTIONS';
+export const loadSelections = (selections) => ({
+  type: LOAD_SELECTIONS,
+  selections: selections,
+})
+
+export const LOAD_CHARACTER_ID = 'LOAD_SELECTLOAD_CHARACTER_IDIONS';
+export const loadCharacterId = (id) => ({
+  type: LOAD_CHARACTER_ID,
+  id: id,
+})
+
+export const editingExistingCharacter = (character) => (dispatch, getState, history) => {
+  dispatch(setEditingExistingCharacter(true));
+  const creationSteps = getState().characterReducer.creationSteps;
+
+  for(let i=0; i<creationSteps.length; i++){
+    dispatch(setStepToComplete(i));
+  }
+
+  dispatch(goldGenerationMethod(character.goldMethod));
+  dispatch(setGold(character.gold));  
+  dispatch(spendGold(character.gold - character.availableGold));
+  dispatch(abilityScoreGenerationMethod(character.abilityScoreGenerationMethod));
+
+  let preferences = {
+    characterName: character.preferences.name,
+    advancementSelecter: character.preferences.advancement,
+    hpSelecter: character.preferences.hpProcess,
+  }
+  dispatch(submitPreferencesToState(preferences));
+  dispatch(submitRaceToState(character.race));
+
+  for(let i=0;i<character.featSlots.length;i++){
+    let featToLoad = character.featSlots[i];
+    let {_id, ...feat} = featToLoad
+    feat.id = featToLoad._id;
+
+    if(character.featSlots.length > 1){
+      dispatch(addFeatSlot("any"));
+    }
+    dispatch(submitFeatToState(feat));
+  }
+
+  for(let i=0;i<character.traitSlots.length;i++){
+    let trait = {
+      id:character.traitSlots[i]._id,
+      name:character.traitSlots[i].Name,
+      cateogry:character.traitSlots[i].Cateogry,
+      description:character.traitSlots[i].Description,
+    }
+    dispatch(submitTraitToState(trait));
+  }
+
+  dispatch(submitClassToState(character.charClass));
+  dispatch(loadSelections(character.selections));
+  // build skills
+  for(let i=0;i<character.characterStats.length;i++){
+    for(let j=0;j<character.characterStats[i].bonuses.length;j++){
+      let bonusToCreate = character.characterStats[i].bonuses[j];
+      let bonus = createBonus({ 
+        name:bonusToCreate.name, 
+        source:bonusToCreate.source, 
+        stat:bonusToCreate.stat, 
+        type:bonusToCreate.type, 
+        duration:-1, 
+        amount:Number(bonusToCreate.amount) });
+      dispatch(addBonus(bonus));
+      dispatch(sumBonus(bonus));
+    }
+  }
+
+  dispatch(submitDetailsToState(character.details));
+  dispatch(loadCharacterId(character._id));
+};

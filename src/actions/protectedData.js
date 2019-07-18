@@ -239,6 +239,7 @@ export const saveAndSubmit = () => (dispatch, getState, history) => {
       user_id: user,
       characterStats: charState.newCharacter.characterStats,
       charClass: charState.newCharacter.charClass._id,
+      selections: charState.newCharacter.selections,
       featSlots: arrayOfFeats,
       traitSlots: arrayOfTraits,
       preferences: {
@@ -305,6 +306,104 @@ export const deleteCharacterById = (id) => (dispatch, getState) => {
   }).then(res => normalizeResponseErrors(res)
   ).then(res => {
     return res.json();
+  }).catch(err => {
+      dispatch(fetchProtectedDataError(err));
+  });
+}
+
+export const editAndSubmit = () => (dispatch, getState) => {
+  console.log("saving");
+  const authToken = getState().auth.authToken;
+  const user = getState().auth.currentUser._id; 
+  dispatch(setLoading());
+  
+  const charState = getState().characterReducer;
+  let arrayOfFeats = [];
+  let arrayOfTraits = [];
+  
+  for(let i=0; i<charState.newCharacter.featSlots.length; i++){
+    arrayOfFeats.push(charState.newCharacter.featSlots[i].selection.id);
+  }
+  for(let i=0; i<charState.newCharacter.traitSlots.length; i++){
+    arrayOfTraits.push(charState.newCharacter.traitSlots[i].selection.id);
+  }
+
+  let armorsList = [];
+  let weaponsList = [];
+  let tradeGoodsList = [];
+  let goodsAndServicesList = [];
+
+  if(charState.newCharacter.gear){
+    for(let i = 0; i < charState.newCharacter.gear.length; i++){
+      let item = charState.newCharacter.gear[i];
+      if(item.hasOwnProperty("dmgS")){
+        weaponsList.push(item.id);
+      } else if (item.hasOwnProperty("collection")){
+        goodsAndServicesList.push(item.id);
+      } else if (item.hasOwnProperty("armorCheckPenalty")){
+        armorsList.push(item.id);
+      } else {
+        tradeGoodsList.push(item.id);
+      }
+    }
+  }
+
+  fetch(`${API_BASE_URL}/users/characters`, {
+    method: 'PUT',
+    headers: {
+      // Provide our auth token as credentials
+      Authorization: `Bearer ${authToken}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      id: charState.id,
+      user_id: user,
+      characterStats: charState.newCharacter.characterStats,
+      charClass: charState.newCharacter.charClass._id,
+      selections: charState.newCharacter.selections,
+      featSlots: arrayOfFeats,
+      traitSlots: arrayOfTraits,
+      preferences: {
+        name: charState.newCharacter.preferences.characterName,
+        advancement: charState.newCharacter.preferences.advancement,
+        hpProcess: charState.newCharacter.preferences.hpProcess,
+      },
+      race: charState.newCharacter.race._id,
+      details:{
+        age: charState.newCharacter.details.age,
+        alignments: charState.newCharacter.details.alignments,
+        allies: charState.newCharacter.details.allies,
+        backstory: charState.newCharacter.details.backstory,
+        deity: charState.newCharacter.details.deity ? charState.newCharacter.details.deity.name : null,
+        enemies: charState.newCharacter.details.enemies,
+        eyes: charState.newCharacter.details.eyes,
+        flaws: charState.newCharacter.details.flaws,
+        gender: charState.newCharacter.details.gender,
+        hair: charState.newCharacter.details.hair,
+        ideals: charState.newCharacter.details.ideals,
+        organizations: charState.newCharacter.details.organizations,
+        other: charState.newCharacter.details.other,
+        personalityTraits: charState.newCharacter.details.personalityTraits,
+        skin: charState.newCharacter.details.skin,
+        weight: charState.newCharacter.details.weight,
+      },
+      goldMethod: charState.newCharacter.goldMethod,
+      gold: charState.newCharacter.gold,
+      availableGold: charState.newCharacter.availableGold,
+      gear: {
+        armor:armorsList,
+        weapon:weaponsList,
+        tradeGoods:tradeGoodsList,
+        goodsAndServices:goodsAndServicesList,
+      },
+      abilityScoreGenerationMethod: charState.abilityScoreGenerationMethod,
+    }),
+  }).then(res => normalizeResponseErrors(res)
+  ).then(res => {
+    return res.json();
+  }).then(data => {
+    clearCurrentStep();
+    dispatch(setSaved(true));
   }).catch(err => {
       dispatch(fetchProtectedDataError(err));
   });
