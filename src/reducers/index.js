@@ -165,6 +165,7 @@ const initialState = {
   menuActive:false,
   reviewExpanded:"",
   clericDetails:{},  
+  characterSheetWindow:false,
 };
 function setSum(stat){
   let total = 0;
@@ -173,7 +174,7 @@ function setSum(stat){
     let typeToFind = stat.bonuses[i].type;
       // **************  This is all if normal non-stacking bonuses are used *********
       // ****  If the bonus is dodge or untyped then we need to skip part of this ****
-    if(typeToFind != 'dodge' && typeToFind != 'untyped' && typeToFind != 'rank'){    
+    if(typeToFind != 'dodge' && typeToFind != 'untyped' && typeToFind != 'rank'){  
       let found = false;
       let replace = false;
       let foundAt = null;
@@ -209,6 +210,7 @@ function setSum(stat){
       for(let j=0; j<arrayOfHighestBonuses.length; j++){
         if(arrayOfHighestBonuses[j].type == typeToFind){
           arrayOfHighestBonuses[j].sum += stat.bonuses[i].amount;
+          console.log(arrayOfHighestBonuses[j]);
           arrayOfHighestBonuses[j].bonuses.push(stat.bonuses[i]);
           found = true;
         };
@@ -972,10 +974,6 @@ export const characterReducer = (state=initialState, action) => {
           foundAt = i;
         }
       }
-      console.log("Bug #3")
-      console.log("Debugging the push of undefined that I get on some char reload")
-      console.log(action.bonus.stat); // Debugging the push of undefined that I get from time to time on char reload 
-
       if(found){
         return{
           ...state,
@@ -1332,6 +1330,20 @@ export const characterReducer = (state=initialState, action) => {
       return {
         ...state,
         id:action.id,
+      }
+    case actions.CLEAR_CHAR_STATS:
+      return {
+        ...state,
+        newCharacter:{
+          ...state.newCharacter,
+          characterStats:[],
+        }
+      }
+    case actions.TOGGLE_CHARACTER_SHEET_WINDOW:
+      const display = action.name ? action.name : false;
+      return {
+        ...state,
+        characterSheetWindow:display,
       }
     default:
       console.warn(`unhandled action: ${action.type}`);

@@ -98,7 +98,7 @@ export class Dashboard extends React.Component {
             {/* <button onClick={() => this.nextPath('/playerDemo/newCharacter/') }>
               change path 
             </button> */}
-          </div>
+          </div>         
         </div>
       );
     }
@@ -107,9 +107,8 @@ export class Dashboard extends React.Component {
 //const {currentUser} = state.auth;
 const mapStateToProps = state => ({
   username: state.auth.currentUser.username,
-  //name: `${currentUser.firstName} ${currentUser.lastName}`,
-  // name: state.auth.currentUser.firstName + state.auth.currentUser.lastName,
   characters:state.protectedData.usersCharacters,
+  //characterSheetWindow:state.characterReducer.characterSheetWindow,
 });
 
 export default requiresLogin()(connect(mapStateToProps)(Dashboard));

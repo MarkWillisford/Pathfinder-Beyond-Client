@@ -1,8 +1,6 @@
 import {API_BASE_URL} from '../config/main.config';
 import {normalizeResponseErrors} from '../utility/normalizeResponseErrors';
-import React from 'react';
-import {Redirect} from 'react-router-dom';
-import { resetCharacterReducerState } from '../actions/index';
+import axios from 'axios';
 import {clearCurrentStep} from '../localStorage';
 
 
@@ -191,6 +189,84 @@ export const fetchProtectedExtraData = (api) => (dispatch, getState) => {
   });
 };
 
+export const fetchProtectedPDF = (character, cb) => (dispatch, getState) => {
+  /************************************************************************************************************/
+    /*                Finally found a usable method                                                             */
+    /* https://stackoverflow.com/questions/47893667/dynamic-pdf-and-opening-a-new-window-instead-of-downloading */
+    /************************************************************************************************************/
+    const authToken = getState().auth.authToken;;
+    const URL = `${API_BASE_URL}/users/pdf`;
+    
+    axios(URL, {
+      method: 'post',
+      headers: {
+        // Provide our auth token as credentials
+        Authorization: `Bearer ${authToken}`,
+        'Content-Type': 'application/json'
+      },
+      data: character,
+    })
+    .then((res) => {
+      let xhr = new XMLHttpRequest();
+      let data = JSON.stringify(res);
+    
+      xhr.open('GET', URL, true)
+      xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8')
+      xhr.setRequestHeader('Authorization', `Bearer ${authToken}`,)
+      xhr.responseType = 'arraybuffer'
+    
+      xhr.onload = function () {
+        if (this.status >= 200 && this.status < 300) {
+          let response = xhr.response;
+          let contentType = xhr.getResponseHeader('Content-Type');
+          let dataView = new DataView(response);
+          let blob;
+    
+          try {
+            blob = new Blob([dataView], { type: contentType });
+            cb(null, blob);
+          } catch (e) {
+            if (e.name === 'InvalidStateError') {
+              let byteArray = new Uint8Array(response);
+              blob = new Blob([byteArray.buffer], { type: contentType });
+              cb(null, blob);
+            } else {
+              cb(new Error('Can not parse buffer response'));
+            }
+          }
+        } else {
+          let error = new Error('request failed')
+    
+          error.status = xhr.status
+          error.statusText = xhr.statusText
+    
+          cb(error)
+        }
+      }
+    
+      xhr.onerror = function () {
+        let error = new Error('request failed')
+    
+        error.status = xhr.status
+        error.statusText = xhr.statusText
+    
+        cb(error)
+      }
+    
+      xhr.send(data)
+    })  
+    /***************************************/
+    /*            DOWNLOAD CODE            */
+    /***************************************/
+              /* const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'file.pdf');
+    link.setAttribute('target','_blank');
+    document.body.appendChild(link);
+    link.click(); */
+} 
+
 export const saveAndSubmit = () => (dispatch, getState, history) => {
   console.log("saving");
   const authToken = getState().auth.authToken;
@@ -312,7 +388,6 @@ export const deleteCharacterById = (id) => (dispatch, getState) => {
 }
 
 export const editAndSubmit = () => (dispatch, getState) => {
-  console.log("saving");
   const authToken = getState().auth.authToken;
   const user = getState().auth.currentUser._id; 
   dispatch(setLoading());

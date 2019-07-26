@@ -531,8 +531,20 @@ export const loadCharacterId = (id) => ({
   id: id,
 })
 
+export const CLEAR_CHAR_STATS = 'CLEAR_CHAR_STATS';
+export const clearCharStats = () => ({
+  type: CLEAR_CHAR_STATS,
+})
+
+export const TOGGLE_CHARACTER_SHEET_WINDOW = 'TOGGLE_CHARACTER_SHEET_WINDOW';
+export const toggleCharacterSheetWindow = (name) => ({
+  type: TOGGLE_CHARACTER_SHEET_WINDOW,
+  name: name,
+})
+
 export const editingExistingCharacter = (character) => (dispatch, getState, history) => {
   dispatch(setEditingExistingCharacter(true));
+  dispatch(clearCharStats());
   const creationSteps = getState().characterReducer.creationSteps;
 
   for(let i=0; i<creationSteps.length; i++){
