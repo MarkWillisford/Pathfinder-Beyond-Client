@@ -11,17 +11,19 @@ export class WeaponSlot extends React.Component{
     let weaponCategories = [];
     let initialWeapon;
 
-    for(let i=0;i<this.props.weapons.length;i++){
-      if(!weaponCategories.includes(this.props.weapons[i].use)){
-        weaponCategories.push(this.props.weapons[i].use);
+    if(this.props.weapons){
+      for(let i=0;i<this.props.weapons.length;i++){
+        if(!weaponCategories.includes(this.props.weapons[i].use)){
+          weaponCategories.push(this.props.weapons[i].use);
+        }
       }
-    }
-    initialWeapon = this.props.weapons.filter((weapon) => weapon.use === weaponCategories[0]);
+      initialWeapon = this.props.weapons.filter((weapon) => weapon.use === weaponCategories[0]);
 
-    this.props.dispatch(setTempWeaponCategory(weaponCategories[0]));
-    this.props.dispatch(setTempWeapon(initialWeapon[0]));
-    this.props.dispatch(setTempWeaponAttackModifier("strength"));
-    this.props.dispatch(setTempWeaponDamageModifier("strength"));
+      this.props.dispatch(setTempWeaponCategory(weaponCategories[0]));
+      this.props.dispatch(setTempWeapon(initialWeapon[0]));
+      this.props.dispatch(setTempWeaponAttackModifier("strength"));
+      this.props.dispatch(setTempWeaponDamageModifier("strength"));
+    }
   }
 
   setEquipmentSlotStatus(slot){

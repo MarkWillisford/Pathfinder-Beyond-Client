@@ -58,7 +58,6 @@ export class Equipment_Selection extends React.Component {
         }
       }
     }
-
     this.props.dispatch(clearData());
     this.props.dispatch(fetchProtectedData("armors"));
     this.props.dispatch(fetchProtectedSubData("goodsAndServices"));
@@ -72,7 +71,6 @@ export class Equipment_Selection extends React.Component {
   }
 
   submitEquipment(){
-    console.log("submitting");
     const tempEquipment = this.props.tempEquipment;
     if(tempEquipment){
       for(let i=0;i<tempEquipment.weaponSlots.length;i++){
@@ -104,6 +102,19 @@ export class Equipment_Selection extends React.Component {
             this.props.dispatch(addBonus(bonus));
             this.props.dispatch(sumBonus(bonus));
           }
+
+          // we also need to add the armor bonus
+          console.log(item);
+
+          let bonus = createBonus({ 
+            name:"armor", 
+            source:item.name, 
+            stat:"armorClass", 
+            type:"armor", 
+            duration:-1, 
+            amount:item.bonus.armor});
+          this.props.dispatch(addBonus(bonus));
+          this.props.dispatch(sumBonus(bonus));
 
           this.props.dispatch(addItemToCharacter(tempEquipment.armorSlots[i].item));
         }

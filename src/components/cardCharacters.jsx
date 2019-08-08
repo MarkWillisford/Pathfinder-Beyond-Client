@@ -15,7 +15,6 @@ class CardCharacters extends React.Component{
       if (err) {
         return console.error(err)
       }
-    
       let reportFileUrl = URL.createObjectURL(reportBlob)
     
       // window.open(reportFileUrl)
