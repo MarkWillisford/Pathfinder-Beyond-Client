@@ -85,20 +85,16 @@ export class Dashboard extends React.Component {
         <div className="dashboard">
           <div className="dashboard-username">
             Username: {this.props.username}
-          </div>
-          {/* <div className="dashboard-name">Name: {this.props.name}</div> */}
-          <div className="dashboard-character-data">
             <h2>Characters</h2>
-              {characters.map((character) => 
-                <CardCharacters key={character.preferences.name} name={character.preferences.name} character={character}/>
-              )}
           </div>
-          <div>
-            <button onClick={() => this.newCharacter()}>Create New Character</button>
-            {/* <button onClick={() => this.nextPath('/playerDemo/newCharacter/') }>
-              change path 
-            </button> */}
-          </div>         
+          <div className="dashboard-character-data">
+            {characters.map((character) => 
+              <CardCharacters key={character.preferences.name} name={character.preferences.name} character={character}/>
+            )}
+            <div className="cardCharacter div">
+              <button onClick={() => this.newCharacter()}>Create New Character</button>
+            </div> 
+          </div>        
         </div>
       );
     }

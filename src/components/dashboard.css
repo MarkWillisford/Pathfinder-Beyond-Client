@@ -1,3 +1,20 @@
-.dashboard{
+/* .dashboard{
   text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+@media (max-width:600px){
+  .dashboard-character-data{
+    display: flex;
+    flex-wrap: wrap;
+    width: 85%;
+  }
+} */
+
+@media (max-width:600px){
+  .dashboard-character-data{
+    
+  }
 }
