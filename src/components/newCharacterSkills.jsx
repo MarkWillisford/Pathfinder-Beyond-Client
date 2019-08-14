@@ -195,10 +195,15 @@ export class NewCharacterSkills extends React.Component{
                       <td className="skillInput">
                         <button className="plus" onClick={this.increase.bind(this)}
                           disabled={(remainingSkillRanks<1 && (Number(_.get(this, path1+"."+item.name+".ranks"))!=1)) || Number(_.get(this, path1+"."+item.name+".ranks"))===1}> + </button>
-                        <div className="skillInputLabel"> 0 </div>
+                        <div className="skillInputLabel"> 
+                          {Number(_.get(this, path1+"."+item.name+".ranks", "0"))}
+
+                          {/* 0 */} 
+
+
+                        </div>
                         <button className="minus" onClick={this.decrease.bind(this)}
-                          disabled={/* (remainingSkillRanks<1 && (Number(_.get(this, path1+"."+item.name+".ranks"))!=1)) ||  */
-                          Number(_.get(this, path1+"."+item.name+".ranks"))===0 ||
+                          disabled={ Number(_.get(this, path1+"."+item.name+".ranks"))===0 ||
                           !Number(_.get(this, path1+"."+item.name+".ranks"))}> - </button></td>
                       <td className="skillAbility">{abilityMods.find( (abilityMod) => abilityMod.name === item.ability).value}</td>
                       <td className="skillMisc">{
@@ -223,10 +228,6 @@ export class NewCharacterSkills extends React.Component{
 			);
 		}
 	}
-}
-
-function skillInput(){
-  
 }
 
 const mapStateToProps = state => ({

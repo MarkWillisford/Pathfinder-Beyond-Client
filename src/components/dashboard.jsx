@@ -92,7 +92,9 @@ export class Dashboard extends React.Component {
               <CardCharacters key={character.preferences.name} name={character.preferences.name} character={character}/>
             )}
             <div className="cardCharacter div">
-              <button onClick={() => this.newCharacter()}>Create New Character</button>
+              <div className="newCharButtonContainer">
+                <button className="newCharButton" onClick={() => this.newCharacter()}><h3>Create New Character</h3></button>              
+              </div>
             </div> 
           </div>        
         </div>
@@ -100,11 +102,9 @@ export class Dashboard extends React.Component {
     }
 }
 
-//const {currentUser} = state.auth;
 const mapStateToProps = state => ({
   username: state.auth.currentUser.username,
   characters:state.protectedData.usersCharacters,
-  //characterSheetWindow:state.characterReducer.characterSheetWindow,
 });
 
 export default requiresLogin()(connect(mapStateToProps)(Dashboard));

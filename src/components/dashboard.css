@@ -1,20 +1,26 @@
-/* .dashboard{
-  text-align: center;
+.newCharButtonContainer{
+  height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
-  flex-direction: column;
+  justify-content: center;    
+}
+.newCharButton{
+  height: 75%;
+  width: 75%;
 }
 
 @media (max-width:600px){
-  .dashboard-character-data{
-    display: flex;
-    flex-wrap: wrap;
-    width: 85%;
-  }
-} */
+}
 
-@media (max-width:600px){
-  .dashboard-character-data{
-    
+@media (min-width:600px){
+  .dashboard{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
   }
+  .dashboard-character-data{
+    width: 85%;
+  }  
 }

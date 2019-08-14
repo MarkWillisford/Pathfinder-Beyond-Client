@@ -61,20 +61,15 @@ class CardCharacters extends React.Component{
 
 		return(
 			<div className="cardCharacter div">
-				<h3>{this.props.name}</h3>
-        {capitalizeFirstLetter(this.props.character.race.name) + " " + capitalizeFirstLetter(this.props.character.charClass.name)}
-        <button onClick={() => this.view(this.props.character)}>View PDF</button>
-        <button onClick={() => this.edit(this.props.character)}>Edit</button>
-        <button onClick={() => this.delete(this.props.character._id)}>Delete</button> 
-			
-        {/* display && (
-          <CharSheetWindow closeWindowPortal={this.closeWindowPortal}>
-            <h1>{this.props.name}</h1>
-            <p>Even though I render in a different window, I share state!</p>
-            <p>{this.props.pdf}</p>
-            {}
-          </CharSheetWindow>
-        ) */}
+        <div className="characterTextContainer">
+          <h3>{this.props.name}</h3>
+          {capitalizeFirstLetter(this.props.character.race.name) + " " + capitalizeFirstLetter(this.props.character.charClass.name)}
+        </div>  
+        <div className="squareButtonContainer">
+          <button className="squareButton" onClick={() => this.view(this.props.character)}>PDF</button>
+          <button className="squareButton" onClick={() => this.edit(this.props.character)}>Edit</button>
+          <button className="squareButton" onClick={() => this.delete(this.props.character._id)}>DEL</button> 
+        </div>			
       </div>
 
 		)

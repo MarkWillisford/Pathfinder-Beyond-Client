@@ -21,9 +21,9 @@ import './newCharacterContainer.css';
 
 export class NewCharacterContainer extends React.Component{
   componentDidMount(){
-    if(this.props.editingExistingCharacter === true){
+    /* if(this.props.editingExistingCharacter === true){
       console.log("editing");
-    }
+    } */
   }
   
   togglePrev(e){
