@@ -9,6 +9,9 @@
   height: 75%;
   width: 75%;
 }
+.bold{
+  font-weight: bold;
+}
 
 @media (max-width:600px){
 }

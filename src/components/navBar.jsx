@@ -38,7 +38,8 @@ export class NavBar extends React.Component{
           <div className="navBar">
             <Link to="/" className="title">TTRPG Char Gen</Link>
             <div className="nav">
-              <Link to="/dashboard" onClick={() => this.clearSteps()}>Home</Link> | <button onClick={() => this.logOut()}>Log Out</button>{/* <Link to="/">Log Out</Link> */}
+              <div className="top">Username: { username }</div>
+              <div className="bottom"><Link to="/dashboard" onClick={() => this.clearSteps()}>Home</Link> | <button className="buttonAsLink" onClick={() => this.logOut()}>Log Out</button></div>
             </div>
           </div>
         </div>

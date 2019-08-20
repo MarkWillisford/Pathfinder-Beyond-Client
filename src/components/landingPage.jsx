@@ -2,10 +2,17 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link, Redirect} from 'react-router-dom';
 import LoginForm from './loginForm';
+import { resetCharacterReducerState } from '../actions/index';
  
 import './landingPage.css';
 
 export class LandingPage extends React.Component {
+  componentDidMount() {
+    /*********************************/
+    /* Trying to clean up extra data */
+    /*********************************/
+    this.props.dispatch(resetCharacterReducerState());
+  }
 
   render(){
     // If we are logged in redirect straight to the user's dashboard

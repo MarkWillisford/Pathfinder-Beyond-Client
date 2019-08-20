@@ -25,8 +25,9 @@ export class CardTrait extends React.Component{
     }
     this.props.dispatch(submitTraitToState(traitObject));
     if(lastTraitSelected){
-      // disable all options if all of our traits have now been selected.
-      this.props.dispatch(setTraitsToComplete()); 
+      // disable all options and hide the menu if all of our traits have now been selected.
+      this.props.dispatch(setTraitsToComplete());
+      this.props.hideMenu();
     }
 	}  
 

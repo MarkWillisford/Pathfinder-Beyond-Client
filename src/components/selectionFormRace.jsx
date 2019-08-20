@@ -74,7 +74,7 @@ export class SelectionFormRace extends React.Component{
 				let bonus = createBonus({ 
 					name:"race", 
 					source:"race", 
-					stat:ability, 
+					stat:ability.stat, 
 					type:"racial", 
 					duration:-1, 
 					amount:2 });
@@ -87,7 +87,7 @@ export class SelectionFormRace extends React.Component{
 				let bonus = createBonus({ 
 					name:"race", 
 					source:"race", 
-					stat:skill, 
+					stat:skill.stat, 
 					type:"racial", 
 					duration:-1, 
 					amount:2 });
@@ -105,7 +105,7 @@ export class SelectionFormRace extends React.Component{
 			let bonus = createBonus({ 
 				name:"race", 
 				source:"race", 
-				stat:values, 
+				stat:values.stat, 
 				type:"racial", 
 				duration:-1, 
 				amount:2 });

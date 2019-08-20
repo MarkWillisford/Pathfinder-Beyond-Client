@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import { withRouter } from 'react-router'
 import { capitalizeFirstLetter } from '../utility/helperFunctions';
 import { deleteCharacterById } from '../actions/protectedData';
-import {fetchProtectedData, fetchProtectedPDF} from '../actions/protectedData';
+import { fetchProtectedData, fetchProtectedPDF } from '../actions/protectedData';
 import { editingExistingCharacter } from '../actions/index';
 
 import './cardCharacters.css';
@@ -46,19 +46,22 @@ class CardCharacters extends React.Component{
   }
   
   delete(id){
+    const currentUser = this.props.user;
+    const usersCharacters = this.props.usersCharacters;
+   
+    // If this is the Demo user
+    if(currentUser._id === "5cc7799ae143841e6c64ef42"){
+      // Check if this is the last character 
+      if(usersCharacters.length === 1){
+        alert("You can not delete the last character in the Demo");
+        return;
+      }
+    }
     this.props.dispatch(deleteCharacterById(id));
     this.props.dispatch(fetchProtectedData("users/characters", "usersCharacters"));
   }
 
 	render(){
-/*     let display = false;
-    const characterSheetWindow = this.props.characterSheetWindow;
-    if(characterSheetWindow){
-      if(characterSheetWindow === this.props.name){
-        display = true;
-      }
-    } */
-
 		return(
 			<div className="cardCharacter div">
         <div className="characterTextContainer">
@@ -80,6 +83,8 @@ const mapStateToProps = state => ({
   // authToken:state.auth.authToken,
   characterSheetWindow:state.characterReducer.characterSheetWindow,
   pdf:state.protectedData.pdf,
+  user:state.auth.currentUser,
+  usersCharacters:state.protectedData.usersCharacters,
 });
 
 export default withRouter(connect(mapStateToProps)(CardCharacters));

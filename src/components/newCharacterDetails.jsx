@@ -101,6 +101,12 @@ export class NewCharacterDetails extends React.Component{
     }
   }
 
+  hideMenu(){
+    this.filterTraits("Hide");
+    let element = document.getElementById("traitSelect");
+    element.value = "Hide";
+  }
+
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
@@ -125,13 +131,6 @@ export class NewCharacterDetails extends React.Component{
     const traitsList = this.props.traitsList;
     let traitCategories = (traitsList[0] && traitsList[0].hasOwnProperty("URL")) ? this.getCategoryList() : []; // this.getCategoryList() // 
     let filteredTraitsList = [];
-
-    /* let toExpand = "";
-		if(this.props.toExpand){
-			if(this.props.toExpand.trait){
-				toExpand = this.props.toExpand.trait;
-			}
-    }	 */
 
     // filter the feats list based on the filter selected by the user
     if(traitsList[0] && traitsList[0].hasOwnProperty("URL")){
@@ -179,7 +178,7 @@ export class NewCharacterDetails extends React.Component{
             personality and history. Alternatively, if you’ve already got a background in your head or 
             written down for your character, you can view picking his traits as a way to quantify that 
             background.</p>
-            <select ref="traitCategorySelection" onChange={() => this.filterTraits(this.refs.traitCategorySelection.value)}>
+            <select id="traitSelect" ref="traitCategorySelection" onChange={() => this.filterTraits(this.refs.traitCategorySelection.value)}>
               <option value="Hide">Hide</option>
               <option value="All">All</option>
               {traitCategories && traitCategories.map((category) =>
@@ -195,20 +194,14 @@ export class NewCharacterDetails extends React.Component{
                 description={trait.Description} 
                 id={trait.id}
                 category={trait.Category ? trait.Category : trait.Type}
-                // we are ignoring trait requirements for this project
-                /* reqAlign={trait["Req-Align"]}      
-                reqClass={trait["Req-Class"]}
-                reqFaith={trait["Req-Faith"]}         
-                reqOther={trait["Req-Other"]}
-                reqPlace={trait["Req-Place"]}
-                reqRace1={trait["Req-Race1"]}
-                reqRace2={trait["Req-Race2"]} */
                 callback={()=> this.showExpandedTrait(trait.Name)}
-                />  
+                hideMenu={()=> this.hideMenu()}
+                />
             )}
           </div>
           
           <form onSubmit={this.props.handleSubmit(this.submitHandler.bind(this))}>
+            <button type="submit" disabled={this.props.submitting || !traitsCompleted}>Submit</button>
             <div><h2>Belief Details</h2><p>Alignment and faith</p>
               <Field name={"alignments"} component={RenderSelect} label={"Alignment"}>
                 <option>--</option>
@@ -248,7 +241,7 @@ export class NewCharacterDetails extends React.Component{
                 return (<Field component={RenderTextarea} name={item} label={capitalizeFirstLetter(item)} key={index} />);
               })}
             </div>
-						<button type="submit" disabled={/* this.props.pristine ||  */this.props.submitting || !traitsCompleted}>Submit</button>
+						<button type="submit" disabled={this.props.submitting || !traitsCompleted}>Submit</button>
 					</form>			        
 			    </div>
 		    );
@@ -261,27 +254,6 @@ export class NewCharacterDetails extends React.Component{
 		}	
 	}
 }
-
-/* function DisplayTraits(props){
-	const traitCategories = props.traitCategories;
-	return(
-		<div>
-      <p>A character trait isn’t just another kind of power you can add on to your character — 
-      it’s a way to quantify (and encourage) building a character background that fits into your 
-      campaign world. Think of character traits as “story seeds” for your background; after you 
-      pick your traits, you’ll have a point of inspiration from which to build your character’s 
-      personality and history. Alternatively, if you’ve already got a background in your head or 
-      written down for your character, you can view picking his traits as a way to quantify that 
-      background.</p>
-      <select ref="traitCategorySelection" onChange={() => this.filterTraits(this.refs.traitCategorySelection.value)}>
-        <option value="All">All</option>
-        {traitCategories && traitCategories.map((category) =>
-          <option key={category} value={category}>{capitalizeFirstLetter(category)}</option>
-        )}
-      </select>			
-    </div>
-	)
-} */
 
 const createRenderer = render => ({ input, meta, label, ...rest }) => 
 	<div>
@@ -325,90 +297,6 @@ class RadioGroup extends React.Component {
     }
 }
 
-/* function DisplayCharacterDetails(props){
-	const deities = props.deities; //require('../data/deities');
-	const defaultAlignments = ["Chaotic evil", "Chaotic good", "Chaotic neutral",
-		"Lawful evil", "Lawful good", "Lawful neutral",
-		"Neutral", "Neutral evil", "Neutral good"];
-	const possibleAlignments = props.alignmentRestrictions ? props.alignmentRestrictions : defaultAlignments;
-	
-	return(
-		<div>
-		<Field name={"alignments"} component={RenderSelect} label={"Alignment"}>
-			<option>--</option>
-			{possibleAlignments.map((alignment => (
-				<option key={alignment} value={alignment}>{alignment}</option>
-			)))}
-		</Field>
-		{props.deity && <Field name="deity" component={RadioGroup} label="Deity" preset={true} options={
-			deities.map((deity) => (
-				{ title: capitalizeFirstLetter(deity.name), value: deity.name, checked: props.deity.name === deity.name ? true : false, 
-				disabled: props.deity.name === deity.name ? false : true }
-			))
-		} />}
-		{!props.deity && <Field name="deity" component={RadioGroup} label="Deity" preset={false} options={
-			deities.map((deity) => (
-				{ title: capitalizeFirstLetter(deity.name), value: deity.name}
-			))
-		} />}
-		</div>
-	)
-} */
-
-/* function DisplayPhysicalCharacteristics(){
-	const physicalCharacteristics = ["hair", "skin", "eyes", "height", "weight", "age"];
-	return(
-		<div>
-			{physicalCharacteristics.map((item, index) => {
-				return (<Field name={item} component={RenderInput} label={capitalizeFirstLetter(item)} key={index} />);
-			})}
-			<Field name="gender" component={RadioGroup} label="Gender" options={[
-			    { title: 'Male', value: 'male' },
-			    { title: 'Female', value: 'female' }
-			]} />
-		</div>
-	)
-} */
-
-/* function DisplayPersonalityCharacteristics(){
-	const personalityCharacteristics = ["ideals", "flaws"]
-	return(
-		<div>
-			<Field component={RenderTextarea} name={"personalityTraits"} label={"Personality traits"} key={0} />
-			{personalityCharacteristics.map((item, index) => {
-				return (<Field component={RenderTextarea} name={item} label={capitalizeFirstLetter(item)} key={index+1} />);
-			})}			
-		</div>
-	)
-} */
-
-/* function DisplayExtras(){
-	const extras = ["organizations", "allies", "enemies", "backstory", "other"]
-	return(
-		<div>
-			{extras.map((item, index) => {
-				return (<Field component={RenderTextarea} name={item} label={capitalizeFirstLetter(item)} key={index} />);
-			})}			
-		</div>
-	)
-} */
-
-/* const validate = values => {
-  const errors = {}
-  console.log(values);
-
-  if(!values.alignments){    
-    errors.alignments = 'Required'
-  }
-
-	return errors
-}
-const warn = values => {
-  const warnings = {}
-  
-  return warnings
-} */
-
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[4].complete,
 	race:state.characterReducer.creationSteps[1].complete,
@@ -427,8 +315,6 @@ NewCharacterDetails = reduxForm({
     form: 'detailsForm',
     onSubmitFail: (errors, dispatch) =>
         dispatch(focus('detailsForm', Object.keys(errors)[0])),
-    /* validate,
-    warn */
 })(NewCharacterDetails)
 
 export default connect(mapStateToProps)(NewCharacterDetails)

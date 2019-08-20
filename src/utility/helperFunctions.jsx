@@ -54,13 +54,12 @@ export function	findBonusIndexByType(arrayOfBonuses, type){
 	}
 }
 
-export function	findBonusAmountByType(stat, type){
-	const charStats = this.props.charStats;
+export function	findBonusesByStatAndType(charStats, stat, type){
 	let statObject = charStats[statIndex(charStats, stat)]
 	if(statObject){
-		let index = this.findBonusIndexByType(statObject.sum.bonuses, type);
+		let index = findBonusIndexByType(statObject.sum.bonuses, type);
 		if(index != null){
-			return statObject.sum.bonuses[index].amount;
-		} else { return "0"}			
-	} else { return "0" }
+			return statObject.sum.bonuses[index];
+		} else { return null }			
+	} else { return null }
 }

@@ -5,7 +5,7 @@ import requiresLogin from './requiresLogin';
 
 import {fetchProtectedData, setSaved} from '../actions/protectedData';
 import {setEditingExistingCharacter} from '../actions/index';
-import { resetCompletedStep } from '../actions/index';
+import { resetCompletedStep, resetCharacterReducerState } from '../actions/index';
 import CardCharacters from './cardCharacters';
 
 import './dashboard.css';
@@ -14,6 +14,11 @@ export class Dashboard extends React.Component {
     componentDidMount() {
       this.props.dispatch(fetchProtectedData("users/characters", "usersCharacters"));
       this.props.dispatch(setSaved(false));
+    
+      /*********************************/
+      /* Trying to clean up extra data */
+      /*********************************/
+      this.props.dispatch(resetCharacterReducerState());
     }
 
    /*  getCharacters(){
@@ -80,22 +85,25 @@ export class Dashboard extends React.Component {
     }
 
     render() {
-      const characters = this.props.characters;//this.getCharacters();
+      const limit = 10;
+      const characters = this.props.characters;
+      const allowNew = characters.length < limit ? true : false;
+
       return (
         <div className="dashboard">
           <div className="dashboard-username">
-            Username: {this.props.username}
-            <h2>Characters</h2>
+            <h2>Characters</h2> 
+            <p className="bold">{ characters.length } of { limit }</p>
           </div>
           <div className="dashboard-character-data">
             {characters.map((character) => 
               <CardCharacters key={character.preferences.name} name={character.preferences.name} character={character}/>
             )}
-            <div className="cardCharacter div">
+            {allowNew && <div className="cardCharacter div">
               <div className="newCharButtonContainer">
                 <button className="newCharButton" onClick={() => this.newCharacter()}><h3>Create New Character</h3></button>              
               </div>
-            </div> 
+            </div>} 
           </div>        
         </div>
       );

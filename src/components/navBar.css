@@ -23,3 +23,17 @@
   text-decoration: none;
   font-weight: bold;
 }
+
+.nav{
+  display:flex;
+  flex-direction: column;
+}
+.buttonAsLink{
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  color: #551a8b;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 16px;
+}

@@ -78,3 +78,23 @@ li {
     width:25vw;
   }
 }
+
+@media (min-width:600px){
+  .flexContianer{
+    display: flex;
+    flex-direction: row;
+  }
+  .navButtonWrapper{
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 0 0 20vw;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+  }
+  .newCharacterDataContainer{
+    flex: 1;
+  }
+}

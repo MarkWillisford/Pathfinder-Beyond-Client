@@ -3,16 +3,114 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 
 import { submitSkillsToState } from '../actions/index';
-import { addBonus } from '../actions/index';
+import { addBonus, removeBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
 import { setStepToComplete } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories'
+import { findBonusesByStatAndType } from '../utility/helperFunctions'
 import CharacterReview from './characterReview2';
 import { resetCompletedStep } from '../actions/index';
 
 import './newCharacterSkills.css';
 
 export class NewCharacterSkills extends React.Component{
+  componentDidMount(){
+    const charStats = this.props.charStats;
+    const array = this.props.skills;
+    const listOfSkills = [
+			{"name":"acrobatics","ability":"dexterity"},
+			{"name":"appraise","ability":"intelligence"},
+			{"name":"bluff","ability":"charisma"},
+			{"name":"climb","ability":"strength"},
+				{"name":"craft","ability":"intelligence"},
+			{"name":"diplomacy","ability":"charisma"},
+			{"name":"disableDevice","ability":"dexterity"},
+			{"name":"disguise","ability":"charisma"},
+			{"name":"escapeArtist","ability":"dexterity"},
+			{"name":"fly","ability":"dexterity"},
+			{"name":"handleAnimal","ability":"charisma"},
+			{"name":"heal","ability":"wisdom"},
+			{"name":"intimidate","ability":"charisma"},
+			{"name":"knowledge (arcana)","ability":"intelligence"},
+			{"name":"knowledge (dungeoneering)","ability":"intelligence"},
+			{"name":"knowledge (engineering)","ability":"intelligence"},
+			{"name":"knowledge (geography)","ability":"intelligence"},
+			{"name":"knowledge (history)","ability":"intelligence"},
+			{"name":"knowledge (local)","ability":"intelligence"},
+			{"name":"knowledge (nature)","ability":"intelligence"},
+			{"name":"knowledge (nobility)","ability":"intelligence"},
+			{"name":"knowledge (planes)","ability":"intelligence"},
+			{"name":"knowledge (religion)","ability":"intelligence"},
+			{"name":"linguistics","ability":"intelligence"},
+			{"name":"perception","ability":"wisdom"},
+				{"name":"perform","ability":"charisma"},
+				{"name":"profession","ability":"wisdom"},
+			{"name":"ride","ability":"dexterity"},
+			{"name":"senseMotive","ability":"wisdom"},
+			{"name":"sleightOfHand","ability":"dexterity"},
+			{"name":"spellcraft","ability":"intelligence"},
+			{"name":"stealth","ability":"dexterity"},
+			{"name":"survival","ability":"wisdom"},
+			{"name":"swim","ability":"strength"},
+			{"name":"useMagicDevice","ability":"charisma"},
+    ];
+    // For each item in listOfSkills check to see if there is an entry in charStats
+    for(let i=0;i<listOfSkills.length;i++){
+      const skillNameToLookFor = listOfSkills[i].name;
+      for(let j=0;j<charStats.length;j++){
+        if(charStats[j].name === skillNameToLookFor){
+          // if there is, check to see if there is a matching entry in array. 
+          const arrayOfBonusesToCheck = charStats[j].sum.bonuses;
+          arrayOfBonusesToCheck.forEach((bonus) => {
+            let alreadyAdded = false;            
+            if(array[bonus.stat][bonus.type]){
+              if(array[bonus.stat][bonus.type] === bonus.amount){
+                alreadyAdded = true;
+              }
+            }
+            if(!alreadyAdded){
+              // if not, then add it. 
+              this.props.dispatch(submitSkillsToState( bonus.stat, bonus.type, bonus.amount ));
+            }
+          })
+        }
+      }
+    }
+  }
+
+  componentWillUnmount(){
+    const props = this.props;
+    const skillsObject = props.skills
+    //console.log(findBonusesByStatAndType(this.props.charStats, "fly", "ranks"));
+
+		Object.keys(skillsObject).forEach(function (item){
+      // is there a rank stored in memory?
+      const isInStore = findBonusesByStatAndType(props.charStats, item, "ranks");
+      const isSelected = skillsObject[item].ranks ? true : false;
+      let bonus = createBonus({ 
+        name:"skills", 
+        source:"skills", 
+        stat:item, 
+        type:"ranks", 
+        duration:-1, 
+        amount:skillsObject[item].ranks });
+
+      if(isInStore && !isSelected){
+        console.log(item);
+        console.log("Is in store, but is not selected");
+        // remove
+				props.dispatch(removeBonus(bonus));
+				props.dispatch(sumBonus(bonus));
+      } else if(isSelected && !isInStore){
+        console.log(item);
+        console.log("Is selected, but is not in store");
+        // add
+				props.dispatch(addBonus(bonus));
+				props.dispatch(sumBonus(bonus));
+      }
+		});
+  }
+
 	sumObject(obj){
 		let sum = 0;
 		for( let el in obj ) {
@@ -32,15 +130,9 @@ export class NewCharacterSkills extends React.Component{
 	increase(event){
 		let value = event.target.nextSibling.innerHTML;
     let skill = event.target.parentElement.parentElement.getAttribute("name");
-    console.log(value);
-    if(value < 1){
-      value++;
-      event.target.nextSibling.innerHTML = value;
-      console.log("submitting");
-      console.log(skill);
-      console.log(value);
-      this.props.dispatch(submitSkillsToState( skill, "ranks", value ));
-    }
+    value++;
+    event.target.nextSibling.innerHTML = value;
+    this.props.dispatch(submitSkillsToState( skill, "ranks", value ));
   }
   decrease(event){
 		let value = event.target.previousSibling.innerHTML;
@@ -75,6 +167,17 @@ export class NewCharacterSkills extends React.Component{
 		});
 		props.dispatch(setStepToComplete(5));
 	}
+  getRanks(skill){
+    for(let i=0;i<this.props.charStats.length;i++){
+      if(this.props.charStats[i].name === skill){
+        for(let j=0;j<this.props.charStats[i].sum.bonuses.length;j++){
+          if(this.props.charStats[i].sum.bonuses[j].type === "ranks"){
+            return this.props.charStats[i].sum.bonuses[j].amount;
+          }
+        }
+      }
+    }
+  }
 
 	render(){
 		const complete = this.props.complete;
@@ -148,7 +251,7 @@ export class NewCharacterSkills extends React.Component{
 			const charisma = this.getModifier(charStats[this.statIndex(charStats, "charisma")].sum.total);
 			const abilityMods = [{"name":"strength","value":strength},{"name":"dexterity","value":dexterity},{"name":"constitution","value":constitution},
 							{"name":"intelligence","value":intelligence},{"name":"wisdom","value":wisdom},{"name":"charisma","value":charisma}];
-			const path1 = "props.skills"
+			const path1 = "props.skills";
 			let array = this.props.skills;
 			let ranksAssigned = Object.keys(array).reduce(function (previous, key) {
 				if(array[key].ranks){
@@ -181,6 +284,7 @@ export class NewCharacterSkills extends React.Component{
 			        	<tbody>
 			        		{listOfSkills.map(item => 
                     <tr key={item.name} name={item.name}>
+                      {/* TODO! It would be very cool to have this check for line wrap and if needed reduce the name to a four letter aprv. */}
                       <td className="skillName">{item.name}</td>
                       <td className="skillTotal">{
                         Number(_.get(this, path1+"."+item.name+".ranks", "0")) + 
@@ -196,10 +300,9 @@ export class NewCharacterSkills extends React.Component{
                         <button className="plus" onClick={this.increase.bind(this)}
                           disabled={(remainingSkillRanks<1 && (Number(_.get(this, path1+"."+item.name+".ranks"))!=1)) || Number(_.get(this, path1+"."+item.name+".ranks"))===1}> + </button>
                         <div className="skillInputLabel"> 
-                          {Number(_.get(this, path1+"."+item.name+".ranks", "0"))}
+                          { this.getRanks(item.name) ? this.getRanks(item.name) : 0 }
 
                           {/* 0 */} 
-
 
                         </div>
                         <button className="minus" onClick={this.decrease.bind(this)}
