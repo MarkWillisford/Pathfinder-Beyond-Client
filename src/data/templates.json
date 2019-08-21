@@ -1,9 +1,9 @@
 Feats:
 	{
-		"name": ,
+		"name": "Combat Casting",
 		"specialization": ,
 		"type": [],
-		"description": ,
+		"description": "You can make additional attacks of opportunity.",
 
 		"prerequisites":[
 			{
@@ -13,7 +13,7 @@ Feats:
 			}
 		],
 
-		"benefit": ,
+		"benefit": "You may make a number of additional attacks of opportunity per round equal to your Dexterity bonus. With this feat, you may also make attacks of opportunity while flat-footed.",
 		"progromaticBenefit": {
 			"progromaticType":"action" // Power Attack
 							"conditional", // Spell Focus
@@ -22,9 +22,9 @@ Feats:
 				"bonus objects?"
 			]
 		},
-		"normal": ,
-		"special": ,
-		"source": ,
+		"normal": "",
+		"special": "",
+		"source": "Core Rule Book",
 		"repeatable":false,
 		"selections":[],
 	}
@@ -197,4 +197,48 @@ Spell
 			"Resistance can be made permanent with a permanency spell."]
 }
 
+Domains:
+{
+  "name" : "azata",
+  "type" : "subdomain",
+  "druidAvailable" : false,
+  "associatedDomain" : "good",
+  "replacementPower" : {
+      "replaces" : "Touch of Good",
+      "name" : "Elysium’s Call",
+      "type" : "Su",
+      "level" : 1,
+      "description" : [ 
+          "With a touch, you can imbue creatures with the spirit of Elysium, lifting their spirits and freeing them from bonds. The creatures touched can immediately reroll any failed saving throws against spells and spell-like abilities of the enchantment (charm) and enchantment (compulsion) subschools. In addition, targets receive a +2 sacred bonus on such saving throws and a +2 sacred bonus on CMB checks to escape a grapple. Finally, targets can ignore up to 5 feet of difficult terrain each round, as if they had the Nimble Moves feat. These bonuses last for a number of rounds equal to 1/2 your cleric level (minimum 1), although the saving throw reroll only applies when the creature is touched. You can use this ability for a number of rounds per day equal to 3 + your Wisdom modifier."
+      ]
+  },
+  "replacementDomainSpells" : [ 
+      {
+          "1st" : "expeditions retreat"
+      }, 
+      {
+          "3rd" : "fly"
+      }, 
+      {
+          "6th" : "planar ally"
+      }
+  ]
+}
+
+"prerequisites":[
+  {
+    "type":"stat",	
+    "data": {
+      "stat":"dexterity",
+      "value":"13"
+    }
+  }
+],
+
+"prerequisites":[
+  {
+    "type":"feat",	
+    "data": ""
+  }
+],
 
