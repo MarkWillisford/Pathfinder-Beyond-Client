@@ -62,7 +62,8 @@ class CardCharacters extends React.Component{
   }
 
 	render(){
-		return(
+    console.log(this.props.character);
+		return( 
 			<div className="cardCharacter div">
         <div className="characterTextContainer">
           <h3>{this.props.name}</h3>
@@ -74,7 +75,6 @@ class CardCharacters extends React.Component{
           <button className="squareButton" onClick={() => this.delete(this.props.character._id)}>DEL</button> 
         </div>			
       </div>
-
 		)
 	}
 }

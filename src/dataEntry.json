@@ -1,0 +1,68 @@
+{
+  "_id" : ObjectId("5cda6c759930571ac0331af9"),
+  "name" : "Sarenrae",
+  "overview" : {
+      "titles" : [ 
+          "The Dawnflower", 
+          "The Cleansing Light", 
+          "The Everlight", 
+          "The Healing Light", 
+          "The Healing Flame"
+      ],
+      "home" : [ 
+          "Sarenrae's Realm", 
+          "Nirvana"
+      ],
+      "alignment" : "Neutral good",
+      "areasOfConcern" : [ 
+          "Sun", 
+          "Redemption", 
+          "Honesty", 
+          "Healing"
+      ],
+      "worshipers" : [ 
+          "Healers", 
+          "farmers", 
+          "redeemed evil-doers"
+      ],
+      "clericAlignments" : [ 
+          "Lawful Good", 
+          "Neutral Good", 
+          "Chaotic Good", 
+          "Neutral"
+      ],
+      "domains" : [ 
+          "Fire", 
+          "Glory", 
+          "Good", 
+          "Healing", 
+          "Sun"
+      ],
+      "subdomains" : [ 
+          "Agathion", 
+          "Day", 
+          "Heroism", 
+          "Light", 
+          "(Redemption)", 
+          "Restoration", 
+          "Resurrection", 
+          "(Revelation)"
+      ],
+      "favoredWeapon" : [ 
+          "Scimitar"
+      ],
+      "symbol" : [ 
+          "Angelic ankh"
+      ],
+      "sacredAnimal" : [ 
+          "Dove"
+      ],
+      "sacredColors" : [ 
+          "Blue", 
+          "gold"
+      ]
+  }
+}
+
+// List of Deities
+/* Milani, Sarenrae, Calistria, Cayden, Desna, Erastil, Iomedae, Shelyn

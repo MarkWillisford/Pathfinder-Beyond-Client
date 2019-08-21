@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import CardClass from './cardClass';
 
-import { toggleClassExpand } from '../actions/index';
 import { submitClassToState } from '../actions/index';
 import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
@@ -121,7 +120,7 @@ export class NewCharacterClass extends React.Component{
 	addClass(_id){
 		for(let i=0; i<this.props.classesArray.length;i++){
 			// if this is the clicked element toggle it 
-			if( this.props.classesArray[i]===_id ){
+			if( this.props.classesArray[i]._id ===_id ){
 				this.props.dispatch(submitClassToState(this.props.classesArray[i]));
 				
         for(let j=1;j<5;j++){
