@@ -45,8 +45,11 @@ const storeAuthInfo = (token, _id, dispatch) => {
 export const login = (email, password) => dispatch => {
     // set a loading indicator to true and clearing any earlier errors
     dispatch(authRequest());
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    const url = `${API_BASE_URL}/users/login`;
+
     return (
-        fetch(`${API_BASE_URL}/users/login`, {
+        fetch(proxyurl + url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
