@@ -51,7 +51,6 @@ export const login = (email, password) => dispatch => {
       headers: {
         'Content-Type': 'application/json'
       },
-      mode: 'no-cors', // no-cors, cors, *same-origin
       body: JSON.stringify({
         email,
         password
