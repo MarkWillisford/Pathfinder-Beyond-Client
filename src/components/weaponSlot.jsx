@@ -70,8 +70,8 @@ export class WeaponSlot extends React.Component{
     this.props.dispatch(setTempWeapon(weapon[0]));
   }
   handleChangeWeapon(e){
-    //let weapon = this.props.weapons.find((w) => (w.name === e.target.value));
-    this.props.dispatch(setTempWeapon(e.target.value));
+    let weapon = this.props.weapons.find((w) => (w.name === e.target.value));
+    this.props.dispatch(setTempWeapon(weapon));
   }
   handleWeaponAttackMod(e){
     this.props.dispatch(setTempWeaponAttackModifier(e.target.value));
@@ -95,6 +95,7 @@ export class WeaponSlot extends React.Component{
     let sizeString = this.props.newCharacter.race ? this.props.newCharacter.race.standardRacialTraits.base.size : "--";
     let sizeValue;
     let availableGold = this.props.availableGold;
+
     
     if(this.props.currentState === "empty"){
       return(
@@ -247,7 +248,7 @@ export class WeaponSlot extends React.Component{
                 </select>
               </div>
               <div className="weaponSelectionInput">
-                <select name="weapon" onChange={this.handleChangeWeapon.bind(this)} value={this.props.tempEquipment.weapon}>
+                <select name="weapon" onChange={this.handleChangeWeapon.bind(this)} value={this.props.tempEquipment.weapon.name}>
                   {weapons.map((weapon, i) => (<option key={weapon.name} style={weapon.cost > availableGold ? {color:"red"} : {color:"black"}}>{weapon.name}</option>))}
                 </select>
               </div>

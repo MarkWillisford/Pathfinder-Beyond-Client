@@ -104,8 +104,6 @@ export class Equipment_Selection extends React.Component {
           }
 
           // we also need to add the armor bonus
-          console.log(item);
-
           let bonus = createBonus({ 
             name:"armor", 
             source:item.name, 

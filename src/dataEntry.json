@@ -1,5 +1,4 @@
 {
-  "_id" : ObjectId("5cda6c759930571ac0331af9"),
   "name" : "Sarenrae",
   "overview" : {
       "titles" : [ 
@@ -62,7 +61,54 @@
           "gold"
       ]
   }
-}
+},
 
 // List of Deities
-/* Milani, Sarenrae, Calistria, Cayden, Desna, Erastil, Iomedae, Shelyn
+/* Milani, Sarenrae, Calistria, Cayden, Desna, Erastil, Iomedae, Shelyn */
+
+
+{
+  "name" : "Longbow",
+  "expand" : false,
+  "description" : "At almost 5 feet in height, a longbow is made up of one solid piece of carefully curved wood. You need two hands to use a bow, regardless of its size. A longbow can’t be used while mounted. If you have a penalty for low Strength, apply it to damage rolls when you use a longbow. You can apply your Strength modifier to damage rolls when you use a composite longbow, but not a regular longbow. A longbow fires arrows.",
+  "category" : "martial",
+  "use" : "Ranged",
+  "cost" : 75,
+  "dmgS" : [ 
+      "1d6"
+  ],
+  "dmgM" : [ 
+      "1d8"
+  ],
+  "critical" : "x3",
+  "range" : "100",
+  "weight" : 3,
+  "type" : [ 
+      "P"
+  ],
+  "special" : [],
+  "material" : "none",
+  "masterwork" : false
+},{
+  "name" : "Shortbow",
+  "expand" : false,
+  "description" : "A shortbow is made up of one piece of wood, about 3 feet in length. You need two hands to use a bow, regardless of its size. You can use a shortbow while mounted. If you have a penalty for low Strength, apply it to damage rolls when you use a shortbow. If you have a bonus for high Strength, you can apply it to damage rolls when you use a composite shortbow, but not a regular shortbow. A shortbow fires arrows.",
+  "category" : "martial",
+  "use" : "Ranged",
+  "cost" : 30,
+  "dmgS" : [ 
+      "1d4"
+  ],
+  "dmgM" : [ 
+      "1d6"
+  ],
+  "critical" : "x3",
+  "range" : "60",
+  "weight" : 3,
+  "type" : [ 
+      "P"
+  ],
+  "special" : [],
+  "material" : "none",
+  "masterwork" : false
+}

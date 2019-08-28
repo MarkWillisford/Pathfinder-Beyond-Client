@@ -152,7 +152,7 @@
     min-width: 20vw;
   }
   .characterReviewOutput{
-    display: flex;
+    /* display: flex; */
   }
     .meleeTotal,
     .rangedTotal,
@@ -198,6 +198,8 @@
   text-align: start;
 }
 .characterReviewOutput{
+/*   display: flex;
+  flex-direction: row; */
 }
 
 .featsAndAbilitesLabel{

@@ -144,6 +144,45 @@ export class CharacterReview extends React.Component{
       break;
     }
 
+    // I need to know what weapons the character has.
+    const gear = this.props.characterToReview.gear ? this.props.characterToReview.gear : [];
+    let meleeWeapons = [];
+    let rangedWeapons = [];
+    for(let i=0;i<gear.length;i++){
+      // if the gear item has a dmgS value then it is a weapon and we need to know about it
+      if(gear[i].use.includes("Melee") || gear[i].use.includes("melee")){
+        meleeWeapons.push(gear[i]);
+      } else if(gear[i].use.includes("Ranged") || gear[i].use.includes("ranged")){
+        rangedWeapons.push(gear[i]);
+      }
+    }
+
+    if(meleeWeapons.length === 0){
+      meleeWeapons.push({
+        "name" : "Strike, Unarmed",
+        "expand" : false,
+        "description" : "An unarmed strike is always considered a light weapon. Therefore, you can use the Weapon Finesse feat to apply your Dexterity modifier instead of your Strength modifier to attack rolls with an unarmed strike. Unarmed strikes do not count as natural weapons (see Combat). The damage from an unarmed strike is considered weapon damage for the purposes of effects that give you a bonus on weapon damage rolls. A monk or any character with the Improved Unarmed Strike feat can deal lethal or nonlethal damage with unarmed strikes, at his discretion.",
+        "category" : "simple",
+        "use" : "Light Melee",
+        "cost" : 0,
+        "dmgS" : [ 
+            "1d2"
+        ],
+        "dmgM" : [ 
+            "1d3"
+        ],
+        "critical" : "x2",
+        "range" : "0",
+        "weight" : 0,
+        "type" : [ 
+            "B"
+        ],
+        "special" : [],
+        "material" : "none",
+        "masterwork" : false
+      })
+    }
+
     return(
       <div className="characterReviewFlexContainer">
         <h1>{characterToReview.preferences ? (characterToReview.preferences.characterName) : "Unnamed Character"}</h1>        
@@ -330,14 +369,15 @@ export class CharacterReview extends React.Component{
         <div className={characterCombatStatsClassName}>
           <div className="characterAttackModifiers">
             <div className="characterReviewLabelsCol">
-              <div className="meleeLabel">
-                <div className="meleeAbbreviation">Melee</div>
-                <div className="meleeComplete">Melee Attack Bonus</div>   
-              </div>
-              <div className="rangedLabel">
-                <div className="rangedAbbreviation">Ranged</div>
-                <div className="rangedComplete">Ranged Attack Bonus</div>   
-              </div>
+              {/****************************************************
+                loop through each weapon. each gets its own section
+              *****************************************************/}
+              {meleeWeapons.length > 0 ? (meleeWeapons.map((weapon) => 
+                <MeleeWeaponLabel key={weapon.name} name={weapon.name}/>
+              )) : <MeleeWeaponLabel key={""} name={""}/>}
+              {rangedWeapons.length > 0 ? (rangedWeapons.map((weapon) => 
+                <RangedWeaponLabel key={weapon.name} name={weapon.name}/>
+              )) : <RangedWeaponLabel key={""} name={""}/>}
               <div className="combatManeuverBonusLabel">
                 <div className="combatManeuverBonusAbbreviation">CMB</div>
                 <div className="combatManeuverBonusComplete">Combat Maneuver Bonus</div>   
@@ -345,27 +385,21 @@ export class CharacterReview extends React.Component{
             </div>
             <div className="characterReviewOutputsCol">
               <div className="characterReviewOutput">
-                {/* if there is a bab ( if there is a str  ) - else ( if there is a str  ) */}
-
-                <div className="meleeTotal">{
-                  this.findStatisticByName("bab", characterToReview) ?
-                    (this.findStatisticByName("strength", characterToReview) ? this.findStatisticByName("bab", characterToReview).sum.total + 
-                    Math.floor((this.findStatisticByName("strength", characterToReview).sum.total - 10) / 2) + sizeMod
-                    : (this.findStatisticByName("bab", characterToReview).sum.total + sizeMod) + " + Str")
-                  : (this.findStatisticByName("strength", characterToReview) ? "BAB + " + (Math.floor((this.findStatisticByName("strength", characterToReview).sum.total - 10) / 2) + sizeMod)
-                    : 0 )
-                }</div>
+              {/****************************************************
+                loop through each weapon. each gets its own section
+              *****************************************************/}
+                {meleeWeapons.map((weapon) => 
+                  <MeleeWeaponOutput key={weapon.name} weapon={weapon} characterToReview={characterToReview} 
+                  sizeMod={sizeMod} findStatisticByName={this.findStatisticByName}/>
+                )}
                 {/* <div className="combatDetailsButton"><button onClick={ () => this.viewDetails("melee") }>details</button></div> */}
               </div>
               <div className="characterReviewOutput">
-                <div className="rangedTotal">{
-                  this.findStatisticByName("bab", characterToReview) ?
-                    (this.findStatisticByName("dexterity", characterToReview) ? this.findStatisticByName("bab", characterToReview).sum.total + 
-                    Math.floor((this.findStatisticByName("dexterity", characterToReview).sum.total - 10) / 2) + sizeMod
-                    : (this.findStatisticByName("bab", characterToReview).sum.total + sizeMod) + " + Str")
-                  : (this.findStatisticByName("dexterity", characterToReview) ? "BAB + " + (Math.floor((this.findStatisticByName("dexterity", characterToReview).sum.total - 10) / 2) + sizeMod)
-                    : 0 )
-                }</div>
+                {rangedWeapons.length > 0 ? rangedWeapons.map((weapon) => 
+                  <RangedWeaponOutput key={weapon.name} weapon={weapon} characterToReview={characterToReview} 
+                  sizeMod={sizeMod} findStatisticByName={this.findStatisticByName}/>
+                ): <RangedWeaponOutput key={"ranged"} weapon={null} characterToReview={characterToReview} 
+                sizeMod={sizeMod} findStatisticByName={this.findStatisticByName}/>}
                 {/* <div className="combatDetailsButton"><button onClick={ () => this.viewDetails("ranged") }>details</button></div> */}
               </div>
               <div className="characterReviewOutput">
@@ -404,7 +438,7 @@ export class CharacterReview extends React.Component{
               <div className="characterReviewOutput">
                 <div className="armorClassTotal">{this.findStatisticByName("armorClass", characterToReview) ? 
                   (this.findStatisticByName("armorClass", characterToReview).sum.total + 
-                  Math.floor((this.findStatisticByName("dexterity", characterToReview).sum.total - 10) / 2) +
+                  (this.findStatisticByName("dexterity", characterToReview) ? Math.floor((this.findStatisticByName("dexterity", characterToReview).sum.total - 10) / 2) : 0) +
                   sizeMod) 
                   : ( 10 + sizeMod + ( this.findStatisticByName("dexterity", characterToReview)
                     ? Math.floor((this.findStatisticByName("dexterity", characterToReview).sum.total - 10) / 2) : " + Dex" ) ) }</div>
@@ -413,14 +447,14 @@ export class CharacterReview extends React.Component{
               <div className="characterReviewOutput">   {/* How is this stat stored? */}
                 <div className="flatFootedArmorClassTotal">{this.findStatisticByName("armorClass", characterToReview) ? 
                   (this.findStatisticByName("armorClass", characterToReview).sum.total + 
-                  Math.floor((this.findStatisticByName("dexterity", characterToReview).sum.total - 10) / 2) +
+                  (this.findStatisticByName("dexterity", characterToReview) ? Math.floor((this.findStatisticByName("dexterity", characterToReview).sum.total - 10) / 2) : 0) +
                   sizeMod) : ( 10 + sizeMod ) }</div>
                 {/* <button onClick={ () => this.viewDetails("flatFootedArmorClass") }>details</button> */}
               </div>
               <div className="characterReviewOutput">
                 <div className="touchArmorClassTotal">{this.findStatisticByName("touchArmorClass", characterToReview) ? 
                   (this.findStatisticByName("touchArmorClass", characterToReview).sum.total + 
-                  Math.floor((this.findStatisticByName("dexterity", characterToReview).sum.total - 10) / 2) +
+                  (this.findStatisticByName("dexterity", characterToReview) ? Math.floor((this.findStatisticByName("dexterity", characterToReview).sum.total - 10) / 2) : 0) +
                   sizeMod) 
                   : ( 10 + sizeMod + ( this.findStatisticByName("dexterity", characterToReview)
                     ? Math.floor((this.findStatisticByName("dexterity", characterToReview).sum.total - 10) / 2) : " + Dex" ) ) }</div>
@@ -673,4 +707,134 @@ function FeatsDisplay(props){
           </div> )}
     </div>
   )
+}
+class MeleeWeaponLabel extends React.Component{
+  render(){
+    return(
+      <div className="meleeLabel">
+        <div className="meleeAbbreviation">Melee - {this.props.name}</div>
+        <div className="meleeComplete">Melee Attack Bonus - {this.props.name}</div>   
+      </div>
+    )
+  }
+}
+class RangedWeaponLabel extends React.Component{
+  render(){
+    return (
+      <div className="rangedLabel">
+        <div className="rangedAbbreviation">Ranged - {this.props.name}</div>
+        <div className="rangedComplete">Ranged Attack Bonus - {this.props.name}</div>   
+      </div>
+    )
+  }
+}
+class MeleeWeaponOutput extends React.Component{
+  render(){
+    {/* if there is a bab ( if there is a str  ) - else ( if there is a str  ) */}    
+    let damageMod;
+    switch(this.props.weapon.damageModifier){
+      case "none":
+        damageMod = "";
+        break;
+      case "0_5_strength":
+        let strength = this.props.findStatisticByName("strength", this.props.characterToReview) ? Math.floor((this.props.findStatisticByName("strength", this.props.characterToReview).sum.total - 10) / 2) : 0;
+        damageMod = (Math.floor(strength / 2) !== 0) ? (" + " + Math.floor(strength / 2)) : " + 0.5 * STR";
+        break;
+      case "strength":
+        strength = this.props.findStatisticByName("strength", this.props.characterToReview) ? Math.floor((this.props.findStatisticByName("strength", this.props.characterToReview).sum.total - 10) / 2) : 0;
+        damageMod = (strength !== 0) ? (" + " + strength) : " + STR";
+        break;
+      case "1_5_strength":
+        strength = this.props.findStatisticByName("strength", this.props.characterToReview) ? Math.floor((this.props.findStatisticByName("strength", this.props.characterToReview).sum.total - 10) / 2) : 0;
+        damageMod = (Math.floor(strength * 1.5) !== 0) ? (" + " + Math.floor(strength * 1.5)) : " + 1.5 * STR";
+        break;
+      case "2_strength":
+        strength = this.props.findStatisticByName("strength", this.props.characterToReview) ? Math.floor((this.props.findStatisticByName("strength", this.props.characterToReview).sum.total - 10) / 2) : 0;
+        damageMod = (strength * 2 !== 0) ? (" + " + strength * 2) : " + 2 * STR";
+        break;
+      case "dexterity":
+        let dexterity = this.props.findStatisticByName("dexterity", this.props.characterToReview) ? Math.floor((this.props.findStatisticByName("dexterity", this.props.characterToReview).sum.total - 10) / 2) : 0;
+        damageMod = (dexterity !== 0) ? (" + " + dexterity) : " + DEX";
+        break;
+    }
+    
+    return(
+      <div className="meleeTotal">{
+        this.props.findStatisticByName("bab", this.props.characterToReview) 
+          ? (this.props.findStatisticByName(this.props.weapon.attackModifier, this.props.characterToReview)
+            ? "+" + this.props.findStatisticByName("bab", this.props.characterToReview).sum.total 
+              + Math.floor((this.props.findStatisticByName(this.props.weapon.attackModifier, this.props.characterToReview).sum.total - 10) / 2) 
+              + this.props.sizeMod
+            : "+" + (this.props.findStatisticByName("bab", this.props.characterToReview).sum.total + this.props.sizeMod) + " + " + this.props.weapon.attackModifier)
+          : (this.props.findStatisticByName(this.props.weapon.attackModifier, this.props.characterToReview) 
+            ? "BAB + " + (Math.floor((this.props.findStatisticByName(this.props.weapon.attackModifier, this.props.characterToReview).sum.total - 10) / 2) 
+              + this.props.sizeMod)
+            : "+0" ) + " ( " + (this.props.sizeMod === 0 ? this.props.weapon.dmgM[0] : this.props.weapon.dmgS[0]) 
+              + damageMod + " ( " + this.props.weapon.critical + " )" + " ) " 
+      }</div>
+    )
+  }
+}
+class RangedWeaponOutput extends React.Component{
+  render(){
+    {/* if there is a bab ( if there is a str  ) - else ( if there is a str  ) */}    
+    let damageMod = 0;
+    let attackModifier;
+    let dmgM;
+    let dmgS;
+    let critical;
+
+    if(this.props.weapon){
+      switch(this.props.weapon.damageModifier){
+        case "none":
+          damageMod = "";
+          break;
+        case "0_5_strength":
+          let strength = this.props.findStatisticByName("strength", this.props.characterToReview) ? Math.floor((this.props.findStatisticByName("strength", this.props.characterToReview).sum.total - 10) / 2) : 0;
+          damageMod = (Math.floor(strength / 2) !== 0) ? (" + " + Math.floor(strength / 2)) : " + 0.5 * STR";
+          break;
+        case "strength":
+          strength = this.props.findStatisticByName("strength", this.props.characterToReview) ? Math.floor((this.props.findStatisticByName("strength", this.props.characterToReview).sum.total - 10) / 2) : 0;
+          damageMod = (strength !== 0) ? (" + " + strength) : " + STR";
+          break;
+        case "1_5_strength":
+          strength = this.props.findStatisticByName("strength", this.props.characterToReview) ? Math.floor((this.props.findStatisticByName("strength", this.props.characterToReview).sum.total - 10) / 2) : 0;
+          damageMod = (Math.floor(strength * 1.5) !== 0) ? (" + " + Math.floor(strength * 1.5)) : " + 1.5 * STR";
+          break;
+        case "2_strength":
+          strength = this.props.findStatisticByName("strength", this.props.characterToReview) ? Math.floor((this.props.findStatisticByName("strength", this.props.characterToReview).sum.total - 10) / 2) : 0;
+          damageMod = (strength * 2 !== 0) ? (" + " + strength * 2) : " + 2 * STR";
+          break;
+        case "dexterity":
+          let dexterity = this.props.findStatisticByName("dexterity", this.props.characterToReview) ? Math.floor((this.props.findStatisticByName("dexterity", this.props.characterToReview).sum.total - 10) / 2) : 0;
+          damageMod = (dexterity !== 0) ? (" + " + dexterity) : " + DEX";
+          break;
+      }
+      attackModifier = this.props.weapon.attackModifier;
+      dmgM = this.props.weapon.dmgM[0];
+      dmgS = this.props.weapon.dmgS[0];
+      critical = this.props.weapon.critical;
+    } else {
+      attackModifier = "dexterity";
+      dmgM = "";
+      dmgS = "";
+      critical = "";
+    }
+    
+    return(
+      <div className="rangedTotal">{
+        this.props.findStatisticByName("bab", this.props.characterToReview) 
+          ? (this.props.findStatisticByName(attackModifier, this.props.characterToReview)
+            ? "+" + this.props.findStatisticByName("bab", this.props.characterToReview).sum.total 
+              + Math.floor((this.props.findStatisticByName(attackModifier, this.props.characterToReview).sum.total - 10) / 2) 
+              + this.props.sizeMod
+            : "+" + (this.props.findStatisticByName("bab", this.props.characterToReview).sum.total + this.props.sizeMod) + " + " + attackModifier)
+          : (this.props.findStatisticByName(attackModifier, this.props.characterToReview) 
+            ? "BAB + " + (Math.floor((this.props.findStatisticByName(attackModifier, this.props.characterToReview).sum.total - 10) / 2) 
+              + this.props.sizeMod)
+            : "+0" ) + " ( " + (this.props.sizeMod === 0 ? dmgM : dmgS) 
+              + damageMod + " ( " + critical + " )" + " ) " 
+      }</div>
+    )
+  }
 }

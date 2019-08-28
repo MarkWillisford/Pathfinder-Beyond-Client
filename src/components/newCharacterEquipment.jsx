@@ -17,6 +17,7 @@ export class NewCharacterEquipment extends React.Component{
 
   dispatchResetCompletedStep(){
     this.props.dispatch(resetCompletedStep(7));
+    // TODO! remove equipment data
 
   }
 
