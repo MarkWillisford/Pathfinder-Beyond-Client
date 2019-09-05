@@ -14,6 +14,9 @@ import { fetchProtectedSubData } from '../actions/protectedData';
 import { fetchProtectedSecondaryData } from '../actions/protectedData';
 import { fetchProtectedExtraData } from '../actions/protectedData';
 import { setInitialEquipmentSlots } from '../actions/index';
+import { setEquipmentSlotStatus, setEquipmentSlotItem } from '../actions/index';
+import { setTempArmorCategory, setTempArmor } from '../actions/index';
+import { setTempWeaponCategory, setTempWeapon, setTempWeaponAttackModifier, setTempWeaponDamageModifier } from '../actions/index';
 
 import WeaponSlot from './weaponSlot'; 
 import ArmorSlot from './armorSlot'; 
@@ -65,8 +68,73 @@ export class Equipment_Selection extends React.Component {
     this.props.dispatch(fetchProtectedExtraData("weapons"));
 
     // only do this if there is nothing already in the slots
-    if(!editing){
+    if(!editing){      
       this.props.dispatch(setInitialEquipmentSlots());
+
+      // I want to add a check here; if there are items stored in the newcharacter.gear object,
+      // I need to add them to the equipmentSlots. 
+      const purchasedGear = this.props.purchasedGear;
+      console.log(purchasedGear);
+      if(purchasedGear){
+        // load gear found at character.gear.armor, .weapon, etc . . .   
+        let weaponSlot = 0;
+        let armorSlot = 0;
+        let itemSlot = 0;
+        for(let i=0;i<purchasedGear.length;i++){
+          if(purchasedGear[i].bonus){
+            console.log(`item ${i} has a bonus`);
+            // item is armor
+            let armor = purchasedGear[i];
+            let slot = { menu:"armor", id: armorSlot, currentState:"saved" };
+
+            this.props.dispatch(setEquipmentSlotStatus(slot));
+            this.props.dispatch(setEquipmentSlotItem({menu:slot.menu, id: slot.id, item:armor}));
+            console.log("setting temp");
+            this.props.dispatch(setTempArmorCategory(armor.use));
+            this.props.dispatch(setTempArmor(armor));
+
+            // and finally take it out of the store
+            this.props.dispatch(removeItemFromCharacter(armor));
+            armorSlot++;
+          } else if(purchasedGear[i].dmgM){
+            console.log(`item ${i} has a dmgM`);
+            // item is a weapon
+            let weapon = purchasedGear[i];
+            let slot = { menu:"weapon", id: weaponSlot, currentState:"saved" };
+
+            weapon.attackModifier = purchasedGear[i].weaponAttackModifier;
+            weapon.damageModifier = purchasedGear[i].weaponDamageModifier;
+            this.props.dispatch(setEquipmentSlotStatus(slot));
+            this.props.dispatch(setEquipmentSlotItem({menu:slot.menu, id: slot.id, item:weapon}));
+            this.props.dispatch(setTempWeaponCategory(weapon.use));
+            this.props.dispatch(setTempWeapon(weapon));
+            this.props.dispatch(setTempWeaponAttackModifier(weapon.attackModifier));
+            this.props.dispatch(setTempWeaponDamageModifier(weapon.damageModifier));
+            this.props.dispatch(removeItemFromCharacter(weapon));
+          } else if(purchasedGear[i].isCollection){
+            console.log(`item ${i} has isCollection`);
+            // item is an item i.e. tradeGoods or goodsAndServices
+            let item = purchasedGear[i];
+            let slot = { menu:"item", id: itemSlot, currentState:"saved" };
+
+            this.props.dispatch(setEquipmentSlotStatus(slot));
+            this.props.dispatch(setEquipmentSlotItem({menu:slot.menu, id: slot.id, item:item}));
+            this.props.dispatch(removeItemFromCharacter(item));
+            itemSlot++;
+          } else {
+
+          }
+        }
+
+
+
+        /* Object.values(character.gear).forEach(item => {
+          for(let i=0;i<item.length;i++){
+            dispatch(         (item[i]));
+          }
+        }); */
+      }
+
     }
   }
 
@@ -75,6 +143,8 @@ export class Equipment_Selection extends React.Component {
     if(tempEquipment){
       for(let i=0;i<tempEquipment.weaponSlots.length;i++){
         if(tempEquipment.weaponSlots[i].item){
+          console.log("weaponSlot has an item saved, adding: ");
+          console.log(tempEquipment.weaponSlots[i].item);
           this.props.dispatch(addItemToCharacter(tempEquipment.weaponSlots[i].item));
         }
       }
@@ -114,11 +184,15 @@ export class Equipment_Selection extends React.Component {
           this.props.dispatch(addBonus(bonus));
           this.props.dispatch(sumBonus(bonus));
 
+          console.log("armorSlots has an item saved, adding: ");
+          console.log(tempEquipment.armorSlots[i].item);
           this.props.dispatch(addItemToCharacter(tempEquipment.armorSlots[i].item));
         }
       }
       for(let i=0;i<tempEquipment.itemSlots.length;i++){
         if(tempEquipment.itemSlots[i].item){
+          console.log("itemSlot has an item saved, adding: ");
+          console.log(tempEquipment.itemSlots[i].item);
           this.props.dispatch(addItemToCharacter(tempEquipment.itemSlots[i].item));
         }
       }
@@ -184,7 +258,8 @@ export class Equipment_Selection extends React.Component {
 /*     for(let i=0;i<itemSlots.length;i++){
       itemSlots[i].items = [goodsAndServicesList, tradeGoodsList];      // HOW DOES THIS MODIFY THE STORE?  
     } */
-    if(startingGold){
+
+    if(startingGold || armorSlots.length === 0){
 			return (
         <div className="equipment">
           <button onClick={()=>this.submitEquipment()}>Submit</button>

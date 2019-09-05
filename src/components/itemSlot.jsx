@@ -37,11 +37,13 @@ export class ItemSlot extends React.Component{
 
           this.props.dispatch(setTempItemCategory(itemCategory));
           this.props.dispatch(setTempItem(initialItem));
-        }        
-
+          this.props.dispatch(spendGold(-this.props.tempEquipment.itemSlots[index].item.cost));
+        }
       break;
       case "canceled":
         this.props.dispatch(setEquipmentSlotStatus({menu:slot.menu, id: slot.id, currentState: "saved"}));
+        index = this.props.id;
+        this.props.dispatch(spendGold(this.props.tempEquipment.itemSlots[index].item.cost));
       break;
       case "saved":
         let item = this.props.tempEquipment.item;

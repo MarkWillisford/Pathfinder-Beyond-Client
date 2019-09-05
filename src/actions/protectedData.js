@@ -268,7 +268,6 @@ export const fetchProtectedPDF = (character, cb) => (dispatch, getState) => {
 } 
 
 export const saveAndSubmit = () => (dispatch, getState, history) => {
-  console.log("saving");
   const authToken = getState().auth.authToken;
   const user = getState().auth.currentUser._id; 
   dispatch(setLoading());
@@ -409,11 +408,17 @@ export const editAndSubmit = () => (dispatch, getState) => {
   let goodsAndServicesList = [];
 
   if(charState.newCharacter.gear){
+    console.log("BUG #7");
+    console.log(charState.newCharacter.gear);
     for(let i = 0; i < charState.newCharacter.gear.length; i++){
       let item = charState.newCharacter.gear[i];
+      console.log("BUG #7");
+      console.log(item);
       if(item.hasOwnProperty("dmgS")){
+        item.id = item._id;
+        delete item._id;
         weaponsList.push(item.id);
-      } else if (item.hasOwnProperty("collection")){
+      } else if (item.hasOwnProperty("isCollection")){
         goodsAndServicesList.push(item.id);
       } else if (item.hasOwnProperty("armorCheckPenalty")){
         armorsList.push(item.id);

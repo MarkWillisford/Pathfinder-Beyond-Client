@@ -11,6 +11,7 @@ export class WeaponSlot extends React.Component{
     let weaponCategories = [];
     let initialWeapon;
 
+    console.log(this.props.weapons);
     if(this.props.weapons){
       for(let i=0;i<this.props.weapons.length;i++){
         if(!weaponCategories.includes(this.props.weapons[i].use)){
@@ -20,6 +21,8 @@ export class WeaponSlot extends React.Component{
       initialWeapon = this.props.weapons.filter((weapon) => weapon.use === weaponCategories[0]);
 
       this.props.dispatch(setTempWeaponCategory(weaponCategories[0]));
+      console.log("setting weapon, in componentDidMount");
+      console.log(initialWeapon);
       this.props.dispatch(setTempWeapon(initialWeapon[0]));
       this.props.dispatch(setTempWeaponAttackModifier("strength"));
       this.props.dispatch(setTempWeaponDamageModifier("strength"));
@@ -47,10 +50,13 @@ export class WeaponSlot extends React.Component{
           weaponCategories.push(initialWeapon[0].use);
           this.props.dispatch(setTempWeaponCategory(weaponCategories[0]));
           this.props.dispatch(setTempWeapon(initialWeapon[0]));
+          this.props.dispatch(spendGold(-this.props.tempEquipment.weaponSlots[index].item.cost));
         }        
       break;
       case "canceled":
         this.props.dispatch(setEquipmentSlotStatus({menu:slot.menu, id: slot.id, currentState: "saved"}));
+        index = this.props.id;
+        this.props.dispatch(spendGold(this.props.tempEquipment.weaponSlots[index].item.cost));
       break;
       case "saved":
         let weapon = this.props.tempEquipment.weapon;
@@ -113,7 +119,7 @@ export class WeaponSlot extends React.Component{
           attackModifier = strength;
           break;
       }
-      let damageMod;
+      let damageMod = "";
       switch(this.props.tempEquipment.weaponSlots[this.props.id].item.damageModifier){
         case "none":
           damageMod = "";

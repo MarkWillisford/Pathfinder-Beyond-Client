@@ -608,6 +608,8 @@ export const characterReducer = (state=initialState, action) => {
         }
       }
     case actions.SET_TEMP_ARMOR_CATEGORY:
+      console.log("setting category");
+      console.log(action.category);
       if(state.tempEquipment){
         return {
           ...state,
@@ -640,6 +642,8 @@ export const characterReducer = (state=initialState, action) => {
         }
       }
     case actions.SET_TEMP_ARMOR:
+        console.log("setting armor");
+        console.log(action.armor);
       if(state.tempEquipment){
         return {
           ...state,
@@ -741,20 +745,6 @@ export const characterReducer = (state=initialState, action) => {
           }
         }
       }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     case actions.ADD_ITEM_TO_CHARACTER:
       if(!state.newCharacter.gear){
           return {

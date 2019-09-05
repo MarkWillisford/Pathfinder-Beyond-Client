@@ -143,17 +143,19 @@ export class CharacterReview extends React.Component{
         characterFeatsAbilitiesNotesDownArrowClassName += " expand";
       break;
     }
-
+ 
     // I need to know what weapons the character has.
     const gear = this.props.characterToReview.gear ? this.props.characterToReview.gear : [];
     let meleeWeapons = [];
     let rangedWeapons = [];
     for(let i=0;i<gear.length;i++){
       // if the gear item has a dmgS value then it is a weapon and we need to know about it
-      if(gear[i].use.includes("Melee") || gear[i].use.includes("melee")){
-        meleeWeapons.push(gear[i]);
-      } else if(gear[i].use.includes("Ranged") || gear[i].use.includes("ranged")){
-        rangedWeapons.push(gear[i]);
+      if(gear[i].use){
+        if(gear[i].use.includes("Melee") || gear[i].use.includes("melee")){
+          meleeWeapons.push(gear[i]);
+        } else if(gear[i].use.includes("Ranged") || gear[i].use.includes("ranged")){
+          rangedWeapons.push(gear[i]);
+        }
       }
     }
 

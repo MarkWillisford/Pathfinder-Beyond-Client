@@ -12,15 +12,45 @@ export class ArmorSlot extends React.Component{
     let armorCategories = [];
     let initialArmor;
 
-    for(let i=0;i<this.props.armor.length;i++){
-      if(!armorCategories.includes(this.props.armor[i].use)){
-        armorCategories.push(this.props.armor[i].use);
+    if(this.props.armor.length > 0){
+      for(let i=0;i<this.props.armor.length;i++){
+        if(!armorCategories.includes(this.props.armor[i].use)){
+          armorCategories.push(this.props.armor[i].use);
+        }
       }
+      initialArmor = this.props.armor.filter((armor) => armor.use === armorCategories[0]);
+      console.log("triggered by mount with props.armor");
+      console.log(this.props.armor);
+      this.props.dispatch(setTempArmorCategory(armorCategories[0]));
+      /* console.log("setting armor, in componentDidMount");
+      console.log(initialArmor); */
+      this.props.dispatch(setTempArmor(initialArmor[0]));
     }
-    initialArmor = this.props.armor.filter((armor) => armor.use === armorCategories[0]);
+  }
 
-    this.props.dispatch(setTempArmorCategory(armorCategories[0]));
-    this.props.dispatch(setTempArmor(initialArmor[0]));
+  componentDidUpdate(){
+    
+    if(this.props.armor.length > 1 && !this.props.tempEquipment.armor){
+      /* console.log("in update, problem, no temp equipment but have a list of armor")
+      console.log(this.props.armor);
+      console.log(this.props.tempEquipment);
+      console.log("therefore I'm redispatching the temp armor"); */
+      
+      let armorCategories = [];
+      let initialArmor;
+      for(let i=0;i<this.props.armor.length;i++){
+        if(!armorCategories.includes(this.props.armor[i].use)){
+          armorCategories.push(this.props.armor[i].use);
+        }
+      }
+      initialArmor = this.props.armor.filter((armor) => armor.use === armorCategories[0]);
+      /* console.log(armorCategories);
+      console.log(initialArmor); */
+      this.props.dispatch(setTempArmorCategory(armorCategories[0]));
+      /* console.log("setting armor, in componentDidUpdate");
+      console.log(initialArmor); */
+      this.props.dispatch(setTempArmor(initialArmor[0]));
+    }
   }
 
   setEquipmentSlotStatus(slot){
@@ -44,11 +74,14 @@ export class ArmorSlot extends React.Component{
           armorCategories.push(initialArmor[0].use);
           this.props.dispatch(setTempArmorCategory(armorCategories[0]));
           this.props.dispatch(setTempArmor(initialArmor[0]));
-        }        
+          this.props.dispatch(spendGold(-this.props.tempEquipment.armorSlots[index].item.cost));
+        }
       break;
       case "canceled":
         this.props.dispatch(setEquipmentSlotStatus({menu:slot.menu, id: slot.id, currentState: "saved"}));
-      break;
+        index = this.props.id;
+        this.props.dispatch(spendGold(this.props.tempEquipment.armorSlots[index].item.cost));
+        break;
       case "saved":
         let armor = this.props.tempEquipment.armor;
         armor.attackModifier = this.props.tempEquipment.armorAttackModifier;
@@ -63,6 +96,7 @@ export class ArmorSlot extends React.Component{
   }
   handleChange(e){
     let category = e.target.value.toLowerCase();
+    
     this.props.dispatch(setTempArmorCategory(category));
     let armor = this.props.armor.filter((armor) => armor.use === category);
     this.props.dispatch(setTempArmor(armor[0]));
@@ -140,6 +174,7 @@ export class ArmorSlot extends React.Component{
       }
 
       let selectedArmor = this.props.tempEquipment.armor;
+
       let totalAC = 10 + selectedArmor.bonus.armor + ( dexterity > selectedArmor.maxDexBonus ? selectedArmor.maxDexBonus : dexterity );
       return(
         <div className="armorSlotDiv editing">

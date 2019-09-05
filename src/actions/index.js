@@ -605,4 +605,11 @@ export const editingExistingCharacter = (character) => (dispatch, getState, hist
 
   dispatch(submitDetailsToState(character.details));
   dispatch(loadCharacterId(character._id));
+
+  // load gear found at character.gear.armor, .weapon, etc . . .   
+  Object.values(character.gear).forEach(item => {
+    for(let i=0;i<item.length;i++){
+      dispatch(addItemToCharacter(item[i]));
+    }
+  });
 };

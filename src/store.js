@@ -10,6 +10,7 @@ import {setAuthToken, refreshAuthToken} from './actions/auth';
 import {setStep} from './actions/index';
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const enhancer = composeEnhancer(
   applyMiddleware(thunk),
   // any other store enhancers
