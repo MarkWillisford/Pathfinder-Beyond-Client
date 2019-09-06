@@ -19,9 +19,9 @@ export class ItemSlot extends React.Component{
      switch(slot.currentState){
       case "empty":
         let index = this.props.id;
-        if(this.props.tempEquipment.itemSlots[index].item){
+        /* if(this.props.tempEquipment.itemSlots[index].item){
           this.props.dispatch(spendGold(-(this.props.tempEquipment.itemSlots[index].item.cost)));
-        }
+        } */
         this.props.dispatch(setEquipmentSlotStatus(slot));
         this.props.dispatch(setEquipmentSlotItem({menu:slot.menu, id: slot.id, item:null}));
       break;

@@ -21,8 +21,6 @@ export class WeaponSlot extends React.Component{
       initialWeapon = this.props.weapons.filter((weapon) => weapon.use === weaponCategories[0]);
 
       this.props.dispatch(setTempWeaponCategory(weaponCategories[0]));
-      console.log("setting weapon, in componentDidMount");
-      console.log(initialWeapon);
       this.props.dispatch(setTempWeapon(initialWeapon[0]));
       this.props.dispatch(setTempWeaponAttackModifier("strength"));
       this.props.dispatch(setTempWeaponDamageModifier("strength"));
@@ -33,9 +31,9 @@ export class WeaponSlot extends React.Component{
     switch(slot.currentState){
       case "empty":
         let index = this.props.id;
-        if(this.props.tempEquipment.weaponSlots[index].item){
+        /* if(this.props.tempEquipment.weaponSlots[index].item){
           this.props.dispatch(spendGold(-(this.props.tempEquipment.weaponSlots[index].item.cost)));
-        }
+        } */
         this.props.dispatch(setEquipmentSlotStatus(slot));
         this.props.dispatch(setEquipmentSlotItem({menu:slot.menu, id: slot.id, item:null}));
       break;

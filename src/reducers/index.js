@@ -210,7 +210,6 @@ function setSum(stat){
       for(let j=0; j<arrayOfHighestBonuses.length; j++){
         if(arrayOfHighestBonuses[j].type == typeToFind){
           arrayOfHighestBonuses[j].sum += stat.bonuses[i].amount;
-          console.log(arrayOfHighestBonuses[j]);
           arrayOfHighestBonuses[j].bonuses.push(stat.bonuses[i]);
           found = true;
         };
@@ -608,8 +607,6 @@ export const characterReducer = (state=initialState, action) => {
         }
       }
     case actions.SET_TEMP_ARMOR_CATEGORY:
-      console.log("setting category");
-      console.log(action.category);
       if(state.tempEquipment){
         return {
           ...state,
@@ -642,8 +639,6 @@ export const characterReducer = (state=initialState, action) => {
         }
       }
     case actions.SET_TEMP_ARMOR:
-        console.log("setting armor");
-        console.log(action.armor);
       if(state.tempEquipment){
         return {
           ...state,
@@ -930,16 +925,11 @@ export const characterReducer = (state=initialState, action) => {
       let foundBonusAt = null;
       let nameOfStat = null;
 
-      console.log("looking for");
-      console.log(action.bonus);
       // look through the stats array for all bonus objects with source === action.bonus.source
       for(let i=0; i<state.newCharacter.characterStats.length;i++){
         for(let j=0;j<state.newCharacter.characterStats[i].bonuses.length;j++){
-          console.log("found: ");
-          console.log(state.newCharacter.characterStats[i].bonuses[j]);
           // !TODO this compares two objects which of course doesn't work, I need to compare values
           if(state.newCharacter.characterStats[i].bonuses[j] === action.bonus){ 
-            console.log("matching");
             foundStatAt = i;  
             foundBonusAt = j;
             nameOfStat = state.newCharacter.characterStats[i].name;
@@ -947,7 +937,6 @@ export const characterReducer = (state=initialState, action) => {
         }
       }
       let stat = state.newCharacter.characterStats[foundStatAt];
-      console.log(stat);
       //let bonus = stat.bonuses[foundBonusAt];
       return{
         ...state,
@@ -1095,7 +1084,6 @@ export const characterReducer = (state=initialState, action) => {
           foundAt = i;
         }
       } 
-      console.log(foundAt);
       return {
         ...state,
         newCharacter:{...state.newCharacter, charClass:{

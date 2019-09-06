@@ -23,6 +23,26 @@ export const fetchProtectedData_charClasses_Success = data => ({
     type: FETCH_PROTECTED_DATA_CHARCLASSES_SUCCESS,
     data
 });
+export const FETCH_PROTECTED_DATA_ARMOR_SUCCESS = 'FETCH_PROTECTED_DATA_ARMOR_SUCCESS';
+export const fetchProtectedData_armor_Success = data => ({
+    type: FETCH_PROTECTED_DATA_ARMOR_SUCCESS,
+    data
+});
+export const FETCH_PROTECTED_DATA_GOODSANDSERVICES_SUCCESS = 'FETCH_PROTECTED_DATA_GOODSANDSERVICES_SUCCESS';
+export const fetchProtectedData_goodsAndServices_Success = data => ({
+    type: FETCH_PROTECTED_DATA_GOODSANDSERVICES_SUCCESS,
+    data
+});
+export const FETCH_PROTECTED_DATA_TRADEGOODS_SUCCESS = 'FETCH_PROTECTED_DATA_TRADEGOODS_SUCCESS';
+export const fetchProtectedData_tradeGoods_Success = data => ({
+    type: FETCH_PROTECTED_DATA_TRADEGOODS_SUCCESS,
+    data
+});
+export const FETCH_PROTECTED_DATA_WEAPONS_SUCCESS = 'FETCH_PROTECTED_DATA_WEAPONS_SUCCESS';
+export const fetchProtectedData_weapons_Success = data => ({
+    type: FETCH_PROTECTED_DATA_WEAPONS_SUCCESS,
+    data
+});
 
 export const FETCH_PROTECTED_SUB_DATA_SUCCESS = 'FETCH_PROTECTED_SUB_DATA_SUCCESS';
 export const fetchProtectedSubDataSuccess = data => ({
@@ -113,13 +133,25 @@ export const fetchProtectedData = (api, call="") => (dispatch, getState) => {
   ).then(res => {
     return res.json();
   }).then(data => {
-    let str = JSON.stringify(data);
+    //let str = JSON.stringify(data);
     switch(call){
       case "usersCharacters": 
         dispatch(fetchProtectedData_usersCharacters_Success(data));
         break;
       case "charClasses":
         dispatch(fetchProtectedData_charClasses_Success(data));
+        break;
+      case "armor":
+        dispatch(fetchProtectedData_armor_Success(data));
+        break;
+      case "goodsAndServices":
+        dispatch(fetchProtectedData_goodsAndServices_Success(data));
+        break;
+      case "tradeGoods":
+        dispatch(fetchProtectedData_tradeGoods_Success(data));
+        break;
+      case "weapons":
+        dispatch(fetchProtectedData_weapons_Success(data));
         break;
       default: 
         dispatch(fetchProtectedDataSuccess(data));
@@ -408,15 +440,18 @@ export const editAndSubmit = () => (dispatch, getState) => {
   let goodsAndServicesList = [];
 
   if(charState.newCharacter.gear){
-    console.log("BUG #7");
-    console.log(charState.newCharacter.gear);
+    /* console.log("BUG #7");
+    console.log(charState.newCharacter.gear); */
     for(let i = 0; i < charState.newCharacter.gear.length; i++){
       let item = charState.newCharacter.gear[i];
-      console.log("BUG #7");
-      console.log(item);
-      if(item.hasOwnProperty("dmgS")){
+      /* console.log("BUG #7");
+      console.log(item); */
+      if(item._id){
         item.id = item._id;
-        delete item._id;
+        delete item._id; 
+      }
+
+      if(item.hasOwnProperty("dmgS")){
         weaponsList.push(item.id);
       } else if (item.hasOwnProperty("isCollection")){
         goodsAndServicesList.push(item.id);

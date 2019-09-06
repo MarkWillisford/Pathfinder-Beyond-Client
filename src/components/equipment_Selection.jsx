@@ -15,7 +15,7 @@ import { fetchProtectedSecondaryData } from '../actions/protectedData';
 import { fetchProtectedExtraData } from '../actions/protectedData';
 import { setInitialEquipmentSlots } from '../actions/index';
 import { setEquipmentSlotStatus, setEquipmentSlotItem } from '../actions/index';
-import { setTempArmorCategory, setTempArmor } from '../actions/index';
+import { setTempArmorCategory, setTempArmor, addItemSlot } from '../actions/index';
 import { setTempWeaponCategory, setTempWeapon, setTempWeaponAttackModifier, setTempWeaponDamageModifier } from '../actions/index';
 
 import WeaponSlot from './weaponSlot'; 
@@ -41,100 +41,78 @@ export class Equipment_Selection extends React.Component {
     element.scrollIntoView({behavior: 'smooth'});
   }
 
-  componentDidMount(){
-    let editing = false;
-    const tempEquipment = this.props.tempEquipment;
-    if(tempEquipment){
-      for(let i=0;i<tempEquipment.weaponSlots.length;i++){
-        if(tempEquipment.weaponSlots[i].item){
-          editing = true;
-        }
-      }
-      for(let i=0;i<tempEquipment.armorSlots.length;i++){
-        if(tempEquipment.armorSlots[i].item){
-          editing = true;
-        }
-      }
-      for(let i=0;i<tempEquipment.itemSlots.length;i++){
-        if(tempEquipment.itemSlots[i].item){
-          editing = true;
-        }
-      }
-    }
-    this.props.dispatch(clearData());
-    this.props.dispatch(fetchProtectedData("armors"));
-    this.props.dispatch(fetchProtectedSubData("goodsAndServices"));
-    this.props.dispatch(fetchProtectedSecondaryData("tradeGoods"));
-    this.props.dispatch(fetchProtectedExtraData("weapons"));
+  componentDidMount(){ 
+    this.props.dispatch(setInitialEquipmentSlots());
 
-    // only do this if there is nothing already in the slots
-    if(!editing){      
-      this.props.dispatch(setInitialEquipmentSlots());
+    // I want to add a check here; if there are items stored in the newcharacter.gear object,
+    // I need to add them to the equipmentSlots. 
+    const purchasedGear = this.props.purchasedGear;
+    console.log(purchasedGear);
+    if(purchasedGear){
+      // load gear found at character.gear.armor, .weapon, etc . . .   
+      let weaponSlot = 0;
+      let armorSlot = 0;
+      let itemSlot = 0;
+      for(let i=0;i<purchasedGear.length;i++){
+        if(purchasedGear[i].bonus){
+          console.log(`item ${i} has a bonus`);
+          // item is armor
+          let armor = purchasedGear[i];
+          let slot = { menu:"armor", id: armorSlot, currentState:"saved" };
 
-      // I want to add a check here; if there are items stored in the newcharacter.gear object,
-      // I need to add them to the equipmentSlots. 
-      const purchasedGear = this.props.purchasedGear;
-      console.log(purchasedGear);
-      if(purchasedGear){
-        // load gear found at character.gear.armor, .weapon, etc . . .   
-        let weaponSlot = 0;
-        let armorSlot = 0;
-        let itemSlot = 0;
-        for(let i=0;i<purchasedGear.length;i++){
-          if(purchasedGear[i].bonus){
-            console.log(`item ${i} has a bonus`);
-            // item is armor
-            let armor = purchasedGear[i];
-            let slot = { menu:"armor", id: armorSlot, currentState:"saved" };
+          this.props.dispatch(setEquipmentSlotStatus(slot));
+          this.props.dispatch(setEquipmentSlotItem({menu:slot.menu, id: slot.id, item:armor}));
+          console.log("setting temp");
+          this.props.dispatch(setTempArmorCategory(armor.use));
+          this.props.dispatch(setTempArmor(armor));
 
-            this.props.dispatch(setEquipmentSlotStatus(slot));
-            this.props.dispatch(setEquipmentSlotItem({menu:slot.menu, id: slot.id, item:armor}));
-            console.log("setting temp");
-            this.props.dispatch(setTempArmorCategory(armor.use));
-            this.props.dispatch(setTempArmor(armor));
+          // and finally take it out of the store
+          this.props.dispatch(removeItemFromCharacter(armor));
+          armorSlot++;
+        } else if(purchasedGear[i].dmgM){
+          console.log(`item ${i} has a dmgM`);
+          // item is a weapon
+          let weapon = purchasedGear[i];
+          let slot = { menu:"weapon", id: weaponSlot, currentState:"saved" };
 
-            // and finally take it out of the store
-            this.props.dispatch(removeItemFromCharacter(armor));
-            armorSlot++;
-          } else if(purchasedGear[i].dmgM){
-            console.log(`item ${i} has a dmgM`);
-            // item is a weapon
-            let weapon = purchasedGear[i];
-            let slot = { menu:"weapon", id: weaponSlot, currentState:"saved" };
+          weapon.attackModifier = purchasedGear[i].weaponAttackModifier;
+          weapon.damageModifier = purchasedGear[i].weaponDamageModifier;
+          this.props.dispatch(setEquipmentSlotStatus(slot));
+          this.props.dispatch(setEquipmentSlotItem({menu:slot.menu, id: slot.id, item:weapon}));
+          this.props.dispatch(setTempWeaponCategory(weapon.use));
+          this.props.dispatch(setTempWeapon(weapon));
+          this.props.dispatch(setTempWeaponAttackModifier(weapon.attackModifier));
+          this.props.dispatch(setTempWeaponDamageModifier(weapon.damageModifier));
+          this.props.dispatch(removeItemFromCharacter(weapon));
+        } else if(purchasedGear[i].isCollection){
+          console.log(`item ${i} has isCollection`);
+          // item is an item i.e. goodsAndServices
+          let item = purchasedGear[i];
+          let slot = { menu:"item", id: itemSlot, currentState:"saved" };
 
-            weapon.attackModifier = purchasedGear[i].weaponAttackModifier;
-            weapon.damageModifier = purchasedGear[i].weaponDamageModifier;
-            this.props.dispatch(setEquipmentSlotStatus(slot));
-            this.props.dispatch(setEquipmentSlotItem({menu:slot.menu, id: slot.id, item:weapon}));
-            this.props.dispatch(setTempWeaponCategory(weapon.use));
-            this.props.dispatch(setTempWeapon(weapon));
-            this.props.dispatch(setTempWeaponAttackModifier(weapon.attackModifier));
-            this.props.dispatch(setTempWeaponDamageModifier(weapon.damageModifier));
-            this.props.dispatch(removeItemFromCharacter(weapon));
-          } else if(purchasedGear[i].isCollection){
-            console.log(`item ${i} has isCollection`);
-            // item is an item i.e. tradeGoods or goodsAndServices
-            let item = purchasedGear[i];
-            let slot = { menu:"item", id: itemSlot, currentState:"saved" };
-
-            this.props.dispatch(setEquipmentSlotStatus(slot));
-            this.props.dispatch(setEquipmentSlotItem({menu:slot.menu, id: slot.id, item:item}));
-            this.props.dispatch(removeItemFromCharacter(item));
-            itemSlot++;
-          } else {
-
+          if(itemSlot > 0){
+            this.props.dispatch(addItemSlot({"id":itemSlot, "currentState":"empty"}));
           }
-        }
 
+          this.props.dispatch(setEquipmentSlotStatus(slot));
+          this.props.dispatch(setEquipmentSlotItem({menu:slot.menu, id: slot.id, item:item}));
+          this.props.dispatch(removeItemFromCharacter(item));
+          itemSlot++;
+        } else if(purchasedGear[i] !== null){
+          // item is a trade goods
+          let item = purchasedGear[i];
+          let slot = { menu:"item", id: itemSlot, currentState:"saved" };
 
-
-        /* Object.values(character.gear).forEach(item => {
-          for(let i=0;i<item.length;i++){
-            dispatch(         (item[i]));
+          if(itemSlot > 0){
+            this.props.dispatch(addItemSlot({"id":itemSlot, "currentState":"empty"}));
           }
-        }); */
-      }
 
+          this.props.dispatch(setEquipmentSlotStatus(slot));
+          this.props.dispatch(setEquipmentSlotItem({menu:slot.menu, id: slot.id, item:item}));
+          this.props.dispatch(removeItemFromCharacter(item));
+          itemSlot++;
+        }
+      }
     }
   }
 
@@ -240,26 +218,27 @@ export class Equipment_Selection extends React.Component {
 
 	render(){
 		const startingGold = this.props.gold;
-		let availableGold = this.props.availableGold;
-    const purchasedGear = this.props.purchasedGear;
-    const expandedSlot = this.props.expandedSlot;
 
-		// inport data
+		// import data
 		const tradeGoodsList = this.props.tradeGoodsList;
 		const weaponsList = this.props.weaponsList;
 		const armorList = this.props.armorsList;
     const goodsAndServicesList = this.props.goodsAndServicesList;
-
+    // flag to wait for data
+    let dataLoaded = true;
+    if(!tradeGoodsList || !weaponsList || !armorList || !goodsAndServicesList){
+      dataLoaded = false;
+    }
+    
     let weaponSlots = this.props.tempEquipment ? this.props.tempEquipment.weaponSlots : [];
     let armorSlots = this.props.tempEquipment ? this.props.tempEquipment.armorSlots : [];
     let itemSlots = this.props.tempEquipment ? this.props.tempEquipment.itemSlots : 
       [{"id":0, "currentState":"empty"}];
     let itemsList = [goodsAndServicesList, tradeGoodsList]
-/*     for(let i=0;i<itemSlots.length;i++){
-      itemSlots[i].items = [goodsAndServicesList, tradeGoodsList];      // HOW DOES THIS MODIFY THE STORE?  
-    } */
 
-    if(startingGold || armorSlots.length === 0){
+    if(!dataLoaded){
+      return null;
+    } else if(startingGold || armorSlots.length === 0){
 			return (
         <div className="equipment">
           <button onClick={()=>this.submitEquipment()}>Submit</button>
@@ -301,10 +280,10 @@ const mapStateToProps = state => ({
   expandedSlot:state.characterReducer.expanded,
   tempEquipment:state.characterReducer.tempEquipment,
 
-  armorsList:state.protectedData.data,
-  goodsAndServicesList:state.protectedData.subData,
-  tradeGoodsList:state.protectedData.secondaryData,
-  weaponsList:state.protectedData.extraData,
+  armorsList:state.protectedData.armor,
+  goodsAndServicesList:state.protectedData.goodsAndServices,
+  tradeGoodsList:state.protectedData.tradeGoods,
+  weaponsList:state.protectedData.weapons,
 })
 
 export default connect(mapStateToProps)(Equipment_Selection);

@@ -2,6 +2,10 @@ import {
     FETCH_PROTECTED_DATA_SUCCESS,
     FETCH_PROTECTED_DATA_USERSCHARACTERS_SUCCESS,
     FETCH_PROTECTED_DATA_CHARCLASSES_SUCCESS,
+    FETCH_PROTECTED_DATA_ARMOR_SUCCESS,
+    FETCH_PROTECTED_DATA_GOODSANDSERVICES_SUCCESS,
+    FETCH_PROTECTED_DATA_TRADEGOODS_SUCCESS,
+    FETCH_PROTECTED_DATA_WEAPONS_SUCCESS,
     FETCH_PROTECTED_DATA_ERROR,
     SET_LOADING,
     FETCH_PROTECTED_SUB_DATA_SUCCESS,
@@ -37,6 +41,34 @@ export default function reducer(state = initialState, action) {
     return Object.assign({}, state, {
       ...state,
       charClasses:action.data,
+      error: null,
+      loading: null
+    });
+  } else if (action.type === FETCH_PROTECTED_DATA_ARMOR_SUCCESS) {
+    return Object.assign({}, state, {
+      ...state,
+      armor:action.data,
+      error: null,
+      loading: null
+    });
+  } else if (action.type === FETCH_PROTECTED_DATA_GOODSANDSERVICES_SUCCESS) {
+    return Object.assign({}, state, {
+      ...state,
+      goodsAndServices:action.data,
+      error: null,
+      loading: null
+    });
+  } else if (action.type === FETCH_PROTECTED_DATA_TRADEGOODS_SUCCESS) {
+    return Object.assign({}, state, {
+      ...state,
+      tradeGoods:action.data,
+      error: null,
+      loading: null
+    });
+  } else if (action.type === FETCH_PROTECTED_DATA_WEAPONS_SUCCESS) {
+    return Object.assign({}, state, {
+      ...state,
+      weapons:action.data,
       error: null,
       loading: null
     });

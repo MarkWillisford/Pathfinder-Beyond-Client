@@ -4,12 +4,20 @@ import EquipmentStartingEquipment from './equipment_StartingEquipment';
 import EquipmentGold from './equipment_Gold';
 import CharacterReview from './characterReview2';
 import { resetCompletedStep } from '../actions/index';
+import { fetchProtectedData, clearData } from '../actions/protectedData';
 
 import { equipmentGenerationMethod } from '../actions/index';
 
 import './newCharacterEquipment.css';
 
 export class NewCharacterEquipment extends React.Component{
+  componentDidMount(){
+    this.props.dispatch(fetchProtectedData("armors", "armor"));
+    this.props.dispatch(fetchProtectedData("goodsAndServices", "goodsAndServices"));
+    this.props.dispatch(fetchProtectedData("tradeGoods", "tradeGoods"));
+    this.props.dispatch(fetchProtectedData("weapons", "weapons"));
+  }
+
 	handleClick(value){
 		// set the state.equipmentGenerationMethod to value
     this.props.dispatch(equipmentGenerationMethod(value));
@@ -18,8 +26,6 @@ export class NewCharacterEquipment extends React.Component{
   dispatchResetCompletedStep(){
     this.props.dispatch(resetCompletedStep(7));
     // add equipment data to store
-    
-
   }
 
 	render(){
