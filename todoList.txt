@@ -1,0 +1,145 @@
+Clean up command line warnings
+finish new character details
+    traits and trait slots                                      DONE
+    Alignment and faith                                         DONE
+    Classes with alignment restrictions                         DONE
+Add deity selection to paladins.                                DONE
+set future feature to add ability score methods
+Remove extra ability score generation methods                   DONE
+deploy on GitHub pages - Heroku                                 DONE
+refactoring the LoadOptions action into require(zyx.json)       
+    races                                                       DONE
+    classes                                                     DONE (ISH)
+Pages should check for the "help" before the "not ready"        DONE
+Fix "not ready" display                                         DONE
+Ability scores should require all 6 to be entered correctly     DONE
+
+add user login - capability to use both email or username
+add google or microsoft login
+refactor the routes so that they accept a user (/userxyz/newCharacter)
+
+*************************************
+Class Selection bug:
+  FIXED - Selection of paladin saves cleric?
+*************************************
+Ability Score Bug:
+  FIXED - typing a number by mistake automatically sets it as the ability score
+*************************************
+
+Add ability to edit equipment selection method after submitting
+FIXED - add ability to edit each page after submitting?
+API results need to be searchable and in pages
+More Data input - Always
+Clear unneeded protected data so there is no data leakage IE from race to class
+Refactor onComponentLoad fetchProtectedData methods to require switch case variable
+DONE - Character Card features
+  DONE - Delete character ability
+  DONE - edit character ability
+  DONE - view characters Ability
+Point Buy
+Skill names should check for line wrap and abbreviate if needed
+
+
+
+
+*************************************
+Skills Selection bug:
+  FIXED - Adding skill ranks sets the racial bonus to 0
+*************************************
+Dashboard Bug:
+  FIXED - Name is undefined on refresh
+*************************************
+Classes Bugs:
+  FIXED - Druid loads all domains,
+  FIXED - Druid can not unselect domains or animal companions (well, bipassed)
+  CANNOT REPRODUCE - Druid domains after edit lead to error on reducer.index ln 203 "push of undefined"
+  FIXED - Undefined error - ln 22 - 
+    steps to reproduce: 
+      log out and refresh to clear data. 
+      click on create new character
+      use menu to go to class page
+  Sorcerer needs spells for testing
+  FIXED - Assimar saves bonuses wrong??
+***************************************
+Feats Bug
+  CANNOT REPRODUCE - spell pen selection caused crash @ characterReview2 ln 619 
+***************************************
+FIXED - BUG #1 - Editing Bug
+  I am getting a TypeError: Cannot read property 'id' of null
+  during an edit, at some point during the reload I loose feats
+  on actions.protectedData.ln 325
+FIXED - BUG #2 Dashboard takes forever to reload on character save
+
+FIXED - BUG #3 - TypeError: Cannot read property 'push' of undefined
+  reducers.index.ln 212. ln 988 setSum()
+  perhaps due to create bonus not be fired yet?
+
+***************************************
+FIXED - Equipment Bug
+  adding armor does not add armor item or bonus to sheet 
+***************************************
+FIXED - Skills Bug
+  ranks don't appear on edit from character review 
+***************************************
+Race BUG
+  Lizardfolk doesn't add NA bonus
+***************************************
+Size ISSUE 
+
+***************************************
+Review BUGS
+  Breaks if there is no dex score ln 402
+  FIXED - BUG #4 - edit on equipment page breaks at <weaponSlot> ln 14
+  Combat doesn't adjust based on weapons, attack or damage modifiers
+***************************************
+Display BUG
+  FIXED - move directional arrows to middle of the screen
+***************************************
+DONE - Demo Protection
+  DONE - Don't allow more than 10 characters per user
+  DONE - Don't allow the Demo User to delete its last character
+***************************************
+Details and traits
+  DONE - When last trait is selected, hide traits
+  DONE - Add submit button at top
+  Traits - When "All" is visible, and one of the "blank" traits is selected, it applies the selection to the state, and disables 
+    the select element. It also leaves the submit button disabled causing a lockout. 
+***************************************
+Login screen
+  Google Login
+***************************************
+Equipment
+  FIXED - Weapons damage and crit are undefined. When the category is first loaded, that weapon's damage is displayed,
+    once the weapon is changed, the damage turns to undefined.
+  DONE - Fix Ranged output on review
+  FIXED - BUG #5 selecting backpack freezes the app
+  DONE - Edit button should remove gear from the state - found on line 20 of newCharacterEquipment
+  Damage output fontsize should shrink to fit rather than wrap
+  Add data to total 15 goodsAndServices
+    
+***************************************
+Feats
+  FIXED - BUG #6 some feats offer selections with no options, locking up the system
+***************************************
+
+  Add a few more animal companions
+
+
+
+  FIXED - BUG - #7 Cannot read property 'use' of null
+    Items are being removed and replaced with "null" which counts towards .length() breaking the app when the char is reloaded
+      - armor, weapons and goodsAndServices appear to have been FIXED
+      steps to reproduce: load char with no gear for editing, 
+        go to equipment, 
+        select edit on review screen
+        select weapon slot 0 and choose morningstar
+        submit and save
+
+
+  FIXED - BUG - #8 Weapon isn't removing cost on char edit
+  FIXED - BUG - #9 Items are being doubled.
+    Steps to Reproduce: 
+  FIXED - BUG - #10 tradeGoods are not being reloaded on char edit
+
+You should have a comprehensive README files for both GitHub repos (we'll discuss this step in detail at the end of this lesson).
+Your app should have a landing page that explains what the app does and how to get started, in addition to pages required to deliver the main functionality.
