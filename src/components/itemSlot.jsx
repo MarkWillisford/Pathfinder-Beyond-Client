@@ -105,7 +105,6 @@ export class ItemSlot extends React.Component{
     this.props.dispatch(addItemSlot({"id":newId, "currentState":"empty"}));
   }
 
-
   findItemsByCategory(category){
     switch(category){
       case "Goods and Services":

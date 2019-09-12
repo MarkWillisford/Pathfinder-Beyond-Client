@@ -19,8 +19,6 @@ export class ArmorSlot extends React.Component{
         }
       }
       initialArmor = this.props.armor.filter((armor) => armor.use === armorCategories[0]);
-      console.log("triggered by mount with props.armor");
-      console.log(this.props.armor);
       this.props.dispatch(setTempArmorCategory(armorCategories[0]));
       /* console.log("setting armor, in componentDidMount");
       console.log(initialArmor); */

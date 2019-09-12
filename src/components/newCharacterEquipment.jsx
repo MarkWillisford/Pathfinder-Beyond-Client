@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import EquipmentStartingEquipment from './equipment_StartingEquipment';
+import EquipmentStartingEquipment from './DELETE - equipment_StartingEquipment';
 import EquipmentGold from './equipment_Gold';
 import CharacterReview from './characterReview2';
 import { resetCompletedStep } from '../actions/index';

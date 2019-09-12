@@ -11,7 +11,6 @@ export class WeaponSlot extends React.Component{
     let weaponCategories = [];
     let initialWeapon;
 
-    console.log(this.props.weapons);
     if(this.props.weapons){
       for(let i=0;i<this.props.weapons.length;i++){
         if(!weaponCategories.includes(this.props.weapons[i].use)){
@@ -43,7 +42,6 @@ export class WeaponSlot extends React.Component{
         let weaponCategories = [];
         let initialWeapon;
         if(this.props.tempEquipment.weaponSlots[index].item){
-          console.log(this.props.tempEquipment.weaponSlots[index].item);
           initialWeapon = this.props.weapons.filter((weapon) => weapon.name === this.props.tempEquipment.weaponSlots[index].item.name);
           weaponCategories.push(initialWeapon[0].use);
           this.props.dispatch(setTempWeaponCategory(weaponCategories[0]));
