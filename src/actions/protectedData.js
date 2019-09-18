@@ -3,7 +3,6 @@ import {normalizeResponseErrors} from '../utility/normalizeResponseErrors';
 import axios from 'axios';
 import {clearCurrentStep} from '../localStorage';
 
-
 export const FETCH_PROTECTED_DATA_SUCCESS = 'FETCH_PROTECTED_DATA_SUCCESS';
 export const fetchProtectedDataSuccess = data => ({
     type: FETCH_PROTECTED_DATA_SUCCESS,
@@ -83,41 +82,6 @@ export const setSaved = (toggle) => ({
   type: SET_SAVED,
   saved: toggle
 })
-/* export const fetchProtectedData = () => (dispatch, getState) => {
-    const authToken = getState().auth.authToken;
-    return fetch(`${API_BASE_URL}/protected`, {
-        method: 'GET',
-        headers: {
-            // Provide our auth token as credentials
-            Authorization: `Bearer ${authToken}`
-        }
-    })
-        .then(res => normalizeResponseErrors(res))
-        .then(res => res.json())
-        .then(({data}) => dispatch(fetchProtectedDataSuccess(data)))
-        .catch(err => {
-            dispatch(fetchProtectedDataError(err));
-        });
-}; */
-
-/* export const fetchProtectedCharactersData = () => (dispatch, getState) => {  
-  const authToken = getState().auth.authToken;
-  dispatch(setLoading());
-
-  return fetch(`${API_BASE_URL}/users/characters`, {
-    method: 'GET',
-    headers: {
-      // Provide our auth token as credentials
-      Authorization: `Bearer ${authToken}`
-    }
-  })
-  .then(res => normalizeResponseErrors(res))
-  .then(res => res.json())
-  .then(({data}) => dispatch(fetchProtectedDataSuccess(data)))
-  .catch(err => {
-    dispatch(fetchProtectedDataError(err));
-  });
-} */
 
 export const fetchProtectedData = (api, call="") => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
