@@ -79,6 +79,21 @@ export const login = (email, password) => dispatch => {
   );
 };
 
+export const googleLogin = (id_token) => dispatch => {
+  dispatch(authRequest());
+  return(
+    fetch( `${API_BASE_URL}/users/googleLogin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id_token
+      })
+    })
+  )
+}
+
 export const refreshAuthToken = () => (dispatch, getState) => {
     dispatch(authRequest());
     const authToken = getState().auth.authToken;

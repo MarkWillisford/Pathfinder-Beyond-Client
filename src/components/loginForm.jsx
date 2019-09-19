@@ -3,7 +3,7 @@ import {Field, reduxForm, focus} from 'redux-form';
 import Input from './input';
 import GoogleLogin from 'react-google-login';
 
-import {login} from '../actions/auth';
+import {login, googleLogin} from '../actions/auth';
 import {required, nonEmpty} from '../utility/validators';
 
 export class LoginForm extends React.Component {
@@ -14,6 +14,7 @@ export class LoginForm extends React.Component {
   render() {
     const responseGoogle = (response) => {
       console.log(response);
+      this.props.dispatch(googleLogin(response.tokenObj.id_token));
     }
     
     let error;
