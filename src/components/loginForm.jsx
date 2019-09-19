@@ -53,13 +53,14 @@ export class LoginForm extends React.Component {
           </button>
         </form>
 
-        <GoogleLogin
+        <div class="g-signin2"></div>
+        {/* <GoogleLogin
           clientId="916807456829-i5iksjetkuinmltcu0svi8leh7lckhjh.apps.googleusercontent.com"
           buttonText="Login"
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
           cookiePolicy={'single_host_origin'}
-        />
+        /> */}
       </div>
     );
   }
