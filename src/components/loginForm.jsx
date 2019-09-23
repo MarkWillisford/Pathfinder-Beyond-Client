@@ -25,6 +25,8 @@ export class LoginForm extends React.Component {
         </div>
       );
     }
+    const message = "If you aready have an account, you may use your google id to log in";
+
     return (
       <div>
         <form
@@ -55,7 +57,7 @@ export class LoginForm extends React.Component {
         </form>
 
         {/* <div class="g-signin2"></div> */}
-        <div><p>If you aready have an account, you may use your google id to log in</p></div>
+        <div><p>{message}</p></div>
         <GoogleLogin
           clientId="916807456829-f1s5e597m7t1iqm8bgf40s6h58f8rl95.apps.googleusercontent.com"
           buttonText="Login"

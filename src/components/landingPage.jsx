@@ -24,7 +24,7 @@ export class LandingPage extends React.Component {
           <h3>Jedipawn Mark's online</h3>
           <h1 className="landingPageTitle">Character Sheet</h1>
           {/* Button to automatically log in the Demo user. */}
-          <LoginForm />
+          <LoginForm error={this.props.error}/>
           <Link to="/register">Register</Link>
         </div>
     );
@@ -35,7 +35,8 @@ const mapStateToProps = state => ({
     loggedIn: state.auth.currentUser !== null,
     nextPath(path, props) {
       props.history.push(path);
-    }
+    },
+    error:state.auth.error,
 });
 
 export default connect(mapStateToProps)(LandingPage);
