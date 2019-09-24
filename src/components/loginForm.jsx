@@ -1,9 +1,10 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Field, reduxForm, focus} from 'redux-form';
 import Input from './input';
 import GoogleLogin from 'react-google-login';
 
-import {login, googleLogin} from '../actions/auth';
+import {login, googleLogin, testErrorDisplay} from '../actions/auth';
 import {required, nonEmpty} from '../utility/validators';
 
 export class LoginForm extends React.Component {
@@ -14,6 +15,7 @@ export class LoginForm extends React.Component {
   render() {
     const responseGoogle = (response) => {
       console.log(response);
+      //this.props.dispatch(testErrorDisplay());
       this.props.dispatch(googleLogin(response.tokenObj.id_token));
     }
     
@@ -25,7 +27,7 @@ export class LoginForm extends React.Component {
         </div>
       );
     }
-    const message = "If you aready have an account, you may use your google id to log in";
+    const message = this.props.errorMessage ? this.props.errorMessage : "If you aready have an account, you may use your google id to log in";
 
     return (
       <div>
@@ -70,7 +72,13 @@ export class LoginForm extends React.Component {
   }
 }
 
-export default reduxForm({
+const mapStateToProps = state => ({
+  errorMessage:state.auth.error,
+})
+
+LoginForm = reduxForm({
   form: 'login',
   onSubmitFail: (errors, dispatch) => dispatch(focus('login', 'email'))
 })(LoginForm);
+
+export default connect(mapStateToProps)(LoginForm)

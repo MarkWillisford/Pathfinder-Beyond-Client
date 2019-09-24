@@ -79,6 +79,11 @@ export const login = (email, password) => dispatch => {
   );
 };
 
+export const testErrorDisplay = () => dispatch => {
+  const err = "Error Testing";
+  dispatch(authError(err));
+}
+
 export const googleLogin = (id_token) => dispatch => {
   dispatch(authRequest());
   return(
