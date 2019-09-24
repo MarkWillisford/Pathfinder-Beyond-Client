@@ -27,7 +27,7 @@ export class LoginForm extends React.Component {
         </div>
       );
     }
-    const message = this.props.errorMessage ? this.props.errorMessage : "If you aready have an account, you may use your google id to log in";
+    const message = this.props.errorMessage ? this.props.errorMessage.generalMessage : "If you aready have an account, you may use your google id to log in";
 
     return (
       <div>
