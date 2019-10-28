@@ -307,7 +307,7 @@ const mapStateToProps = state => ({
   deities:state.protectedData.data,
   traitsList:state.protectedData.subData,
   traitFilter:state.characterReducer.traitFilter,
-  toExpand:state.characterReducer.expanded, 
+  toExpand:state.characterReducer.expanded,
   traits:state.characterReducer.newCharacter.traitSlots,
 });
 

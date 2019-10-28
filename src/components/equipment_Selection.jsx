@@ -6,7 +6,7 @@ import { spendGold } from '../actions/index';
 import { addItemToCharacter } from '../actions/index';
 import { removeItemFromCharacter } from '../actions/index';
 import { setStepToComplete } from '../actions/index';
-import { addBonus } from '../actions/index';
+import { addBonus, removeBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories'
 import { fetchProtectedData, clearData } from '../actions/protectedData';
@@ -65,7 +65,34 @@ export class Equipment_Selection extends React.Component {
 
           // and finally take it out of the store
           this.props.dispatch(removeItemFromCharacter(armor));
-          armorSlot++;
+          console.log("Bug #12");
+          console.log(armor);
+
+          if(armor.armorCheckPenalty !== 0){// If we are removing armor that has an ACP, remove the acp
+            const skillList = require('../data/skills');
+            const charStats = this.props.characterToUpdate.characterStats;
+            let acpSkills = [];
+            let arrayOfBonusesToRemove = [];
+            
+            for(let j=0; j<skillList.length; j++){
+              if(skillList[j].armorCheckPenalty === true){
+                acpSkills.push(skillList[j].name);
+              }
+            }
+            
+            
+          }
+          /* // we also need to remove the armor bonus
+          let bonus = createBonus({ 
+            name:"armor", 
+            source:armor.name, 
+            stat:"armorClass", 
+            type:"armor", 
+            duration:-1, 
+            amount:armor.bonus.armor});
+          this.props.dispatch(removeBonus(bonus));
+          this.props.dispatch(sumBonus(bonus));
+          armorSlot++; */
         } else if(purchasedGear[i].dmgM){
           // item is a weapon
           let weapon = purchasedGear[i];

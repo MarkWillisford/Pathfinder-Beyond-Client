@@ -925,19 +925,36 @@ export const characterReducer = (state=initialState, action) => {
       let foundBonusAt = null;
       let nameOfStat = null;
 
+      console.log("Bug #12");
+      console.log(state.newCharacter.characterStats);
+      console.log(action.bonus);
+
       // look through the stats array for all bonus objects with source === action.bonus.source
       for(let i=0; i<state.newCharacter.characterStats.length;i++){
         for(let j=0;j<state.newCharacter.characterStats[i].bonuses.length;j++){
           // !TODO this compares two objects which of course doesn't work, I need to compare values
-          if(state.newCharacter.characterStats[i].bonuses[j] === action.bonus){ 
+          if(state.newCharacter.characterStats[i].bonuses[j].stat === "acrobatics"){  
+            console.log("state");
+            console.log(state.newCharacter.characterStats[i].bonuses[j]);
+            console.log("vs Bonus");
+            console.log(action.bonus);
+          }
+          if(state.newCharacter.characterStats[i].bonuses[j] === action.bonus){
+            console.log("found it at");
+            console.log(i);
             foundStatAt = i;  
             foundBonusAt = j;
             nameOfStat = state.newCharacter.characterStats[i].name;
           }
         }
       }
+      console.log(foundStatAt);
       let stat = state.newCharacter.characterStats[foundStatAt];
       //let bonus = stat.bonuses[foundBonusAt];
+
+      console.log("Bug #12");
+      console.log(stat);
+
       return{
         ...state,
         newCharacter:{...state.newCharacter, characterStats:[
