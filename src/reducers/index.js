@@ -902,6 +902,7 @@ export const characterReducer = (state=initialState, action) => {
       }
     case actions.REMOVE_BONUS:
       let foundStatAt = null;
+      let foundBonusAt = null;
       let nameOfStat = null;
 
       console.log("Bug #12");
@@ -927,7 +928,7 @@ export const characterReducer = (state=initialState, action) => {
         ...state,
         newCharacter:{...state.newCharacter, characterStats:[
           ...state.newCharacter.characterStats.filter(r => r.name !== nameOfStat),{
-            ...stat, bonuses:[ // <-- TODO! ERROR
+            ...stat, bonuses:[ 
               ...stat.bonuses.filter(r => r !== action.bonus)
             ]
           }
