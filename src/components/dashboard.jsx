@@ -21,47 +21,6 @@ export class Dashboard extends React.Component {
       this.props.dispatch(resetCharacterReducerState());
     }
 
-   /*  getCharacters(){
-      return (
-        [
-          {
-            '_id':1,
-            'characterStats':{
-              'name':"Syren",
-            },
-            'charClass':"ranger",
-            'featSlots':"1 feat",
-            'traitSlots':"1 trait",
-            'preferences':"To Win",
-            'race':"elf",
-            'details':"details",
-            'goldMethod':"crafting",
-            'gold':"all the gold",
-            'availableGold':"most of the gold", 
-            'gear':"awesome gear",
-            'abilityScoreGenerationMethod':"crazy high stats",
-          },
-          {
-            '_id':2,
-            'characterStats':{
-              'name':"Slick",
-            },
-            'charClass':"ranger",
-            'featSlots':"1 feat",
-            'traitSlots':"1 trait",
-            'preferences':"To Win",
-            'race':"elf",
-            'details':"details",
-            'goldMethod':"crafting",
-            'gold':"all the gold",
-            'availableGold':"most of the gold", 
-            'gear':"awesome gear",
-            'abilityScoreGenerationMethod':"crazy high stats",
-          }
-        ]
-      );
-    } */
-
     nextPath(path) {
       this.props.history.push(path);
     }

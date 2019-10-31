@@ -19,9 +19,6 @@ export class ItemSlot extends React.Component{
      switch(slot.currentState){
       case "empty":
         let index = this.props.id;
-        /* if(this.props.tempEquipment.itemSlots[index].item){
-          this.props.dispatch(spendGold(-(this.props.tempEquipment.itemSlots[index].item.cost)));
-        } */
         this.props.dispatch(setEquipmentSlotStatus(slot));
         this.props.dispatch(setEquipmentSlotItem({menu:slot.menu, id: slot.id, item:null}));
       break;
@@ -100,7 +97,6 @@ export class ItemSlot extends React.Component{
   }
   addAdditionalItemSlot(){
     let itemSlots = this.props.tempEquipment.itemSlots;
-    // [{"id":0, "currentState":"empty"}];
     let newId = itemSlots.length;
     this.props.dispatch(addItemSlot({"id":newId, "currentState":"empty"}));
   }
@@ -113,18 +109,6 @@ export class ItemSlot extends React.Component{
         return this.props.items[1];
     }
   }
-  /* readableStringToCode(string){
-    let newArray = string.split(" ");
-    newArray[0] = newArray[0].toLowerCase();
-    let returnString = newArray.join("");
-    return returnString;
-  } */
-
-  /* codeToReadableString(string){
-    let categoryArray = string.split(/(?=[A-Z])/);
-    let category = categoryArray.join(" ");
-    return category;
-  } */
 
 	render(){
     let availableGold = this.props.availableGold;

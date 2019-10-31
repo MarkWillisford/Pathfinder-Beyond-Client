@@ -1,18 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import CardGoodsOrService from './cardGoodsOrService'
 
-import { spendGold } from '../actions/index';
 import { addItemToCharacter } from '../actions/index';
 import { removeItemFromCharacter } from '../actions/index';
 import { setStepToComplete } from '../actions/index';
-import { addBonus, removeBonus } from '../actions/index';
+import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
 import { createBonus } from '../utility/statObjectFactories'
-import { fetchProtectedData, clearData } from '../actions/protectedData';
-import { fetchProtectedSubData } from '../actions/protectedData';
-import { fetchProtectedSecondaryData } from '../actions/protectedData';
-import { fetchProtectedExtraData } from '../actions/protectedData';
 import { setInitialEquipmentSlots } from '../actions/index';
 import { setEquipmentSlotStatus, setEquipmentSlotItem } from '../actions/index';
 import { setTempArmorCategory, setTempArmor, addItemSlot } from '../actions/index';
@@ -21,8 +15,6 @@ import { setTempWeaponCategory, setTempWeapon, setTempWeaponAttackModifier, setT
 import WeaponSlot from './weaponSlot'; 
 import ArmorSlot from './armorSlot'; 
 import ItemSlot from './itemSlot'; 
-
-import './equipment_Selection.css';
 
 export class Equipment_Selection extends React.Component {
   componentDidUpdate() {
@@ -82,17 +74,6 @@ export class Equipment_Selection extends React.Component {
             
             
           }
-          /* // we also need to remove the armor bonus
-          let bonus = createBonus({ 
-            name:"armor", 
-            source:armor.name, 
-            stat:"armorClass", 
-            type:"armor", 
-            duration:-1, 
-            amount:armor.bonus.armor});
-          this.props.dispatch(removeBonus(bonus));
-          this.props.dispatch(sumBonus(bonus));
-          armorSlot++; */
         } else if(purchasedGear[i].dmgM){
           // item is a weapon
           let weapon = purchasedGear[i];
@@ -193,44 +174,6 @@ export class Equipment_Selection extends React.Component {
     }
     this.props.dispatch(setStepToComplete(7));
   }
-
-	/* removeItem(name){
-		const tradeGoodsList = this.props.tradeGoodsList;  //require('../data/tradeGoods');
-		const weaponsList = this.props.weaponsList;    //require('../data/weapons');
-		const armorList = this.props.armorList;    //require('../data/armor');
-		const goodsAndServicesList = this.props.goodsAndServicesList;   //require('../data/goodsAndServices');
-		let item = null;
-		for(let i=0;i<tradeGoodsList.length;i++){
-			if(tradeGoodsList[i].name == name){
-				item = tradeGoodsList[i];
-			}
-		};
-		if(item == null){
-			for(let i=0;i<weaponsList.length;i++){
-				if(weaponsList[i].name == name){
-					item = weaponsList[i];
-				}
-			};
-		} 
-		if(item == null){
-			for(let i=0;i<armorList.length;i++){
-				if(armorList[i].name == name){
-					item = armorList[i];
-				}
-			};			
-		}
-		if(item == null){
-			for(let i=0;i<goodsAndServicesList.length;i++){
-				if(goodsAndServicesList[i].name == name){
-					item = goodsAndServicesList[i];
-				}
-			};			
-		}
-
-		// Now we have the item the user selected stored in item
-		this.props.dispatch(spendGold(-item.cost));
-		this.props.dispatch(removeItemFromCharacter(item));
-	} */
 
 	render(){
 		const startingGold = this.props.gold;

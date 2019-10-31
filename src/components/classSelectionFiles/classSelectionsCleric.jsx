@@ -20,8 +20,6 @@ import { capitalizeFirstLetter } from '../../utility/helperFunctions';
 import { fetchProtectedSubData } from '../../actions/protectedData';
 import { fetchProtectedSecondaryData } from '../../actions/protectedData';
 
-import './classSelectionsCleric.css';
-
 export class ClassSelectionsCleric extends React.Component{
   componentDidMount(){
     this.props.dispatch(fetchProtectedSubData("deities"));
@@ -30,7 +28,7 @@ export class ClassSelectionsCleric extends React.Component{
 
   getDomains(availableDomainsList){
       if(availableDomainsList){
-          const domains = this.props.domains;//require('../../data/domains');
+          const domains = this.props.domains;
           let array = [];
           for(let i = 0; i<domains.length; i++){
               if(availableDomainsList.includes(capitalizeFirstLetter(domains[i].name))){
@@ -46,8 +44,8 @@ export class ClassSelectionsCleric extends React.Component{
   }
 
 	render(){
-    const deities = this.props.deities;//require('../../data/deities');
-    const availableDomainsList = this.props.availableDomainsList;   // this is currently just an array of domain names . . .   
+    const deities = this.props.deities;
+    const availableDomainsList = this.props.availableDomainsList; 
     const availableDomains = this.getDomains(availableDomainsList);
     const expand = this.props.expand;
     const clericDetails = this.props.clericDetails; 
@@ -88,13 +86,6 @@ export class ClassSelectionsCleric extends React.Component{
             onExpandClick={()=>this.onExpandClick(name)}
             onSelectClick={()=>this.onDomainClick({name, description, domainSpells, grantedPowers})}
             onCancelClick={()=>this.onDomainCancelClick({name, description, domainSpells, grantedPowers})}
-            /* disableSelect={(clericDetails) ? ((clericDetails.domains) ? (
-                // if domain[1] exists, we know there are already two domains and must disable all 
-                clericDetails.domains[1] ? true : (
-                    // if it doesn't, then check if [0].name equals 
-                    clericDetails.domains[0].name === name ? true : false
-                )
-            ) : false) : false}  */
             disableSelect={(!clericDetails) ? (false) : ( 
               (!clericDetails.domains) ? (false) : (
                 (clericDetails.domains[1]) ? (true) : (
@@ -177,7 +168,6 @@ export class ClassSelectionsCleric extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	//classesArray:require('../../data/classes'),
   classesArray:state.protectedData.charClasses,
   availableDomainsList:state.characterReducer.availableDomains,
   expand:state.characterReducer.expand,

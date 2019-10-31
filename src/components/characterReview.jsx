@@ -1,16 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Redirect, Link} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import requiresLogin from './requiresLogin';
-import { addBonus } from '../actions/index';
-import { sumBonus } from '../actions/index';
-import { createBonus } from '../utility/statObjectFactories'
 import { capitalizeFirstLetter } from '../utility/helperFunctions';
 import { saveAndSubmit } from '../actions/protectedData';
 import { resetCharacterReducerState } from '../actions/index';
 import CharacterReview from './characterReview2';
-
-import './characterReview.css';
 
 export class CharacterReviewPage extends React.Component{
   findStatisticByName(name, characterToReview){
@@ -23,7 +18,6 @@ export class CharacterReviewPage extends React.Component{
 
   save(){
     this.props.dispatch(saveAndSubmit());
-    // redirect to dashboard    
   }
 
 	render(){
@@ -39,7 +33,6 @@ export class CharacterReviewPage extends React.Component{
           Character Review          
           <CharacterReview />
 
-          {/* <Link to="/dashboard" onClick={ () => this.save() }>Submit and Save</Link> */}
           <button onClick={ () => this.save() }>Submit and Save</button>
         </div>
       )
@@ -55,7 +48,6 @@ const mapStateToProps = state => ({
   saved:state.protectedData.saved
 });
 
-//export default connect(mapStateToProps)(CharacterReviewPage);
 export default requiresLogin()(connect(mapStateToProps)(CharacterReviewPage));
 
 function AbilityScoreDisplay(props){
@@ -82,15 +74,9 @@ function SkillDisplay(skill){
       <div className={skill.name+"Overview"}>
         <div className={skill.name+"Label"}>{capitalizeFirstLetter(skill.name)}</div>
         <div className={skill.name+"Total"}>
-
-        {/* skill.lookupCall(skill.name, skill.characterToReview) ? "found it": "not there" */}
         {(skill.lookupCall(skill.name, skill.characterToReview) ? 
           skill.lookupCall(skill.name, skill.characterToReview).sum.total : 0) + 
           Math.floor((skill.lookupCall(skill.ability, skill.characterToReview).sum.total - 10) / 2) }
-
-        
-        
-        
         </div>
       </div>
       <button onClick={ () => this.viewDetails(skill.name) }>details</button>

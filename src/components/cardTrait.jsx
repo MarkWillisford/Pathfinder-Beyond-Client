@@ -100,7 +100,6 @@ export class CardTrait extends React.Component{
             <div className="traitButtons">
               <button onClick={() => this.submitTraitToState(
                 this.props
-                //{name:this.props.name, id:this.props.id, description:this.props.description, prerequisites:this.props.prerequisites}
               )} disabled={!selectable}>Select</button>
               <button onClick={() => this.clearTraitFromState(
                 this.props

@@ -2,8 +2,6 @@
   display: flex;
   align-items: center;    
   flex-direction: column;
-  /* opacity: 0.5;
-  background: darkgray; */
   background: rgba(47, 44, 78, 0.5);
 }
 .characterTextContainer{
@@ -12,14 +10,12 @@
 .squareButtonContainer{
  width: 85%;
  height: 20%;
-/*  background: yellow; */
  margin-bottom: 5%;
  display: flex;
  align-items: center;
  justify-content: center;
 }
 .squareButton{
-/*   background: tomato; */
   height: 90%;
   width: 30%;
 }
@@ -29,7 +25,6 @@
     width: 75vw;
     height: 75vw;
     margin: auto;
-/*     background: yellow; */
     margin-bottom: 10px;
   }
 }
@@ -42,12 +37,10 @@
   .cardCharacter{
     width: calc(50vw - 20px);
     height: calc(50vw - 20px);
-/*     background: white; */
     float: left;
     margin-bottom: 10px;
   }
   .cardCharacter:nth-child(odd) {
-/*     background: grey; */
     margin-left: 15px;
     margin-right: 5px;
   }
@@ -63,7 +56,6 @@
     height: calc(27vw - 20px);
     max-width: 200px;
     max-height: 200px;
-/*     background: red; */
     float: left;
     margin-bottom: 10px;
     margin-left: 5px;

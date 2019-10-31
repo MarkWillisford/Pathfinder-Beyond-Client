@@ -97,7 +97,6 @@ export const fetchProtectedData = (api, call="") => (dispatch, getState) => {
   ).then(res => {
     return res.json();
   }).then(data => {
-    //let str = JSON.stringify(data);
     switch(call){
       case "usersCharacters": 
         dispatch(fetchProtectedData_usersCharacters_Success(data));
@@ -254,7 +253,7 @@ export const fetchProtectedPDF = (character, cb) => (dispatch, getState) => {
     /***************************************/
     /*            DOWNLOAD CODE            */
     /***************************************/
-              /* const url = window.URL.createObjectURL(new Blob([response.data]));
+    /* const url = window.URL.createObjectURL(new Blob([response.data]));
     const link = document.createElement('a');
     link.href = url;
     link.setAttribute('download', 'file.pdf');
@@ -361,7 +360,6 @@ export const saveAndSubmit = () => (dispatch, getState, history) => {
 
 export const deleteCharacterById = (id) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
-  // const user = getState().auth.currentUser._id; 
   fetch(`${API_BASE_URL}/users/characters`, {
     method: 'DELETE',
     headers: {

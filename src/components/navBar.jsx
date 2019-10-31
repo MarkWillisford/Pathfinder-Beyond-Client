@@ -8,9 +8,6 @@ import {login} from '../actions/auth';
 import './navBar.css';
 
 export class NavBar extends React.Component{
-/*    constructor(props){
-        super(props);
-    }*/
   loginDemo(){
     this.props.dispatch(login("demo@test.com", "demopassword"));
   }

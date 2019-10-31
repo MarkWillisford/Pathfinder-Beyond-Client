@@ -7,10 +7,10 @@ import { removeItemFromCharacter } from '../actions/index';
 
 export class CardGoodsOrServices extends React.Component{
 	addItem(name){
-		const tradeGoodsList = this.props.tradeGoodsList; //require('../data/tradeGoods');
-		const weaponsList = this.props.weaponsList; //require('../data/weapons');
-		const armorList = this.props.armorsList; //require('../data/armor');
-		const goodsAndServicesList = this.props.goodsAndServicesList; //require('../data/goodsAndServices');
+		const tradeGoodsList = this.props.tradeGoodsList;
+		const weaponsList = this.props.weaponsList;
+		const armorList = this.props.armorsList;
+		const goodsAndServicesList = this.props.goodsAndServicesList;
 		let item = null;
 		for(let i=0;i<tradeGoodsList.length;i++){
 			if(tradeGoodsList[i].name == name){
@@ -45,10 +45,10 @@ export class CardGoodsOrServices extends React.Component{
 	}
 
 	removeItem(name){
-		const tradeGoodsList = this.props.tradeGoodsList; //require('../data/tradeGoods');
-		const weaponsList = this.props.weaponsList; //require('../data/weapons');
-		const armorList = this.props.armorList; //require('../data/armor');
-		const goodsAndServicesList = this.props.goodsAndServicesList; //require('../data/goodsAndServices');
+		const tradeGoodsList = this.props.tradeGoodsList;
+		const weaponsList = this.props.weaponsList;
+		const armorList = this.props.armorList;
+		const goodsAndServicesList = this.props.goodsAndServicesList;
 		let item = null;
 
 		for(let i=0;i<tradeGoodsList.length;i++){
@@ -115,19 +115,6 @@ export class CardGoodsOrServices extends React.Component{
 		)	
 	}	
 }
-
-/* Possibly saved for expanding details. 
-function GoodsExpanded(props){
-	return(
-		<div className="goodsExpanded">
-			<button onClick={props.addClassCallback}>Add Class</button>
-			<button onClick={props.callback}>Cancel</button>
-			
-			<button onClick={props.addClassCallback}>Add Class</button>
-			<button onClick={props.callback}>Cancel</button>
-		</div>
-	)
-}*/
 
 const mapStateToProps = state => ({
 	gold:state.characterReducer.newCharacter.gold,

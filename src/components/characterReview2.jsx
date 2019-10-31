@@ -390,7 +390,6 @@ export class CharacterReview extends React.Component{
                   <MeleeWeaponOutput key={weapon.name} weapon={weapon} characterToReview={characterToReview} 
                   sizeMod={sizeMod} findStatisticByName={this.findStatisticByName}/>
                 )}
-                {/* <div className="combatDetailsButton"><button onClick={ () => this.viewDetails("melee") }>details</button></div> */}
               </div>
               <div className="characterReviewOutput">
                 {rangedWeapons.length > 0 ? rangedWeapons.map((weapon) => 
@@ -398,7 +397,6 @@ export class CharacterReview extends React.Component{
                   sizeMod={sizeMod} findStatisticByName={this.findStatisticByName}/>
                 ): <RangedWeaponOutput key={"ranged"} weapon={null} characterToReview={characterToReview} 
                 sizeMod={sizeMod} findStatisticByName={this.findStatisticByName}/>}
-                {/* <div className="combatDetailsButton"><button onClick={ () => this.viewDetails("ranged") }>details</button></div> */}
               </div>
               <div className="characterReviewOutput">
                 <div className="combatManeuverBonusTotal">{
@@ -409,7 +407,6 @@ export class CharacterReview extends React.Component{
                   : (this.findStatisticByName("strength", characterToReview) ? "BAB + " + (Math.floor((this.findStatisticByName("strength", characterToReview).sum.total - 10) / 2) - sizeMod)
                     : 0 )
                 }</div>
-                {/* <div className="combatDetailsButton"><button onClick={ () => this.viewDetails("combatManeuverBonus") }>details</button></div> */}
               </div>
             </div>        
           </div>
@@ -440,14 +437,12 @@ export class CharacterReview extends React.Component{
                   sizeMod) 
                   : ( 10 + sizeMod + ( this.findStatisticByName("dexterity", characterToReview)
                     ? Math.floor((this.findStatisticByName("dexterity", characterToReview).sum.total - 10) / 2) : " + Dex" ) ) }</div>
-                {/* <button onClick={ () => this.viewDetails("armorClass") }>details</button> */}
               </div>
-              <div className="characterReviewOutput">   {/* How is this stat stored? */}
+              <div className="characterReviewOutput">
                 <div className="flatFootedArmorClassTotal">{this.findStatisticByName("armorClass", characterToReview) ? 
                   (this.findStatisticByName("armorClass", characterToReview).sum.total + 
                   (this.findStatisticByName("dexterity", characterToReview) ? Math.floor((this.findStatisticByName("dexterity", characterToReview).sum.total - 10) / 2) : 0) +
                   sizeMod) : ( 10 + sizeMod ) }</div>
-                {/* <button onClick={ () => this.viewDetails("flatFootedArmorClass") }>details</button> */}
               </div>
               <div className="characterReviewOutput">
                 <div className="touchArmorClassTotal">{this.findStatisticByName("touchArmorClass", characterToReview) ? 
@@ -456,7 +451,6 @@ export class CharacterReview extends React.Component{
                   sizeMod) 
                   : ( 10 + sizeMod + ( this.findStatisticByName("dexterity", characterToReview)
                     ? Math.floor((this.findStatisticByName("dexterity", characterToReview).sum.total - 10) / 2) : " + Dex" ) ) }</div>
-                {/* <button onClick={ () => this.viewDetails("touchArmorClass") }>details</button> */}
               </div>
               <div className="characterReviewOutput">
               <div className="combatManeuverDefenseTotal">{this.findStatisticByName("combatManeuverDefense", characterToReview) ?
@@ -486,8 +480,7 @@ export class CharacterReview extends React.Component{
                       sizeMod + " + Dex + BAB") ) 
                     : ( /* There is no Dex, no Str */ this.findStatisticByName("bab", characterToReview) 
                       ? (/* There is no Dex, no Str and BAB */ 10 + this.findStatisticByName("bab", characterToReview).sum.total - sizeMod + " + Dex + Str") 
-                      : (/* There is no Dex, no Str and no BAB */ 10 + " + Dex + Str + BAB") ) ) ) }</div>
-              {/* <button onClick={ () => this.viewDetails("combatManeuverDefense") }>details</button> */}
+                      : (/* There is no Dex, no Str and no BAB */ 10 + " + Dex + Str + BAB") ) ) ) }</div>              
             </div> 
             </div>
           </div>
@@ -516,7 +509,6 @@ export class CharacterReview extends React.Component{
                   : (this.findStatisticByName("constitution", characterToReview) ? "Fortitude + " + (Math.floor((this.findStatisticByName("constitution", characterToReview).sum.total - 10) / 2))
                     : 0 )
                 }</div>
-                {/* <button onClick={ () => this.viewDetails("fort") }>details</button> */}
               </div>
               <div className="characterReviewOutput">
                 <div className="reflexSaveTotal">{
@@ -527,7 +519,6 @@ export class CharacterReview extends React.Component{
                   : (this.findStatisticByName("dexterity", characterToReview) ? "Reflex + " + (Math.floor((this.findStatisticByName("dexterity", characterToReview).sum.total - 10) / 2))
                     : 0 )
                 }</div>
-                {/* <button onClick={ () => this.viewDetails("ref") }>details</button> */}
               </div>
               <div className="characterReviewOutput">
                 <div className="willSaveTotal">{
@@ -538,7 +529,6 @@ export class CharacterReview extends React.Component{
                   : (this.findStatisticByName("wisdom", characterToReview) ? "Will + " + (Math.floor((this.findStatisticByName("wisdom", characterToReview).sum.total - 10) / 2))
                     : 0 )
                 }</div>
-                {/* <button onClick={ () => this.viewDetails("will") }>details</button> */}
               </div>
             </div>
           </div>         
@@ -604,8 +594,6 @@ export class CharacterReview extends React.Component{
           <img className={characterFeatsAbilitiesNotesDownArrowClassName} src={downDisplayArrow} alt="hide" />     
           Feats and Abilities</div>
         <FeatsDisplay characterToReview = {this.props.characterToReview} characterFeatsAbilitiesNotesClassName={characterFeatsAbilitiesNotesClassName}/>
-        {/* <Link to="/dashboard" onClick={ () => this.save() }>Submit and Save</Link> */}
-        {/* <button onClick={ () => this.save() }>Submit and Save</button> */}
       </div>
     )
 	}
@@ -645,15 +633,13 @@ function AbilityScoreOutputDisplay(props){
 function SkillDisplay(skill){
   return(
     <div className={skill.name}>
-      <div className="characterReviewOutput"> {/* skill.name+"Output" */}
-        <div className="characterReviewTotal"> {/* skill.name+"Total" */}
-          {/* skill.lookupCall(skill.name, skill.characterToReview) ? "found it": "not there" */}
+      <div className="characterReviewOutput">
+        <div className="characterReviewTotal">
           {(skill.lookupCall(skill.name, skill.characterToReview) ? 
             skill.lookupCall(skill.name, skill.characterToReview).sum.total : 0) + 
             skill.lookupCall(skill.ability, skill.characterToReview) ? 
             (Math.floor((skill.lookupCall(skill.ability, skill.characterToReview).sum.total - 10) / 2)) : 0}
         </div>
-        {/* <button onClick={ () => skill.viewDetails(skill.name) }>details</button> */}
       </div>
     </div>
   )
@@ -664,7 +650,7 @@ function FeatsDisplay(props){
   const proficiency = characterToReview.charClass.classFeatures.proficiency ? characterToReview.charClass.classFeatures.proficiency : null;
   let specialAbilities = [];
   
-  if(characterToReview.race){ //.standardRacialTraits.racial
+  if(characterToReview.race){
     for(let i=0;i<characterToReview.race.standardRacialTraits.racial.length;i++){
       specialAbilities.push(characterToReview.race.standardRacialTraits.racial[i]);
     }

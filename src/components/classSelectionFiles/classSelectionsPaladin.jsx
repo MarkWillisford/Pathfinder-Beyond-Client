@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import { CardDeity } from '../cardDeity';
 
 import { setGenericExpand } from '../../actions/index';
-import { setDeity } from '../../actions/index';
 import { submitClassToState } from '../../actions/index';
 import { addBonus } from '../../actions/index';
 import { sumBonus } from '../../actions/index';
@@ -13,20 +12,15 @@ import { createBonus } from '../../utility/statObjectFactories';
 import { capitalizeFirstLetter } from '../../utility/helperFunctions';
 import { fetchProtectedSubData } from '../../actions/protectedData';
 
-import './classSelectionsCleric.css';
-
 export class ClassSelectionsPaladin extends React.Component{
   componentDidMount(){
     this.props.dispatch(fetchProtectedSubData("deities"));
   }
 
 	render(){
-        /* const deities = require('../../data/deities').filter(deity => (
-            deity.overview.alignment === "Neutral good" || deity.overview.alignment === "Lawful good"
-        )) */
         let deities = [];
         if(this.props.deities){
-          deities = /* require('../../data/deities') */this.props.deities.filter(deity => (
+          deities = this.props.deities.filter(deity => (
             deity.overview.alignment === "Neutral good" || deity.overview.alignment === "Lawful good"
           ))
         }
@@ -86,7 +80,6 @@ export class ClassSelectionsPaladin extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	//classesArray:require('../../data/classes'),
   classesArray:state.protectedData.charClasses,
   expand:state.characterReducer.expand,
   deities:state.protectedData.subData,

@@ -13,16 +13,12 @@ export default function App(props) {
     <div className="app">
       <main className="main">
         <NavBar />
-        {/* <Switch> */}
-          <Route exact path="/" component={LandingPage} />
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/register" component={RegistrationPage} />
-          <Route path="/newCharacter/" component={NewCharacterContainer} />
-        {/* </Switch> */}
+        <Route exact path="/" component={LandingPage} />
+        <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/register" component={RegistrationPage} />
+        <Route path="/newCharacter/" component={NewCharacterContainer} />
       </main>
     </div>
   </Router>        
   );
 }
-
-// https://blooming-crag-44038.herokuapp.com/playerDemo/newCharacter/home

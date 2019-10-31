@@ -4,7 +4,6 @@ import {reduxForm, Field, formValueSelector } from 'redux-form';
 import { DynamicSelect } from './dynamicSelect';
 
 import { saveAbilityScoreOptions } from '../actions/index';
-// import { submitAbilityScoreToState } from '../actions/index';
 import { setStepToComplete } from '../actions/index';
 import { addBonus } from '../actions/index';
 import { sumBonus } from '../actions/index';
@@ -13,7 +12,6 @@ import { saveTempScore, resetTempScore } from '../actions/index';
 
 import './abilityScoreDice.css';
 
-/*onChange={()=> this.handleClick(this.refs.abilityScoreGenerationMethod.value)}*/
 export class AbilityScoreDice extends React.Component {
 	constructor(props){
 		super(props);
@@ -45,7 +43,7 @@ export class AbilityScoreDice extends React.Component {
 
     rollDice(event){
     	event.preventDefault();
-    	let dice = event.target.value // This needs the value of the diceSelecter select
+    	let dice = event.target.value
     	dice = this.props.diceOptions;
 
     	dice = parseInt(dice.substring(0,1));
@@ -73,10 +71,10 @@ export class AbilityScoreDice extends React.Component {
     	this.SaveAbilityScoreOptions(this);
     }
 
-    getRandomInt(min, max) {
-	    min = Math.ceil(min);
-	    max = Math.floor(max);
-	    return Math.floor(Math.random() * (max - min + 1)) + min;
+  getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
 	AbilityScoreSelectedCallBack(event){
@@ -88,16 +86,6 @@ export class AbilityScoreDice extends React.Component {
 		// Get the name of the ability as a string by finding the name of the select element, splitting
 		// on capital letters (the S in strength'S'electer) and taking only the first string in the result
 		let ability = event.target.name.split(/(?=[A-Z])/)[0];
-
-		/* let bonus = createBonus({ 
-			name:"character base", 
-			source:"character base", 
-			stat:ability, 
-			type:"base", 
-			duration:-1, 
-			amount:value });
-		this.props.dispatch(addBonus(bonus));
-    this.props.dispatch(sumBonus(bonus)); */
     this.props.dispatch(saveTempScore(ability, value));
 	}
 
@@ -232,8 +220,6 @@ const mapStateToProps = state => ({
 
 AbilityScoreDice = reduxForm({
     form: 'diceForm',
-/*     onSubmitFail: (errors, dispatch) =>
-        dispatch(focus('dice', Object.keys(errors)[0])), */
     validate
 })(AbilityScoreDice)
 

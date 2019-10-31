@@ -56,7 +56,6 @@ export class LoginForm extends React.Component {
           </button>
         </form>
 
-        {/* <div class="g-signin2"></div> */}
         <div><p>{message}</p></div>
         <GoogleLogin
           clientId="916807456829-f1s5e597m7t1iqm8bgf40s6h58f8rl95.apps.googleusercontent.com"

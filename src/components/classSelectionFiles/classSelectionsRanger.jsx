@@ -9,8 +9,6 @@ import { submitFavoredEnemy } from '../../actions/index';
 import { createBonus } from '../../utility/statObjectFactories';
 import { capitalizeFirstLetter } from '../../utility/helperFunctions';
 
-import './classSelectionsRanger.css';
-
 const validate = values => {
 	const errors = {}
 

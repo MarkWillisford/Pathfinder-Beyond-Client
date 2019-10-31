@@ -16,21 +16,12 @@ class CardCharacters extends React.Component{
         return console.error(err)
       }
       let reportFileUrl = URL.createObjectURL(reportBlob)
-    
-      // window.open(reportFileUrl)
 
       this.externalWindow = window.open(reportFileUrl, '', 'width=600,height=400,left=200,top=200');
       this.containerEl = this.externalWindow.document.createElement('div');
       this.externalWindow.document.body.appendChild(this.containerEl);
 
       this.externalWindow.document.title = character.preferences.name;
-      // copyStyles(document, this.externalWindow.document);
-
-      // update the state in the parent component if the user closes the 
-      // new window
-      /* this.externalWindow.addEventListener('beforeunload', () => {
-        this.props.closeWindowPortal();
-      }); */
     }))
   }
 
@@ -79,7 +70,6 @@ class CardCharacters extends React.Component{
 }
 
 const mapStateToProps = state => ({
-  // authToken:state.auth.authToken,
   characterSheetWindow:state.characterReducer.characterSheetWindow,
   pdf:state.protectedData.pdf,
   user:state.auth.currentUser,

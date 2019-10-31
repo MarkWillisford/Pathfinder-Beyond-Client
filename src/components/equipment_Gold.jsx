@@ -7,8 +7,6 @@ import { goldGenerationMethod } from '../actions/index';
 import { setGold } from '../actions/index';
 import { spendGold } from '../actions/index';
 
-import './equipment_Gold.css';
-
 export class EquipmentGold extends React.Component {
 	handleGold(text){
 		this.props.dispatch(goldGenerationMethod(text));		

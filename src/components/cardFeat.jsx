@@ -180,7 +180,6 @@ export class CardFeat extends React.Component{
             </div>
           </div>
           {thisExpanded && <CardFeatExpanded feat={featDetails} prerequisites={this.props.prerequisites}
-            /* hide={() => this.hide(this.props.name)} show={() => this.show(this.props.name)} */ 
             thisExpanded={thisExpanded} submit={() => this.submitFeatToState(this.props.name)}
             hide={() => this.hide()} selectable={selectable} showTheseSelections={showTheseSelections} 
             errorMessage={errorMessage}/>}
@@ -202,9 +201,7 @@ function CardFeatExpanded(props){
       <div className="featBenefit"><strong>Benefit: </strong>{props.feat.benefit}</div>
       {normal && <div><strong>Normal: </strong>{props.feat.normal}</div>}
       {special && <div><strong>Special: </strong>{props.feat.special}</div>}
-      {/* <button onClick={() => props.show()} disabled={props.thisExpanded}>Show Details</button>
-      <button onClick={() => props.hide()} disabled={!props.thisExpanded}>Hide Details</button>
-        */}<button onClick={() => props.submit()} disabled={!props.selectable}>Select</button>
+      <button onClick={() => props.submit()} disabled={!props.selectable}>Select</button>
     </div>
   )
 }

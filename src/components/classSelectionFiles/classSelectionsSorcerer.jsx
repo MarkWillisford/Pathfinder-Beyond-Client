@@ -1,8 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-
-import './classSelectionsSorcerer.css';
-
 import { setGenericExpand } from '../../actions/index';
 import { setBloodline } from '../../actions/index';
 import { setSpells } from '../../actions/index';

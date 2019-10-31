@@ -44,9 +44,6 @@ export class ArmorSlot extends React.Component{
     switch(slot.currentState){
       case "empty":
         let index = this.props.id;
-        /* if(this.props.tempEquipment.armorSlots[index].item){
-          this.props.dispatch(spendGold(-(this.props.tempEquipment.armorSlots[index].item.cost)));
-        } */
         this.props.dispatch(setEquipmentSlotStatus(slot));
         this.props.dispatch(setEquipmentSlotItem({menu:slot.menu, id: slot.id, item:null}));
       break;
@@ -102,9 +99,7 @@ export class ArmorSlot extends React.Component{
   }
 
 	render(){
-    //let strength = this.findStatisticByName("strength", this.props.charStats) ? Math.floor((this.findStatisticByName("strength", this.props.charStats).sum.total - 10) / 2) : 0;
     let dexterity = this.findStatisticByName("dexterity", this.props.charStats) ? Math.floor((this.findStatisticByName("dexterity", this.props.charStats).sum.total - 10) / 2) : 0;
-    //let bab = this.findStatisticByName("bab", this.props.charStats) ? this.findStatisticByName("bab", this.props.charStats).sum.total : 0;
     let sizeString = this.props.newCharacter.race ? this.props.newCharacter.race.standardRacialTraits.base.size : "--";
     let sizeValue;
     let availableGold = this.props.availableGold;
@@ -173,7 +168,6 @@ export class ArmorSlot extends React.Component{
               <div className="armorSelectionLabel">Max Dex Bonus</div>
               <div className="armorSelectionLabel">Arcane Failure</div>
               <div className="armorSelectionLabel">Check Penalty</div>
-              {/* <div className="armorSelectionLabel">Speed (Adjusted)</div> */}
               <div className="armorSelectionLabel">Total AC</div>
               <div className="armorSelectionLabel">Cost (gp)</div>
             </div>          
@@ -192,7 +186,6 @@ export class ArmorSlot extends React.Component{
               <div className="armorSelectionOutput">{selectedArmor.maxDexBonus}</div>
               <div className="armorSelectionOutput">{selectedArmor.arcaneSpellFailureChance}%</div>
               <div className="armorSelectionOutput">{selectedArmor.armorCheckPenalty}</div>
-              {/* <div className="armorSelectionOutput"> -- </div> */}
               <div className="armorSelectionOutput">{totalAC}</div>
               <div className="armorSelectionOutput">{selectedArmor.cost}gp</div>
             </div>

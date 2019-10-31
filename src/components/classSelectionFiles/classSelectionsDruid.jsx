@@ -11,8 +11,6 @@ import { createBonus } from '../../utility/statObjectFactories';
 import { capitalizeFirstLetter } from '../../utility/helperFunctions';
 import { fetchProtectedSubData } from '../../actions/protectedData';
 
-import './classSelectionsDruid.css';
-
 export class ClassSelectionsDruid extends React.Component{
   componentDidUpdate() {
     let element = document.getElementsByClassName("expanded")[0];
@@ -190,7 +188,6 @@ class CardAnimalCompanion extends React.Component{
 }
 
 const mapStateToProps = state => ({
-	//classesArray:require('../../data/classes'),
   classesArray:state.protectedData.charClasses,
   expand:state.characterReducer.expand,
   druidNatureBond:state.protectedData.subData,

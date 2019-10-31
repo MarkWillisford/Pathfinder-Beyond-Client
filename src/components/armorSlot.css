@@ -7,7 +7,6 @@
 
 .armorSlotEmpty{
   flex: 1;
-  /* border: 1px solid red; */
   text-align: left;
 }
 .armorSlotSelection{
@@ -26,6 +25,5 @@
   }
 .armorSlotSaved{
   flex: 1;
-  /* border: 1px solid blue; */
   text-align: left;
 }
