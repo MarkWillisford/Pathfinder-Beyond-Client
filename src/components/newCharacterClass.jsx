@@ -16,8 +16,6 @@ import { fetchProtectedData, clearData } from '../actions/protectedData';
 import CharacterReview from './characterReview2';
 import { resetCompletedStep } from '../actions/index';
 
-import './newCharacterClass.css';
-
 export class NewCharacterClass extends React.Component{ 
   componentDidUpdate() {
     let element;
@@ -239,7 +237,6 @@ export class NewCharacterClass extends React.Component{
 
 const mapStateToProps = state => ({
 	complete:state.characterReducer.creationSteps[2].complete,
-  //classesArray:require('../data/classes'),
   classesArray:state.protectedData.charClasses,
 	help:state.characterReducer.help,
 	classSelections:state.characterReducer.classSelectionsView,

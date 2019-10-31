@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, Field } from 'redux-form';
 import {submitPreferencesToState} from '../actions/index';
-/* import { CharacterReview } from './characterReview2'; */
 import CharacterReview from './characterReview2';
 import { resetCompletedStep } from '../actions/index';
 

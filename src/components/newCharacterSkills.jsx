@@ -279,26 +279,18 @@ export class NewCharacterSkills extends React.Component{
 			        	<tbody>
 			        		{listOfSkills.map(item => 
                     <tr key={item.name} name={item.name}>
-                      {/* TODO! It would be very cool to have this check for line wrap and if needed reduce the name to a four letter aprv. */}
                       <td className="skillName">{item.name}</td>
                       <td className="skillTotal">{
                         Number(_.get(this, path1+"."+item.name+".ranks", "0")) + 
                         Number(abilityMods.find( (abilityMod) => abilityMod.name === item.ability).value) +
                         Number((_.get(this, "props.classSkills", "error").includes(item.name) && ( _.get(this, path1+"."+item.name+".ranks", "0") > 0 )) ? 3 : 0) +
                         Number(_.get(this, path1+"."+item.name+".racial", "0"))
-                      }</td>
-                      {/* <td className="skillInput"><input type="number" name={item.name+"Ranks"} min="0" max={hitDie} 
-                        placeholder={(Number(_.get(this, path1+"."+item.name+".ranks"))) ? Number(_.get(this, path1+"."+item.name+".ranks")) : "0" }
-                        onChange={this.onChangeHandler.bind(this)} 
-                        disabled={remainingSkillRanks<1 && (Number(_.get(this, path1+"."+item.name+".ranks"))!=1)}/></td> */}
+                      }</td>                      
                       <td className="skillInput">
                         <button className="plus" onClick={this.increase.bind(this)}
                           disabled={(remainingSkillRanks<1 && (Number(_.get(this, path1+"."+item.name+".ranks"))!=1)) || Number(_.get(this, path1+"."+item.name+".ranks"))===1}> + </button>
                         <div className="skillInputLabel"> 
                           { this.getRanks(item.name) ? this.getRanks(item.name) : 0 }
-
-                          {/* 0 */} 
-
                         </div>
                         <button className="minus" onClick={this.decrease.bind(this)}
                           disabled={ Number(_.get(this, path1+"."+item.name+".ranks"))===0 ||
@@ -338,7 +330,6 @@ const mapStateToProps = state => ({
 	classSkills:state.characterReducer.newCharacter.charClass.classFeatures.classSkills,
 	skills:state.characterReducer.newCharacter.skills,
 	charStats:state.characterReducer.newCharacter.characterStats,
-	// draw in the sum of the abilityScores here 
 });
 
 export default connect(mapStateToProps)(NewCharacterSkills);

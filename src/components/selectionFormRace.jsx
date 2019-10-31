@@ -33,12 +33,6 @@ export class SelectionFormRace extends React.Component{
     }
     return null;
   }
-/* 	getFeatDetails(name){
-		// this will be an API call, but for now it searches the list and retreaves feat details
-		const featsList = require('../data/feats');
-		let featToReturn = featsList.find( feat => feat.name === name);
-		return featToReturn;
-	} */
 
 	render(){
     const racesArray = this.props.racesArray;
@@ -52,7 +46,6 @@ export class SelectionFormRace extends React.Component{
     const listOfHeritages = this.props.listOfHeritages;
 		const onSubmitFormAasimar = (values) => {
 			const selectionsHeritage = capitalizeFirstLetter(values.selectionsHeritage);
-			// #TODO
 			this.props.dispatch(setSelections(""));
       let heritage = {};
       let found = false;

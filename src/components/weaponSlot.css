@@ -7,7 +7,6 @@
 
 .weaponSlotEmpty{
   flex: 1;
-  /* border: 1px solid red; */
   text-align: left;
 }
 .weaponSlotSelection{
@@ -26,6 +25,5 @@
   }
 .weaponSlotSaved{
   flex: 1;
-  /* border: 1px solid blue; */
   text-align: left;
 }

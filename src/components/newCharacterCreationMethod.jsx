@@ -3,12 +3,9 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {loadCreationSteps} from '../actions/index';
 
-import './newCharacterCreationMethod.css';
-
 export class NewCharacterCreationMethod extends React.Component{
     loadCreationSteps(){ 
-		this.props.dispatch(loadCreationSteps()); 
-		
+		  this.props.dispatch(loadCreationSteps()); 		
     }
     
     render(){

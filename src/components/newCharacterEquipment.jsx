@@ -7,8 +7,6 @@ import { fetchProtectedData, clearData } from '../actions/protectedData';
 
 import { equipmentGenerationMethod } from '../actions/index';
 
-import './newCharacterEquipment.css';
-
 export class NewCharacterEquipment extends React.Component{
   componentDidMount(){
     this.props.dispatch(fetchProtectedData("armors", "armor"));
@@ -32,15 +30,7 @@ export class NewCharacterEquipment extends React.Component{
 		const help = this.props.help;
 		const wealth = this.props.wealth ? this.props.wealth : { "number":4, "type":6 };
     const defaultGear = this.props.defaultGear;
-    const ready = true/* (
-      this.props.basics &&
-      this.props.race && 
-      this.props.charClassComplete &&  
-      this.props.abilityScores &&
-      this.props.details &&
-      this.props.skills &&
-      this.props.feats 
-    ) */;
+    const ready = true;
     let stepsLeft = [];
     for(let i=0;i<this.props.creationSteps.length;i++){
       if(!this.props.creationSteps[i].complete){
@@ -65,8 +55,7 @@ export class NewCharacterEquipment extends React.Component{
 		} else if( !ready ){
 			return (
 				<div>
-          <h3>Please finish the {string} steps of your character before buying equipment.</h3>
-					{/* <h3>Please finish your race, class and ability score selections before choosing your equipment.</h3> */} 
+          <h3>Please finish the {string} steps of your character before buying equipment.</h3>			
 				</div>
 			)
 		} else if(!complete){
@@ -80,8 +69,7 @@ export class NewCharacterEquipment extends React.Component{
       );
 		} else {
       return (
-        <div className="newCharacterEquipment">
-          
+        <div className="newCharacterEquipment">          
           <CharacterReview resetCallback={()=>this.dispatchResetCompletedStep()}/>
         </div>	
       )

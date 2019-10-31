@@ -232,9 +232,6 @@ export const characterReducer = (state=initialState, action) => {
   let step = null;
   let charClass = null;
   let expand = null;
-  // refactor to switch case
-  // return ...state,
-  //    changes: action.changes,
   switch(action.type){
     case actions.LOAD_CHARACTER:
       return{
@@ -263,7 +260,7 @@ export const characterReducer = (state=initialState, action) => {
         disabledPrev:action.disabledPrev,         
       }
     case actions.TOGGLE_RACE_EXPAND:
-      race = state.racesArray.find(r => r.id === action.index);// @todo could be null
+      race = state.racesArray.find(r => r.id === action.index);
       expand = race.expand;
       return { 
         ...state, 
@@ -427,23 +424,6 @@ export const characterReducer = (state=initialState, action) => {
           }
         }           
       }
-    case actions.TOGGLE_CLASS_EXPAND:
-
-
-
-
-      /* charClass = state.classesArray.find(r => r.id === action.index);
-      expand = charClass.expand;
-      // THIS WORKS TO ENABLE THE CLICKED RACE 
-      return { ...state, 
-        classesArray:[ ...state.classesArray.filter(r => r.id < charClass.id), 
-          { ...charClass, expand:!expand }, 
-          ...state.classesArray.filter(r => r.id > charClass.id) 
-        ] 
-      }; */
-
-
-
     case actions.LOAD_CLASSES:
       return {
         ...state,
@@ -922,7 +902,6 @@ export const characterReducer = (state=initialState, action) => {
       }
     case actions.REMOVE_BONUS:
       let foundStatAt = null;
-      let foundBonusAt = null;
       let nameOfStat = null;
 
       console.log("Bug #12");
@@ -932,7 +911,6 @@ export const characterReducer = (state=initialState, action) => {
       // look through the stats array for all bonus objects with source === action.bonus.source
       for(let i=0; i<state.newCharacter.characterStats.length;i++){
         for(let j=0;j<state.newCharacter.characterStats[i].bonuses.length;j++){
-          // !TODO this compares two objects which of course doesn't work, I need to compare values
           if(state.newCharacter.characterStats[i].bonuses[j].stat === "acrobatics"){  
 
           }
@@ -944,10 +922,6 @@ export const characterReducer = (state=initialState, action) => {
         }
       }
       let stat = state.newCharacter.characterStats[foundStatAt];
-      //let bonus = stat.bonuses[foundBonusAt];
-
-      console.log("Bug #12");
-      console.log(stat);
 
       return{
         ...state,
@@ -1087,27 +1061,6 @@ export const characterReducer = (state=initialState, action) => {
           }
         }
       }
-/*       tableLevel = state.newCharacter.charClass.classFeatures.table[1];
-      levelSpecial = state.newCharacter.charClass.classFeatures.table[1][5];
-      foundAt = null;
-      for(let i=0;i<levelSpecial.length;i++){
-        if(levelSpecial[i].name === "domains"){
-          foundAt = i;
-        }
-      } 
-      return {
-        ...state,
-        newCharacter:{...state.newCharacter, charClass:{
-          ...state.newCharacter.charClass, classFeatures:{
-            ...state.newCharacter.charClass.classFeatures, table:[
-              ...state.newCharacter.charClass.classFeatures.table.filter(r => r[0] === "level"),
-                tableLevel.map((content, i) => i === 5 ? 
-                  levelSpecial.map((content2, j) => j === foundAt ? {...content2, specialty: action.domain } : content2 ) : content),
-                ...state.newCharacter.charClass.classFeatures.table.filter(r => r[0] > 1)
-            ]
-          }
-        }}
-      }   */
     case actions.SET_DEITY:
       return {
         ...state,

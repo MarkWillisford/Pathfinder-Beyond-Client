@@ -38,7 +38,6 @@ export class NewCharacterContainer extends React.Component{
 
   customRedirect(redirectTo){
     this.props.dispatch(toggleStep(0, false, true));
-    //localStorage.setItem('currentStep', 0);
     return (<Redirect to={redirectTo} />)
   }
 

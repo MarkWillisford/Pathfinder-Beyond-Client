@@ -14,7 +14,6 @@ import { resetTraitsToComplete } from '../actions/index';
 import CardTrait from './cardTrait';
 
 import './newCharacterDetails.css';
-/* import CardTraitCategory from './cardTraitCategory'; */
 
 export class NewCharacterDetails extends React.Component{
   componentDidMount(){
@@ -107,7 +106,6 @@ export class NewCharacterDetails extends React.Component{
 	render(){
 		const complete = this.props.complete;
 		const help = this.props.help;
-		// const expand = this.props.expand;
 		const details = this.props.charDetails;
 		const selectedDeity = details ? details.deity : null;
 		const alignmentRestrictions = details ? ( 

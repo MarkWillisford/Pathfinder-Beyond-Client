@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import RaceCard from './raceCard';
 
-import { toggleRaceExpand } from '../actions/index';
 import { submitRaceToState } from '../actions/index';
 import { submitSkillsToState } from '../actions/index';
 import { addBonus } from '../actions/index';
@@ -17,8 +16,6 @@ import { fetchProtectedData, clearData } from '../actions/protectedData';
 import { createBonus } from '../utility/statObjectFactories'
 import { fetchProtectedSubData } from '../actions/protectedData';
 import CharacterReview from './characterReview2';
-
-import './newCharacterRace.css';
 
 export class NewCharacterRace extends React.Component{   
   componentDidUpdate() {
@@ -69,7 +66,6 @@ export class NewCharacterRace extends React.Component{
 					let abilityArray = racesArray[i].standardRacialTraits.base.abilityScoreRacialBonusArray;
 					if(abilityArray){		// find out if there are given ability score bonuses
 						for(let j=0; j<abilityArray.length; j++){
-							//this.props.dispatch(submitAbilityScoreToState( abilityArray[j].stat, "racial", abilityArray[j].value ));
 							let bonus = createBonus({ 
 								name:"race", 
 								source:"race", 
@@ -80,8 +76,8 @@ export class NewCharacterRace extends React.Component{
 							this.props.dispatch(addBonus(bonus));
 							this.props.dispatch(sumBonus(bonus));
 						}					
-					} else {		// nothing set means the user has to pick one. 
-						// TODO do a cool thing
+          } else {		// nothing set means the user has to pick one. 
+            
 					}
 					let skillArray = racesArray[i].standardRacialTraits.base.skillRacialBonusArray;
 					if(skillArray){			// find out if there are any racial skill bonuses
