@@ -6,7 +6,9 @@ The app is live on Heroku [HERE](https://blooming-crag-44038.herokuapp.com/) whi
 **Screenshots**
 Dashboard:
 ![Alt text](/screenshots/desktop_TTRPGCharGen_Compressed.png "Dashboard")
+Mobile Login:
 ![Alt text](/screenshots/mobile_TTRPGCharGen_Compressed.png "Dashboard")
+One of a myriad of selection screens:
 ![Alt text](/screenshots/TTRPG_Screenshot_2.png "Race Selection")
 
 **Summery**
