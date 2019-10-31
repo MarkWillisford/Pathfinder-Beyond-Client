@@ -9,12 +9,11 @@ const matchesPassword = matches('password');
 
 export class RegistrationForm extends React.Component {
     onSubmit(values) {
-      console.log("in registration form onSubmit");
-        const {username, password, firstName, lastName, email} = values;
-        const user = {username, password, firstName, lastName, email};
-        return this.props
-            .dispatch(registerUser(user))
-            .then(() => this.props.dispatch(login(email, password)));
+      const {username, password, firstName, lastName, email} = values;
+      const user = {username, password, firstName, lastName, email};
+      return this.props
+        .dispatch(registerUser(user))
+        .then(() => this.props.dispatch(login(email, password)));
     }
 
     render() {
@@ -69,7 +68,6 @@ export class RegistrationForm extends React.Component {
 export default reduxForm({
     form: 'registration',
     onSubmitFail: (errors, dispatch) => {
-      console.log(errors);
       dispatch(focus('registration', Object.keys(errors)[0]))
     }
 })(RegistrationForm);

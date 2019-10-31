@@ -45,9 +45,6 @@ export class NewCharacterDetails extends React.Component{
 
     if(traitsCompleted){
 			this.props.dispatch(submitDetailsToState(values));
-		} else { 
-      console.log("traits not done");
-      
 		}
 	}
 

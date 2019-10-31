@@ -19,10 +19,6 @@ const isCraftOrProfession = value =>
 	(value && (/craft\s\(.+\)/i.test(value) || /profession\s\(.+\)/i.test(value) )) ? undefined : "this must be in the following pattern; craft or profession (detail)";
 
 export class SelectionFormRace extends React.Component{
-  /* componentDidMount(){
-    console.log("getting heritages");
-  } */
-
 	hideSelections(){
 		this.props.dispatch(setSelections("")); 
 	}
@@ -126,7 +122,6 @@ export class SelectionFormRace extends React.Component{
 				return null
 			});
 			selections.standardRacialTraits.base.skillRacialBonusArray.map(skill => {
-				console.log(selections.standardRacialTraits.base.skillRacialBonusArray);
 				let bonus = createBonus({ 
 					name:"race", 
 					source:"race", 
@@ -223,7 +218,6 @@ export class SelectionFormRace extends React.Component{
 		// This could be abstracted, but is hardcoded for now
 		switch(this.props.name){
 			case "Aasimar":
-        console.log("in aasimar render");
 				return(
 					<form onSubmit={this.props.handleSubmit(onSubmitFormAasimar) }>
 						<button type="button" onClick={() => this.hideSelections()}>Cancel</button>

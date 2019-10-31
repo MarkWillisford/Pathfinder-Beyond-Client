@@ -360,8 +360,6 @@ export const saveAndSubmit = () => (dispatch, getState, history) => {
 };
 
 export const deleteCharacterById = (id) => (dispatch, getState) => {
-  console.log("deleting id:");
-  console.log(id);
   const authToken = getState().auth.authToken;
   // const user = getState().auth.currentUser._id; 
   fetch(`${API_BASE_URL}/users/characters`, {
@@ -404,12 +402,8 @@ export const editAndSubmit = () => (dispatch, getState) => {
   let goodsAndServicesList = [];
 
   if(charState.newCharacter.gear){
-    /* console.log("BUG #7");
-    console.log(charState.newCharacter.gear); */
     for(let i = 0; i < charState.newCharacter.gear.length; i++){
       let item = charState.newCharacter.gear[i];
-      /* console.log("BUG #7");
-      console.log(item); */
       if(item._id){
         item.id = item._id;
         delete item._id; 

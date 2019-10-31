@@ -81,8 +81,7 @@ export class NewCharacterSkills extends React.Component{
   componentWillUnmount(){
     const props = this.props;
     const skillsObject = props.skills
-    //console.log(findBonusesByStatAndType(this.props.charStats, "fly", "ranks"));
-
+    
 		Object.keys(skillsObject).forEach(function (item){
       // is there a rank stored in memory?
       const isInStore = findBonusesByStatAndType(props.charStats, item, "ranks");
@@ -96,14 +95,10 @@ export class NewCharacterSkills extends React.Component{
         amount:skillsObject[item].ranks });
 
       if(isInStore && !isSelected){
-        console.log(item);
-        console.log("Is in store, but is not selected");
         // remove
 				props.dispatch(removeBonus(bonus));
 				props.dispatch(sumBonus(bonus));
       } else if(isSelected && !isInStore){
-        console.log(item);
-        console.log("Is selected, but is not in store");
         // add
 				props.dispatch(addBonus(bonus));
 				props.dispatch(sumBonus(bonus));

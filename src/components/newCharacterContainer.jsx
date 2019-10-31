@@ -19,13 +19,7 @@ import {toggleStep} from '../actions/index';
 
 import './newCharacterContainer.css';
 
-export class NewCharacterContainer extends React.Component{
-  componentDidMount(){
-    /* if(this.props.editingExistingCharacter === true){
-      console.log("editing");
-    } */
-  }
-  
+export class NewCharacterContainer extends React.Component{  
   togglePrev(e){
     let index = this.props.currentStep-1;
     let disabledPrev = (index === 0);

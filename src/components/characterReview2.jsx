@@ -42,10 +42,6 @@ export class CharacterReview extends React.Component{
     }
   }
 
-  viewDetails(stat){
-    console.log(stat);
-  }
-
   saveCharacter(){
     if(!this.props.editingExistingCharacter){
       this.props.dispatch(saveAndSubmit());

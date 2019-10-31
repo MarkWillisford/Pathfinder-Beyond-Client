@@ -14,8 +14,6 @@ export class LoginForm extends React.Component {
 
   render() {
     const responseGoogle = (response) => {
-      console.log(response);
-      //this.props.dispatch(testErrorDisplay());
       this.props.dispatch(googleLogin(response.tokenObj.id_token));
     }
     

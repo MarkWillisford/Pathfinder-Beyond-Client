@@ -21,10 +21,6 @@ export class CharacterReviewPage extends React.Component{
     }
   }
 
-  viewDetails(stat){
-    console.log(stat);
-  }
-
   save(){
     this.props.dispatch(saveAndSubmit());
     // redirect to dashboard    
@@ -34,7 +30,6 @@ export class CharacterReviewPage extends React.Component{
     const saved = this.props.saved;
     const skillList = require('../data/skills');
     let characterToReview = this.props.characterToReview;
-    console.log(this.props);
     let sizeMod = characterToReview.race.standardRacialTraits.base.size === "small" ? 1 : 0;
     
 

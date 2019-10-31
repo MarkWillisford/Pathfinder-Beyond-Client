@@ -22,6 +22,7 @@ export class LandingPage extends React.Component {
     return (
         <div className="home">
           <h3>Mark's online</h3>
+          {/* Cinzel,serif */}
           <h1 className="landingPageTitle">Character Sheet</h1>
           {/* Button to automatically log in the Demo user. */}
           <LoginForm error={this.props.error}/>

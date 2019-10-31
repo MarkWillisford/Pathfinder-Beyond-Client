@@ -62,7 +62,6 @@ class CardCharacters extends React.Component{
   }
 
 	render(){
-    console.log(this.props.character);
 		return( 
 			<div className="cardCharacter div">
         <div className="characterTextContainer">

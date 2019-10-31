@@ -82,9 +82,6 @@ export class NewCharacterClass extends React.Component{
 				name = this.props.classesArray[i].name
       }
     }
-		if(name === ""){
-			console.log("Error! Couldn't find class")
-		}
 		this.props.dispatch(setExpandedClass(name));
 	}
 
@@ -214,7 +211,7 @@ export class NewCharacterClass extends React.Component{
 							</div>
 						)
 					default:
-            console.log("here");
+            return null;
 				}
 
 			} else {

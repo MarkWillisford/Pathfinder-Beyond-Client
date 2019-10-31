@@ -101,8 +101,7 @@ export const googleLogin = (id_token) => dispatch => {
     .then(res => normalizeResponseErrors(res))
     .then(res => res.json())
     .then(({token, _id}) => storeAuthInfo(token, _id, dispatch))
-    .catch(err => {
-      console.log(err); 
+    .catch(err => { 
       const {code} = err;
       const message =
         code === 401

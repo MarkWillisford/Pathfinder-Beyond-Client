@@ -42,7 +42,6 @@ export class ClassSelectionsCleric extends React.Component{
   }
 
   changeDeity(){
-    console.log("changing deity");
     this.props.dispatch(removeDeity());
   }
 

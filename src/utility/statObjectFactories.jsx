@@ -33,7 +33,6 @@ export const createStat = ({ name, flag = false, bonuses, sum = { } }) => ({
 					if(arrayOfHighestBonuses[j].type == typeToFind){
 						// if so, compare and keep only the largest 
 						if(this.bonuses[i].amount > arrayOfHighestBonuses[j].amount){
-							// console.log('new bonus is larger')
 							found = true;
 							replace = true;
 							foundAt = j;
@@ -52,7 +51,6 @@ export const createStat = ({ name, flag = false, bonuses, sum = { } }) => ({
 					arrayOfHighestBonuses[foundAt] = this.bonuses[i];
 				} else if(!found){
 					// if not, add this bonus to the array and be done
-					// console.log('no matching type found. adding first now')
 					arrayOfHighestBonuses.push(this.bonuses[i]);
 					total = total + this.bonuses[i].amount;
 				};

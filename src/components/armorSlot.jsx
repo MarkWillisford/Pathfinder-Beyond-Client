@@ -20,20 +20,13 @@ export class ArmorSlot extends React.Component{
       }
       initialArmor = this.props.armor.filter((armor) => armor.use === armorCategories[0]);
       this.props.dispatch(setTempArmorCategory(armorCategories[0]));
-      /* console.log("setting armor, in componentDidMount");
-      console.log(initialArmor); */
       this.props.dispatch(setTempArmor(initialArmor[0]));
     }
   }
 
   componentDidUpdate(){
     
-    if(this.props.armor.length > 1 && !this.props.tempEquipment.armor){
-      /* console.log("in update, problem, no temp equipment but have a list of armor")
-      console.log(this.props.armor);
-      console.log(this.props.tempEquipment);
-      console.log("therefore I'm redispatching the temp armor"); */
-      
+    if(this.props.armor.length > 1 && !this.props.tempEquipment.armor){      
       let armorCategories = [];
       let initialArmor;
       for(let i=0;i<this.props.armor.length;i++){
@@ -42,11 +35,7 @@ export class ArmorSlot extends React.Component{
         }
       }
       initialArmor = this.props.armor.filter((armor) => armor.use === armorCategories[0]);
-      /* console.log(armorCategories);
-      console.log(initialArmor); */
       this.props.dispatch(setTempArmorCategory(armorCategories[0]));
-      /* console.log("setting armor, in componentDidUpdate");
-      console.log(initialArmor); */
       this.props.dispatch(setTempArmor(initialArmor[0]));
     }
   }

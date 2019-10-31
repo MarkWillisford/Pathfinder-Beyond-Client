@@ -49,7 +49,6 @@ export class ClassSelectionsPaladin extends React.Component{
     }
     
     onSubmitClick(deity){   
-      console.log("clicked");
       for(let i=0; i<this.props.classesArray.length;i++){
         // if this is the clicked element toggle it 
         if( this.props.classesArray[i].name==="paladin" ){     

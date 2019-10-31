@@ -19,12 +19,9 @@
 						if(dice == 4){
 							number = number - lowest;
 						}
-						console.log(number);
 						statArray.push({index:a,value:number});
 					}
-					console.log(statArray);
 					statArray.sort(function(a,b){ return b.value - a.value;});
-					console.log(statArray);
 					props.dispatch(adjustDisplayD6(statArray));				
 				}}>Roll</button>  
 				<table>

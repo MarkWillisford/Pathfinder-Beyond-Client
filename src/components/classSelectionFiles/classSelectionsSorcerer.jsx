@@ -37,9 +37,7 @@ export class ClassSelectionsSorcerer extends React.Component{
         // okay, spells has an unsorted array of spell objects. I need to find all the spells that have a level object with a class attribute of "sorcerer/wizard"
         // then sort that list by level object's attribute "num"
         // This will be done server side, for now a basic function built in here.
-        console.log(spells);
         let filteredSpellList = this.filterSpells(spells, "sorcerer/wizard", [0,1]); 
-        console.log(filteredSpellList);
 
         return (
             <div>
