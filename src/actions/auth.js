@@ -46,7 +46,7 @@ export const login = (email, password) => dispatch => {
   // set a loading indicator to true and clearing any earlier errors
   dispatch(authRequest());
   return (
-    fetch(`${API_BASE_URL}/users/login`, {
+    fetch(`https://cors-anywhere.herokuapp.com/${API_BASE_URL}/users/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
