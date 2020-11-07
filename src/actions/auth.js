@@ -46,7 +46,7 @@ export const login = (email, password) => dispatch => {
   // set a loading indicator to true and clearing any earlier errors
   dispatch(authRequest());
   console.log(API_BASE_URL);
-  API_BASE_URL = `https://cors-anywhere.herokuapp.com/https://rocky-mountain-99485.herokuapp.com/api`;
+  //API_BASE_URL = `https://cors-anywhere.herokuapp.com/https://rocky-mountain-99485.herokuapp.com/api`;
   console.log(API_BASE_URL);
   return (
     fetch(`${API_BASE_URL}/users/login`, {
